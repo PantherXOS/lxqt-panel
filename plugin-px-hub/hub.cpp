@@ -25,7 +25,7 @@
  *
  * END_COMMON_COPYRIGHT_HEADER */
 
-#include "notes.h"
+#include "hub.h"
 
 #include <QMouseEvent>
 #include <QResizeEvent>

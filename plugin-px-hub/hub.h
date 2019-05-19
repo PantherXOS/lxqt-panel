@@ -43,7 +43,6 @@
 #include <interfaces/hub.capnp.h>
 #include <rpc/ServiceEventHandler.h>
 #include <rpc/EventSubscriber.h>
-#include "ShareObjects.h"
 
 #define HUB_SERVER_ADDRESS "/root/.userdata/rpc/hub"
 

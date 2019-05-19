@@ -31,8 +31,7 @@ set(CMAKE_AUTORCC ON)
 
 set(REQUIRED_QT_VERSION "5.7.1")
 set(KF5_MINIMUM_VERSION "5.36.0")
-set(LXQT_GLOBALKEYS_MINIMUM_VERSION "0.14.1")
-set(LXQT_MINIMUM_VERSION "0.14.1")
+set(LXQT_MINIMUM_VERSION "0.14.0")
 
 find_package(Qt5DBus ${REQUIRED_QT_VERSION} REQUIRED)
 find_package(Qt5LinguistTools ${REQUIRED_QT_VERSION} REQUIRED)
@@ -41,10 +40,11 @@ find_package(Qt5X11Extras ${REQUIRED_QT_VERSION} REQUIRED)
 find_package(Qt5Xml ${REQUIRED_QT_VERSION} REQUIRED)
 find_package(KF5WindowSystem ${KF5_MINIMUM_VERSION} REQUIRED)
 find_package(lxqt ${LXQT_MINIMUM_VERSION} REQUIRED)
-find_package(lxqt-globalkeys-ui ${LXQT_GLOBALKEYS_MINIMUM_VERSION} REQUIRED)
+find_package(lxqt-globalkeys ${LXQT_MINIMUM_VERSION} REQUIRED)
+find_package(lxqt-globalkeys-ui ${LXQT_MINIMUM_VERSION} REQUIRED)
 
 # Patch Version
-set(LXQT_PANEL_PATCH_VERSION 1)
+set(LXQT_PANEL_PATCH_VERSION 0)
 set(LXQT_PANEL_VERSION ${LXQT_MAJOR_VERSION}.${LXQT_MINOR_VERSION}.${LXQT_PANEL_PATCH_VERSION})
 add_definitions("-DLXQT_PANEL_VERSION=\"${LXQT_PANEL_VERSION}\"")
 
@@ -253,6 +253,7 @@ if(NOTES_PLUGIN)
     list(APPEND ENABLED_PLUGINS "Notes")
     add_subdirectory(plugin-px-hub)
 endif()
+
 #########################################################################
 
 message(STATUS  "**************** The following plugins will be built ****************")

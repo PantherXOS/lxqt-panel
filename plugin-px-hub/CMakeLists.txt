@@ -1,4 +1,4 @@
-set(PLUGIN "notes")
+set(PLUGIN "hub")
 find_package(CapnProto CONFIG REQUIRED)
 find_package(nng REQUIRED)
 
@@ -8,7 +8,7 @@ capnp_generate_cpp(CapnpSources CapnpHeaders
 include_directories(${CapnProto_INCLUDE_DIRS})
 
 set(HEADERS
-    notes.h
+		hub.h
 		rpc/AccountParser.h
 		interfaces/hub.capnp.h
 		interfaces/event.capnp.h
@@ -16,18 +16,16 @@ set(HEADERS
 		rpc/EventSubscriber.h
 		rpc/ServiceEventHandler.h
 		rpc/Utils.h
-		ShareObjects.h
-)
+		)
 
 set(SOURCES
-    notes.cpp
+		hub.cpp
 		interfaces/hub.capnp.c++
 		interfaces/event.capnp.c++
 		rpc/EventSubscriber.cpp
 		rpc/ServiceEventHandler.cpp
 		rpc/Utils.cpp
-		ShareObjects.cpp
-)
+		)
 
 
 set(RESOURCES
