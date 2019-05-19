@@ -51,8 +51,19 @@ Notes::Notes(const ILXQtPanelPluginStartupInfo &startupInfo) :
     realign();
     vector <QAction *> qactVector;
     QMenu *menu = new QMenu;
-    for(string s : getAccount()){
-        QAction * qact= new QAction(tr(s.c_str()));
+    vector<Account> accounts=getAccount();
+    for(Account s : accounts){
+        string title = s.getTitle() + " - (" + to_string(s.getUnread()) + ")";
+        QAction * qact= new QAction(tr(title.c_str()));
+        if(s.getStatus() == Status::online)
+            qact->setIcon(QIcon("/home/fakhri/Downloads/online"));
+        else if(s.getStatus() == Status::offline)
+            qact->setIcon(QIcon("/home/fakhri/Downloads/offline"));
+        else if(s.getStatus() == Status::none)
+            qact->setIcon(QIcon("/home/fakhri/Downloads/none"));
+        qact->setIconVisibleInMenu(true);
+
+//        qact->setIcon(XdgIcon::fromTheme("drive-removable-media", "drive-removable-media"));
         qactVector.push_back(qact);
         menu->addAction(qact);
     }
@@ -63,7 +74,7 @@ Notes::Notes(const ILXQtPanelPluginStartupInfo &startupInfo) :
     mButton.setMenu(menu);
     mButton.setPopupMode(QToolButton::InstantPopup);
     mButton.setAutoRaise(true);
-    mButton.setIcon(XdgIcon::fromTheme("date", "date"));
+//    mButton.setIcon(XdgIcon::fromTheme("drive-removable-media", "drive-removable-media"));
     
     
     // load all notes
@@ -166,8 +177,8 @@ QDialog* Notes::configureDialog()
 
 }
 
-vector<string> Notes::getAccount() {
-    vector<string> rsult;
+vector<Account> Notes::getAccount() {
+    vector<Account> rsult;
     string addr = string("unix:") + HUB_SERVER_ADDRESS;
     capnp::EzRpcClient rpcClient(addr);
     auto &waitScope = rpcClient.getWaitScope();
@@ -176,26 +187,33 @@ vector<string> Notes::getAccount() {
         auto actReq = client.getAccountsStatusRequest();
         auto actRes = actReq.send().wait(waitScope);
         for(auto act : actRes.getAccountsStatus()) {
-            string status;
+            Account account;
             switch (act.getStatus()){
                 case AccountStatus::Status::NONE:
-                    status = " - NONE";
+                    account.setStatus(Status::none);
                     break;
                 case AccountStatus::Status::ERROR:
-                    status = " - ERROR";
+                    account.setStatus(Status::error);
                     break;
                 case AccountStatus::Status::ONLINE:
-                    status = " - ONLINE";
+                    account.setStatus(Status::online);
                     break;
                 case AccountStatus::Status::OFFLINE:
-                    status = " - OFFLINE";
+                    account.setStatus(Status::offline);
                     break;
             }
-            rsult.push_back(act.getTitle().cStr() + status);
+            account.setTime(act.getTime());
+            account.setUnread(act.getUnread());
+            account.setType(act.getType().cStr());
+            account.setIcon(act.getIcon().cStr());
+            account.setLink(act.getLink().cStr());
+            account.setAltLink(act.getAltLink().cStr());
+            account.setTitle(act.getTitle().cStr());
+
+            rsult.push_back(account);
         }
     } catch (kj::Exception){
 
     }
-    if (rsult.size()==0) rsult.push_back("Empty");
     return rsult;
 }

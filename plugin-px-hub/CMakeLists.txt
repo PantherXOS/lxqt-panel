@@ -16,6 +16,7 @@ set(HEADERS
 		rpc/EventSubscriber.h
 		rpc/ServiceEventHandler.h
 		rpc/Utils.h
+		Account.h
 		)
 
 set(SOURCES
@@ -25,6 +26,7 @@ set(SOURCES
 		rpc/EventSubscriber.cpp
 		rpc/ServiceEventHandler.cpp
 		rpc/Utils.cpp
+		Account.cpp
 		)
 
 

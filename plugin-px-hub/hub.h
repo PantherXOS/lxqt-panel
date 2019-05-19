@@ -43,6 +43,7 @@
 #include <interfaces/hub.capnp.h>
 #include <rpc/ServiceEventHandler.h>
 #include <rpc/EventSubscriber.h>
+#include "Account.h"
 
 #define HUB_SERVER_ADDRESS "/root/.userdata/rpc/hub"
 
@@ -81,7 +82,7 @@ private:
     
     void setIconsColor(const QString &color);
     void setIconColor(const QString &icon, const QString &color);
-    vector<string> getAccount();
+    vector<Account> getAccount();
     
     QMainWindow window;
 };
