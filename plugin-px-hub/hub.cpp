@@ -50,28 +50,39 @@ Notes::Notes(const ILXQtPanelPluginStartupInfo &startupInfo) :
 {
     realign();
     vector <QAction *> qactVector;
-    QMenu *menu = new QMenu;
-    vector<Account> accounts=getAccount();
-    for(Account s : accounts){
-        string title = s.getTitle() + " - (" + to_string(s.getUnread()) + ")";
-        QAction * qact= new QAction(tr(title.c_str()));
-        if(s.getStatus() == Status::online)
-            qact->setIcon(QIcon("/home/fakhri/Downloads/online"));
-        else if(s.getStatus() == Status::offline)
-            qact->setIcon(QIcon("/home/fakhri/Downloads/offline"));
-        else if(s.getStatus() == Status::none)
-            qact->setIcon(QIcon("/home/fakhri/Downloads/none"));
-        qact->setIconVisibleInMenu(true);
+    QMenu *mainMenu = new QMenu;
 
-//        qact->setIcon(XdgIcon::fromTheme("drive-removable-media", "drive-removable-media"));
-        qactVector.push_back(qact);
-        menu->addAction(qact);
+    vector<Account> accounts=getAccount();
+
+    for(Account s : accounts){
+        QHBoxLayout *qlayout = new QHBoxLayout;
+        QToolButton *statusIcon = new QToolButton;
+        QLabel *accountTitle = new QLabel;
+        QToolButton *accountIcon = new QToolButton;
+     // accountIcon->setStyleSheet("QLabel { border: 0px; }");
+        QIcon *qi=new QIcon("/home/fakhri/Downloads/online");
+        string title = s.getTitle() + " - (" + to_string(s.getUnread()) + ")";
+        if(s.getStatus() == Status::online)
+            qi=new QIcon("/home/fakhri/Downloads/online");
+        else if(s.getStatus() == Status::offline)
+            qi=new QIcon("/home/fakhri/Downloads/offline");
+        else if(s.getStatus() == Status::none)
+            qi=new QIcon("/home/fakhri/Downloads/none");
+        accountIcon->setIcon(*qi);
+        accountTitle->setText(title.c_str());
+        statusIcon->setIcon(*qi);
+        qlayout->addWidget(accountIcon);
+        qlayout->addWidget(accountTitle);
+        qlayout->addWidget(statusIcon);
+
+        mainMenu->setLayout(qlayout);
+
     }
     ServiceEventHandler hubEventHandler;
     EventSubscriber * eventSubscriber = new EventSubscriber("hub", &hubEventHandler, &mButton);
     eventSubscriber->run();
 
-    mButton.setMenu(menu);
+    mButton.setMenu(mainMenu);
     mButton.setPopupMode(QToolButton::InstantPopup);
     mButton.setAutoRaise(true);
 //    mButton.setIcon(XdgIcon::fromTheme("drive-removable-media", "drive-removable-media"));
