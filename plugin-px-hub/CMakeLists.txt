@@ -8,7 +8,7 @@ capnp_generate_cpp(CapnpSources CapnpHeaders
 include_directories(${CapnProto_INCLUDE_DIRS})
 
 set(HEADERS
-		hub.h
+        Hub.h
 		rpc/AccountParser.h
 		interfaces/hub.capnp.h
 		interfaces/event.capnp.h
@@ -17,16 +17,18 @@ set(HEADERS
 		rpc/ServiceEventHandler.h
 		rpc/Utils.h
 		Account.h
+		MenuManager.h
 		)
 
 set(SOURCES
-		hub.cpp
+        Hub.cpp
 		interfaces/hub.capnp.c++
 		interfaces/event.capnp.c++
 		rpc/EventSubscriber.cpp
 		rpc/ServiceEventHandler.cpp
 		rpc/Utils.cpp
 		Account.cpp
+		MenuManager.cpp
 		)
 
 

@@ -27,11 +27,12 @@ using namespace std;
 #include <QToolButton>
 #include <QMenu>
 #include <qobjectdefs.h>
+#include <Hub.h>
 
 #define CHANNEL_BASE    "/.userdata/event/channels/"
 
-class EventSubscriber : public QObject{
-Q_OBJECT
+class EventSubscriber {
+
 public:
     EventSubscriber(string service, EventHandler *eventHandler, QToolButton *mButton);
     void run();

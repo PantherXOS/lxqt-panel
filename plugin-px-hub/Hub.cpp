@@ -25,7 +25,7 @@
  *
  * END_COMMON_COPYRIGHT_HEADER */
 
-#include "hub.h"
+#include "Hub.h"
 
 #include <QMouseEvent>
 #include <QResizeEvent>
@@ -42,70 +42,34 @@
 #include <QAction>
 #include <QMenu>
 #include <QDebug>
+#include <QtGui/QPainter>
 
-Notes::Notes(const ILXQtPanelPluginStartupInfo &startupInfo) :
+Hub::Hub(const ILXQtPanelPluginStartupInfo &startupInfo) :
     QObject(),
     ILXQtPanelPlugin(startupInfo),
     mHidden(false)
 {
     realign();
     vector <QAction *> qactVector;
-    QMenu *mainMenu = new QMenu;
-
+    mainMenu->setFixedWidth(300);
     vector<Account> accounts=getAccount();
-
+    mainMenu->addAction(createeTitle("YOUR ACCOUNTS"));
     for(Account s : accounts){
-        QHBoxLayout *qlayout = new QHBoxLayout;
-        QToolButton *statusIcon = new QToolButton;
-        QLabel *accountTitle = new QLabel;
-        QToolButton *accountIcon = new QToolButton;
-     // accountIcon->setStyleSheet("QLabel { border: 0px; }");
-        QIcon *qi=new QIcon("/home/fakhri/Downloads/online");
-        string title = s.getTitle() + " - (" + to_string(s.getUnread()) + ")";
-        if(s.getStatus() == Status::online)
-            qi=new QIcon("/home/fakhri/Downloads/online");
-        else if(s.getStatus() == Status::offline)
-            qi=new QIcon("/home/fakhri/Downloads/offline");
-        else if(s.getStatus() == Status::none)
-            qi=new QIcon("/home/fakhri/Downloads/none");
-        accountIcon->setIcon(*qi);
-        accountTitle->setText(title.c_str());
-        statusIcon->setIcon(*qi);
-        qlayout->addWidget(accountIcon);
-        qlayout->addWidget(accountTitle);
-        qlayout->addWidget(statusIcon);
-
-        mainMenu->setLayout(qlayout);
-
+        mainMenu->addAction(buildAccountItem(s));
     }
-    ServiceEventHandler hubEventHandler;
-    EventSubscriber * eventSubscriber = new EventSubscriber("hub", &hubEventHandler, &mButton);
-    eventSubscriber->run();
+    mainMenu->addSeparator();
 
+    ServiceEventHandler hubEventHandler;
+    EventSubscriber * eventSubscriber = new EventSubscriber("hub", &hubEventHandler,&mButton);
+    eventSubscriber->run();
     mButton.setMenu(mainMenu);
     mButton.setPopupMode(QToolButton::InstantPopup);
     mButton.setAutoRaise(true);
-//    mButton.setIcon(XdgIcon::fromTheme("drive-removable-media", "drive-removable-media"));
-    
-    
-    // load all notes
-    QDir dir(dataDir());
-    QStringList notes = dir.entryList(QDir::Files);
-    
-    for(int i = 0; i < notes.size(); ++i) {
-        qint64 noteId = notes[i].toLong();
-        
-        if(!noteId)
-            continue;
-
-    }
-    
-    // set colors & fonts 
-    settingsChanged();
+    mButton.setIcon(QIcon(":resources/icon/user"));
 }
 
 
-Notes::~Notes()
+Hub::~Hub()
 {
     for(auto it = mNotes.begin(); it != mNotes.end(); ++it)
         delete it.value();
@@ -113,43 +77,27 @@ Notes::~Notes()
     mNotes.clear();
 }
 
-void Notes::realign()
+void Hub::realign()
 {
   mButton.setFixedHeight(panel()->iconSize());
   mButton.setFixedWidth(panel()->iconSize());
 }
 
 
-QString Notes::dataDir()
+QString Hub::dataDir()
 {
     QString dir = QStandardPaths::writableLocation(QStandardPaths::GenericDataLocation) + QDir::separator() + "lxqt-notes";
     return dir;
 }
 
-void Notes::addNewNote()
+
+void Hub::toggleShowHide()
 {
+
 
 }
 
-void Notes::deleteNote(const qint64 &id)
-{
-    auto it = mNotes.find(id);
-    if(it != mNotes.end()) {
-        delete it.value();
-        mNotes.erase(it);
-    }
-    
-    // delete note file
-    QDir dir(dataDir());
-    dir.remove(QString::number(id));
-}
-
-void Notes::toggleShowHide()
-{
-
-}
-
-void Notes::setIconColor(const QString &icon, const QString &color)
+void Hub::setIconColor(const QString &icon, const QString &color)
 {
     // create icons path
     QString iconsDir = dataDir() + QDir::separator() + "icons";
@@ -159,36 +107,36 @@ void Notes::setIconColor(const QString &icon, const QString &color)
     QFile file(icon);
     if(!file.open(QIODevice::ReadOnly | QIODevice::Text))
         return;
-    
+
     QTextStream in(&file);
     QString svg = in.readAll().arg(color);
-    
+
     file.close();
 
     QFileInfo info(icon);
     QString iconFile = iconsDir + QDir::separator() + info.fileName();
-    
+
     QFile outFile(iconFile);
     if(!outFile.open(QIODevice::WriteOnly | QIODevice::Text))
         return;
-    
+
     QTextStream out(&outFile);
     out << svg;
-    
+
     outFile.close();
 }
 
-void Notes::settingsChanged()
+void Hub::settingsChanged()
 {
 
 }
 
-QDialog* Notes::configureDialog()
+QDialog* Hub::configureDialog()
 {
 
 }
 
-vector<Account> Notes::getAccount() {
+vector<Account> Hub::getAccount() {
     vector<Account> rsult;
     string addr = string("unix:") + HUB_SERVER_ADDRESS;
     capnp::EzRpcClient rpcClient(addr);
@@ -226,5 +174,75 @@ vector<Account> Notes::getAccount() {
     } catch (kj::Exception){
 
     }
+    if(rsult.size()==0) {
+        Account acc;
+        acc.setTitle("Fakhri");
+        acc.setUnread(10);
+        acc.setStatus(Status::online);
+        rsult.push_back(acc);
+
+        acc.setTitle("Franz");
+        acc.setUnread(2);
+        acc.setStatus(Status::offline);
+        rsult.push_back(acc);
+    }
     return rsult;
+}
+
+QWidgetAction* Hub::buildAccountItem(Account account) {
+    QHBoxLayout *qlayout = new QHBoxLayout;
+    QHBoxLayout *llayout = new QHBoxLayout;
+    QHBoxLayout *rlayout = new QHBoxLayout;
+
+    QToolButton *statusIcon = new QToolButton;
+    QToolButton *accountIcon = new QToolButton;
+
+    QIcon *qi=new QIcon(":resources/icon/online");
+    QIcon *qi2=new QIcon(":resources/icon/mail");
+    if(account.getStatus() == Status::online)
+        qi=new QIcon(":resources/icon/online");
+    else if(account.getStatus() == Status::offline)
+        qi=new QIcon(":resources/icon/offline");
+    else if(account.getStatus() == Status::none)
+        qi=new QIcon(":resources/icon/none");
+    accountIcon->setIcon(*qi2);
+    accountIcon->setStyleSheet(style.c_str());
+    statusIcon->setStyleSheet(style.c_str());
+
+
+    QToolButton *accountTitle = new QToolButton;
+    QToolButton *unredCount = new QToolButton;
+    accountTitle->setText(account.getTitle().c_str());
+    unredCount->setText(to_string(account.getUnread()).c_str());
+    accountTitle->setStyleSheet(style.c_str());
+    unredCount->setStyleSheet(style.c_str());
+    statusIcon->setIcon(*qi);
+    llayout->addWidget(accountIcon);
+    llayout->addWidget(accountTitle);
+    rlayout->addWidget(unredCount);
+    rlayout->addWidget(statusIcon);
+    llayout->setAlignment(Qt::AlignLeft);
+    rlayout->setAlignment(Qt::AlignRight);
+    qlayout->addLayout(llayout);
+    qlayout->addLayout(rlayout);
+    QWidget* widget = new QWidget;
+    widget->setLayout(qlayout);
+    QWidgetAction *qWidgetAction = new QWidgetAction(this);
+    qWidgetAction->setDefaultWidget(widget);
+    return qWidgetAction;
+}
+
+QWidgetAction *Hub::createeTitle(string title) {
+    QHBoxLayout *slayout = new QHBoxLayout;
+    QToolButton *subject = new QToolButton;
+    subject->setText(title.c_str());
+    subject->setStyleSheet(style.c_str());
+    slayout->setAlignment(Qt::AlignLeft);
+    slayout->addWidget(subject);
+    QAction *qact=new QAction;
+    QWidget* sWidget = new QWidget;
+    sWidget->setLayout(slayout);
+    QWidgetAction *sWidgetAction = new QWidgetAction(this);
+    sWidgetAction->setDefaultWidget(sWidget);
+    return sWidgetAction;
 }

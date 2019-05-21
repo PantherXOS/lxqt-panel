@@ -4,6 +4,7 @@
 
 #include <rpc/EventSubscriber.h>
 #include <XdgIcon>
+#include "Hub.h"
 
 
 EventSubscriber::EventSubscriber(string service, EventHandler *eventHandler, QToolButton *mButton) {
@@ -15,7 +16,7 @@ EventSubscriber::EventSubscriber(string service, EventHandler *eventHandler, QTo
     nng_dial(subSock, ipcSock.c_str(), nullptr, 0);
     this->eventHandler = eventHandler;
     this->isRun = false;
-    this->mButton= mButton;
+    this->mButton = mButton;
 }
 
 
@@ -44,12 +45,12 @@ void EventSubscriber::run() {
 //                    cout<<this->eventHandler->toString(eventObject)<<endl;
                 QMenu *menu = new QMenu;
                 string title = eventObject.event +" - " + eventObject.topic;
-                QAction * qact= new QAction(tr(title.c_str()));
-                menu->addAction(qact);
-                this->mButton->setMenu(menu);
-                this->mButton->setPopupMode(QToolButton::InstantPopup);
-                this->mButton->setAutoRaise(true);
-                this->mButton->setIcon(XdgIcon::fromTheme("date", "date"));
+//                QAction * qact= new QAction(tr(title.c_str()));
+//                menu->addAction(qact);
+//                this->mButton->setMenu(menu);
+//                this->mButton->setPopupMode(QToolButton::InstantPopup);
+//                this->mButton->setAutoRaise(true);
+//                this->mButton->setIcon(XdgIcon::fromTheme("date", "date"));
             }
         });
     }

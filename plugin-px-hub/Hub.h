@@ -43,6 +43,7 @@
 #include <interfaces/hub.capnp.h>
 #include <rpc/ServiceEventHandler.h>
 #include <rpc/EventSubscriber.h>
+#include <QtWidgets/QWidgetAction>
 #include "Account.h"
 
 #define HUB_SERVER_ADDRESS "/root/.userdata/rpc/hub"
@@ -51,18 +52,19 @@ using namespace std;
 
 class StickyNote;
 
-class Notes : public QObject, public ILXQtPanelPlugin
+class Hub : public QObject, public ILXQtPanelPlugin
 {
     Q_OBJECT
 public:
-    explicit Notes(const ILXQtPanelPluginStartupInfo &startupInfo);
-    ~Notes();
+    explicit Hub(const ILXQtPanelPluginStartupInfo &startupInfo);
+    ~Hub();
 
     virtual QWidget *widget() { return &mButton; }
     virtual QString themeId() const { return "px-hub"; }
     virtual ILXQtPanelPlugin::Flags flags() const { return HaveConfigDialog; }
 
     bool isSeparate() const { return true; }
+    QMenu *mainMenu = new QMenu;
     QDialog *configureDialog();
 
 public slots:
@@ -75,16 +77,22 @@ protected slots:
     void settingsChanged();
 
 private:
-   QToolButton mButton;
+    QToolButton mButton;
     bool mHidden;
     QMap<qint64, StickyNote*> mNotes;
     QString dataDir(); // (cannot be static for some reason)
-    
+
+    string style = "background: transparent; border: none;";
     void setIconsColor(const QString &color);
     void setIconColor(const QString &icon, const QString &color);
+    QWidgetAction* buildAccountItem(Account account);
+    QWidgetAction* createeTitle(string title);
+
     vector<Account> getAccount();
     
     QMainWindow window;
+
+
 };
 
 
@@ -96,7 +104,7 @@ class NotesLibrary: public QObject, public ILXQtPanelPluginLibrary
 public:
     ILXQtPanelPlugin *instance(const ILXQtPanelPluginStartupInfo &startupInfo) const
     {
-        return new Notes(startupInfo);
+        return new Hub(startupInfo);
     }
 };
 
