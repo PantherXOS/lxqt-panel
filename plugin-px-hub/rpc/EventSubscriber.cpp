@@ -7,7 +7,7 @@
 #include "Hub.h"
 
 
-EventSubscriber::EventSubscriber(string service, EventHandler *eventHandler, QToolButton *mButton) {
+EventSubscriber::EventSubscriber(string service, EventHandler *eventHandler, Hub *hub) {
     subSock = { 0x00 };
     string ipcSock = "ipc://"+string(getpwuid(getuid())->pw_dir) + UTILS::FILE::fullpath(CHANNEL_BASE) + service;
 
@@ -16,7 +16,7 @@ EventSubscriber::EventSubscriber(string service, EventHandler *eventHandler, QTo
     nng_dial(subSock, ipcSock.c_str(), nullptr, 0);
     this->eventHandler = eventHandler;
     this->isRun = false;
-    this->mButton = mButton;
+    this->hub = hub;
 }
 
 
@@ -40,17 +40,7 @@ void EventSubscriber::run() {
                 for (const auto &param : evtData.getParams()) {
                     eventObject.params.insert(pair<string, string>(param.getKey().cStr(), param.getValue().cStr()));
                 }
-//                this->eventHandler->execute(eventObject);
-//                if(Common::instance().isDebugMode)
-//                    cout<<this->eventHandler->toString(eventObject)<<endl;
-                QMenu *menu = new QMenu;
-                string title = eventObject.event +" - " + eventObject.topic;
-//                QAction * qact= new QAction(tr(title.c_str()));
-//                menu->addAction(qact);
-//                this->mButton->setMenu(menu);
-//                this->mButton->setPopupMode(QToolButton::InstantPopup);
-//                this->mButton->setAutoRaise(true);
-//                this->mButton->setIcon(XdgIcon::fromTheme("date", "date"));
+                this->hub->puEvent(eventObject);
             }
         });
     }

@@ -30,11 +30,12 @@ using namespace std;
 #include <Hub.h>
 
 #define CHANNEL_BASE    "/.userdata/event/channels/"
+class Hub;
 
 class EventSubscriber {
 
 public:
-    EventSubscriber(string service, EventHandler *eventHandler, QToolButton *mButton);
+    EventSubscriber(string service, EventHandler *eventHandler, Hub *hub);
     void run();
     void stop();
 
@@ -46,6 +47,7 @@ private:
     size_t sz;
     unsigned char* buff;
     EventHandler *eventHandler;
+    Hub *hub;
     QToolButton *mButton;
 };
 

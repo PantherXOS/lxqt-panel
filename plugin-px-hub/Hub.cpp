@@ -50,22 +50,11 @@ Hub::Hub(const ILXQtPanelPluginStartupInfo &startupInfo) :
     mHidden(false)
 {
     realign();
-    vector <QAction *> qactVector;
-    mainMenu->setFixedWidth(300);
-    vector<Account> accounts=getAccount();
-    mainMenu->addAction(createeTitle("YOUR ACCOUNTS"));
-    for(Account s : accounts){
-        mainMenu->addAction(buildAccountItem(s));
-    }
-    mainMenu->addSeparator();
-
+    refresh();
     ServiceEventHandler hubEventHandler;
-    EventSubscriber * eventSubscriber = new EventSubscriber("hub", &hubEventHandler,&mButton);
+    EventSubscriber * eventSubscriber = new EventSubscriber("hub", &hubEventHandler, this);
     eventSubscriber->run();
-    mButton.setMenu(mainMenu);
-    mButton.setPopupMode(QToolButton::InstantPopup);
-    mButton.setAutoRaise(true);
-    mButton.setIcon(QIcon(":resources/icon/user"));
+    run();
 }
 
 
@@ -136,6 +125,21 @@ QDialog* Hub::configureDialog()
 
 }
 
+void Hub::refresh() {
+    vector <QAction *> qactVector;
+    mainMenu->setFixedWidth(300);
+    vector<Account> accounts=getAccount();
+    mainMenu->addAction(createeTitle("Your Account"));
+    for(Account s : accounts){
+        mainMenu->addAction(buildAccountItem(s));
+    }
+    mainMenu->addSeparator();
+    mButton.setMenu(mainMenu);
+    mButton.setPopupMode(QToolButton::InstantPopup);
+    mButton.setAutoRaise(true);
+    mButton.setIcon(QIcon(":resources/icon/user"));
+}
+
 vector<Account> Hub::getAccount() {
     vector<Account> rsult;
     string addr = string("unix:") + HUB_SERVER_ADDRESS;
@@ -175,16 +179,19 @@ vector<Account> Hub::getAccount() {
 
     }
     if(rsult.size()==0) {
-        Account acc;
-        acc.setTitle("Fakhri");
-        acc.setUnread(10);
-        acc.setStatus(Status::online);
-        rsult.push_back(acc);
+        for(int i=0 ;i<50;++i){
+            Account acc;
+            acc.setTitle("Fakhri");
+            acc.setUnread(10);
+            acc.setStatus(Status::online);
+            rsult.push_back(acc);
 
-        acc.setTitle("Franz");
-        acc.setUnread(2);
-        acc.setStatus(Status::offline);
-        rsult.push_back(acc);
+            acc.setTitle("Franz");
+            acc.setUnread(2);
+            acc.setStatus(Status::offline);
+            rsult.push_back(acc);
+        }
+
     }
     return rsult;
 }
@@ -245,4 +252,25 @@ QWidgetAction *Hub::createeTitle(string title) {
     QWidgetAction *sWidgetAction = new QWidgetAction(this);
     sWidgetAction->setDefaultWidget(sWidget);
     return sWidgetAction;
+}
+
+void Hub::run() {
+    if(!isRun) {
+        isRun=true;
+        statThread = std::thread([&]() {
+            while (1) {
+                    for(EventHandler::EventObject e : events){
+                        if(e.topic == "Status_Change" && e.event == "hub"){
+                            refresh();
+                        }
+                    }
+
+            }
+        });
+    }
+}
+
+void Hub::puEvent(EventHandler::EventObject eventObject) {
+    events.push_back(eventObject);
+
 }

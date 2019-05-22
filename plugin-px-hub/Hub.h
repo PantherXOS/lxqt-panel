@@ -62,6 +62,7 @@ public:
     virtual QWidget *widget() { return &mButton; }
     virtual QString themeId() const { return "px-hub"; }
     virtual ILXQtPanelPlugin::Flags flags() const { return HaveConfigDialog; }
+    void puEvent(EventHandler::EventObject eventObject);
 
     bool isSeparate() const { return true; }
     QMenu *mainMenu = new QMenu;
@@ -89,9 +90,12 @@ private:
     QWidgetAction* createeTitle(string title);
 
     vector<Account> getAccount();
-    
+    void refresh();
+    void run();
     QMainWindow window;
-
+    bool isRun;
+    vector<EventHandler::EventObject> events;
+    std::thread statThread;
 
 };
 
