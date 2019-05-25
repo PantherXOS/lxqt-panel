@@ -4,10 +4,10 @@
 
 #include <rpc/EventSubscriber.h>
 #include <XdgIcon>
-#include "Hub.h"
+#include "hub.h"
 
 
-EventSubscriber::EventSubscriber(string service, EventHandler *eventHandler, Hub *hub) {
+EventSubscriber::EventSubscriber(string service, EventHandler *eventHandler, hub *hub) {
     subSock = { 0x00 };
     string ipcSock = "ipc://"+string(getpwuid(getuid())->pw_dir) + UTILS::FILE::fullpath(CHANNEL_BASE) + service;
 
@@ -16,7 +16,7 @@ EventSubscriber::EventSubscriber(string service, EventHandler *eventHandler, Hub
     nng_dial(subSock, ipcSock.c_str(), nullptr, 0);
     this->eventHandler = eventHandler;
     this->isRun = false;
-    this->hub = hub;
+    this->_hub = hub;
 }
 
 
@@ -40,7 +40,7 @@ void EventSubscriber::run() {
                 for (const auto &param : evtData.getParams()) {
                     eventObject.params.insert(pair<string, string>(param.getKey().cStr(), param.getValue().cStr()));
                 }
-                this->hub->puEvent(eventObject);
+                this->_hub->puEvent(eventObject);
             }
         });
     }

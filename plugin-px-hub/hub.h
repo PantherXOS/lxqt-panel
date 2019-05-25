@@ -44,6 +44,7 @@
 #include <rpc/ServiceEventHandler.h>
 #include <rpc/EventSubscriber.h>
 #include <QtWidgets/QWidgetAction>
+#include <QScrollBar>
 #include "Account.h"
 
 #define HUB_SERVER_ADDRESS "/root/.userdata/rpc/hub"
@@ -52,12 +53,12 @@ using namespace std;
 
 class StickyNote;
 
-class Hub : public QObject, public ILXQtPanelPlugin
+class hub : public QObject, public ILXQtPanelPlugin
 {
     Q_OBJECT
 public:
-    explicit Hub(const ILXQtPanelPluginStartupInfo &startupInfo);
-    ~Hub();
+    explicit hub(const ILXQtPanelPluginStartupInfo &startupInfo);
+    ~hub();
 
     virtual QWidget *widget() { return &mButton; }
     virtual QString themeId() const { return "px-hub"; }
@@ -87,7 +88,7 @@ private:
     void setIconsColor(const QString &color);
     void setIconColor(const QString &icon, const QString &color);
     QWidgetAction* buildAccountItem(Account account);
-    QWidgetAction* createeTitle(string title);
+    QWidgetAction* createeTitle(QString title);
 
     vector<Account> getAccount();
     void refresh();
@@ -108,7 +109,7 @@ class NotesLibrary: public QObject, public ILXQtPanelPluginLibrary
 public:
     ILXQtPanelPlugin *instance(const ILXQtPanelPluginStartupInfo &startupInfo) const
     {
-        return new Hub(startupInfo);
+        return new hub(startupInfo);
     }
 };
 

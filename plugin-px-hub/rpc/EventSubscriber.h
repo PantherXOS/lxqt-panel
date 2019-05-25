@@ -27,15 +27,15 @@ using namespace std;
 #include <QToolButton>
 #include <QMenu>
 #include <qobjectdefs.h>
-#include <Hub.h>
+#include <hub.h>
 
 #define CHANNEL_BASE    "/.userdata/event/channels/"
-class Hub;
+class hub;
 
 class EventSubscriber {
 
 public:
-    EventSubscriber(string service, EventHandler *eventHandler, Hub *hub);
+    EventSubscriber(string service, EventHandler *eventHandler, hub *hub);
     void run();
     void stop();
 
@@ -47,7 +47,7 @@ private:
     size_t sz;
     unsigned char* buff;
     EventHandler *eventHandler;
-    Hub *hub;
+    hub *_hub;
     QToolButton *mButton;
 };
 
