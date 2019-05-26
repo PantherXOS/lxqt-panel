@@ -137,6 +137,7 @@ void hub::refresh() {
     for(Account s : accounts){
         mainMenu->addAction(buildAccountItem(s));
     }
+    //mainMenu->setStyleSheet("background: dark gray;");
 
     mainMenu->addSeparator();
     mButton.setMenu(mainMenu);
@@ -211,7 +212,7 @@ QWidgetAction* hub::buildAccountItem(Account account) {
 
     QIcon *qi=new QIcon(":resources/icon/online");
    // QIcon *qi2=new QIcon(":resources/icon/mail");
-    QIcon qi2 = XdgIcon::fromTheme("date","date");
+    QIcon qi2 = XdgIcon::fromTheme("email","email");
     if(account.getStatus() == Status::online)
         qi=new QIcon(":resources/icon/online");
     else if(account.getStatus() == Status::offline)
@@ -238,6 +239,7 @@ QWidgetAction* hub::buildAccountItem(Account account) {
     rlayout->setAlignment(Qt::AlignRight);
     qlayout->addLayout(llayout);
     qlayout->addLayout(rlayout);
+
     QWidget* widget = new QWidget;
     widget->setLayout(qlayout);
     QWidgetAction *qWidgetAction = new QWidgetAction(this);
