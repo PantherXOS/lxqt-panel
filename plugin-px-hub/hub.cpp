@@ -127,21 +127,21 @@ vector<Account> hub::getAccount() {
     } catch (kj::Exception){
 
     }
-    if(rsult.size()==0) {
-        for(int i=0 ;i<1;++i){
-            Account acc;
-            acc.setTitle("Fakhri");
-            acc.setUnread(10);
-            acc.setStatus(Status::online);
-            rsult.push_back(acc);
+//    if(rsult.size()==0) {
+//        for(int i=0 ;i<1;++i){
+//            Account acc;
+//            acc.setTitle("Fakhri");
+//            acc.setUnread(10);
+//            acc.setStatus(Status::online);
+//            rsult.push_back(acc);
+//
+//            acc.setTitle("Franz");
+//            acc.setUnread(2);
+//            acc.setStatus(Status::offline);
+//            rsult.push_back(acc);
+//        }
 
-            acc.setTitle("Franz");
-            acc.setUnread(2);
-            acc.setStatus(Status::offline);
-            rsult.push_back(acc);
-        }
-
-    }
+   // }
     return rsult;
 }
 
