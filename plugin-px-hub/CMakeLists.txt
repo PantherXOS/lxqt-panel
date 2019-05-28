@@ -17,8 +17,7 @@ set(HEADERS
 		rpc/ServiceEventHandler.h
 		rpc/Utils.h
 		Account.h
-		MenuManager.h
-		)
+        )
 
 set(SOURCES
 		hub.cpp
@@ -28,8 +27,7 @@ set(SOURCES
 		rpc/ServiceEventHandler.cpp
 		rpc/Utils.cpp
 		Account.cpp
-		MenuManager.cpp
-		)
+        )
 
 
 set(RESOURCES

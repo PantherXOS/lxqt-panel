@@ -58,73 +58,17 @@ hub::hub(const ILXQtPanelPluginStartupInfo &startupInfo) :
     run();
 }
 
-
-hub::~hub()
-{
-    for(auto it = mNotes.begin(); it != mNotes.end(); ++it)
-        delete it.value();
-    
-    mNotes.clear();
-}
-
 void hub::realign()
 {
   mButton.setFixedHeight(panel()->iconSize());
   mButton.setFixedWidth(panel()->iconSize());
 }
 
-
-QString hub::dataDir()
-{
-    QString dir = QStandardPaths::writableLocation(QStandardPaths::GenericDataLocation) + QDir::separator() + "lxqt-notes";
-    return dir;
-}
-
-
-void hub::toggleShowHide()
-{
-
-
-}
-
-void hub::setIconColor(const QString &icon, const QString &color)
-{
-    // create icons path
-    QString iconsDir = dataDir() + QDir::separator() + "icons";
-    QDir().mkpath(iconsDir);
-
-    // set icon color
-    QFile file(icon);
-    if(!file.open(QIODevice::ReadOnly | QIODevice::Text))
-        return;
-
-    QTextStream in(&file);
-    QString svg = in.readAll().arg(color);
-
-    file.close();
-
-    QFileInfo info(icon);
-    QString iconFile = iconsDir + QDir::separator() + info.fileName();
-
-    QFile outFile(iconFile);
-    if(!outFile.open(QIODevice::WriteOnly | QIODevice::Text))
-        return;
-
-    QTextStream out(&outFile);
-    out << svg;
-
-    outFile.close();
-}
-
 void hub::settingsChanged()
-{
-
-}
+{}
 
 QDialog* hub::configureDialog()
-{
-
-}
+{}
 
 void hub::refresh() {
     QScrollBar *scrollBar = new QScrollBar(Qt::Vertical);
@@ -133,12 +77,11 @@ void hub::refresh() {
     vector <QAction *> qactVector;
     mainMenu->setFixedWidth(300);
     vector<Account> accounts=getAccount();
-    mainMenu->addAction(createeTitle(tr("Your Accounts")));
+    mainMenu->addAction(createTitle(tr("Your Accounts")));
     for(Account s : accounts){
         mainMenu->addAction(buildAccountItem(s));
     }
-    //mainMenu->setStyleSheet("background: dark gray;");
-
+    mainMenu->setObjectName("LXQtMountPopup");
     mainMenu->addSeparator();
     mButton.setMenu(mainMenu);
     mButton.setPopupMode(QToolButton::InstantPopup);
@@ -185,7 +128,7 @@ vector<Account> hub::getAccount() {
 
     }
     if(rsult.size()==0) {
-        for(int i=0 ;i<2;++i){
+        for(int i=0 ;i<1;++i){
             Account acc;
             acc.setTitle("Fakhri");
             acc.setUnread(10);
@@ -211,7 +154,6 @@ QWidgetAction* hub::buildAccountItem(Account account) {
     QToolButton *accountIcon = new QToolButton;
 
     QIcon *qi=new QIcon(":resources/icon/online");
-   // QIcon *qi2=new QIcon(":resources/icon/mail");
     QIcon qi2 = XdgIcon::fromTheme("email","email");
     if(account.getStatus() == Status::online)
         qi=new QIcon(":resources/icon/online");
@@ -222,7 +164,6 @@ QWidgetAction* hub::buildAccountItem(Account account) {
     accountIcon->setIcon(qi2);
     accountIcon->setStyleSheet(style.c_str());
     statusIcon->setStyleSheet(style.c_str());
-
 
     QToolButton *accountTitle = new QToolButton;
     QToolButton *unredCount = new QToolButton;
@@ -247,14 +188,13 @@ QWidgetAction* hub::buildAccountItem(Account account) {
     return qWidgetAction;
 }
 
-QWidgetAction *hub::createeTitle(QString title) {
+QWidgetAction *hub::createTitle(QString title) {
     QHBoxLayout *slayout = new QHBoxLayout;
     QToolButton *subject = new QToolButton;
     subject->setText(title);
     subject->setStyleSheet(style.c_str());
     slayout->setAlignment(Qt::AlignLeft);
     slayout->addWidget(subject);
-    QAction *qact=new QAction;
     QWidget* sWidget = new QWidget;
     sWidget->setLayout(slayout);
     QWidgetAction *sWidgetAction = new QWidgetAction(this);
@@ -280,5 +220,4 @@ void hub::run() {
 
 void hub::puEvent(EventHandler::EventObject eventObject) {
     events.push_back(eventObject);
-
 }

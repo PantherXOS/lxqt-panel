@@ -58,7 +58,6 @@ class hub : public QObject, public ILXQtPanelPlugin
     Q_OBJECT
 public:
     explicit hub(const ILXQtPanelPluginStartupInfo &startupInfo);
-    ~hub();
 
     virtual QWidget *widget() { return &mButton; }
     virtual QString themeId() const { return "px-hub"; }
@@ -71,9 +70,6 @@ public:
 
 public slots:
     void realign();
-    void toggleShowHide();
-    void addNewNote();
-    void deleteNote(const qint64 &id);
     
 protected slots:
     void settingsChanged();
@@ -81,14 +77,11 @@ protected slots:
 private:
     QToolButton mButton;
     bool mHidden;
-    QMap<qint64, StickyNote*> mNotes;
     QString dataDir(); // (cannot be static for some reason)
 
     string style = "background: transparent; border: none;";
-    void setIconsColor(const QString &color);
-    void setIconColor(const QString &icon, const QString &color);
     QWidgetAction* buildAccountItem(Account account);
-    QWidgetAction* createeTitle(QString title);
+    QWidgetAction* createTitle(QString title);
 
     vector<Account> getAccount();
     void refresh();
