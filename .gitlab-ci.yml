@@ -1,6 +1,6 @@
 # GitLab CI Automation for PantherX Packages
 # Author: Franz Geffke <franz@pantherx.org>
-# Version: 0.0.4
+# Version: 0.0.6
 
 # Git submodules
 variables:
@@ -10,7 +10,7 @@ stages:
   - test
   - deploy
 
-# temporarily disabled code quality check due timeout issues
+# code quality; temporarily disabled due timeout issues
 .code_quality:
   stage: test
   image: docker:stable
@@ -29,7 +29,8 @@ stages:
   artifacts:
     reports:
       codequality: gl-code-quality-report.json
-      
+
+# security
 sast:
   stage: test
   image: docker:stable
@@ -49,18 +50,21 @@ sast:
     reports:
       sast: gl-sast-report.json
 
+# deployment to S3
 deploy:
   stage: deploy
   image: alpine:latest
   script:
+    - cd ../
     - apk add py-pip
     - pip install --user awscli
     - export PATH="$PATH:/root/.local/bin"
     - export AWS_ACCESS_KEY_ID=$(echo "$AWS_ACCESS_KEY_ID")
     - export AWS_SECRET_ACCESS_KEY=$(echo "$AWS_SECRET_ACCESS_KEY")
     - export AWS_DEFAULT_REGION=eu-central-1
-    - tar --exclude='./git' -zcvf $(echo "$CI_PROJECT_NAME")_$(echo "$CI_COMMIT_TAG").tgz .
-    - aws s3 cp $(echo "$CI_PROJECT_NAME")_$(echo "$CI_COMMIT_TAG").tgz s3://source-git-pantherx-org/
+    - export PACKAGE_NAME="$(echo $CI_PROJECT_NAME)_$(echo $CI_COMMIT_TAG).tgz"
+    - tar --exclude="$CI_PROJECT_NAME/.git" -zcvf "$PACKAGE_NAME" "$CI_PROJECT_NAME"
+    - aws s3 cp "$PACKAGE_NAME" s3://source-git-pantherx-org/
   only:
     - tags
   tags: [source]
