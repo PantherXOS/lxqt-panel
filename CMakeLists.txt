@@ -248,9 +248,9 @@ if(SPACER_PLUGIN)
     add_subdirectory(plugin-spacer)
 endif()
 
-setByDefault(NOTES_PLUGIN Yes)
-if(NOTES_PLUGIN)
-    list(APPEND ENABLED_PLUGINS "Notes")
+setByDefault(HUB_PLUGIN Yes)
+if(HUB_PLUGIN)
+    list(APPEND ENABLED_PLUGINS "Hub")
     add_subdirectory(plugin-px-hub)
 endif()
 
