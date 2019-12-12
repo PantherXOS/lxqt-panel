@@ -20,7 +20,7 @@ struct AccountStatus{
 
 struct Message{
 	    time	    @0 : UInt64;
-	    msgId	    @1 : UInt64;
+	    msgId	    @1 : Text;
 	    account     @2 : Text;
         source      @3 : Text;
         type        @4 : Text;

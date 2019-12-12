@@ -207,9 +207,9 @@ CAPNP_DEFINE_ENUM(Status_9190e47b93428f5d, 9190e47b93428f5d);
 static const ::capnp::_::AlignedData<183> b_e3d4bcb9d852880b = {
   {   0,   0,   0,   0,   5,   0,   6,   0,
      11, 136,  82, 216, 185, 188, 212, 227,
-     10,   0,   0,   0,   1,   0,   2,   0,
+     10,   0,   0,   0,   1,   0,   1,   0,
       8, 147,  30,  15,   3, 174, 147, 200,
-      9,   0,   7,   0,   0,   0,   0,   0,
+     10,   0,   7,   0,   0,   0,   0,   0,
       0,   0,   0,   0,   0,   0,   0,   0,
      21,   0,   0,   0, 146,   0,   0,   0,
      29,   0,   0,   0,   7,   0,   0,   0,
@@ -229,70 +229,70 @@ static const ::capnp::_::AlignedData<183> b_e3d4bcb9d852880b = {
       0,   0,   0,   0,   0,   0,   0,   0,
      32,   1,   0,   0,   3,   0,   1,   0,
      44,   1,   0,   0,   2,   0,   1,   0,
-      1,   0,   0,   0,   1,   0,   0,   0,
+      1,   0,   0,   0,   0,   0,   0,   0,
       0,   0,   1,   0,   1,   0,   0,   0,
       0,   0,   0,   0,   0,   0,   0,   0,
      41,   1,   0,   0,  50,   0,   0,   0,
       0,   0,   0,   0,   0,   0,   0,   0,
      36,   1,   0,   0,   3,   0,   1,   0,
      48,   1,   0,   0,   2,   0,   1,   0,
-      2,   0,   0,   0,   0,   0,   0,   0,
+      2,   0,   0,   0,   1,   0,   0,   0,
       0,   0,   1,   0,   2,   0,   0,   0,
       0,   0,   0,   0,   0,   0,   0,   0,
      45,   1,   0,   0,  66,   0,   0,   0,
       0,   0,   0,   0,   0,   0,   0,   0,
      40,   1,   0,   0,   3,   0,   1,   0,
      52,   1,   0,   0,   2,   0,   1,   0,
-      3,   0,   0,   0,   1,   0,   0,   0,
+      3,   0,   0,   0,   2,   0,   0,   0,
       0,   0,   1,   0,   3,   0,   0,   0,
       0,   0,   0,   0,   0,   0,   0,   0,
      49,   1,   0,   0,  58,   0,   0,   0,
       0,   0,   0,   0,   0,   0,   0,   0,
      44,   1,   0,   0,   3,   0,   1,   0,
      56,   1,   0,   0,   2,   0,   1,   0,
-      4,   0,   0,   0,   2,   0,   0,   0,
+      4,   0,   0,   0,   3,   0,   0,   0,
       0,   0,   1,   0,   4,   0,   0,   0,
       0,   0,   0,   0,   0,   0,   0,   0,
      53,   1,   0,   0,  42,   0,   0,   0,
       0,   0,   0,   0,   0,   0,   0,   0,
      48,   1,   0,   0,   3,   0,   1,   0,
      60,   1,   0,   0,   2,   0,   1,   0,
-      5,   0,   0,   0,   3,   0,   0,   0,
+      5,   0,   0,   0,   4,   0,   0,   0,
       0,   0,   1,   0,   5,   0,   0,   0,
       0,   0,   0,   0,   0,   0,   0,   0,
      57,   1,   0,   0,  42,   0,   0,   0,
       0,   0,   0,   0,   0,   0,   0,   0,
      52,   1,   0,   0,   3,   0,   1,   0,
      64,   1,   0,   0,   2,   0,   1,   0,
-      6,   0,   0,   0,   4,   0,   0,   0,
+      6,   0,   0,   0,   5,   0,   0,   0,
       0,   0,   1,   0,   6,   0,   0,   0,
       0,   0,   0,   0,   0,   0,   0,   0,
      61,   1,   0,   0,  42,   0,   0,   0,
       0,   0,   0,   0,   0,   0,   0,   0,
      56,   1,   0,   0,   3,   0,   1,   0,
      68,   1,   0,   0,   2,   0,   1,   0,
-      7,   0,   0,   0,   5,   0,   0,   0,
+      7,   0,   0,   0,   6,   0,   0,   0,
       0,   0,   1,   0,   7,   0,   0,   0,
       0,   0,   0,   0,   0,   0,   0,   0,
      65,   1,   0,   0,  58,   0,   0,   0,
       0,   0,   0,   0,   0,   0,   0,   0,
      60,   1,   0,   0,   3,   0,   1,   0,
      72,   1,   0,   0,   2,   0,   1,   0,
-      8,   0,   0,   0,   6,   0,   0,   0,
+      8,   0,   0,   0,   7,   0,   0,   0,
       0,   0,   1,   0,   8,   0,   0,   0,
       0,   0,   0,   0,   0,   0,   0,   0,
      69,   1,   0,   0,  90,   0,   0,   0,
       0,   0,   0,   0,   0,   0,   0,   0,
      68,   1,   0,   0,   3,   0,   1,   0,
      80,   1,   0,   0,   2,   0,   1,   0,
-      9,   0,   0,   0,   7,   0,   0,   0,
+      9,   0,   0,   0,   8,   0,   0,   0,
       0,   0,   1,   0,   9,   0,   0,   0,
       0,   0,   0,   0,   0,   0,   0,   0,
      77,   1,   0,   0,  50,   0,   0,   0,
       0,   0,   0,   0,   0,   0,   0,   0,
      72,   1,   0,   0,   3,   0,   1,   0,
      84,   1,   0,   0,   2,   0,   1,   0,
-     10,   0,   0,   0,   8,   0,   0,   0,
+     10,   0,   0,   0,   9,   0,   0,   0,
       0,   0,   1,   0,  10,   0,   0,   0,
       0,   0,   0,   0,   0,   0,   0,   0,
      81,   1,   0,   0,  66,   0,   0,   0,
@@ -308,11 +308,11 @@ static const ::capnp::_::AlignedData<183> b_e3d4bcb9d852880b = {
       0,   0,   0,   0,   0,   0,   0,   0,
       0,   0,   0,   0,   0,   0,   0,   0,
     109, 115, 103,  73, 100,   0,   0,   0,
-      9,   0,   0,   0,   0,   0,   0,   0,
+     12,   0,   0,   0,   0,   0,   0,   0,
       0,   0,   0,   0,   0,   0,   0,   0,
       0,   0,   0,   0,   0,   0,   0,   0,
       0,   0,   0,   0,   0,   0,   0,   0,
-      9,   0,   0,   0,   0,   0,   0,   0,
+     12,   0,   0,   0,   0,   0,   0,   0,
       0,   0,   0,   0,   0,   0,   0,   0,
       0,   0,   0,   0,   0,   0,   0,   0,
      97,  99,  99, 111, 117, 110, 116,   0,
@@ -1132,7 +1132,7 @@ HubReader::Client::getAccountsStatusRequest(::kj::Maybe< ::capnp::MessageSize> s
       "hub.capnp:HubReader", "getAccountsStatus",
       0x83e7e22305decbfaull, 3);
 }
-::kj::Promise<void> HubReader::Server::dispatchCall(
+::capnp::Capability::Server::DispatchCallResult HubReader::Server::dispatchCall(
     uint64_t interfaceId, uint16_t methodId,
     ::capnp::CallContext< ::capnp::AnyPointer, ::capnp::AnyPointer> context) {
   switch (interfaceId) {
@@ -1142,22 +1142,34 @@ HubReader::Client::getAccountsStatusRequest(::kj::Maybe< ::capnp::MessageSize> s
       return internalUnimplemented("hub.capnp:HubReader", interfaceId);
   }
 }
-::kj::Promise<void> HubReader::Server::dispatchCallInternal(
+::capnp::Capability::Server::DispatchCallResult HubReader::Server::dispatchCallInternal(
     uint16_t methodId,
     ::capnp::CallContext< ::capnp::AnyPointer, ::capnp::AnyPointer> context) {
   switch (methodId) {
     case 0:
-      return getLastMessages(::capnp::Capability::Server::internalGetTypedContext<
-           ::HubReader::GetLastMessagesParams,  ::HubReader::GetLastMessagesResults>(context));
+      return {
+        getLastMessages(::capnp::Capability::Server::internalGetTypedContext<
+             ::HubReader::GetLastMessagesParams,  ::HubReader::GetLastMessagesResults>(context)),
+        false
+      };
     case 1:
-      return getLastMessage(::capnp::Capability::Server::internalGetTypedContext<
-           ::HubReader::GetLastMessageParams,  ::HubReader::GetLastMessageResults>(context));
+      return {
+        getLastMessage(::capnp::Capability::Server::internalGetTypedContext<
+             ::HubReader::GetLastMessageParams,  ::HubReader::GetLastMessageResults>(context)),
+        false
+      };
     case 2:
-      return getAccountStatus(::capnp::Capability::Server::internalGetTypedContext<
-           ::HubReader::GetAccountStatusParams,  ::HubReader::GetAccountStatusResults>(context));
+      return {
+        getAccountStatus(::capnp::Capability::Server::internalGetTypedContext<
+             ::HubReader::GetAccountStatusParams,  ::HubReader::GetAccountStatusResults>(context)),
+        false
+      };
     case 3:
-      return getAccountsStatus(::capnp::Capability::Server::internalGetTypedContext<
-           ::HubReader::GetAccountsStatusParams,  ::HubReader::GetAccountsStatusResults>(context));
+      return {
+        getAccountsStatus(::capnp::Capability::Server::internalGetTypedContext<
+             ::HubReader::GetAccountsStatusParams,  ::HubReader::GetAccountsStatusResults>(context)),
+        false
+      };
     default:
       (void)context;
       return ::capnp::Capability::Server::internalUnimplemented(
