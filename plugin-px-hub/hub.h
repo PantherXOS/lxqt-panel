@@ -47,7 +47,7 @@
 #include <QScrollBar>
 #include "Account.h"
 
-#define HUB_SERVER_ADDRESS "/root/.userdata/rpc/hub"
+#define HUB_SERVER_ADDRESS string(getpwuid(getuid())->pw_dir) + "/.userdata/rpc/hub"
 
 using namespace std;
 
