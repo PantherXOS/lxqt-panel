@@ -1,29 +1,3 @@
-/* BEGIN_COMMON_COPYRIGHT_HEADER
- * (c)LGPL2+
- *
- * LXQt - a lightweight, Qt based, desktop toolset
- * https://lxqt.org
- *
- * Copyright: 2012 Razor team
- * Authors:
- *   Matteo Fois <giomatfois62@yahoo.it>
- *
- * This program or library is free software; you can redistribute it
- * and/or modify it under the terms of the GNU Lesser General Public
- * License as published by the Free Software Foundation; either
- * version 2.1 of the License, or (at your option) any later version.
- *
- * This library is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
- * Lesser General Public License for more details.
- *
- * You should have received a copy of the GNU Lesser General
- * Public License along with this library; if not, write to the
- * Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
- * Boston, MA 02110-1301 USA
- *
- * END_COMMON_COPYRIGHT_HEADER */
 
 #ifndef LXQT_NOTES_H
 #define LXQT_NOTES_H
@@ -46,12 +20,11 @@
 #include <QtWidgets/QWidgetAction>
 #include <QScrollBar>
 #include "Account.h"
+#include "Settings.h"
 
 #define HUB_SERVER_ADDRESS string(getpwuid(getuid())->pw_dir) + "/.userdata/rpc/hub"
 
 using namespace std;
-
-class StickyNote;
 
 class hub : public QObject, public ILXQtPanelPlugin
 {
@@ -62,7 +35,7 @@ public:
     virtual QWidget *widget() { return &mButton; }
     virtual QString themeId() const { return "px-hub"; }
     virtual ILXQtPanelPlugin::Flags flags() const { return HaveConfigDialog; }
-    void puEvent(EventHandler::EventObject eventObject);
+    void putEvent(EventHandler::EventObject eventObject);
 
     bool isSeparate() const { return true; }
     QMenu *mainMenu = new QMenu;
@@ -77,7 +50,6 @@ protected slots:
 private:
     QToolButton mButton;
     bool mHidden;
-    QString dataDir(); // (cannot be static for some reason)
 
     string style = "background: transparent; border: none;";
     QWidgetAction* buildAccountItem(Account account);
@@ -90,11 +62,10 @@ private:
     bool isRun;
     vector<EventHandler::EventObject> events;
     std::thread statThread;
-
 };
 
 
-class NotesLibrary: public QObject, public ILXQtPanelPluginLibrary
+class HubPlugin: public QObject, public ILXQtPanelPluginLibrary
 {
     Q_OBJECT
     Q_PLUGIN_METADATA(IID "lxqt.org/Panel/PluginInterface/3.0")

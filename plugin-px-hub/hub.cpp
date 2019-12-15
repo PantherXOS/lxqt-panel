@@ -1,30 +1,3 @@
-/* BEGIN_COMMON_COPYRIGHT_HEADER
- * (c)LGPL2+
- *
- * LXQt - a lightweight, Qt based, desktop toolset
- * https://lxqt.org
- *
- * Copyright: 2012 Razor team
- * Authors:
- *   Matteo Fois <giomatfois62@yahoo.it>
- *
- * This program or library is free software; you can redistribute it
- * and/or modify it under the terms of the GNU Lesser General Public
- * License as published by the Free Software Foundation; either
- * version 2.1 of the License, or (at your option) any later version.
- *
- * This library is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
- * Lesser General Public License for more details.
- *
- * You should have received a copy of the GNU Lesser General
- * Public License along with this library; if not, write to the
- * Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
- * Boston, MA 02110-1301 USA
- *
- * END_COMMON_COPYRIGHT_HEADER */
-
 #include "hub.h"
 
 #include <QMouseEvent>
@@ -71,16 +44,16 @@ QDialog* hub::configureDialog()
 {}
 
 void hub::refresh() {
-    QScrollBar *scrollBar = new QScrollBar(Qt::Vertical);
-    scrollBar->setFocusPolicy(Qt::StrongFocus);
-
-    vector <QAction *> qactVector;
-    mainMenu->setFixedWidth(300);
+    // get accounts
     vector<Account> accounts=getAccount();
+    mainMenu->setFixedWidth(MAIN_MENU_SIZE_W);
     mainMenu->addAction(createTitle(tr("Your Accounts")));
-    for(Account s : accounts){
+    for(const auto &s : accounts){
         mainMenu->addAction(buildAccountItem(s));
     }
+    // get messages
+
+    //
     mainMenu->setObjectName("LXQtMountPopup");
     mainMenu->addSeparator();
     mButton.setMenu(mainMenu);
@@ -127,21 +100,6 @@ vector<Account> hub::getAccount() {
     } catch (kj::Exception){
 
     }
-//    if(rsult.size()==0) {
-//        for(int i=0 ;i<1;++i){
-//            Account acc;
-//            acc.setTitle("Fakhri");
-//            acc.setUnread(10);
-//            acc.setStatus(Status::online);
-//            rsult.push_back(acc);
-//
-//            acc.setTitle("Franz");
-//            acc.setUnread(2);
-//            acc.setStatus(Status::offline);
-//            rsult.push_back(acc);
-//        }
-
-   // }
     return rsult;
 }
 
@@ -207,17 +165,16 @@ void hub::run() {
         isRun=true;
         statThread = std::thread([&]() {
             while (1) {
-                    for(EventHandler::EventObject e : events){
-                        if(e.topic == "Status_Change" && e.event == "hub"){
-                            refresh();
-                        }
+                for (EventHandler::EventObject e : events) {
+                    if (e.topic == "Status_Change" && e.event == "hub") {
+                        refresh();
                     }
-
+                }
             }
         });
     }
 }
 
-void hub::puEvent(EventHandler::EventObject eventObject) {
+void hub::putEvent(EventHandler::EventObject eventObject) {
     events.push_back(eventObject);
 }

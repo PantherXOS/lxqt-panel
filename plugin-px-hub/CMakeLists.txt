@@ -9,6 +9,7 @@ include_directories(${CapnProto_INCLUDE_DIRS})
 
 set(HEADERS
 		hub.h
+		Settings.h
 		rpc/AccountParser.h
 		interfaces/hub.capnp.h
 		interfaces/event.capnp.h

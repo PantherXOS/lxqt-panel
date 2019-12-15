@@ -40,7 +40,7 @@ void EventSubscriber::run() {
                 for (const auto &param : evtData.getParams()) {
                     eventObject.params.insert(pair<string, string>(param.getKey().cStr(), param.getValue().cStr()));
                 }
-                this->_hub->puEvent(eventObject);
+                this->_hub->putEvent(eventObject);
             }
         });
     }
