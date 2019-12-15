@@ -51,7 +51,7 @@ private:
     QToolButton mButton;
     bool mHidden;
 
-    string style = "background: transparent; border: none;";
+    string style = "border: none;";
     QWidgetAction* buildAccountItem(Account account);
     QWidgetAction* createTitle(QString title);
 

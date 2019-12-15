@@ -104,58 +104,62 @@ vector<Account> hub::getAccount() {
 }
 
 QWidgetAction* hub::buildAccountItem(Account account) {
-    QHBoxLayout *qlayout = new QHBoxLayout;
-    QHBoxLayout *llayout = new QHBoxLayout;
-    QHBoxLayout *rlayout = new QHBoxLayout;
-
-    QToolButton *statusIcon = new QToolButton;
-    QToolButton *accountIcon = new QToolButton;
-
-    QIcon *qi=new QIcon(":resources/icon/online");
-    QIcon qi2 = XdgIcon::fromTheme("email","email");
+    auto statusIcon=new QIcon;
     if(account.getStatus() == Status::online)
-        qi=new QIcon(":resources/icon/online");
+        statusIcon=new QIcon(":resources/icon/online");
     else if(account.getStatus() == Status::offline)
-        qi=new QIcon(":resources/icon/offline");
+        statusIcon=new QIcon(":resources/icon/offline");
     else if(account.getStatus() == Status::none)
-        qi=new QIcon(":resources/icon/none");
-    accountIcon->setIcon(qi2);
-    accountIcon->setStyleSheet(style.c_str());
-    statusIcon->setStyleSheet(style.c_str());
+        statusIcon=new QIcon(":resources/icon/none");
 
-    QToolButton *accountTitle = new QToolButton;
-    QToolButton *unredCount = new QToolButton;
+    QIcon accountIcon = XdgIcon::fromTheme("email", "email"); // TODO retrieve from hub
+    auto statusButton = new QToolButton;
+    statusButton->setStyleSheet(style.c_str());
+    statusButton->setIcon(*statusIcon);
+
+    auto accountButton = new QToolButton;
+    accountButton->setIcon(accountIcon);
+    accountButton->setStyleSheet(style.c_str());
+
+    auto accountTitle = new QToolButton;
     accountTitle->setText(account.getTitle().c_str());
-    unredCount->setText(to_string(account.getUnread()).c_str());
     accountTitle->setStyleSheet(style.c_str());
+
+    auto unredCount = new QToolButton;
+    unredCount->setText(to_string(account.getUnread()).c_str());
     unredCount->setStyleSheet(style.c_str());
-    statusIcon->setIcon(*qi);
-    llayout->addWidget(accountIcon);
+
+    auto llayout = new QHBoxLayout;
+    llayout->addWidget(accountButton);
     llayout->addWidget(accountTitle);
-    rlayout->addWidget(unredCount);
-    rlayout->addWidget(statusIcon);
     llayout->setAlignment(Qt::AlignLeft);
+
+    auto rlayout = new QHBoxLayout;
+    rlayout->addWidget(unredCount);
+    rlayout->addWidget(statusButton);
     rlayout->setAlignment(Qt::AlignRight);
+
+    auto qlayout = new QHBoxLayout;
     qlayout->addLayout(llayout);
     qlayout->addLayout(rlayout);
 
-    QWidget* widget = new QWidget;
+    auto  widget = new QWidget;
     widget->setLayout(qlayout);
-    QWidgetAction *qWidgetAction = new QWidgetAction(this);
+    auto qWidgetAction = new QWidgetAction(this);
     qWidgetAction->setDefaultWidget(widget);
     return qWidgetAction;
 }
 
 QWidgetAction *hub::createTitle(QString title) {
-    QHBoxLayout *slayout = new QHBoxLayout;
-    QToolButton *subject = new QToolButton;
+    auto subject = new QLabel;
     subject->setText(title);
     subject->setStyleSheet(style.c_str());
+    auto slayout = new QHBoxLayout;
     slayout->setAlignment(Qt::AlignLeft);
     slayout->addWidget(subject);
-    QWidget* sWidget = new QWidget;
+    auto sWidget = new QWidget;
     sWidget->setLayout(slayout);
-    QWidgetAction *sWidgetAction = new QWidgetAction(this);
+    auto sWidgetAction = new QWidgetAction(this);
     sWidgetAction->setDefaultWidget(sWidget);
     return sWidgetAction;
 }
