@@ -2,6 +2,8 @@
 // Created by fakhri on 2/17/19.
 //
 
+#include <ctime>
+#include <iomanip>
 #include "Utils.h"
 
 
@@ -29,4 +31,12 @@ string UTILS::FILE::fullpath(const string &path) {
         wordfree(&w);
     }
     return res;
+}
+
+string UTILS::timestampToString(int time) {
+    std::time_t _time = time;
+    std::tm* t = std::gmtime(&_time);
+    std::stringstream ss;
+    ss << std::put_time(t,"%Y-%m-%d %I:%M:%S %p");
+    return ss.str();
 }

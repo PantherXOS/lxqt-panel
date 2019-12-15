@@ -17,6 +17,7 @@
 #include <QDebug>
 #include <QtGui/QPainter>
 #include <QtWidgets/QScrollArea>
+#include <rpc/RPCHubClient.h>
 
 hub::hub(const ILXQtPanelPluginStartupInfo &startupInfo) :
     QObject(),
@@ -45,14 +46,19 @@ QDialog* hub::configureDialog()
 
 void hub::refresh() {
     // get accounts
-    vector<Account> accounts=getAccount();
+    RPCHubClient rpcHubClient;
+    vector<AccountObject> accounts= rpcHubClient.getAccountList();
     mainMenu->setFixedWidth(MAIN_MENU_SIZE_W);
     mainMenu->addAction(createTitle(tr("Your Accounts")));
     for(const auto &s : accounts){
         mainMenu->addAction(buildAccountItem(s));
     }
     // get messages
-
+    vector<MessageObject> messageList = rpcHubClient.getMessageList();
+    for(auto &m : messageList){
+        cout << m.toString() << endl;
+//        mainMenu->addAction(buildMessageItem(m));
+    }
     //
     mainMenu->setObjectName("LXQtMountPopup");
     mainMenu->addSeparator();
@@ -62,48 +68,7 @@ void hub::refresh() {
     mButton.setIcon(QIcon(":resources/icon/user"));
 }
 
-vector<Account> hub::getAccount() {
-    vector<Account> rsult;
-    string addr = string("unix:") + HUB_SERVER_ADDRESS;
-    capnp::EzRpcClient rpcClient(addr);
-    auto &waitScope = rpcClient.getWaitScope();
-    HubReader::Client client = rpcClient.getMain<HubReader>();
-    try {
-        auto actReq = client.getAccountsStatusRequest();
-        auto actRes = actReq.send().wait(waitScope);
-        for(auto act : actRes.getAccountsStatus()) {
-            Account account;
-            switch (act.getStatus()){
-                case AccountStatus::Status::NONE:
-                    account.setStatus(Status::none);
-                    break;
-                case AccountStatus::Status::ERROR:
-                    account.setStatus(Status::error);
-                    break;
-                case AccountStatus::Status::ONLINE:
-                    account.setStatus(Status::online);
-                    break;
-                case AccountStatus::Status::OFFLINE:
-                    account.setStatus(Status::offline);
-                    break;
-            }
-            account.setTime(act.getTime());
-            account.setUnread(act.getUnread());
-            account.setType(act.getType().cStr());
-            account.setIcon(act.getIcon().cStr());
-            account.setLink(act.getLink().cStr());
-            account.setAltLink(act.getAltLink().cStr());
-            account.setTitle(act.getTitle().cStr());
-
-            rsult.push_back(account);
-        }
-    } catch (kj::Exception){
-
-    }
-    return rsult;
-}
-
-QWidgetAction* hub::buildAccountItem(Account account) {
+QWidgetAction* hub::buildAccountItem(AccountObject account) {
     auto statusIcon=new QIcon;
     if(account.getStatus() == Status::online)
         statusIcon=new QIcon(":resources/icon/online");
@@ -181,4 +146,8 @@ void hub::run() {
 
 void hub::putEvent(EventHandler::EventObject eventObject) {
     events.push_back(eventObject);
+}
+
+QWidgetAction *hub::buildMessageItem(MessageObject message) {
+    return nullptr;
 }

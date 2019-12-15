@@ -25,6 +25,8 @@ namespace UTILS {
 
         string fullpath(const string &path);
     }
+
+    string timestampToString(int time);
 }
 
 

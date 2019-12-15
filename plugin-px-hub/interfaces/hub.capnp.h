@@ -61,7 +61,7 @@ struct AccountStatus {
 
 
   struct _capnpPrivate {
-    CAPNP_DECLARE_STRUCT_HEADER(b1488898d891c95e, 2, 5)
+    CAPNP_DECLARE_STRUCT_HEADER(b1488898d891c95e, 2, 6)
     #if !CAPNP_LITE
     static constexpr ::capnp::_::RawBrandedSchema const* brand() { return &schema->defaultBrand; }
     #endif  // !CAPNP_LITE
@@ -76,7 +76,7 @@ struct Message {
   class Pipeline;
 
   struct _capnpPrivate {
-    CAPNP_DECLARE_STRUCT_HEADER(e3d4bcb9d852880b, 1, 10)
+    CAPNP_DECLARE_STRUCT_HEADER(e3d4bcb9d852880b, 1, 12)
     #if !CAPNP_LITE
     static constexpr ::capnp::_::RawBrandedSchema const* brand() { return &schema->defaultBrand; }
     #endif  // !CAPNP_LITE
@@ -317,6 +317,9 @@ public:
 
   inline  ::AccountStatus::Status getStatus() const;
 
+  inline bool hasSubType() const;
+  inline  ::capnp::Text::Reader getSubType() const;
+
 private:
   ::capnp::_::StructReader _reader;
   template <typename, ::capnp::Kind>
@@ -389,6 +392,13 @@ public:
   inline  ::AccountStatus::Status getStatus();
   inline void setStatus( ::AccountStatus::Status value);
 
+  inline bool hasSubType();
+  inline  ::capnp::Text::Builder getSubType();
+  inline void setSubType( ::capnp::Text::Reader value);
+  inline  ::capnp::Text::Builder initSubType(unsigned int size);
+  inline void adoptSubType(::capnp::Orphan< ::capnp::Text>&& value);
+  inline ::capnp::Orphan< ::capnp::Text> disownSubType();
+
 private:
   ::capnp::_::StructBuilder _builder;
   template <typename, ::capnp::Kind>
@@ -452,6 +462,9 @@ public:
   inline bool hasLink() const;
   inline  ::capnp::Text::Reader getLink() const;
 
+  inline bool hasAltLink() const;
+  inline  ::capnp::Text::Reader getAltLink() const;
+
   inline bool hasSender() const;
   inline  ::capnp::Text::Reader getSender() const;
 
@@ -463,6 +476,9 @@ public:
 
   inline bool hasMessage() const;
   inline  ::capnp::Text::Reader getMessage() const;
+
+  inline bool hasSubType() const;
+  inline  ::capnp::Text::Reader getSubType() const;
 
 private:
   ::capnp::_::StructReader _reader;
@@ -537,6 +553,13 @@ public:
   inline void adoptLink(::capnp::Orphan< ::capnp::Text>&& value);
   inline ::capnp::Orphan< ::capnp::Text> disownLink();
 
+  inline bool hasAltLink();
+  inline  ::capnp::Text::Builder getAltLink();
+  inline void setAltLink( ::capnp::Text::Reader value);
+  inline  ::capnp::Text::Builder initAltLink(unsigned int size);
+  inline void adoptAltLink(::capnp::Orphan< ::capnp::Text>&& value);
+  inline ::capnp::Orphan< ::capnp::Text> disownAltLink();
+
   inline bool hasSender();
   inline  ::capnp::Text::Builder getSender();
   inline void setSender( ::capnp::Text::Reader value);
@@ -564,6 +587,13 @@ public:
   inline  ::capnp::Text::Builder initMessage(unsigned int size);
   inline void adoptMessage(::capnp::Orphan< ::capnp::Text>&& value);
   inline ::capnp::Orphan< ::capnp::Text> disownMessage();
+
+  inline bool hasSubType();
+  inline  ::capnp::Text::Builder getSubType();
+  inline void setSubType( ::capnp::Text::Reader value);
+  inline  ::capnp::Text::Builder initSubType(unsigned int size);
+  inline void adoptSubType(::capnp::Orphan< ::capnp::Text>&& value);
+  inline ::capnp::Orphan< ::capnp::Text> disownSubType();
 
 private:
   ::capnp::_::StructBuilder _builder;
@@ -1769,6 +1799,40 @@ inline void AccountStatus::Builder::setStatus( ::AccountStatus::Status value) {
       ::capnp::bounded<5>() * ::capnp::ELEMENTS, value);
 }
 
+inline bool AccountStatus::Reader::hasSubType() const {
+  return !_reader.getPointerField(
+      ::capnp::bounded<5>() * ::capnp::POINTERS).isNull();
+}
+inline bool AccountStatus::Builder::hasSubType() {
+  return !_builder.getPointerField(
+      ::capnp::bounded<5>() * ::capnp::POINTERS).isNull();
+}
+inline  ::capnp::Text::Reader AccountStatus::Reader::getSubType() const {
+  return ::capnp::_::PointerHelpers< ::capnp::Text>::get(_reader.getPointerField(
+      ::capnp::bounded<5>() * ::capnp::POINTERS));
+}
+inline  ::capnp::Text::Builder AccountStatus::Builder::getSubType() {
+  return ::capnp::_::PointerHelpers< ::capnp::Text>::get(_builder.getPointerField(
+      ::capnp::bounded<5>() * ::capnp::POINTERS));
+}
+inline void AccountStatus::Builder::setSubType( ::capnp::Text::Reader value) {
+  ::capnp::_::PointerHelpers< ::capnp::Text>::set(_builder.getPointerField(
+      ::capnp::bounded<5>() * ::capnp::POINTERS), value);
+}
+inline  ::capnp::Text::Builder AccountStatus::Builder::initSubType(unsigned int size) {
+  return ::capnp::_::PointerHelpers< ::capnp::Text>::init(_builder.getPointerField(
+      ::capnp::bounded<5>() * ::capnp::POINTERS), size);
+}
+inline void AccountStatus::Builder::adoptSubType(
+    ::capnp::Orphan< ::capnp::Text>&& value) {
+  ::capnp::_::PointerHelpers< ::capnp::Text>::adopt(_builder.getPointerField(
+      ::capnp::bounded<5>() * ::capnp::POINTERS), kj::mv(value));
+}
+inline ::capnp::Orphan< ::capnp::Text> AccountStatus::Builder::disownSubType() {
+  return ::capnp::_::PointerHelpers< ::capnp::Text>::disown(_builder.getPointerField(
+      ::capnp::bounded<5>() * ::capnp::POINTERS));
+}
+
 inline  ::uint64_t Message::Reader::getTime() const {
   return _reader.getDataField< ::uint64_t>(
       ::capnp::bounded<0>() * ::capnp::ELEMENTS);
@@ -1987,140 +2051,208 @@ inline ::capnp::Orphan< ::capnp::Text> Message::Builder::disownLink() {
       ::capnp::bounded<5>() * ::capnp::POINTERS));
 }
 
-inline bool Message::Reader::hasSender() const {
+inline bool Message::Reader::hasAltLink() const {
   return !_reader.getPointerField(
       ::capnp::bounded<6>() * ::capnp::POINTERS).isNull();
 }
-inline bool Message::Builder::hasSender() {
+inline bool Message::Builder::hasAltLink() {
   return !_builder.getPointerField(
       ::capnp::bounded<6>() * ::capnp::POINTERS).isNull();
 }
-inline  ::capnp::Text::Reader Message::Reader::getSender() const {
+inline  ::capnp::Text::Reader Message::Reader::getAltLink() const {
   return ::capnp::_::PointerHelpers< ::capnp::Text>::get(_reader.getPointerField(
       ::capnp::bounded<6>() * ::capnp::POINTERS));
 }
-inline  ::capnp::Text::Builder Message::Builder::getSender() {
+inline  ::capnp::Text::Builder Message::Builder::getAltLink() {
   return ::capnp::_::PointerHelpers< ::capnp::Text>::get(_builder.getPointerField(
       ::capnp::bounded<6>() * ::capnp::POINTERS));
 }
-inline void Message::Builder::setSender( ::capnp::Text::Reader value) {
+inline void Message::Builder::setAltLink( ::capnp::Text::Reader value) {
   ::capnp::_::PointerHelpers< ::capnp::Text>::set(_builder.getPointerField(
       ::capnp::bounded<6>() * ::capnp::POINTERS), value);
 }
-inline  ::capnp::Text::Builder Message::Builder::initSender(unsigned int size) {
+inline  ::capnp::Text::Builder Message::Builder::initAltLink(unsigned int size) {
   return ::capnp::_::PointerHelpers< ::capnp::Text>::init(_builder.getPointerField(
       ::capnp::bounded<6>() * ::capnp::POINTERS), size);
 }
-inline void Message::Builder::adoptSender(
+inline void Message::Builder::adoptAltLink(
     ::capnp::Orphan< ::capnp::Text>&& value) {
   ::capnp::_::PointerHelpers< ::capnp::Text>::adopt(_builder.getPointerField(
       ::capnp::bounded<6>() * ::capnp::POINTERS), kj::mv(value));
 }
-inline ::capnp::Orphan< ::capnp::Text> Message::Builder::disownSender() {
+inline ::capnp::Orphan< ::capnp::Text> Message::Builder::disownAltLink() {
   return ::capnp::_::PointerHelpers< ::capnp::Text>::disown(_builder.getPointerField(
       ::capnp::bounded<6>() * ::capnp::POINTERS));
 }
 
-inline bool Message::Reader::hasSenderName() const {
+inline bool Message::Reader::hasSender() const {
   return !_reader.getPointerField(
       ::capnp::bounded<7>() * ::capnp::POINTERS).isNull();
 }
-inline bool Message::Builder::hasSenderName() {
+inline bool Message::Builder::hasSender() {
   return !_builder.getPointerField(
       ::capnp::bounded<7>() * ::capnp::POINTERS).isNull();
 }
-inline  ::capnp::Text::Reader Message::Reader::getSenderName() const {
+inline  ::capnp::Text::Reader Message::Reader::getSender() const {
   return ::capnp::_::PointerHelpers< ::capnp::Text>::get(_reader.getPointerField(
       ::capnp::bounded<7>() * ::capnp::POINTERS));
 }
-inline  ::capnp::Text::Builder Message::Builder::getSenderName() {
+inline  ::capnp::Text::Builder Message::Builder::getSender() {
   return ::capnp::_::PointerHelpers< ::capnp::Text>::get(_builder.getPointerField(
       ::capnp::bounded<7>() * ::capnp::POINTERS));
 }
-inline void Message::Builder::setSenderName( ::capnp::Text::Reader value) {
+inline void Message::Builder::setSender( ::capnp::Text::Reader value) {
   ::capnp::_::PointerHelpers< ::capnp::Text>::set(_builder.getPointerField(
       ::capnp::bounded<7>() * ::capnp::POINTERS), value);
 }
-inline  ::capnp::Text::Builder Message::Builder::initSenderName(unsigned int size) {
+inline  ::capnp::Text::Builder Message::Builder::initSender(unsigned int size) {
   return ::capnp::_::PointerHelpers< ::capnp::Text>::init(_builder.getPointerField(
       ::capnp::bounded<7>() * ::capnp::POINTERS), size);
 }
-inline void Message::Builder::adoptSenderName(
+inline void Message::Builder::adoptSender(
     ::capnp::Orphan< ::capnp::Text>&& value) {
   ::capnp::_::PointerHelpers< ::capnp::Text>::adopt(_builder.getPointerField(
       ::capnp::bounded<7>() * ::capnp::POINTERS), kj::mv(value));
 }
-inline ::capnp::Orphan< ::capnp::Text> Message::Builder::disownSenderName() {
+inline ::capnp::Orphan< ::capnp::Text> Message::Builder::disownSender() {
   return ::capnp::_::PointerHelpers< ::capnp::Text>::disown(_builder.getPointerField(
       ::capnp::bounded<7>() * ::capnp::POINTERS));
 }
 
-inline bool Message::Reader::hasTitle() const {
+inline bool Message::Reader::hasSenderName() const {
   return !_reader.getPointerField(
       ::capnp::bounded<8>() * ::capnp::POINTERS).isNull();
 }
-inline bool Message::Builder::hasTitle() {
+inline bool Message::Builder::hasSenderName() {
   return !_builder.getPointerField(
       ::capnp::bounded<8>() * ::capnp::POINTERS).isNull();
 }
-inline  ::capnp::Text::Reader Message::Reader::getTitle() const {
+inline  ::capnp::Text::Reader Message::Reader::getSenderName() const {
   return ::capnp::_::PointerHelpers< ::capnp::Text>::get(_reader.getPointerField(
       ::capnp::bounded<8>() * ::capnp::POINTERS));
 }
-inline  ::capnp::Text::Builder Message::Builder::getTitle() {
+inline  ::capnp::Text::Builder Message::Builder::getSenderName() {
   return ::capnp::_::PointerHelpers< ::capnp::Text>::get(_builder.getPointerField(
       ::capnp::bounded<8>() * ::capnp::POINTERS));
 }
-inline void Message::Builder::setTitle( ::capnp::Text::Reader value) {
+inline void Message::Builder::setSenderName( ::capnp::Text::Reader value) {
   ::capnp::_::PointerHelpers< ::capnp::Text>::set(_builder.getPointerField(
       ::capnp::bounded<8>() * ::capnp::POINTERS), value);
 }
-inline  ::capnp::Text::Builder Message::Builder::initTitle(unsigned int size) {
+inline  ::capnp::Text::Builder Message::Builder::initSenderName(unsigned int size) {
   return ::capnp::_::PointerHelpers< ::capnp::Text>::init(_builder.getPointerField(
       ::capnp::bounded<8>() * ::capnp::POINTERS), size);
 }
-inline void Message::Builder::adoptTitle(
+inline void Message::Builder::adoptSenderName(
     ::capnp::Orphan< ::capnp::Text>&& value) {
   ::capnp::_::PointerHelpers< ::capnp::Text>::adopt(_builder.getPointerField(
       ::capnp::bounded<8>() * ::capnp::POINTERS), kj::mv(value));
 }
-inline ::capnp::Orphan< ::capnp::Text> Message::Builder::disownTitle() {
+inline ::capnp::Orphan< ::capnp::Text> Message::Builder::disownSenderName() {
   return ::capnp::_::PointerHelpers< ::capnp::Text>::disown(_builder.getPointerField(
       ::capnp::bounded<8>() * ::capnp::POINTERS));
 }
 
-inline bool Message::Reader::hasMessage() const {
+inline bool Message::Reader::hasTitle() const {
   return !_reader.getPointerField(
       ::capnp::bounded<9>() * ::capnp::POINTERS).isNull();
 }
-inline bool Message::Builder::hasMessage() {
+inline bool Message::Builder::hasTitle() {
   return !_builder.getPointerField(
       ::capnp::bounded<9>() * ::capnp::POINTERS).isNull();
 }
-inline  ::capnp::Text::Reader Message::Reader::getMessage() const {
+inline  ::capnp::Text::Reader Message::Reader::getTitle() const {
   return ::capnp::_::PointerHelpers< ::capnp::Text>::get(_reader.getPointerField(
       ::capnp::bounded<9>() * ::capnp::POINTERS));
 }
-inline  ::capnp::Text::Builder Message::Builder::getMessage() {
+inline  ::capnp::Text::Builder Message::Builder::getTitle() {
   return ::capnp::_::PointerHelpers< ::capnp::Text>::get(_builder.getPointerField(
       ::capnp::bounded<9>() * ::capnp::POINTERS));
 }
-inline void Message::Builder::setMessage( ::capnp::Text::Reader value) {
+inline void Message::Builder::setTitle( ::capnp::Text::Reader value) {
   ::capnp::_::PointerHelpers< ::capnp::Text>::set(_builder.getPointerField(
       ::capnp::bounded<9>() * ::capnp::POINTERS), value);
 }
-inline  ::capnp::Text::Builder Message::Builder::initMessage(unsigned int size) {
+inline  ::capnp::Text::Builder Message::Builder::initTitle(unsigned int size) {
   return ::capnp::_::PointerHelpers< ::capnp::Text>::init(_builder.getPointerField(
       ::capnp::bounded<9>() * ::capnp::POINTERS), size);
 }
-inline void Message::Builder::adoptMessage(
+inline void Message::Builder::adoptTitle(
     ::capnp::Orphan< ::capnp::Text>&& value) {
   ::capnp::_::PointerHelpers< ::capnp::Text>::adopt(_builder.getPointerField(
       ::capnp::bounded<9>() * ::capnp::POINTERS), kj::mv(value));
 }
-inline ::capnp::Orphan< ::capnp::Text> Message::Builder::disownMessage() {
+inline ::capnp::Orphan< ::capnp::Text> Message::Builder::disownTitle() {
   return ::capnp::_::PointerHelpers< ::capnp::Text>::disown(_builder.getPointerField(
       ::capnp::bounded<9>() * ::capnp::POINTERS));
+}
+
+inline bool Message::Reader::hasMessage() const {
+  return !_reader.getPointerField(
+      ::capnp::bounded<10>() * ::capnp::POINTERS).isNull();
+}
+inline bool Message::Builder::hasMessage() {
+  return !_builder.getPointerField(
+      ::capnp::bounded<10>() * ::capnp::POINTERS).isNull();
+}
+inline  ::capnp::Text::Reader Message::Reader::getMessage() const {
+  return ::capnp::_::PointerHelpers< ::capnp::Text>::get(_reader.getPointerField(
+      ::capnp::bounded<10>() * ::capnp::POINTERS));
+}
+inline  ::capnp::Text::Builder Message::Builder::getMessage() {
+  return ::capnp::_::PointerHelpers< ::capnp::Text>::get(_builder.getPointerField(
+      ::capnp::bounded<10>() * ::capnp::POINTERS));
+}
+inline void Message::Builder::setMessage( ::capnp::Text::Reader value) {
+  ::capnp::_::PointerHelpers< ::capnp::Text>::set(_builder.getPointerField(
+      ::capnp::bounded<10>() * ::capnp::POINTERS), value);
+}
+inline  ::capnp::Text::Builder Message::Builder::initMessage(unsigned int size) {
+  return ::capnp::_::PointerHelpers< ::capnp::Text>::init(_builder.getPointerField(
+      ::capnp::bounded<10>() * ::capnp::POINTERS), size);
+}
+inline void Message::Builder::adoptMessage(
+    ::capnp::Orphan< ::capnp::Text>&& value) {
+  ::capnp::_::PointerHelpers< ::capnp::Text>::adopt(_builder.getPointerField(
+      ::capnp::bounded<10>() * ::capnp::POINTERS), kj::mv(value));
+}
+inline ::capnp::Orphan< ::capnp::Text> Message::Builder::disownMessage() {
+  return ::capnp::_::PointerHelpers< ::capnp::Text>::disown(_builder.getPointerField(
+      ::capnp::bounded<10>() * ::capnp::POINTERS));
+}
+
+inline bool Message::Reader::hasSubType() const {
+  return !_reader.getPointerField(
+      ::capnp::bounded<11>() * ::capnp::POINTERS).isNull();
+}
+inline bool Message::Builder::hasSubType() {
+  return !_builder.getPointerField(
+      ::capnp::bounded<11>() * ::capnp::POINTERS).isNull();
+}
+inline  ::capnp::Text::Reader Message::Reader::getSubType() const {
+  return ::capnp::_::PointerHelpers< ::capnp::Text>::get(_reader.getPointerField(
+      ::capnp::bounded<11>() * ::capnp::POINTERS));
+}
+inline  ::capnp::Text::Builder Message::Builder::getSubType() {
+  return ::capnp::_::PointerHelpers< ::capnp::Text>::get(_builder.getPointerField(
+      ::capnp::bounded<11>() * ::capnp::POINTERS));
+}
+inline void Message::Builder::setSubType( ::capnp::Text::Reader value) {
+  ::capnp::_::PointerHelpers< ::capnp::Text>::set(_builder.getPointerField(
+      ::capnp::bounded<11>() * ::capnp::POINTERS), value);
+}
+inline  ::capnp::Text::Builder Message::Builder::initSubType(unsigned int size) {
+  return ::capnp::_::PointerHelpers< ::capnp::Text>::init(_builder.getPointerField(
+      ::capnp::bounded<11>() * ::capnp::POINTERS), size);
+}
+inline void Message::Builder::adoptSubType(
+    ::capnp::Orphan< ::capnp::Text>&& value) {
+  ::capnp::_::PointerHelpers< ::capnp::Text>::adopt(_builder.getPointerField(
+      ::capnp::bounded<11>() * ::capnp::POINTERS), kj::mv(value));
+}
+inline ::capnp::Orphan< ::capnp::Text> Message::Builder::disownSubType() {
+  return ::capnp::_::PointerHelpers< ::capnp::Text>::disown(_builder.getPointerField(
+      ::capnp::bounded<11>() * ::capnp::POINTERS));
 }
 
 #if !CAPNP_LITE

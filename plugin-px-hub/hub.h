@@ -12,17 +12,13 @@
 #include <QList>
 #include <XdgIcon>
 #include <string>
-#include <capnp/ez-rpc.h>
-#include <rpc/AccountParser.h>
-#include <interfaces/hub.capnp.h>
 #include <rpc/ServiceEventHandler.h>
 #include <rpc/EventSubscriber.h>
 #include <QtWidgets/QWidgetAction>
 #include <QScrollBar>
-#include "Account.h"
+#include "AccountObject.h"
 #include "Settings.h"
-
-#define HUB_SERVER_ADDRESS string(getpwuid(getuid())->pw_dir) + "/.userdata/rpc/hub"
+#include "MessageObject.h"
 
 using namespace std;
 
@@ -36,7 +32,6 @@ public:
     virtual QString themeId() const { return "px-hub"; }
     virtual ILXQtPanelPlugin::Flags flags() const { return HaveConfigDialog; }
     void putEvent(EventHandler::EventObject eventObject);
-
     bool isSeparate() const { return true; }
     QMenu *mainMenu = new QMenu;
     QDialog *configureDialog();
@@ -52,10 +47,10 @@ private:
     bool mHidden;
 
     string style = "border: none;";
-    QWidgetAction* buildAccountItem(Account account);
+    QWidgetAction* buildAccountItem(AccountObject account);
+    QWidgetAction* buildMessageItem(MessageObject message);
     QWidgetAction* createTitle(QString title);
 
-    vector<Account> getAccount();
     void refresh();
     void run();
     QMainWindow window;

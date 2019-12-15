@@ -9,6 +9,7 @@ struct AccountStatus{
         title   @5 : Text;
         unread  @6 : UInt16;
         status  @7 : Status;
+        subType @8 : Text;
 
 	enum Status {
 		none 	@0;
@@ -26,10 +27,12 @@ struct Message{
         type        @4 : Text;
         icon        @5 : Text;
         link        @6 : Text;
-        sender      @7 : Text;
-        senderName  @8 : Text;
-        title       @9 : Text;
-        message     @10: Text;
+        altLink     @7 : Text;
+        sender      @8 : Text;
+        senderName  @9 : Text;
+        title       @10: Text;
+        message     @11: Text;
+        subType     @12: Text;
 }
 
 interface HubReader{
