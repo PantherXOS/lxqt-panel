@@ -16,6 +16,8 @@
 #include <rpc/EventSubscriber.h>
 #include <QtWidgets/QWidgetAction>
 #include <QScrollBar>
+#include <QFrame>
+#include <QFont>
 #include "AccountObject.h"
 #include "Settings.h"
 #include "MessageObject.h"
