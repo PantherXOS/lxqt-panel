@@ -63,6 +63,9 @@ set(CMAKE_MODULE_LINKER_FLAGS "${OLD_CMAKE_MODULE_LINKER_FLAGS} ${SYMBOLIC_FLAGS
 # Warning: This must be before add_subdirectory(panel). Move with caution.
 if(DEV_PLUGIN)
     set(CMAKE_INSTALL_FULL_LIBDIR $ENV{HOME})
+    set(CMAKE_INSTALL_FULL_DATAROOTDIR $ENV{HOME})
+    set(LXQT_TRANSLATIONS_DIR $ENV{HOME})
+    set(CMAKE_INSTALL_COMPONENT $ENV{HOME})
 endif()
 set(PLUGIN_DIR "${CMAKE_INSTALL_FULL_LIBDIR}/lxqt-panel")
 add_definitions(
