@@ -11,7 +11,7 @@ class MessageObject{
 private:
     string time, message, icon, sender, link, altLink;
 public:
-    const string &toString(){
+    const string toString(){
         string _str = "{" + sender + ", " + time + ", " + icon + ", " + link + ", " + altLink
                 + ", " + message +"}";
         return _str;
@@ -33,7 +33,6 @@ public:
         MessageObject::altLink = altLink;
     }
 
-public:
     const string &getTime() const {
         return time;
     }
@@ -46,8 +45,8 @@ public:
         return message;
     }
 
-    void setMessage(const string &message) {
-        MessageObject::message = message;
+    void setMessage(const string &_message) {
+        this->message = _message.substr(1, _message.length() - 2);
     }
 
     const string &getIcon() const {

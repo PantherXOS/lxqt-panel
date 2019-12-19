@@ -47,7 +47,7 @@ vector<AccountObject> RPCHubClient::getAccountList() {
     return rsult;
 }
 
-vector<MessageObject> RPCHubClient::getMessageList() {
+vector<MessageObject> RPCHubClient::getMessageList(int n) {
     vector<MessageObject> messageList;
     string addr = string("unix:") + HUB_SERVER_ADDRESS;
     capnp::EzRpcClient rpcClient(addr);
@@ -55,7 +55,7 @@ vector<MessageObject> RPCHubClient::getMessageList() {
     HubReader::Client client = rpcClient.getMain<HubReader>();
     try {
         auto msgReq = client.getLastMessagesRequest();
-        msgReq.setCount(10);
+        msgReq.setCount(n);
         auto msgRes = msgReq.send().wait(waitScope);
         for(auto msg : msgRes.getMessages()){
             MessageObject msgObj;

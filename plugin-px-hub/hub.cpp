@@ -56,7 +56,7 @@ void hub::refresh() {
     mainMenu->addSeparator();
     mainMenu->addAction(createTitle(tr("PANTHER HUB")));
     // get messages
-    vector<MessageObject> messageList = rpcHubClient.getMessageList();
+    vector<MessageObject> messageList = rpcHubClient.getMessageList(6);
     for(auto &m : messageList){
         cout << m.toString() << endl;
         mainMenu->addAction(buildMessageItem(m));
@@ -152,6 +152,7 @@ void hub::putEvent(EventHandler::EventObject eventObject) {
 QWidgetAction *hub::buildMessageItem(MessageObject message) {
     auto messageSender = new QLabel;
     messageSender->setText(message.getSender().c_str());
+    messageSender->setFont(QFont("default",10,QFont::Bold));
 
     auto llayout = new QHBoxLayout;
     llayout->addWidget(messageSender);
@@ -161,20 +162,19 @@ QWidgetAction *hub::buildMessageItem(MessageObject message) {
     messageTime->setText(message.getTime().c_str());
 
     auto rlayout = new QHBoxLayout;
-    llayout->addWidget(messageTime);
-    llayout->setAlignment(Qt::AlignRight);
+    rlayout->addWidget(messageTime);
+    rlayout->setAlignment(Qt::AlignRight);
 
     auto qlayout = new QHBoxLayout;
     qlayout->addLayout(llayout);
     qlayout->addLayout(rlayout);
 
     auto messagePreview = new QLabel;
-    messagePreview->setText(message.getMessage().c_str());
-
+    messagePreview->setText(message.getMessage().c_str());  
     auto Tlayout = new QVBoxLayout;
     Tlayout->addLayout(qlayout);
-    llayout->addWidget(messagePreview);
-    //llayout->setAlignment(Qt::AlignTop);
+    Tlayout->addWidget(messagePreview);
+    Tlayout->setAlignment(Qt::AlignTop);
 
     QIcon messageIcon = XdgIcon::fromTheme("email", "email"); // TODO replace suitable icon
     auto messageButton = new QToolButton;

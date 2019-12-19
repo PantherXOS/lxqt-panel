@@ -18,7 +18,7 @@
 class RPCHubClient {
 public:
     vector<AccountObject> getAccountList();
-    vector<MessageObject> getMessageList();
+    vector<MessageObject> getMessageList(int n);
 };
 
 
