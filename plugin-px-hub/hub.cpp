@@ -18,6 +18,8 @@
 #include <QtGui/QPainter>
 #include <QtWidgets/QScrollArea>
 #include <rpc/RPCHubClient.h>
+#include "../panel/lxqtpanel.h"
+#include "../panel/pluginsettings.h"
 
 hub::hub(const ILXQtPanelPluginStartupInfo &startupInfo) :
     QObject(),
@@ -116,9 +118,18 @@ QWidgetAction* hub::buildAccountItem(AccountObject account) {
 }
 
 QWidgetAction *hub::createTitle(QString title) {
+    QFont font = qvariant_cast<QFont>(settings()->value("defaultFont"));
+    QString bgColor = settings()->value("backgroundColor").toString();
+    QString fgColor = settings()->value("foregroundColor").toString();
+
     auto subject = new QLabel;
     subject->setText(title);
-    subject->setFont(QFont("default",12,QFont::Bold));
+//    subject->setFont(QFont("default",12,QFont::Bold));
+    subject->setFont(font);
+    QPalette palette;
+    palette.setColor(subject->backgroundRole(), bgColor);
+    palette.setColor(subject->foregroundRole(), fgColor);
+    subject->setPalette(palette);
 
     auto slayout = new QHBoxLayout;
     slayout->setAlignment(Qt::AlignLeft);
