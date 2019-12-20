@@ -1,26 +1,37 @@
 
-#ifndef LXQT_NOTES_H
-#define LXQT_NOTES_H
-
-#include "../panel/ilxqtpanelplugin.h"
-#include <QApplication>
-#include <QMainWindow>
-#include <QDesktopWidget>
-#include <QFontMetrics>
-#include <QTextEdit>
-#include <QToolButton>
-#include <QList>
+#ifndef LXQT_HUB_H
+#define LXQT_HUB_H
+#include <QMouseEvent>
+#include <QResizeEvent>
+#include <QHBoxLayout>
+#include <QVBoxLayout>
+#include <QScreen>
+#include <QStandardPaths>
+#include <QSettings>
+#include <QLabel>
+#include <QDateTime>
+#include <QMessageBox>
+#include <QDir>
+#include <QFontDialog>
+#include <QAction>
+#include <QMenu>
+#include <QDebug>
+#include <QtGui/QPainter>
+#include <QtWidgets/QScrollArea>
 #include <XdgIcon>
 #include <string>
-#include <rpc/ServiceEventHandler.h>
-#include <rpc/EventSubscriber.h>
 #include <QtWidgets/QWidgetAction>
 #include <QScrollBar>
 #include <QFrame>
 #include <QFont>
+#include "../panel/ilxqtpanelplugin.h"
+
+#include "rpc/RPCHubClient.h"
 #include "AccountObject.h"
 #include "Settings.h"
 #include "MessageObject.h"
+#include <rpc/ServiceEventHandler.h>
+#include <rpc/EventSubscriber.h>
 
 using namespace std;
 
@@ -36,26 +47,20 @@ public:
     void putEvent(EventHandler::EventObject eventObject);
     bool isSeparate() const { return true; }
     QMenu *mainMenu = new QMenu;
-    QDialog *configureDialog();
 
 public slots:
     void realign();
-    
-protected slots:
-    void settingsChanged();
 
 private:
-    QToolButton mButton;
-    bool mHidden;
-
-    string style = "border: none;";
+    QLabel *buildIconFromFile(QString file, QSize size);
     QWidgetAction* buildAccountItem(AccountObject account);
     QWidgetAction* buildMessageItem(MessageObject message);
     QWidgetAction* createTitle(QString title);
-
     void refresh();
     void run();
-    QMainWindow window;
+
+    QToolButton mButton;
+    bool mHidden;
     bool isRun;
     vector<EventHandler::EventObject> events;
     std::thread statThread;

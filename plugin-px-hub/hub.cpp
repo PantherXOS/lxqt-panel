@@ -1,26 +1,5 @@
 #include "hub.h"
 
-#include <QMouseEvent>
-#include <QResizeEvent>
-#include <QHBoxLayout>
-#include <QVBoxLayout>
-#include <QScreen>
-#include <QStandardPaths>
-#include <QSettings>
-#include <QLabel>
-#include <QDateTime>
-#include <QMessageBox>
-#include <QDir>
-#include <QFontDialog>
-#include <QAction>
-#include <QMenu>
-#include <QDebug>
-#include <QtGui/QPainter>
-#include <QtWidgets/QScrollArea>
-#include <rpc/RPCHubClient.h>
-#include "../panel/lxqtpanel.h"
-#include "../panel/pluginsettings.h"
-
 hub::hub(const ILXQtPanelPluginStartupInfo &startupInfo) :
     QObject(),
     ILXQtPanelPlugin(startupInfo),
@@ -39,12 +18,6 @@ void hub::realign()
   mButton.setFixedHeight(panel()->iconSize());
   mButton.setFixedWidth(panel()->iconSize());
 }
-
-void hub::settingsChanged()
-{}
-
-QDialog* hub::configureDialog()
-{}
 
 void hub::refresh() {
     // get accounts
@@ -69,7 +42,17 @@ void hub::refresh() {
     mButton.setMenu(mainMenu);
     mButton.setPopupMode(QToolButton::InstantPopup);
     mButton.setAutoRaise(true);
-    mButton.setIcon(QIcon(":resources/icon/user"));
+    //mButton.setIcon(XdgIcon::fromTheme(QLatin1String("view-refresh")));
+}
+
+QLabel *hub::buildIconFromFile(QString file, QSize size){
+    QIcon qicon;
+    QImage image(file);
+    qicon.addPixmap(QPixmap::fromImage(image), QIcon::Normal, QIcon::On);
+    QPixmap pixmap = qicon.pixmap(size, QIcon::Normal, QIcon::On);
+    auto iconLabel = new QLabel;
+    iconLabel->setPixmap(pixmap);
+    iconLabel->setFixedSize(size);
 }
 
 QWidgetAction* hub::buildAccountItem(AccountObject account) {
@@ -80,29 +63,28 @@ QWidgetAction* hub::buildAccountItem(AccountObject account) {
         statusIcon=new QIcon(":resources/icon/offline");
     else if(account.getStatus() == Status::none)
         statusIcon=new QIcon(":resources/icon/none");
-
-    QIcon accountIcon = XdgIcon::fromTheme("email", "email"); // TODO retrieve from hub
     auto statusButton = new QToolButton;
-    statusButton->setStyleSheet(style.c_str());
     statusButton->setIcon(*statusIcon);
 
-    auto accountButton = new QToolButton;
-    accountButton->setIcon(accountIcon);
-    accountButton->setStyleSheet(style.c_str());
+    // auto accountIcon = buildIconFromFile(account.getIcon,QSize(ACCOUNT_ICON_SIZE,ACCOUNT_ICON_SIZE));
+    auto accountIcon = new QToolButton;
+    accountIcon->setIcon(XdgIcon::fromTheme("email", "email"));
 
     auto accountTitle = new QLabel;
     accountTitle->setText(account.getTitle().c_str());
+    accountTitle->setObjectName("NoDiskLabel");
 
-    auto unredCount = new QLabel;
-    unredCount->setText(to_string(account.getUnread()).c_str());
+    auto unreadCount = new QLabel;
+    unreadCount->setText(to_string(account.getUnread()).c_str());
+    unreadCount->setObjectName("NoDiskLabel");
 
     auto llayout = new QHBoxLayout;
-    llayout->addWidget(accountButton);
+    llayout->addWidget(accountIcon);
     llayout->addWidget(accountTitle);
     llayout->setAlignment(Qt::AlignLeft);
 
     auto rlayout = new QHBoxLayout;
-    rlayout->addWidget(unredCount);
+    rlayout->addWidget(unreadCount);
     rlayout->addWidget(statusButton);
     rlayout->setAlignment(Qt::AlignRight);
 
@@ -118,26 +100,20 @@ QWidgetAction* hub::buildAccountItem(AccountObject account) {
 }
 
 QWidgetAction *hub::createTitle(QString title) {
-    QFont font = qvariant_cast<QFont>(settings()->value("defaultFont"));
-    QString bgColor = settings()->value("backgroundColor").toString();
-    QString fgColor = settings()->value("foregroundColor").toString();
-
     auto subject = new QLabel;
     subject->setText(title);
-//    subject->setFont(QFont("default",12,QFont::Bold));
-    subject->setFont(font);
-    QPalette palette;
-    palette.setColor(subject->backgroundRole(), bgColor);
-    palette.setColor(subject->foregroundRole(), fgColor);
-    subject->setPalette(palette);
+    subject->setFont(QFont("default",12,QFont::Bold));
+    subject->setObjectName("NoDiskLabel");
 
     auto slayout = new QHBoxLayout;
     slayout->setAlignment(Qt::AlignLeft);
     slayout->addWidget(subject);
     auto sWidget = new QWidget;
     sWidget->setLayout(slayout);
+
     auto sWidgetAction = new QWidgetAction(this);
     sWidgetAction->setDefaultWidget(sWidget);
+
     return sWidgetAction;
 }
 
@@ -164,6 +140,7 @@ QWidgetAction *hub::buildMessageItem(MessageObject message) {
     auto messageSender = new QLabel;
     messageSender->setText(message.getSender().c_str());
     messageSender->setFont(QFont("default",10,QFont::Bold));
+    messageSender->setObjectName("NoDiskLabel");
 
     auto llayout = new QHBoxLayout;
     llayout->addWidget(messageSender);
@@ -171,6 +148,7 @@ QWidgetAction *hub::buildMessageItem(MessageObject message) {
 
     auto messageTime = new QLabel;
     messageTime->setText(message.getTime().c_str());
+    messageTime->setObjectName("NoDiskLabel");
 
     auto rlayout = new QHBoxLayout;
     rlayout->addWidget(messageTime);
@@ -181,19 +159,20 @@ QWidgetAction *hub::buildMessageItem(MessageObject message) {
     qlayout->addLayout(rlayout);
 
     auto messagePreview = new QLabel;
-    messagePreview->setText(message.getMessage().c_str());  
+    messagePreview->setText(message.getMessage().c_str());
+    messagePreview->setObjectName("NoDiskLabel");
+
     auto Tlayout = new QVBoxLayout;
     Tlayout->addLayout(qlayout);
     Tlayout->addWidget(messagePreview);
     Tlayout->setAlignment(Qt::AlignTop);
 
-    QIcon messageIcon = XdgIcon::fromTheme("email", "email"); // TODO replace suitable icon
-    auto messageButton = new QToolButton;
-    messageButton->setIcon(messageIcon);
-    messageButton->setStyleSheet(style.c_str());
+    // auto messageIcon = buildIconFromFile(message.getIcon, QSize(MESSAGE_ICON_SIZE,MESSAGE_ICON_SIZE));
+    auto messageIcon = new QToolButton;
+    messageIcon->setIcon(XdgIcon::fromTheme("email", "email"));
 
     auto glayout = new QHBoxLayout;
-    glayout->addWidget(messageButton);
+    glayout->addWidget(messageIcon);
     glayout->addLayout(Tlayout);
 
     auto  resultWidget = new QWidget;

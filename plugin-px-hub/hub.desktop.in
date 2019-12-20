@@ -1,0 +1,7 @@
+[Desktop Entry]
+Type=Service
+ServiceTypes=LXQtPanel/Plugin
+Name=px-hub-plugin
+Comment=Initial plugin of px-hub-service
+Icon=view-refresh
+TRANSLATIONS_DIR=../translations
