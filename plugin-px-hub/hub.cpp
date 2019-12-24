@@ -66,10 +66,11 @@ QWidgetAction* hub::buildAccountItem(AccountObject account) {
         statusIconFile=":resources/icon/offline";
     else if(account.getStatus() == Status::none)
         statusIconFile=":resources/icon/none";
-    auto statusLabel = buildIconFromFile(":resources/icon/online",QSize(ACCOUNT_STATUS_ICON_SIZE,ACCOUNT_STATUS_ICON_SIZE));
-    // auto accountIcon = buildIconFromFile(account.getIcon,QSize(ACCOUNT_ICON_SIZE,ACCOUNT_ICON_SIZE));
-    auto accountIcon = new QToolButton;
-    accountIcon->setIcon(XdgIcon::fromTheme("email", "email"));
+    auto statusLabel = buildIconFromFile(statusIconFile,QSize(ACCOUNT_STATUS_ICON_SIZE,ACCOUNT_STATUS_ICON_SIZE));
+    qDebug() << account.getIcon().c_str();
+    auto accountIcon = buildIconFromFile(account.getIcon().c_str(),QSize(ACCOUNT_ICON_SIZE,ACCOUNT_ICON_SIZE));
+//    auto accountIcon = new QToolButton;
+//    accountIcon->setIcon(XdgIcon::fromTheme("email", "email"));
 
     auto accountTitle = new QLabel;
     accountTitle->setText(account.getTitle().c_str());
@@ -185,10 +186,10 @@ QWidgetAction *hub::buildMessageItem(MessageObject message) {
     Tlayout->setMargin(0);
     Tlayout->setSpacing(0);
     Tlayout->setContentsMargins(0,0,0,0);
-
-    // auto messageIcon = buildIconFromFile(message.getIcon, QSize(MESSAGE_ICON_SIZE,MESSAGE_ICON_SIZE));
-    auto messageIcon = new QToolButton;
-    messageIcon->setIcon(XdgIcon::fromTheme("email", "email"));
+    qDebug() << message.getIcon().c_str();
+     auto messageIcon = buildIconFromFile(message.getIcon().c_str(), QSize(MESSAGE_ICON_SIZE,MESSAGE_ICON_SIZE));
+//      auto messageIcon = new QToolButton;
+//      messageIcon->setIcon(XdgIcon::fromTheme("email", "email"));
     auto ilayout = new QHBoxLayout;
     ilayout->addWidget(messageIcon);
     ilayout->setMargin(0);

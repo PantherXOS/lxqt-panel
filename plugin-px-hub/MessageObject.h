@@ -49,11 +49,11 @@ public:
         this->message = _message.substr(1, _message.length() - 2);
     }
 
-    const string &getIcon() const {
+    const string getIcon() const {
         return icon;
     }
 
-    void setIcon(const string &icon) {
+    void setIcon(const string icon) {
         MessageObject::icon = icon;
     }
 

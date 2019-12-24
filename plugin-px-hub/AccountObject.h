@@ -15,8 +15,6 @@ using namespace std;
         error,
     };
 
-
-
 class AccountObject {
 public:
     int getTime() const {
@@ -43,11 +41,11 @@ public:
         AccountObject::type = type;
     }
 
-    const string &getIcon() const {
+    const string getIcon() const {
         return icon;
     }
 
-    void setIcon(const string &icon) {
+    void setIcon(const string icon) {
         AccountObject::icon = icon;
     }
 
