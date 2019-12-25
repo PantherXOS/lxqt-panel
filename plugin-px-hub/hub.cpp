@@ -33,7 +33,6 @@ void hub::refresh() {
     // get messages
     vector<MessageObject> messageList = rpcHubClient.getMessageList(6);
     for(auto &m : messageList){
-        cout << m.toString() << endl;
         mainMenu->addAction(buildMessageItem(m));
     }
     //
@@ -67,10 +66,8 @@ QWidgetAction* hub::buildAccountItem(AccountObject account) {
     else if(account.getStatus() == Status::none)
         statusIconFile=":resources/icon/none";
     auto statusLabel = buildIconFromFile(statusIconFile,QSize(ACCOUNT_STATUS_ICON_SIZE,ACCOUNT_STATUS_ICON_SIZE));
-    qDebug() << account.getIcon().c_str();
     auto accountIcon = buildIconFromFile(account.getIcon().c_str(),QSize(ACCOUNT_ICON_SIZE,ACCOUNT_ICON_SIZE));
-//    auto accountIcon = new QToolButton;
-//    accountIcon->setIcon(XdgIcon::fromTheme("email", "email"));
+
 
     auto accountTitle = new QLabel;
     accountTitle->setText(account.getTitle().c_str());
@@ -80,6 +77,8 @@ QWidgetAction* hub::buildAccountItem(AccountObject account) {
     auto unreadCount = new QLabel;
     unreadCount->setText(to_string(account.getUnread()).c_str());
     unreadCount->setStyleSheet("QLabel{ color: #D2D8E0;}");
+    if(account.getUnread() == 0)
+        unreadCount->setVisible(false);
     //unreadCount->setObjectName("NoDiskLabel");
 
     auto llayout = new QHBoxLayout;
@@ -151,9 +150,9 @@ QWidgetAction *hub::buildMessageItem(MessageObject message) {
     auto llayout = new QHBoxLayout;
     llayout->addWidget(messageSender);
     llayout->setAlignment(Qt::AlignLeft);
-    llayout->setMargin(0);
-    llayout->setSpacing(0);
-    llayout->setContentsMargins(0,0,0,0);
+//    llayout->setMargin(0);
+//    llayout->setSpacing(0);
+//    llayout->setContentsMargins(0,0,0,0);
 
     auto messageTime = new QLabel;
     messageTime->setText(message.getTime().c_str());
@@ -163,16 +162,16 @@ QWidgetAction *hub::buildMessageItem(MessageObject message) {
     auto rlayout = new QHBoxLayout;
     rlayout->addWidget(messageTime);
     rlayout->setAlignment(Qt::AlignRight);
-    rlayout->setMargin(0);
-    rlayout->setSpacing(0);
-    rlayout->setContentsMargins(0,0,0,0);
+//    rlayout->setMargin(0);
+//    rlayout->setSpacing(0);
+//    rlayout->setContentsMargins(0,0,0,0);
 
     auto qlayout = new QHBoxLayout;
     qlayout->addLayout(llayout);
     qlayout->addLayout(rlayout);
-    qlayout->setMargin(0);
-    qlayout->setSpacing(0);
-    qlayout->setContentsMargins(0,0,0,0);
+//    qlayout->setMargin(0);
+//    qlayout->setSpacing(0);
+//    qlayout->setContentsMargins(0,0,0,0);
 
     auto messagePreview = new QLabel;
     messagePreview->setText(message.getMessage().c_str());
@@ -183,25 +182,22 @@ QWidgetAction *hub::buildMessageItem(MessageObject message) {
     Tlayout->addLayout(qlayout);
     Tlayout->addWidget(messagePreview);
     Tlayout->setAlignment(Qt::AlignTop);
-    Tlayout->setMargin(0);
-    Tlayout->setSpacing(0);
-    Tlayout->setContentsMargins(0,0,0,0);
-    qDebug() << message.getIcon().c_str();
-     auto messageIcon = buildIconFromFile(message.getIcon().c_str(), QSize(MESSAGE_ICON_SIZE,MESSAGE_ICON_SIZE));
-//      auto messageIcon = new QToolButton;
-//      messageIcon->setIcon(XdgIcon::fromTheme("email", "email"));
+//    Tlayout->setMargin(0);
+//    Tlayout->setSpacing(0);
+//    Tlayout->setContentsMargins(0,0,0,0);
+    auto messageIcon = buildIconFromFile(message.getIcon().c_str(), QSize(MESSAGE_ICON_SIZE,MESSAGE_ICON_SIZE));
     auto ilayout = new QHBoxLayout;
     ilayout->addWidget(messageIcon);
-    ilayout->setMargin(0);
-    ilayout->setSpacing(0);
-    ilayout->setContentsMargins(0,0,0,0);
+//    ilayout->setMargin(0);
+//    ilayout->setSpacing(0);
+//    ilayout->setContentsMargins(0,0,0,0);
 
     auto glayout = new QHBoxLayout;
     glayout->addLayout(ilayout);
     glayout->addLayout(Tlayout);
-    glayout->setMargin(0);
-    glayout->setSpacing(0);
-    glayout->setContentsMargins(0,0,0,0);
+//    glayout->setMargin(0);
+//    glayout->setSpacing(0);
+//    glayout->setContentsMargins(0,0,0,0);
 
     auto  resultWidget = new QWidget;
     resultWidget->setLayout(glayout);
