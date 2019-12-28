@@ -57,11 +57,11 @@ public:
         MessageObject::icon = icon;
     }
 
-    const string &getSender() const {
+    const string getSender() const {
         return sender;
     }
 
-    void setSender(const string &sender) {
+    void setSender(const string sender) {
         MessageObject::sender = sender;
     }
 };

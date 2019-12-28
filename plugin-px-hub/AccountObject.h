@@ -49,27 +49,27 @@ public:
         AccountObject::icon = icon;
     }
 
-    const string &getLink() const {
+    const string getLink() const {
         return link;
     }
 
-    void setLink(const string &link) {
+    void setLink(const string link) {
         AccountObject::link = link;
     }
 
-    const string &getAltLink() const {
+    const string getAltLink() const {
         return altLink;
     }
 
-    void setAltLink(const string &altLink) {
+    void setAltLink(const string altLink) {
         AccountObject::altLink = altLink;
     }
 
-    const string &getTitle() const {
+    const string getTitle() const {
         return title;
     }
 
-    void setTitle(const string &title) {
+    void setTitle(const string title) {
         AccountObject::title = title;
     }
 
