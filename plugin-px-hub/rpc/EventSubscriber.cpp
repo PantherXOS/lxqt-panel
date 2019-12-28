@@ -26,7 +26,7 @@ void EventSubscriber::run() {
     if(!isRun) {
         isRun=true;
         statThread = std::thread([&]() {
-            while (1) {
+            while (isRun) {
                 nng_recv(subSock, &buff, &sz, NNG_FLAG_ALLOC);
                 kj::ArrayPtr<uint8_t> data(buff, sz);
                 kj::ArrayInputStream strm(data);

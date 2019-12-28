@@ -20,7 +20,7 @@ set(HEADERS
 		rpc/ServiceEventHandler.h
 		rpc/RPCHubClient.h
 		rpc/Utils.h
-        )
+		)
 
 set(SOURCES
 		hub.cpp

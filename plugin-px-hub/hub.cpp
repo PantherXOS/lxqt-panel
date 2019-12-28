@@ -21,6 +21,7 @@ void hub::realign()
 
 void hub::refresh() {
     // get accounts
+    cout<<"STAAAARTTTTT"<<endl;
     RPCHubClient rpcHubClient;
     vector<AccountObject> accounts= rpcHubClient.getAccountList();
     mainMenu->setFixedWidth(MAIN_MENU_SIZE_W);
@@ -67,8 +68,6 @@ QWidgetAction* hub::buildAccountItem(AccountObject account) {
         statusIconFile=":resources/icon/none";
     auto statusLabel = buildIconFromFile(statusIconFile,QSize(ACCOUNT_STATUS_ICON_SIZE,ACCOUNT_STATUS_ICON_SIZE));
     auto accountIcon = buildIconFromFile(account.getIcon().c_str(),QSize(ACCOUNT_ICON_SIZE,ACCOUNT_ICON_SIZE));
-
-
     auto accountTitle = new QLabel;
     accountTitle->setText(account.getTitle().c_str());
     accountTitle->setStyleSheet("QLabel{ color: #D2D8E0;}");
@@ -125,9 +124,13 @@ void hub::run() {
     if(!isRun) {
         isRun=true;
         statThread = std::thread([&]() {
-            while (1) {
+            while (isRun) {
                 for (EventHandler::EventObject e : events) {
                     if (e.topic == "Status_Change" && e.event == "hub") {
+                        refresh();
+                        events.pop_back();
+                    }else if(e.event == "READY"){
+                        events.pop_back();
                         refresh();
                     }
                 }

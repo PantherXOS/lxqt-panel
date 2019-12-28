@@ -61,7 +61,7 @@ private:
 
     QToolButton mButton;
     bool mHidden;
-    bool isRun;
+    bool isRun= false;
     vector<EventHandler::EventObject> events;
     std::thread statThread;
 };
