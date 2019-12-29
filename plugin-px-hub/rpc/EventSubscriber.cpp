@@ -7,16 +7,14 @@
 #include "hub.h"
 
 
-EventSubscriber::EventSubscriber(string service, EventHandler *eventHandler, hub *hub) {
+EventSubscriber::EventSubscriber(string service) {
     subSock = { 0x00 };
     string ipcSock = "ipc://"+string(getpwuid(getuid())->pw_dir) + UTILS::FILE::fullpath(CHANNEL_BASE) + service;
 
     nng_sub0_open(&subSock);
     nng_setopt(subSock, NNG_OPT_SUB_SUBSCRIBE, "", 0);
     nng_dial(subSock, ipcSock.c_str(), nullptr, 0);
-    this->eventHandler = eventHandler;
     this->isRun = false;
-    this->_hub = hub;
 }
 
 
@@ -31,16 +29,19 @@ void EventSubscriber::run() {
                 kj::ArrayPtr<uint8_t> data(buff, sz);
                 kj::ArrayInputStream strm(data);
                 capnp::InputStreamMessageReader reader(strm);
-                EventHandler::EventObject eventObject;
+                EventObject *eventObject=new EventObject;
                 EventData::Reader evtData = reader.getRoot<EventData>();
-                eventObject.event = evtData.getEvent();
-                eventObject.source = evtData.getSource();
-                eventObject.time = evtData.getTime();
-                eventObject.topic = evtData.getTopic();
+                eventObject->setEvent(evtData.getEvent().cStr());
+                eventObject->setSource(evtData.getSource().cStr());
+                eventObject->setTime(evtData.getTime());
+                eventObject->setTopic(evtData.getTopic().cStr());
+                map<QString,QString> m;
                 for (const auto &param : evtData.getParams()) {
-                    eventObject.params.insert(pair<string, string>(param.getKey().cStr(), param.getValue().cStr()));
+                    m.insert(pair<QString, QString>(param.getKey().cStr(), param.getValue().cStr()));
                 }
-                this->_hub->putEvent(eventObject);
+                eventObject->setParams(m);
+                qDebug() <<eventObject->toString();
+                emit hubEvents(eventObject);
             }
         });
     }

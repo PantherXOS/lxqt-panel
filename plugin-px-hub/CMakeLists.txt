@@ -15,11 +15,10 @@ set(HEADERS
 		interfaces/hub.capnp.h
 		interfaces/event.capnp.h
 		rpc/AccountParser.h
-		rpc/EventHandler.h
 		rpc/EventSubscriber.h
-		rpc/ServiceEventHandler.h
 		rpc/RPCHubClient.h
 		rpc/Utils.h
+		EventObject.h
 		)
 
 set(SOURCES
@@ -27,7 +26,6 @@ set(SOURCES
 		interfaces/hub.capnp.c++
 		interfaces/event.capnp.c++
 		rpc/EventSubscriber.cpp
-		rpc/ServiceEventHandler.cpp
 		rpc/RPCHubClient.cpp
 		rpc/Utils.cpp
 		)

@@ -23,7 +23,7 @@ using namespace std;
 #include <pwd.h>
 #include <unistd.h>
 #include "Utils.h"
-#include "EventHandler.h"
+#include "EventObject.h"
 #include <QToolButton>
 #include <QMenu>
 #include <qobjectdefs.h>
@@ -32,24 +32,22 @@ using namespace std;
 #define CHANNEL_BASE    "/.userdata/event/channels/"
 class hub;
 
-class EventSubscriber {
-
+class EventSubscriber : public QObject {
+Q_OBJECT
 public:
-    EventSubscriber(string service, EventHandler *eventHandler, hub *hub);
+    EventSubscriber(string service);
     void run();
     void stop();
-
     nng_socket subSock;
+
+signals:
+    void hubEvents(EventObject *eventObject);
 
 private:
     bool isRun;
     std::thread statThread;
     size_t sz;
     unsigned char* buff;
-    EventHandler *eventHandler;
-    hub *_hub;
     QToolButton *mButton;
 };
-
-
 #endif //PX_HUB_SERVICE_EVENTSUBSCRIBER_H

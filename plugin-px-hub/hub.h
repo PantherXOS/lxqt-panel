@@ -30,7 +30,6 @@
 #include "AccountObject.h"
 #include "Settings.h"
 #include "MessageObject.h"
-#include <rpc/ServiceEventHandler.h>
 #include <rpc/EventSubscriber.h>
 
 using namespace std;
@@ -44,12 +43,14 @@ public:
     virtual QWidget *widget() { return &mButton; }
     virtual QString themeId() const { return "px-hub"; }
     virtual ILXQtPanelPlugin::Flags flags() const { return HaveConfigDialog; }
-    void putEvent(EventHandler::EventObject eventObject);
     bool isSeparate() const { return true; }
     QMenu *mainMenu = new QMenu;
 
 public slots:
     void realign();
+
+private slots:
+    void hubEventsHandler(EventObject *eventObject);
 
 private:
     QLabel *buildIconFromFile(QString file, QSize size);
@@ -57,12 +58,10 @@ private:
     QWidgetAction* buildMessageItem(MessageObject message);
     QWidgetAction* createTitle(QString title);
     void refresh();
-    void run();
 
     QToolButton mButton;
     bool mHidden;
     bool isRun= false;
-    vector<EventHandler::EventObject> events;
     std::thread statThread;
 };
 

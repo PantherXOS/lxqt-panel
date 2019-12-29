@@ -7,10 +7,10 @@ hub::hub(const ILXQtPanelPluginStartupInfo &startupInfo) :
 {
     realign();
     refresh();
-    ServiceEventHandler hubEventHandler;
-    EventSubscriber * eventSubscriber = new EventSubscriber("hub", &hubEventHandler, this);
+    EventSubscriber * eventSubscriber = new EventSubscriber("hub");
+    connect(eventSubscriber,SIGNAL(hubEvents(EventObject *)),this,SLOT(hubEventsHandler(EventObject *)));
     eventSubscriber->run();
-    run();
+    //run();
 }
 
 void hub::realign()
@@ -20,8 +20,9 @@ void hub::realign()
 }
 
 void hub::refresh() {
+    mainMenu->clear();
+    //sleep(1);
     // get accounts
-    cout<<"STAAAARTTTTT"<<endl;
     RPCHubClient rpcHubClient;
     vector<AccountObject> accounts= rpcHubClient.getAccountList();
     mainMenu->setFixedWidth(MAIN_MENU_SIZE_W);
@@ -36,7 +37,6 @@ void hub::refresh() {
     for(auto &m : messageList){
         mainMenu->addAction(buildMessageItem(m));
     }
-    //
     mainMenu->setObjectName("LXQtMountPopup");
     mainMenu->addSeparator();
     mButton.setMenu(mainMenu);
@@ -120,27 +120,8 @@ QWidgetAction *hub::createTitle(QString title) {
     return sWidgetAction;
 }
 
-void hub::run() {
-    if(!isRun) {
-        isRun=true;
-        statThread = std::thread([&]() {
-            while (isRun) {
-                for (EventHandler::EventObject e : events) {
-                    if (e.topic == "Status_Change" && e.event == "hub") {
-                        refresh();
-                        events.pop_back();
-                    }else if(e.event == "READY"){
-                        events.pop_back();
-                        refresh();
-                    }
-                }
-            }
-        });
-    }
-}
-
-void hub::putEvent(EventHandler::EventObject eventObject) {
-    events.push_back(eventObject);
+void hub::hubEventsHandler(EventObject *eventObject){
+    refresh();
 }
 
 QWidgetAction *hub::buildMessageItem(MessageObject message) {
