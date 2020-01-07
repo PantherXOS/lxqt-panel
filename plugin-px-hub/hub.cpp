@@ -69,7 +69,10 @@ QWidgetAction* hub::buildAccountItem(AccountObject account) {
     auto statusLabel = buildIconFromFile(statusIconFile,QSize(ACCOUNT_STATUS_ICON_SIZE,ACCOUNT_STATUS_ICON_SIZE));
     auto accountIcon = buildIconFromFile(account.getIcon().c_str(),QSize(ACCOUNT_ICON_SIZE,ACCOUNT_ICON_SIZE));
     auto accountTitle = new QLabel;
-    accountTitle->setText(account.getTitle().c_str());
+    string acc = account.getTitle();
+    if(acc.size()>MAX_ACCOUNT_SIZE)
+        acc = acc.substr(0,MAX_ACCOUNT_SIZE)+"...";
+    accountTitle->setText(acc.c_str());
     accountTitle->setStyleSheet("QLabel{ color: #D2D8E0;}");
     //accountTitle->setObjectName("NoDiskLabel");
 
@@ -126,7 +129,10 @@ void hub::hubEventsHandler(EventObject *eventObject){
 
 QWidgetAction *hub::buildMessageItem(MessageObject message) {
     auto messageSender = new QLabel;
-    messageSender->setText(message.getSender().c_str());
+    string acc = message.getSender();
+    if(acc.size()>MAX_ACCOUNT_SIZE)
+        acc = acc.substr(0,MAX_ACCOUNT_SIZE)+"...";
+    messageSender->setText(acc.c_str());
     messageSender->setFont(QFont("default",10,QFont::Bold));
    //messageSender->setObjectName("NoDiskLabel");
    messageSender->setStyleSheet("QLabel{color: #D2D8E0;}");
