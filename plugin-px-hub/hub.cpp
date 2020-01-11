@@ -42,7 +42,7 @@ void hub::refresh() {
     mButton.setMenu(mainMenu);
     mButton.setPopupMode(QToolButton::InstantPopup);
     mButton.setAutoRaise(true);
-    //mButton.setIcon(XdgIcon::fromTheme(QLatin1String("view-refresh")));
+    mButton.setIcon(XdgIcon::fromTheme(QLatin1String("view-refresh")));
 }
 
 QLabel *hub::buildIconFromFile(QString file, QSize size){
