@@ -31,6 +31,7 @@
 #include "Settings.h"
 #include "MessageObject.h"
 #include <rpc/EventSubscriber.h>
+#include <lxqt/LXQt/Notification>
 
 using namespace std;
 
@@ -54,6 +55,7 @@ private slots:
 
 private:
     QLabel *buildIconFromFile(QString file, QSize size);
+    QLabel *buildIconFromTheme(QString icon, QSize size);
     QWidgetAction* buildAccountItem(AccountObject account);
     QWidgetAction* buildMessageItem(MessageObject message);
     QWidgetAction* createTitle(QString title);

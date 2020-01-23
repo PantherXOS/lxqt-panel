@@ -4,5 +4,4 @@ ServiceTypes=LXQtPanel/Plugin
 Name=px-hub-plugin
 Comment=Initial plugin of px-hub-service
 #Icon=drive-removable-media
-
 TRANSLATIONS_DIR=../translations

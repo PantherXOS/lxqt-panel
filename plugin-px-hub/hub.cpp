@@ -45,7 +45,19 @@ void hub::refresh() {
     mButton.setIcon(XdgIcon::fromTheme(QLatin1String("view-refresh")));
 }
 
+QLabel *hub::buildIconFromTheme(QString icon, QSize size){
+    QIcon qicon = QIcon::fromTheme(icon);
+    QPixmap pixmap = qicon.pixmap(size, QIcon::Normal, QIcon::On);
+    auto iconLabel = new QLabel;
+//    iconLable->setStyleSheet("border: 0px;");
+    iconLabel->setAttribute(Qt::WA_TranslucentBackground);
+    iconLabel->setPixmap(pixmap);
+    iconLabel->setFixedSize(size);
+    return iconLabel;
+}
+
 QLabel *hub::buildIconFromFile(QString file, QSize size){
+    //QIcon tmpIcon = QIcon::fromTheme("px-mastodon");
     QIcon qicon;
     QImage image(file);
     qicon.addPixmap(QPixmap::fromImage(image), QIcon::Normal, QIcon::On);
@@ -67,7 +79,7 @@ QWidgetAction* hub::buildAccountItem(AccountObject account) {
     else if(account.getStatus() == Status::none)
         statusIconFile=":resources/icon/none";
     auto statusLabel = buildIconFromFile(statusIconFile,QSize(ACCOUNT_STATUS_ICON_SIZE,ACCOUNT_STATUS_ICON_SIZE));
-    auto accountIcon = buildIconFromFile(account.getIcon().c_str(),QSize(ACCOUNT_ICON_SIZE,ACCOUNT_ICON_SIZE));
+    auto accountIcon = buildIconFromTheme(account.getIcon().c_str(),QSize(ACCOUNT_ICON_SIZE,ACCOUNT_ICON_SIZE));
     auto accountTitle = new QLabel;
     string acc = account.getTitle();
     if(acc.size()>MAX_ACCOUNT_SIZE)
@@ -125,6 +137,7 @@ QWidgetAction *hub::createTitle(QString title) {
 
 void hub::hubEventsHandler(EventObject *eventObject){
     refresh();
+    LXQt::Notification::notify("1 new message");
 }
 
 QWidgetAction *hub::buildMessageItem(MessageObject message) {
@@ -175,7 +188,7 @@ QWidgetAction *hub::buildMessageItem(MessageObject message) {
 //    Tlayout->setMargin(0);
 //    Tlayout->setSpacing(0);
 //    Tlayout->setContentsMargins(0,0,0,0);
-    auto messageIcon = buildIconFromFile(message.getIcon().c_str(), QSize(MESSAGE_ICON_SIZE,MESSAGE_ICON_SIZE));
+    auto messageIcon = buildIconFromTheme(message.getIcon().c_str(), QSize(MESSAGE_ICON_SIZE,MESSAGE_ICON_SIZE));
     auto ilayout = new QHBoxLayout;
     ilayout->addWidget(messageIcon);
 //    ilayout->setMargin(0);
