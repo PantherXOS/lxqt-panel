@@ -45,6 +45,8 @@ signals:
 
 private:
     bool isRun;
+    bool isEventRun;
+    string service;
     std::thread statThread;
     size_t sz;
     unsigned char* buff;

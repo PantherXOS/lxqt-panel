@@ -8,19 +8,22 @@
 
 
 EventSubscriber::EventSubscriber(string service) {
-    subSock = { 0x00 };
-    string ipcSock = "ipc://"+string(getpwuid(getuid())->pw_dir) + UTILS::FILE::fullpath(CHANNEL_BASE) + service;
-
-    nng_sub0_open(&subSock);
-    nng_setopt(subSock, NNG_OPT_SUB_SUBSCRIBE, "", 0);
-    nng_dial(subSock, ipcSock.c_str(), nullptr, 0);
     this->isRun = false;
+    this->service = service;
 }
 
 
 void EventSubscriber::run() {
     buff = nullptr;
     sz = 0;
+    subSock = { 0x00 };
+    string ipcSock = "ipc://"+string(getpwuid(getuid())->pw_dir) + UTILS::FILE::fullpath(CHANNEL_BASE) + service;
+    nng_sub0_open(&subSock);
+    nng_setopt(subSock, NNG_OPT_SUB_SUBSCRIBE, "", 0);
+
+    while(nng_dial(subSock, ipcSock.c_str(), nullptr, 0) != 0){
+        sleep(5);
+    }
     if(!isRun) {
         isRun=true;
         statThread = std::thread([&]() {
