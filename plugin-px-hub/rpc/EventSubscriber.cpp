@@ -21,12 +21,12 @@ void EventSubscriber::run() {
     nng_sub0_open(&subSock);
     nng_setopt(subSock, NNG_OPT_SUB_SUBSCRIBE, "", 0);
 
-    while(nng_dial(subSock, ipcSock.c_str(), nullptr, 0) != 0){
-        sleep(5);
-    }
     if(!isRun) {
         isRun=true;
         statThread = std::thread([&]() {
+            while(nng_dial(subSock, ipcSock.c_str(), nullptr, 0) != 0){
+                sleep(5);
+            }
             while (isRun) {
                 nng_recv(subSock, &buff, &sz, NNG_FLAG_ALLOC);
                 kj::ArrayPtr<uint8_t> data(buff, sz);
