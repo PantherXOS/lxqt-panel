@@ -136,8 +136,16 @@ QWidgetAction *hub::createTitle(QString title) {
 }
 
 void hub::hubEventsHandler(EventObject *eventObject){
+    string popup;
+    auto params = eventObject->getParams();
+    if(eventObject->getEvent() == "Status_Change"){
+       popup = params["account"].toStdString() + " is " + params["new-status"].toStdString();
+        LXQt::Notification::notify(popup.c_str());
+    }else if(eventObject->getEvent() == "Service_refresh"){
+        popup = params["account"].toStdString() + " has 1 new message";
+        LXQt::Notification::notify(popup.c_str());
+    }
     refresh();
-    LXQt::Notification::notify("1 new message");
 }
 
 QWidgetAction *hub::buildMessageItem(MessageObject message) {
