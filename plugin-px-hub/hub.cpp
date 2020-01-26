@@ -10,7 +10,6 @@ hub::hub(const ILXQtPanelPluginStartupInfo &startupInfo) :
     EventSubscriber * eventSubscriber = new EventSubscriber("hub");
     connect(eventSubscriber,SIGNAL(hubEvents(EventObject *)),this,SLOT(hubEventsHandler(EventObject *)));
     eventSubscriber->run();
-    //run();
 }
 
 void hub::realign()

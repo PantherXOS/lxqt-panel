@@ -41,8 +41,8 @@ vector<AccountObject> RPCHubClient::getAccountList() {
 
             rsult.push_back(account);
         }
-    } catch (kj::Exception){
-
+    } catch (kj::Exception e){
+        cout << e.getDescription().cStr() << endl;
     }
     return rsult;
 }

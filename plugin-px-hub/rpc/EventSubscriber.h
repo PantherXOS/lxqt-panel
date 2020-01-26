@@ -44,8 +44,7 @@ signals:
     void hubEvents(EventObject *eventObject);
 
 private:
-    bool isRun;
-    bool isEventRun;
+    volatile bool isRun;
     string service;
     std::thread statThread;
     size_t sz;
