@@ -24,6 +24,7 @@
 #include <QScrollBar>
 #include <QFrame>
 #include <QFont>
+#include <QIcon>
 #include "../panel/ilxqtpanelplugin.h"
 
 #include "rpc/RPCHubClient.h"

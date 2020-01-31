@@ -1,7 +1,7 @@
 [Desktop Entry]
 Type=Service
 ServiceTypes=LXQtPanel/Plugin
-Name=px-hub-plugin
-Comment=Initial plugin of px-hub-service
+Name=PantherX HUB
+Comment=Initial plugin of PantherX HUB Service.
 #Icon=drive-removable-media
-TRANSLATIONS_DIR=../translations
+#TRANSLATIONS_DIR=../translations

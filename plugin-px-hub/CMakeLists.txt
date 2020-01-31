@@ -37,9 +37,10 @@ set(RESOURCES
 
 set(LIBRARIES
     lxqt
-	CapnProto::capnp-rpc
+    CapnProto::capnp-rpc
     nng::nng
 )
+
 add_definitions( -Wall -O2 -fexceptions )
 
 BUILD_LXQT_PLUGIN(${PLUGIN})

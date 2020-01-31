@@ -38,17 +38,17 @@ void hub::refresh() {
     }
     mainMenu->setObjectName("LXQtMountPopup");
     mainMenu->addSeparator();
+    mButton.setStyleSheet("QToolButton::menu-indicator { image: none; }");
     mButton.setMenu(mainMenu);
     mButton.setPopupMode(QToolButton::InstantPopup);
     mButton.setAutoRaise(true);
-    mButton.setIcon(XdgIcon::fromTheme(QLatin1String("view-refresh")));
+    mButton.setIcon(QIcon::fromTheme("panther"));
 }
 
 QLabel *hub::buildIconFromTheme(QString icon, QSize size){
     QIcon qicon = QIcon::fromTheme(icon);
     QPixmap pixmap = qicon.pixmap(size, QIcon::Normal, QIcon::On);
     auto iconLabel = new QLabel;
-//    iconLable->setStyleSheet("border: 0px;");
     iconLabel->setAttribute(Qt::WA_TranslucentBackground);
     iconLabel->setPixmap(pixmap);
     iconLabel->setFixedSize(size);
@@ -56,13 +56,11 @@ QLabel *hub::buildIconFromTheme(QString icon, QSize size){
 }
 
 QLabel *hub::buildIconFromFile(QString file, QSize size){
-    //QIcon tmpIcon = QIcon::fromTheme("px-mastodon");
     QIcon qicon;
     QImage image(file);
     qicon.addPixmap(QPixmap::fromImage(image), QIcon::Normal, QIcon::On);
     QPixmap pixmap = qicon.pixmap(size, QIcon::Normal, QIcon::On);
     auto iconLabel = new QLabel;
-//    iconLable->setStyleSheet("border: 0px;");
     iconLabel->setAttribute(Qt::WA_TranslucentBackground);
     iconLabel->setPixmap(pixmap);
     iconLabel->setFixedSize(size);
@@ -84,15 +82,11 @@ QWidgetAction* hub::buildAccountItem(AccountObject account) {
     if(acc.size()>MAX_ACCOUNT_SIZE)
         acc = acc.substr(0,MAX_ACCOUNT_SIZE)+"...";
     accountTitle->setText(acc.c_str());
-    accountTitle->setStyleSheet("QLabel{ color: #D2D8E0;}");
-    //accountTitle->setObjectName("NoDiskLabel");
 
     auto unreadCount = new QLabel;
     unreadCount->setText(to_string(account.getUnread()).c_str());
-    unreadCount->setStyleSheet("QLabel{ color: #D2D8E0;}");
     if(account.getUnread() == 0)
         unreadCount->setVisible(false);
-    //unreadCount->setObjectName("NoDiskLabel");
 
     auto llayout = new QHBoxLayout;
     llayout->addWidget(accountIcon);
@@ -119,8 +113,6 @@ QWidgetAction *hub::createTitle(QString title) {
     auto subject = new QLabel;
     subject->setText(title);
     subject->setFont(QFont("default",12,QFont::Bold));
-    subject->setStyleSheet("QLabel{color: #D2D8E0;}");
-    //subject->setObjectName("NoDiskLabel");
 
     auto slayout = new QHBoxLayout;
     slayout->setAlignment(Qt::AlignLeft);
@@ -154,8 +146,6 @@ QWidgetAction *hub::buildMessageItem(MessageObject message) {
         acc = acc.substr(0,MAX_ACCOUNT_SIZE)+"...";
     messageSender->setText(acc.c_str());
     messageSender->setFont(QFont("default",10,QFont::Bold));
-   //messageSender->setObjectName("NoDiskLabel");
-   messageSender->setStyleSheet("QLabel{color: #D2D8E0;}");
 
     auto llayout = new QHBoxLayout;
     llayout->addWidget(messageSender);
@@ -166,8 +156,6 @@ QWidgetAction *hub::buildMessageItem(MessageObject message) {
 
     auto messageTime = new QLabel;
     messageTime->setText(message.getTime().c_str());
-   //messageTime->setObjectName("NoDiskLabel");
-    messageTime->setStyleSheet("QLabel{ color: #D2D8E0;}");
 
     auto rlayout = new QHBoxLayout;
     rlayout->addWidget(messageTime);
@@ -185,8 +173,6 @@ QWidgetAction *hub::buildMessageItem(MessageObject message) {
 
     auto messagePreview = new QLabel;
     messagePreview->setText(message.getMessage().c_str());
-   // messagePreview->setObjectName("NoDiskLabel");
-   messagePreview->setStyleSheet("QLabel{ color: #D2D8E0;}");
 
     auto Tlayout = new QVBoxLayout;
     Tlayout->addLayout(qlayout);
