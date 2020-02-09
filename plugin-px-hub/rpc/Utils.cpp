@@ -37,6 +37,6 @@ string UTILS::timestampToString(int time) {
     std::time_t _time = time;
     std::tm* t = std::gmtime(&_time);
     std::stringstream ss;
-    ss << std::put_time(t,"%Y-%m-%d %I:%M:%S %p");
+    ss << std::put_time(t,"%H:%M");
     return ss.str();
 }

@@ -19,6 +19,7 @@ set(HEADERS
 		rpc/RPCHubClient.h
 		rpc/Utils.h
 		EventObject.h
+		LineSeperator.h
 		)
 
 set(SOURCES

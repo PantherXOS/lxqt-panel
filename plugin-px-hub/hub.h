@@ -33,6 +33,7 @@
 #include "MessageObject.h"
 #include <rpc/EventSubscriber.h>
 #include <lxqt/LXQt/Notification>
+#include "LineSeperator.h"
 
 using namespace std;
 
@@ -53,14 +54,14 @@ public slots:
 
 private slots:
     void hubEventsHandler(EventObject *eventObject);
+    void refresh();
 
 private:
     QLabel *buildIconFromFile(QString file, QSize size);
     QLabel *buildIconFromTheme(QString icon, QSize size);
     QWidgetAction* buildAccountItem(AccountObject account);
     QWidgetAction* buildMessageItem(MessageObject message);
-    QWidgetAction* createTitle(QString title);
-    void refresh();
+    QWidgetAction *createTitle(QString title, QString icon);
 
     QToolButton mButton;
     bool mHidden;
