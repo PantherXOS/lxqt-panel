@@ -54,14 +54,14 @@ public slots:
 
 private slots:
     void hubEventsHandler(EventObject *eventObject);
-    void refresh();
-
+    void updateButtonHandler();
 private:
     QLabel *buildIconFromFile(QString file, QSize size);
     QLabel *buildIconFromTheme(QString icon, QSize size);
     QWidgetAction* buildAccountItem(AccountObject account);
     QWidgetAction* buildMessageItem(MessageObject message);
     QWidgetAction *createTitle(QString title, QString icon);
+    void refresh();
 
     QToolButton mButton;
     bool mHidden;

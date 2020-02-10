@@ -89,20 +89,20 @@ QWidgetAction* hub::buildAccountItem(AccountObject account) {
         statusIconFile=":resources/icon/none";
     auto statusLabel = buildIconFromFile(statusIconFile,QSize(ACCOUNT_STATUS_ICON_SIZE,ACCOUNT_STATUS_ICON_SIZE));
     auto accountIcon = buildIconFromTheme(account.getIcon().c_str(),QSize(ACCOUNT_ICON_SIZE,ACCOUNT_ICON_SIZE));
-    //accountIcon->setContentsMargins(3,0,0,0);
+    accountIcon->setContentsMargins(3,0,0,0);
     auto accountTitle = new QLabel;
     string acc = account.getTitle();
     if(acc.size()>MAX_ACCOUNT_SIZE)
         acc = acc.substr(0,MAX_ACCOUNT_SIZE)+"...";
     accountTitle->setText(acc.c_str());
     accountTitle->setMargin(0);
-    accountTitle->setContentsMargins(5,0,0,0);
+    accountTitle->setContentsMargins(7,0,0,0);
 
     auto unreadCount = new QLabel;
     unreadCount->setText(to_string(account.getUnread()).c_str());
     if(account.getUnread() == 0)
         unreadCount->setVisible(false);
-
+    accountIcon->setContentsMargins(0,0,3,0);
 
     auto llayout = new QHBoxLayout;
     llayout->addWidget(accountIcon);
@@ -110,7 +110,7 @@ QWidgetAction* hub::buildAccountItem(AccountObject account) {
     llayout->setAlignment(Qt::AlignLeft);
     llayout->setMargin(0);
     llayout->setSpacing(0);
-    //llayout->setContentsMargins(3,0,0,0);
+    llayout->setContentsMargins(3,0,0,0);
 
     auto rlayout = new QHBoxLayout;
     rlayout->addWidget(unreadCount);
@@ -123,6 +123,9 @@ QWidgetAction* hub::buildAccountItem(AccountObject account) {
     auto qlayout = new QHBoxLayout;
     qlayout->addLayout(llayout);
     qlayout->addLayout(rlayout);
+    qlayout->setMargin(0);
+    qlayout->setSpacing(0);
+    qlayout->setContentsMargins(3,0,3,0);
 
     auto  widget = new QWidget;
     widget->setLayout(qlayout);
@@ -134,7 +137,7 @@ QWidgetAction* hub::buildAccountItem(AccountObject account) {
 QWidgetAction *hub::createTitle(QString title, QString icon) {
     auto subject = new QLabel;
     subject->setText(title);
-    subject->setFont(QFont("Helvetica",12,QFont::Bold));
+    subject->setFont(QFont("Helvetica",11,QFont::Bold));
 
     auto slayout = new QHBoxLayout;
     slayout->setAlignment(Qt::AlignLeft);
@@ -146,7 +149,7 @@ QWidgetAction *hub::createTitle(QString title, QString icon) {
         qPushButton->setIcon(QIcon::fromTheme(icon));
         qPushButton->setIconSize(QSize(UPDATE_ICON_SIZE,UPDATE_ICON_SIZE));
         qPushButton->setStyleSheet("QPushButton {background-color: transparent; border:0px;}");
-//        connect(qPushButton,SIGNAL(released()),this,SLOT(refresh()));
+        connect(qPushButton,SIGNAL(released()),this,SLOT(updateButtonHandler()));
         rlayout->addWidget(qPushButton);
         rlayout->setAlignment(Qt::AlignRight);
     }
@@ -161,6 +164,10 @@ QWidgetAction *hub::createTitle(QString title, QString icon) {
     sWidgetAction->setDefaultWidget(sWidget);
 
     return sWidgetAction;
+}
+
+void hub::updateButtonHandler() {
+    refresh();
 }
 
 void hub::hubEventsHandler(EventObject *eventObject){
@@ -182,7 +189,7 @@ QWidgetAction *hub::buildMessageItem(MessageObject message) {
     if(acc.size()>MAX_ACCOUNT_SIZE)
         acc = acc.substr(0,MAX_ACCOUNT_SIZE)+"...";
     messageSender->setText(acc.c_str());
-    messageSender->setFont(QFont("Helvetica",10,QFont::Bold));
+    messageSender->setFont(QFont("Helvetica",9,QFont::Bold));
 
     auto llayout = new QHBoxLayout;
     llayout->addWidget(messageSender);
@@ -193,6 +200,7 @@ QWidgetAction *hub::buildMessageItem(MessageObject message) {
 
     auto messageTime = new QLabel;
     messageTime->setText(message.getTime().c_str());
+    messageTime->setFont(QFont("Helvetica",8));
 
     auto rlayout = new QHBoxLayout;
     rlayout->addWidget(messageTime);
@@ -206,11 +214,11 @@ QWidgetAction *hub::buildMessageItem(MessageObject message) {
     qlayout->addLayout(rlayout);
     qlayout->setMargin(0);
     qlayout->setSpacing(0);
-    qlayout->setContentsMargins(5,0,0,0);
+    qlayout->setContentsMargins(0,0,0,0);
 
     auto messagePreview = new QLabel;
     messagePreview->setText(message.getMessage().c_str());
-   // messagePreview->setFont(QFont("Helvetica",10));
+    messagePreview->setFont(QFont("Helvetica",8));
 
     auto Tlayout = new QVBoxLayout;
     Tlayout->addLayout(qlayout);
@@ -218,7 +226,7 @@ QWidgetAction *hub::buildMessageItem(MessageObject message) {
     Tlayout->setAlignment(Qt::AlignTop);
     Tlayout->setMargin(0);
     Tlayout->setSpacing(0);
-    Tlayout->setContentsMargins(5,0,0,0);
+    Tlayout->setContentsMargins(7,0,0,0);
     auto messageIcon = buildIconFromTheme(message.getIcon().c_str(), QSize(MESSAGE_ICON_SIZE,MESSAGE_ICON_SIZE));
     auto ilayout = new QHBoxLayout;
     ilayout->addWidget(messageIcon);
