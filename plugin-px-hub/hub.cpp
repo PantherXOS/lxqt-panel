@@ -96,13 +96,13 @@ QWidgetAction* hub::buildAccountItem(AccountObject account) {
         acc = acc.substr(0,MAX_ACCOUNT_SIZE)+"...";
     accountTitle->setText(acc.c_str());
     accountTitle->setMargin(0);
-    accountTitle->setContentsMargins(7,0,0,0);
+    accountTitle->setContentsMargins(5,0,0,0);
 
     auto unreadCount = new QLabel;
     unreadCount->setText(to_string(account.getUnread()).c_str());
     if(account.getUnread() == 0)
         unreadCount->setVisible(false);
-    accountIcon->setContentsMargins(0,0,3,0);
+    accountIcon->setContentsMargins(0,0,0,0);
 
     auto llayout = new QHBoxLayout;
     llayout->addWidget(accountIcon);
@@ -110,7 +110,7 @@ QWidgetAction* hub::buildAccountItem(AccountObject account) {
     llayout->setAlignment(Qt::AlignLeft);
     llayout->setMargin(0);
     llayout->setSpacing(0);
-    llayout->setContentsMargins(3,0,0,0);
+    llayout->setContentsMargins(0,0,0,0);
 
     auto rlayout = new QHBoxLayout;
     rlayout->addWidget(unreadCount);
