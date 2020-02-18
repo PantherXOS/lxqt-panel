@@ -31,8 +31,7 @@ set(CMAKE_AUTORCC ON)
 
 set(REQUIRED_QT_VERSION "5.7.1")
 set(KF5_MINIMUM_VERSION "5.36.0")
-set(LXQT_GLOBALKEYS_MINIMUM_VERSION "0.14.1")
-set(LXQT_MINIMUM_VERSION "0.14.1")
+set(LXQT_MINIMUM_VERSION "0.14.0")
 
 find_package(Qt5DBus ${REQUIRED_QT_VERSION} REQUIRED)
 find_package(Qt5LinguistTools ${REQUIRED_QT_VERSION} REQUIRED)
@@ -41,10 +40,11 @@ find_package(Qt5X11Extras ${REQUIRED_QT_VERSION} REQUIRED)
 find_package(Qt5Xml ${REQUIRED_QT_VERSION} REQUIRED)
 find_package(KF5WindowSystem ${KF5_MINIMUM_VERSION} REQUIRED)
 find_package(lxqt ${LXQT_MINIMUM_VERSION} REQUIRED)
-find_package(lxqt-globalkeys-ui ${LXQT_GLOBALKEYS_MINIMUM_VERSION} REQUIRED)
+find_package(lxqt-globalkeys ${LXQT_MINIMUM_VERSION} REQUIRED)
+find_package(lxqt-globalkeys-ui ${LXQT_MINIMUM_VERSION} REQUIRED)
 
 # Patch Version
-set(LXQT_PANEL_PATCH_VERSION 1)
+set(LXQT_PANEL_PATCH_VERSION 0)
 set(LXQT_PANEL_VERSION ${LXQT_MAJOR_VERSION}.${LXQT_MINOR_VERSION}.${LXQT_PANEL_PATCH_VERSION})
 add_definitions("-DLXQT_PANEL_VERSION=\"${LXQT_PANEL_VERSION}\"")
 
@@ -61,11 +61,16 @@ include(LXQtCompilerSettings NO_POLICY_SCOPE)
 set(CMAKE_MODULE_LINKER_FLAGS "${OLD_CMAKE_MODULE_LINKER_FLAGS} ${SYMBOLIC_FLAGS}")
 
 # Warning: This must be before add_subdirectory(panel). Move with caution.
+if(DEV_PLUGIN)
+    set(CMAKE_INSTALL_FULL_LIBDIR $ENV{HOME})
+    set(CMAKE_INSTALL_FULL_DATAROOTDIR $ENV{HOME})
+    set(LXQT_TRANSLATIONS_DIR $ENV{HOME})
+    set(CMAKE_INSTALL_COMPONENT $ENV{HOME})
+endif()
 set(PLUGIN_DIR "${CMAKE_INSTALL_FULL_LIBDIR}/lxqt-panel")
 add_definitions(
     -DPLUGIN_DIR=\"${PLUGIN_DIR}\"
 )
-
 message(STATUS "CMAKE Module linker flags: ${CMAKE_MODULE_LINKER_FLAGS}")
 message(STATUS "Panel plugins location: ${PLUGIN_DIR}")
 
@@ -246,6 +251,12 @@ if(SPACER_PLUGIN)
     add_definitions(-DWITH_SPACER_PLUGIN)
     list(APPEND ENABLED_PLUGINS "Spacer")
     add_subdirectory(plugin-spacer)
+endif()
+
+setByDefault(HUB_PLUGIN Yes)
+if(HUB_PLUGIN)
+    list(APPEND ENABLED_PLUGINS "Hub")
+    add_subdirectory(plugin-px-hub)
 endif()
 
 #########################################################################
