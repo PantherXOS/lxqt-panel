@@ -259,6 +259,12 @@ if(HUB_PLUGIN)
     add_subdirectory(plugin-px-hub)
 endif()
 
+setByDefault(SYSTEM_PLUGIN Yes)
+if(SYSTEM_PLUGIN)
+    list(APPEND ENABLED_PLUGINS "SYSTEM")
+    add_subdirectory(plugin-px-system)
+endif()
+
 #########################################################################
 
 message(STATUS  "**************** The following plugins will be built ****************")
