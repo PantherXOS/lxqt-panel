@@ -53,11 +53,20 @@ public slots:
 //    void hubEventsHandler(EventObject *eventObject);
 //    void updateButtonHandler();
 private:
-//    QLabel *buildIconFromFile(QString file, QSize size);
-//    QLabel *buildIconFromTheme(QString icon, QSize size);
+    QLabel *buildIconFromFile(QString file, QSize size);
+    QLabel *buildIconFromTheme(QString icon, QSize size);
 //    QWidgetAction* buildAccountItem(AccountObject account);
 //    QWidgetAction* buildMessageItem(MessageObject message);
     QWidgetAction *createTitle(QString title, QString icon);
+    QWidgetAction* getUser();
+    QWidgetAction* getFirewallStatus();
+    QWidgetAction* getInternet();
+    QWidgetAction* getVpnStatus();
+    QWidgetAction* getWifiStatus();
+    QWidgetAction* getBTStatus();
+    QWidgetAction* getUpdateStat();
+    QLayout* internetLayout(QString text);
+    QWidgetAction* generalItems(QString name,QString information,bool stat,QString icon);
     void refresh();
 
     QToolButton mButton;
