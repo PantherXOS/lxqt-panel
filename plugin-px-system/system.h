@@ -28,7 +28,13 @@
 #include <QToolButton>
 #include <QtWidgets/QPushButton>
 #include "../panel/ilxqtpanelplugin.h"
-
+#include <string>
+#include <stdio.h>
+#include <iostream>
+#include <cstdio>
+#include <memory>
+#include <stdexcept>
+#include <array>
 #include "Settings.h"
 #include <lxqt/LXQt/Notification>
 
@@ -49,9 +55,10 @@ public:
 public slots:
     void realign();
 
-//private slots:
+private slots:
 //    void hubEventsHandler(EventObject *eventObject);
 //    void updateButtonHandler();
+    void refresh();
 private:
     QLabel *buildIconFromFile(QString file, QSize size);
     QLabel *buildIconFromTheme(QString icon, QSize size);
@@ -67,7 +74,7 @@ private:
     QWidgetAction* getUpdateStat();
     QLayout* internetLayout(QString text);
     QWidgetAction* generalItems(QString name,QString information,bool stat,QString icon);
-    void refresh();
+    string exec(const char* cmd);
 
     QToolButton mButton;
     bool mHidden;

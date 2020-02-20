@@ -1,4 +1,5 @@
 #include "system.h"
+#include "QDebug"
 //
 System::System(const ILXQtPanelPluginStartupInfo &startupInfo) :
     QObject(),
@@ -6,7 +7,17 @@ System::System(const ILXQtPanelPluginStartupInfo &startupInfo) :
     mHidden(false)
 {
     realign();
-    refresh();
+//    refresh();
+    mainMenu->setObjectName("LXQtMountPopup");
+    //mainMenu->addSeparator();
+    mButton.setStyleSheet("QToolButton::menu-indicator { image: none; }");
+    mButton.setMenu(mainMenu);
+    mButton.setPopupMode(QToolButton::DelayedPopup);
+//    mButton.setAutoRaise(true);
+//    mButton.setCheckable(true);
+    mButton.setIcon(QIcon::fromTheme("px-user"));
+    mButton.setText("UerTest");
+    connect(&mButton, SIGNAL(pressed()),this,SLOT(refresh()));
 //    EventSubscriber * eventSubscriber = new EventSubscriber("hub");
 //    connect(eventSubscriber,SIGNAL(hubEvents(EventObject *)),this,SLOT(hubEventsHandler(EventObject *)));
 //    eventSubscriber->run();
@@ -19,6 +30,7 @@ void System::realign()
 }
 
 void System::refresh() {
+    qDebug()<< "Start REFRESH";
     mainMenu->clear();
     mainMenu->setFixedWidth(MAIN_MENU_SIZE_W);
     mainMenu->addAction(getUser());
@@ -34,15 +46,7 @@ void System::refresh() {
     mainMenu->addAction(getBTStatus());
     mainMenu->addSeparator();
     mainMenu->addAction(getUpdateStat());
-
-
-    mainMenu->setObjectName("LXQtMountPopup");
-    mainMenu->addSeparator();
-    mButton.setStyleSheet("QToolButton::menu-indicator { image: none; }");
-    mButton.setMenu(mainMenu);
-    mButton.setPopupMode(QToolButton::InstantPopup);
-    mButton.setAutoRaise(true);
-    mButton.setIcon(QIcon::fromTheme("px-user"));
+    mButton.showMenu();
 }
 
 QLabel *System::buildIconFromTheme(QString icon, QSize size){
@@ -104,7 +108,7 @@ QWidgetAction *System::getUser() {
     auto accountIcon = buildIconFromTheme("px-user",QSize(ACCOUNT_ICON_SIZE,ACCOUNT_ICON_SIZE));
     accountIcon->setContentsMargins(0,0,0,0);
     auto accountTitle = new QLabel;
-    string acc = "UserTest"; //TODO get user
+    string acc = exec("whoami").c_str();
     if(acc.size()>MAX_ACCOUNT_SIZE)
         acc = acc.substr(0,MAX_ACCOUNT_SIZE)+"...";
     accountTitle->setText(acc.c_str());
@@ -133,7 +137,7 @@ QWidgetAction *System::getFirewallStatus() {
 QWidgetAction *System::getInternet() {
     map<string,string> internetData; //TODO should be fill by system
     internetData.insert(pair<string, string>("INTERNET", "192.168.10.10"));
-    internetData.insert(pair<string, string>("Wifi", "192.168.0.12"));
+    internetData.insert(pair<string, string>("WIFI", "192.168.0.12"));
     internetData.insert(pair<string, string>("VPN", "123.123.123.123"));
     auto llayout = new QVBoxLayout;
     auto Tlayout = new QVBoxLayout;
@@ -262,8 +266,8 @@ statusLabel->setContentsMargins(0,0,0,0);
 auto Hlayout = new QHBoxLayout;
 auto title = new QLabel;
 title->setText(text);
-title->setMargin(0);
-title->setFont(QFont("Helvetica",10,QFont::Bold));
+title->setMargin(1);
+//title->setFont(QFont("default",11));
 title->setContentsMargins(9,0,0,0);
 Hlayout->addWidget(statusLabel);
 Hlayout->addWidget(title);
@@ -372,4 +376,19 @@ QWidgetAction *System::getUpdateStat() {
     auto qWidgetAction = new QWidgetAction(this);
     qWidgetAction->setDefaultWidget(widget);
     return qWidgetAction;
+}
+
+
+
+string System::exec(const char* cmd) {
+    std::array<char, 128> buffer;
+    std::string result;
+    std::unique_ptr<FILE, decltype(&pclose)> pipe(popen(cmd, "r"), pclose);
+    if (!pipe) {
+        throw std::runtime_error("popen() failed!");
+    }
+    while (fgets(buffer.data(), buffer.size(), pipe.get()) != nullptr) {
+        result += buffer.data();
+    }
+    return result;
 }
