@@ -109,6 +109,7 @@ QWidgetAction *System::getUser() {
     accountIcon->setContentsMargins(0,0,0,0);
     auto accountTitle = new QLabel;
     string acc = exec("whoami").c_str();
+    acc = acc.substr(0, acc.find("\n", 0));
     if(acc.size()>MAX_ACCOUNT_SIZE)
         acc = acc.substr(0,MAX_ACCOUNT_SIZE)+"...";
     accountTitle->setText(acc.c_str());
@@ -141,10 +142,16 @@ QWidgetAction *System::getInternet() {
     internetData.insert(pair<string, string>("VPN", "123.123.123.123"));
     auto llayout = new QVBoxLayout;
     auto Tlayout = new QVBoxLayout;
+    int i=0;
     for(auto m:internetData){
-        llayout->addLayout(internetLayout(m.first.c_str()));
+        if(i==0){
+            llayout->addLayout(internetLayout(m.first.c_str(), ":resources/icon/status_2_green_d"));
+        }else{
+            llayout->addLayout(internetLayout(m.first.c_str(), ":resources/icon/status_3_green_ud"));
+        }
+        i++;
     }
-    llayout->addLayout(internetLayout("YOU"));
+    llayout->addLayout(internetLayout("YOU", ":resources/icon/status_1_green_u"));
     llayout->setAlignment(Qt::AlignTop);
     llayout->setMargin(0);
     llayout->setSpacing(0);
@@ -260,13 +267,14 @@ QWidgetAction *System::getInternet() {
 //    return gWidgetAction;
 //}
 
-QLayout* System::internetLayout(QString text){
-auto statusLabel = buildIconFromFile(":resources/icon/online",QSize(10,10));
+QLayout * System::internetLayout(QString text, QString icon) {
+auto statusLabel = buildIconFromFile(icon,QSize(ACCOUNT_STATUS_ICON_SIZE,ACCOUNT_STATUS_ICON_SIZE));
+statusLabel->setMargin(0);
 statusLabel->setContentsMargins(0,0,0,0);
 auto Hlayout = new QHBoxLayout;
 auto title = new QLabel;
 title->setText(text);
-title->setMargin(1);
+title->setMargin(0);
 //title->setFont(QFont("default",11));
 title->setContentsMargins(9,0,0,0);
 Hlayout->addWidget(statusLabel);
@@ -283,9 +291,7 @@ QWidgetAction *System::getVpnStatus() {
 
 QWidgetAction *System::getWifiStatus() {
     return generalItems("WIFI","HomeWifi",true,"px-wifi");
-
 }
-
 QWidgetAction *System::getBTStatus() {
     return generalItems("BT","Logitech z533",true,"px-bluetooth");
 }
@@ -293,10 +299,10 @@ QWidgetAction *System::getBTStatus() {
 QWidgetAction* System::generalItems(QString name,QString information,bool stat,QString icon){
     QString statusIconFile;
     if(stat){
-        statusIconFile=":resources/icon/online";
+        statusIconFile=":resources/icon/status_0_green_o";
     }
     else{
-        statusIconFile=":resources/icon/none";
+        statusIconFile=":resources/icon/status_0_grey";
     }
     auto statusLabel = buildIconFromFile(statusIconFile,QSize(ACCOUNT_STATUS_ICON_SIZE,ACCOUNT_STATUS_ICON_SIZE));
     auto firewallIcon = buildIconFromTheme(icon,QSize(ACCOUNT_ICON_SIZE,ACCOUNT_ICON_SIZE));

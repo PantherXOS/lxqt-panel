@@ -72,7 +72,7 @@ private:
     QWidgetAction* getWifiStatus();
     QWidgetAction* getBTStatus();
     QWidgetAction* getUpdateStat();
-    QLayout* internetLayout(QString text);
+    QLayout *internetLayout(QString text, QString icon);
     QWidgetAction* generalItems(QString name,QString information,bool stat,QString icon);
     string exec(const char* cmd);
 

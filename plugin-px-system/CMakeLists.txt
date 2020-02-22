@@ -9,6 +9,9 @@ set(SOURCES
 		system.cpp
 		)
 
+set(RESOURCES
+		resources.qrc
+		)
 
 set(LIBRARIES
     lxqt
