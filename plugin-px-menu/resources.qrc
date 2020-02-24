@@ -1,0 +1,12 @@
+<RCC>
+    <qresource prefix="/">
+        <file>resources/font-solid.svg</file>
+        <file>resources/times-solid.svg</file>
+        <file>resources/icon/status_0_green_o.svg</file>
+        <file>resources/icon/status_0_grey.svg</file>
+        <file>resources/icon/status_0_red.svg</file>
+        <file>resources/icon/status_1_green_u.svg</file>
+        <file>resources/icon/status_2_green_d.svg</file>
+        <file>resources/icon/status_3_green_ud.svg</file>
+    </qresource>
+</RCC>

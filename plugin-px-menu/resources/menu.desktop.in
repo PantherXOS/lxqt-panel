@@ -1,0 +1,7 @@
+[Desktop Entry]
+Type=Service
+ServiceTypes=LXQtPanel/Plugin
+Name=PantherX MENU
+Comment=Initial plugin of PantherX MENU.
+#Icon=drive-removable-media
+#TRANSLATIONS_DIR=../translations

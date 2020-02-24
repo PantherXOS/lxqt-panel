@@ -265,6 +265,12 @@ if(SYSTEM_PLUGIN)
     add_subdirectory(plugin-px-system)
 endif()
 
+setByDefault(MENU_PLUGIN Yes)
+if(MENU_PLUGIN)
+    list(APPEND ENABLED_PLUGINS "MENU")
+    add_subdirectory(plugin-px-menu)
+endif()
+
 #########################################################################
 
 message(STATUS  "**************** The following plugins will be built ****************")
