@@ -13,14 +13,9 @@ System::System(const ILXQtPanelPluginStartupInfo &startupInfo) :
     mButton.setStyleSheet("QToolButton::menu-indicator { image: none; }");
     mButton.setMenu(mainMenu);
     mButton.setPopupMode(QToolButton::DelayedPopup);
-//    mButton.setAutoRaise(true);
-//    mButton.setCheckable(true);
     mButton.setIcon(QIcon::fromTheme("px-user"));
     mButton.setText("UerTest");
     connect(&mButton, SIGNAL(pressed()),this,SLOT(refresh()));
-//    EventSubscriber * eventSubscriber = new EventSubscriber("hub");
-//    connect(eventSubscriber,SIGNAL(hubEvents(EventObject *)),this,SLOT(hubEventsHandler(EventObject *)));
-//    eventSubscriber->run();
 }
 
 void System::realign()
@@ -182,90 +177,7 @@ QWidgetAction *System::getInternet() {
     qWidgetAction->setDefaultWidget(widget);
     return qWidgetAction;
 }
-//
-//void hub::updateButtonHandler() {
-//    refresh();
-//}
-//
-//void hub::hubEventsHandler(EventObject *eventObject){
-//    string popup;
-//    auto params = eventObject->getParams();
-//    if(eventObject->getEvent() == "Status_Change"){
-//       popup = params["account"].toStdString() + " is " + params["new-status"].toStdString();
-//        LXQt::Notification::notify(popup.c_str());
-//    }else if(eventObject->getEvent() == "Service_refresh"){
-//        popup = params["account"].toStdString() + " has 1 new message";
-//        LXQt::Notification::notify(popup.c_str());
-//    }
-//    refresh();
-//}
-//
-//QWidgetAction *hub::buildMessageItem(MessageObject message) {
-//    auto messageSender = new QLabel;
-//    string acc = message.getSender();
-//    if(acc.size()>MAX_ACCOUNT_SIZE)
-//        acc = acc.substr(0,MAX_ACCOUNT_SIZE)+"...";
-//    messageSender->setText(acc.c_str());
-//    messageSender->setFont(QFont("Helvetica",9,QFont::Bold));
-//
-//    auto llayout = new QHBoxLayout;
-//    llayout->addWidget(messageSender);
-//    llayout->setAlignment(Qt::AlignLeft);
-//    llayout->setMargin(0);
-//    llayout->setSpacing(0);
-//    llayout->setContentsMargins(0,0,0,0);
-//
-//    auto messageTime = new QLabel;
-//    messageTime->setText(message.getTime().c_str());
-//    messageTime->setFont(QFont("Helvetica",8));
-//
-//    auto rlayout = new QHBoxLayout;
-//    rlayout->addWidget(messageTime);
-//    rlayout->setAlignment(Qt::AlignRight);
-//    rlayout->setMargin(0);
-//    rlayout->setSpacing(0);
-//    rlayout->setContentsMargins(0,0,3,0);
-//
-//    auto qlayout = new QHBoxLayout;
-//    qlayout->addLayout(llayout);
-//    qlayout->addLayout(rlayout);
-//    qlayout->setMargin(0);
-//    qlayout->setSpacing(0);
-//    qlayout->setContentsMargins(0,0,0,0);
-//
-//    auto messagePreview = new QLabel;
-//    messagePreview->setText(message.getMessage().c_str());
-//    messagePreview->setFont(QFont("Helvetica",8));
-//
-//    auto Tlayout = new QVBoxLayout;
-//    Tlayout->addLayout(qlayout);
-//    Tlayout->addWidget(messagePreview);
-//    Tlayout->setAlignment(Qt::AlignTop);
-//    Tlayout->setMargin(0);
-//    Tlayout->setSpacing(0);
-//    Tlayout->setContentsMargins(7,0,0,0);
-//    auto messageIcon = buildIconFromTheme(message.getIcon().c_str(), QSize(MESSAGE_ICON_SIZE,MESSAGE_ICON_SIZE));
-//    auto ilayout = new QHBoxLayout;
-//    ilayout->addWidget(messageIcon);
-//    ilayout->setMargin(0);
-//    ilayout->setSpacing(0);
-//    ilayout->setContentsMargins(3,0,0,0);
-//
-//    auto glayout = new QHBoxLayout;
-//    glayout->addLayout(ilayout);
-//    glayout->addLayout(Tlayout);
-//    glayout->setMargin(0);
-//    glayout->setSpacing(0);
-//    glayout->setContentsMargins(0,0,0,0);
-//
-//    auto  resultWidget = new QWidget;
-//    resultWidget->setLayout(glayout);
-//    resultWidget->setSizePolicy(QSizePolicy::MinimumExpanding,QSizePolicy::Preferred);
-//
-//    auto gWidgetAction = new QWidgetAction(this);
-//    gWidgetAction->setDefaultWidget(resultWidget);
-//    return gWidgetAction;
-//}
+
 
 QLayout * System::internetLayout(QString text, QString icon) {
 auto statusLabel = buildIconFromFile(icon,QSize(ACCOUNT_STATUS_ICON_SIZE,ACCOUNT_STATUS_ICON_SIZE));
