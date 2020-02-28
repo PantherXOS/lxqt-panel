@@ -7,9 +7,7 @@ System::System(const ILXQtPanelPluginStartupInfo &startupInfo) :
     mHidden(false)
 {
     realign();
-//    refresh();
     mainMenu->setObjectName("LXQtMountPopup");
-    //mainMenu->addSeparator();
     mButton.setStyleSheet("QToolButton::menu-indicator { image: none; }");
     mButton.setMenu(mainMenu);
     mButton.setPopupMode(QToolButton::DelayedPopup);
@@ -185,7 +183,6 @@ auto Hlayout = new QHBoxLayout;
 auto title = new QLabel;
 title->setText(text);
 title->setMargin(0);
-//title->setFont(QFont("default",11));
 title->setContentsMargins(9,0,0,0);
 Hlayout->addWidget(statusLabel);
 Hlayout->addWidget(title);
