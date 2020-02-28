@@ -14,7 +14,6 @@ System::System(const ILXQtPanelPluginStartupInfo &startupInfo) :
     mButton.setMenu(mainMenu);
     mButton.setPopupMode(QToolButton::DelayedPopup);
     mButton.setIcon(QIcon::fromTheme("px-user"));
-    mButton.setText("UerTest");
     connect(&mButton, SIGNAL(pressed()),this,SLOT(refresh()));
 }
 
@@ -25,7 +24,6 @@ void System::realign()
 }
 
 void System::refresh() {
-    qDebug()<< "Start REFRESH";
     mainMenu->clear();
     mainMenu->setFixedWidth(MAIN_MENU_SIZE_W);
     mainMenu->addAction(getUser());
