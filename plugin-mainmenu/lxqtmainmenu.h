@@ -95,6 +95,7 @@ private:
     QWidgetAction * mSearchViewAction;
     ActionView * mSearchView;
     QAction * mMakeDirtyAction;
+    void addItem(QString text, QAction *before);
     bool mFilterMenu; //!< searching should perform hiding nonmatching items in menu
     bool mFilterShow; //!< searching should list matching items in top menu
     bool mFilterClear; //!< search field should be cleared upon showing the menu

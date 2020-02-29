@@ -49,6 +49,8 @@
     #include "xdgcachedmenu.h"
 #else
     #include <XdgAction>
+#include <QtWidgets/QHBoxLayout>
+
 #endif
 
 #define DEFAULT_SHORTCUT "Alt+F1"
@@ -395,6 +397,8 @@ void LXQtMainMenu::buildMenu()
 #else
     mMenu = new XdgMenuWidget(mXdgMenu, "", &mButton);
 #endif
+    addItem("YOUR APPLICATIONS",mMenu->actions()[0]);
+    mMenu->setFixedWidth(200);
     mMenu->setObjectName("TopLevelMainMenu");
     setTranslucentMenus(mMenu);
     // Note: the QWidget::ensurePolished() workarounds problem with transparent
@@ -454,7 +458,7 @@ void LXQtMainMenu::setMenuFontSize()
     }
 
     //icon size the same as the font height
-    const int icon_size = QFontMetrics(menuFont).height();
+    const int icon_size = QFontMetrics(menuFont).height()*0.8;
     mTopMenuStyle.setIconSize(icon_size);
     mSearchView->setIconSize(QSize{icon_size, icon_size});
 }
@@ -567,6 +571,25 @@ bool LXQtMainMenu::eventFilter(QObject *obj, QEvent *event)
         }
     }
     return false;
+}
+
+void LXQtMainMenu::addItem(QString text, QAction *before) {
+    auto qlayout = new QHBoxLayout;
+    auto title = new QLabel;
+    title->setText(text);
+    auto _font = title->font();
+    QFont  font = _font;
+    font.setBold(true);
+//    title->setMargin(0);
+    title->setFont(font);
+//    title->setContentsMargins(8,0,0,0);
+    qlayout->addWidget(title);
+
+    auto  widget = new QWidget;
+    widget->setLayout(qlayout);
+    auto qWidgetAction = new QWidgetAction(this);
+    qWidgetAction->setDefaultWidget(widget);
+    mMenu->insertAction(before,qWidgetAction);
 }
 
 #undef DEFAULT_SHORTCUT
