@@ -41,10 +41,13 @@
 #include <QDomElement>
 #include <QAction>
 #include <QTimer>
+#include <QDebug>
 #include <QKeySequence>
-
+#include <string>
+#include <iostream>
 #include "menustyle.h"
-
+#include <memory>
+using namespace std;
 
 class QMenu;
 class QWidgetAction;
@@ -96,6 +99,7 @@ private:
     ActionView * mSearchView;
     QAction * mMakeDirtyAction;
     void addItem(QString text, QAction *before);
+    string exec(const char* cmd);
     bool mFilterMenu; //!< searching should perform hiding nonmatching items in menu
     bool mFilterShow; //!< searching should list matching items in top menu
     bool mFilterClear; //!< search field should be cleared upon showing the menu

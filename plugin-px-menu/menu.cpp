@@ -1,3 +1,4 @@
+#include <QtGui/QDesktopServices>
 #include "menu.h"
 #include "QDebug"
 //
@@ -8,6 +9,7 @@ Menu::Menu(const ILXQtPanelPluginStartupInfo &startupInfo) :
 {
     realign();
     refresh();
+    qDebug()<<QDesktopServices::openUrl(QUrl::fromLocalFile("file:///home/panther/flower"));
     mainMenu->setObjectName("LXQtMountPopup");
    }
 

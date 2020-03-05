@@ -42,8 +42,12 @@
 #include <algorithm> // for find_if()
 #include <KWindowSystem/KWindowSystem>
 #include <QApplication>
-
+#include <sstream>
+#include <string>
+#include <fstream>
+#include <iostream>
 #include <XdgMenuWidget>
+#include "ResultItem.h"
 
 #ifdef HAVE_MENU_CACHE
     #include "xdgcachedmenu.h"
@@ -337,8 +341,37 @@ static void setTranslucentMenus(QMenu * menu)
  ************************************************/
 void LXQtMainMenu::searchTextChanged(QString const & text)
 {
+
     if (mFilterShow)
     {
+        if(!text.isEmpty()){
+            qDebug()<<"************* "+text;
+            string command = "recollq -S type "+text.toStdString();
+            string res = exec(command.c_str());
+            std::stringstream ss(res);
+            std::string to;
+            vector<ResultItem> resultList;
+            int i = 0;
+            if (res.c_str() != NULL)
+            {
+                while(std::getline(ss,to,'\n')) {
+                    if (i > 1) {
+                        ResultItem resultItem;
+                        cout << "**********************" << endl;
+                        istringstream iss(to);
+                        vector<string> tokens{istream_iterator<string>{iss},
+                                              istream_iterator<string>{}};
+
+                        resultItem.type = tokens.at(0).c_str();
+                        resultItem.address = tokens.at(1).c_str();
+                        resultItem.name = tokens.at(2).c_str();
+                        qDebug() << resultItem.toString();
+                        resultList.push_back(resultItem);
+                    }
+                    i++;
+                }
+            }
+        }
         mHeavyMenuChanges = true;
         const bool shown = !text.isEmpty();
         if (mFilterShowHideMenu)
@@ -352,10 +385,11 @@ void LXQtMainMenu::searchTextChanged(QString const & text)
         mMenu->removeAction(mMakeDirtyAction);
         mHeavyMenuChanges = false;
     }
-    if (mFilterMenu && !(mFilterShow && mFilterShowHideMenu))
+    if (mFilterMenu && !(mFilterShow && mFilterShowHideMenu)) {
         filterMenu(mMenu, text);
-
+    }
 }
+
 
 /************************************************
 
@@ -590,6 +624,20 @@ void LXQtMainMenu::addItem(QString text, QAction *before) {
     auto qWidgetAction = new QWidgetAction(this);
     qWidgetAction->setDefaultWidget(widget);
     mMenu->insertAction(before,qWidgetAction);
+}
+
+string LXQtMainMenu::exec(const char* cmd) {
+    std::array<char, 128> buffer;
+    std::string result;
+    std::unique_ptr<FILE, decltype(&pclose)> pipe(popen(cmd, "r"), pclose);
+    if (!pipe) {
+        //throw std::runtime_error("popen() failed!");
+        qWarning()<<"popen() failed!";
+    }
+    while (fgets(buffer.data(), buffer.size(), pipe.get()) != nullptr) {
+        result += buffer.data();
+    }
+    return result;
 }
 
 #undef DEFAULT_SHORTCUT
