@@ -344,28 +344,27 @@ void LXQtMainMenu::searchTextChanged(QString const & text)
 
     if (mFilterShow)
     {
+        QList<QAction *> resultList;
+        resultList.clear();
         if(!text.isEmpty()){
-            qDebug()<<"************* "+text;
-            string command = "recollq -S type "+text.toStdString();
+            qDebug()<<"*********" + text;
+            string command = "recollq -S type " + text.toStdString();
             string res = exec(command.c_str());
             std::stringstream ss(res);
             std::string to;
-            vector<ResultItem> resultList;
             int i = 0;
             if (res.c_str() != NULL)
             {
                 while(std::getline(ss,to,'\n')) {
                     if (i > 1) {
-                        ResultItem resultItem;
-                        cout << "**********************" << endl;
                         istringstream iss(to);
                         vector<string> tokens{istream_iterator<string>{iss},
                                               istream_iterator<string>{}};
+                        tokens.at(2) = tokens.at(2).substr(1, tokens.at(2).size() - 2);
+                        tokens.at(1) = tokens.at(1).substr(1, tokens.at(1).size() - 2);
 
-                        resultItem.type = tokens.at(0).c_str();
-                        resultItem.address = tokens.at(1).c_str();
-                        resultItem.name = tokens.at(2).c_str();
-                        qDebug() << resultItem.toString();
+                        auto resultItem = new ResultItem(tokens.at(2).c_str(), tokens.at(0).c_str(), tokens.at(1).c_str(), mMenu->font(),nullptr);
+                        qDebug() << resultItem->toString();
                         resultList.push_back(resultItem);
                     }
                     i++;
@@ -379,6 +378,8 @@ void LXQtMainMenu::searchTextChanged(QString const & text)
         if (shown)
             mSearchView->setFilter(text);
         mSearchView->setVisible(shown);
+        mSearchView->addActions(resultList);
+//        qDebug() << resultList;
         mSearchViewAction->setVisible(shown);
         //TODO: how to force the menu to recalculate it's size in a more elegant way?
         mMenu->addAction(mMakeDirtyAction);
