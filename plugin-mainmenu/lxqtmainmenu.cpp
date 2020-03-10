@@ -164,6 +164,8 @@ void LXQtMainMenu::showHideMenu()
  ************************************************/
 void LXQtMainMenu::showMenu()
 {
+    mMenu->clear();
+    mMenu->addActions(backupMenu->actions());
     if (!mMenu)
         return;
 
@@ -341,13 +343,12 @@ static void setTranslucentMenus(QMenu * menu)
  ************************************************/
 void LXQtMainMenu::searchTextChanged(QString const & text)
 {
-
     if (mFilterShow)
     {
-        QList<QAction *> resultList;
-        resultList.clear();
         if(!text.isEmpty()){
-            qDebug()<<"*********" + text;
+            for(auto m:resultItemList)
+                mMenu->removeAction(m);
+            resultItemList.clear();
             string command = "recollq -S type " + text.toStdString();
             string res = exec(command.c_str());
             std::stringstream ss(res);
@@ -356,7 +357,7 @@ void LXQtMainMenu::searchTextChanged(QString const & text)
             if (res.c_str() != NULL)
             {
                 while(std::getline(ss,to,'\n')) {
-                    if (i > 1) {
+                    if (i > 1 && i<7) {
                         istringstream iss(to);
                         vector<string> tokens{istream_iterator<string>{iss},
                                               istream_iterator<string>{}};
@@ -364,13 +365,16 @@ void LXQtMainMenu::searchTextChanged(QString const & text)
                         tokens.at(1) = tokens.at(1).substr(1, tokens.at(1).size() - 2);
 
                         auto resultItem = new ResultItem(tokens.at(2).c_str(), tokens.at(0).c_str(), tokens.at(1).c_str(), mMenu->font(),nullptr);
-                        qDebug() << resultItem->toString();
-                        resultList.push_back(resultItem);
+//                        mMenu->insertAction(mMenu->actions()[mMenu->actions().size()-1],resultItem);
+                        resultItemList.push_back(resultItem);
                     }
                     i++;
                 }
             }
         }
+        for(auto res : resultItemList)
+            mMenu->insertAction(mMenu->actions()[mMenu->actions().size()-1],res);
+
         mHeavyMenuChanges = true;
         const bool shown = !text.isEmpty();
         if (mFilterShowHideMenu)
@@ -378,8 +382,6 @@ void LXQtMainMenu::searchTextChanged(QString const & text)
         if (shown)
             mSearchView->setFilter(text);
         mSearchView->setVisible(shown);
-        mSearchView->addActions(resultList);
-//        qDebug() << resultList;
         mSearchViewAction->setVisible(shown);
         //TODO: how to force the menu to recalculate it's size in a more elegant way?
         mMenu->addAction(mMakeDirtyAction);
@@ -451,6 +453,9 @@ void LXQtMainMenu::buildMenu()
     mMenu->addSeparator();
     mMenu->addAction(mSearchViewAction);
     mMenu->addAction(mSearchEditAction);
+    backupMenu = new QMenu;
+    backupMenu->addActions(mMenu->actions());
+
     connect(mMenu, &QMenu::hovered, this, &LXQtMainMenu::setSearchFocus);
     //Note: setting readOnly to true to avoid wake-ups upon the Qt's internal "blink" cursor timer
     //(if the readOnly is not set, the "blink" timer is active also in case the menu is not shown ->

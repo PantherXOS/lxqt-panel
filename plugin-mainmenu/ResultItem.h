@@ -39,6 +39,7 @@ public:
         resultWidget->setLayout(Tlayout);
         resultWidget->setSizePolicy(QSizePolicy::MinimumExpanding,QSizePolicy::Preferred);
         setDefaultWidget(resultWidget);
+        setText(name);
     }
 
     QLabel * buildIconFromTheme(QString icon, QSize size){

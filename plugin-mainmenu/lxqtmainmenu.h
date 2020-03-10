@@ -47,6 +47,7 @@
 #include <iostream>
 #include "menustyle.h"
 #include <memory>
+#include "ResultItem.h"
 using namespace std;
 
 class QMenu;
@@ -91,6 +92,8 @@ private:
     QToolButton mButton;
     QString mLogDir;
     QMenu* mMenu;
+    QList <ResultItem *> resultItemList;
+    QMenu* backupMenu;
     GlobalKeyShortcut::Action *mShortcut;
     MenuStyle mTopMenuStyle;
     QWidgetAction * mSearchEditAction;
