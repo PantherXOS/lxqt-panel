@@ -11,10 +11,13 @@
 #include <QHBoxLayout>
 #include <QLabel>
 #include <QFont>
+#include <QtGui/QDesktopServices>
+#include <QUrl>
+
 class ResultItem : public QWidgetAction{
 Q_OBJECT
 public:
-    ResultItem(QString name, QString type, QString address,QFont mfont, QObject *parent) : QWidgetAction(parent) {
+    ResultItem(QString name, QString type, QString address,QFont mfont, QObject *parent= nullptr) : QWidgetAction(parent) {
         auto title = new QLabel;
         title->setText(name);
         title->setFont(mfont);
@@ -28,22 +31,24 @@ public:
         Tlayout->addWidget(itemIcon);
         int left,right,top,buttom;
         itemIcon->getContentsMargins(&left,&top,&right,&buttom);
-        //itemIcon->setContentsMargins(left,top,5,buttom);
         Tlayout->addWidget(title);
         Tlayout->setAlignment(Qt::AlignLeft);
-//        Tlayout->setMargin(0);
-//        Tlayout->setSpacing(0);
-//        Tlayout->setContentsMargins(5,0,0,0);
 
         auto  resultWidget = new QWidget;
         resultWidget->setLayout(Tlayout);
         resultWidget->setSizePolicy(QSizePolicy::MinimumExpanding,QSizePolicy::Preferred);
         setDefaultWidget(resultWidget);
         setText(name);
+        address = address.remove(0,7);
+        setToolTip(address);
     }
-
+    void open(){
+        QDesktopServices::openUrl(QUrl(this->address));
+    }
     QLabel * buildIconFromTheme(QString icon, QSize size){
         QIcon qicon = QIcon::fromTheme(icon);
+        if(qicon.name().isEmpty())
+            qicon = QIcon::fromTheme("unknown");
         QPixmap pixmap = qicon.pixmap(size, QIcon::Normal, QIcon::On);
         auto iconLabel = new QLabel;
         iconLabel->setAttribute(Qt::WA_TranslucentBackground);

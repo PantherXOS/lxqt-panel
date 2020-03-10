@@ -83,7 +83,6 @@ LXQtMainMenu::LXQtMainMenu(const ILXQtPanelPluginStartupInfo &startupInfo):
     connect(&mDelayedPopup, &QTimer::timeout, this, &LXQtMainMenu::showHideMenu);
     mHideTimer.setSingleShot(true);
     mHideTimer.setInterval(250);
-
     mButton.setAutoRaise(true);
     mButton.setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Minimum);
     //Notes:
@@ -164,8 +163,6 @@ void LXQtMainMenu::showHideMenu()
  ************************************************/
 void LXQtMainMenu::showMenu()
 {
-    mMenu->clear();
-    mMenu->addActions(backupMenu->actions());
     if (!mMenu)
         return;
 
@@ -345,10 +342,10 @@ void LXQtMainMenu::searchTextChanged(QString const & text)
 {
     if (mFilterShow)
     {
+        for(auto m:resultItemList)
+            mMenu->removeAction(m);
+        resultItemList.clear();
         if(!text.isEmpty()){
-            for(auto m:resultItemList)
-                mMenu->removeAction(m);
-            resultItemList.clear();
             string command = "recollq -S type " + text.toStdString();
             string res = exec(command.c_str());
             std::stringstream ss(res);
@@ -372,8 +369,10 @@ void LXQtMainMenu::searchTextChanged(QString const & text)
                 }
             }
         }
+        if(resultItemList.size())
+            mMenu->insertSeparator(mMenu->actions()[mMenu->actions().size()-1]);
         for(auto res : resultItemList)
-            mMenu->insertAction(mMenu->actions()[mMenu->actions().size()-1],res);
+            mMenu->insertAction(mMenu->actions()[mMenu->actions().size()-2],res);
 
         mHeavyMenuChanges = true;
         const bool shown = !text.isEmpty();
@@ -455,6 +454,7 @@ void LXQtMainMenu::buildMenu()
     mMenu->addAction(mSearchEditAction);
     backupMenu = new QMenu;
     backupMenu->addActions(mMenu->actions());
+    connect(mMenu, &QMenu::triggered, this, &LXQtMainMenu::actionTrigered);
 
     connect(mMenu, &QMenu::hovered, this, &LXQtMainMenu::setSearchFocus);
     //Note: setting readOnly to true to avoid wake-ups upon the Qt's internal "blink" cursor timer
@@ -644,6 +644,14 @@ string LXQtMainMenu::exec(const char* cmd) {
         result += buffer.data();
     }
     return result;
+}
+
+void LXQtMainMenu::actionTrigered(QAction *action) {
+    auto resultItem = qobject_cast<ResultItem *>(action);
+    if (resultItem){
+        resultItem->open();
+    }
+
 }
 
 #undef DEFAULT_SHORTCUT
