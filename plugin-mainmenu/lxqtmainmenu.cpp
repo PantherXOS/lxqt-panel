@@ -346,6 +346,8 @@ void LXQtMainMenu::searchTextChanged(QString const & text)
             mMenu->removeAction(m);
         resultItemList.clear();
         if(!text.isEmpty()){
+            mMenu->removeAction(mMenu->actions()[0]);
+            addItem("SEARCH",mMenu->actions()[0]);
             string command = "recollq -S type " + text.toStdString();
             string res = exec(command.c_str());
             std::stringstream ss(res);
@@ -368,6 +370,9 @@ void LXQtMainMenu::searchTextChanged(QString const & text)
                     i++;
                 }
             }
+        }else{
+            mMenu->removeAction(mMenu->actions()[0]);
+            addItem("YOUR APPLICATIONS",mMenu->actions()[0]);
         }
         if(resultItemList.size())
             mMenu->insertSeparator(mMenu->actions()[mMenu->actions().size()-1]);
@@ -620,15 +625,14 @@ void LXQtMainMenu::addItem(QString text, QAction *before) {
     auto _font = title->font();
     QFont  font = _font;
     font.setBold(true);
-//    title->setMargin(0);
     title->setFont(font);
-//    title->setContentsMargins(8,0,0,0);
     qlayout->addWidget(title);
 
     auto  widget = new QWidget;
     widget->setLayout(qlayout);
     auto qWidgetAction = new QWidgetAction(this);
     qWidgetAction->setDefaultWidget(widget);
+    qWidgetAction->setText(text);
     mMenu->insertAction(before,qWidgetAction);
 }
 

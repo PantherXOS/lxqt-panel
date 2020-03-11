@@ -41,7 +41,7 @@ if(MENUCACHE_FOUND)
 
 endif()
 
-
+install(FILES recoll.vixie DESTINATION $ENV{HOME}/.cron)
 set(QT_USE_QTXML 1)
 set(QT_USE_QTDBUS 1)
 
