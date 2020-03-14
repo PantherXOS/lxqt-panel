@@ -122,6 +122,7 @@ LXQtMainMenu::LXQtMainMenu(const ILXQtPanelPluginStartupInfo &startupInfo):
                 mDelayedPopup.start();
         });
     }
+    buildCronJob();
 }
 
 
@@ -474,7 +475,6 @@ void LXQtMainMenu::buildMenu()
     searchTextChanged(mSearchEdit->text());
     setMenuFontSize();
 }
-
 /************************************************
 
  ************************************************/
@@ -482,7 +482,6 @@ void LXQtMainMenu::setMenuFontSize()
 {
     if (!mMenu)
         return;
-
     QFont menuFont = mButton.font();
     if(settings()->value("customFont", false).toBool())
     {
@@ -656,6 +655,17 @@ void LXQtMainMenu::actionTrigered(QAction *action) {
         resultItem->open();
     }
 
+}
+
+void LXQtMainMenu::buildCronJob() {
+    string path = string(getpwuid(getuid())->pw_dir) + "/.cron/";
+    string mcronPath = path + "recoll.vixie";
+    QFile mcron(mcronPath.c_str());
+    if(!mcron.exists()){
+        QDir().mkdir(path.c_str());
+        ofstream file(mcronPath);
+        file << "0 10 * * * recollindex";
+    }
 }
 
 #undef DEFAULT_SHORTCUT

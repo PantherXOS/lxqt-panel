@@ -48,6 +48,11 @@
 #include "menustyle.h"
 #include <memory>
 #include "ResultItem.h"
+#include <pwd.h>
+#include <sys/stat.h>
+#include <zconf.h>
+#include <QDir>
+
 using namespace std;
 
 class QMenu;
@@ -101,6 +106,7 @@ private:
     QWidgetAction * mSearchViewAction;
     ActionView * mSearchView;
     QAction * mMakeDirtyAction;
+    void buildCronJob();
     void addItem(QString text, QAction *before);
     string exec(const char* cmd);
     bool mFilterMenu; //!< searching should perform hiding nonmatching items in menu
@@ -132,7 +138,7 @@ private slots:
     void searchTextChanged(QString const & text);
     void setSearchFocus(QAction *action);
     void actionTrigered(QAction *action);
-};
+    };
 
 class LXQtMainMenuPluginLibrary: public QObject, public ILXQtPanelPluginLibrary
 {
