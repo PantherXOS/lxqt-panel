@@ -373,7 +373,11 @@ void LXQtMainMenu::searchTextChanged(QString const & text)
             }
         }else{
             mMenu->removeAction(mMenu->actions()[0]);
-            addItem("YOUR APPLICATIONS",mMenu->actions()[0]);
+//            addItem("YOUR APPLICATIONS",mMenu->actions()[0]);
+            mMenu->insertAction(mMenu->actions()[0],buildPxMenu());
+
+            //connect(mMenu, &QMenu::triggered, this, &LXQtMainMenu::actionFileTrigered);
+            mMenu->insertAction(mMenu->actions()[1],mMenu->addSeparator());
         }
         if(resultItemList.size())
             mMenu->insertSeparator(mMenu->actions()[mMenu->actions().size()-1]);
@@ -439,7 +443,6 @@ void LXQtMainMenu::buildMenu()
 #else
     mMenu = new XdgMenuWidget(mXdgMenu, "", &mButton);
 #endif
-    addItem("YOUR APPLICATIONS",mMenu->actions()[0]);
     mMenu->setFixedWidth(200);
     mMenu->setObjectName("TopLevelMainMenu");
     setTranslucentMenus(mMenu);
@@ -454,13 +457,13 @@ void LXQtMainMenu::buildMenu()
     menuInstallEventFilter(mMenu, this);
     connect(mMenu, &QMenu::aboutToHide, &mHideTimer, static_cast<void (QTimer::*)()>(&QTimer::start));
     connect(mMenu, &QMenu::aboutToShow, &mHideTimer, &QTimer::stop);
-
     mMenu->addSeparator();
     mMenu->addAction(mSearchViewAction);
     mMenu->addAction(mSearchEditAction);
     backupMenu = new QMenu;
     backupMenu->addActions(mMenu->actions());
     connect(mMenu, &QMenu::triggered, this, &LXQtMainMenu::actionTrigered);
+
 
     connect(mMenu, &QMenu::hovered, this, &LXQtMainMenu::setSearchFocus);
     //Note: setting readOnly to true to avoid wake-ups upon the Qt's internal "blink" cursor timer
@@ -618,19 +621,8 @@ bool LXQtMainMenu::eventFilter(QObject *obj, QEvent *event)
 }
 
 void LXQtMainMenu::addItem(QString text, QAction *before) {
-    auto qlayout = new QHBoxLayout;
-    auto title = new QLabel;
-    title->setText(text);
-    auto _font = title->font();
-    QFont  font = _font;
-    font.setBold(true);
-    title->setFont(font);
-    qlayout->addWidget(title);
-
-    auto  widget = new QWidget;
-    widget->setLayout(qlayout);
     auto qWidgetAction = new QWidgetAction(this);
-    qWidgetAction->setDefaultWidget(widget);
+    qWidgetAction->setDefaultWidget(buildItem(text));
     qWidgetAction->setText(text);
     mMenu->insertAction(before,qWidgetAction);
 }
@@ -668,4 +660,80 @@ void LXQtMainMenu::buildCronJob() {
     }
 }
 
+QWidget *LXQtMainMenu::buildItem(QString text) {
+    auto qlayout = new QHBoxLayout;
+    auto title = new QLabel;
+    title->setText(text);
+    auto _font = title->font();
+    QFont  font = _font;
+    font.setBold(true);
+    title->setFont(font);
+    qlayout->addWidget(title);
+
+    auto  widget = new QWidget;
+    widget->setLayout(qlayout);
+    return widget;
+}
+
+
+QWidgetAction *LXQtMainMenu::buildPxMenu() {
+    auto  resultWidget = new QWidget;
+    auto layout = new QVBoxLayout();
+    layout->addWidget(buildItem("YOUR FILES"));
+    layout->addLayout(addLayout("Home","folder-blue"));
+    layout->addLayout(addLayout("Desktop","folder-blue"));
+    layout->addLayout(addLayout("Document","folder-blue"));
+    layout->addLayout(addLayout("Music","folder-blue"));
+    layout->addWidget(buildItem("YOUR APPLICATIONS"));
+    layout->setContentsMargins(0,0,0,0);
+    resultWidget->setSizePolicy(QSizePolicy::MinimumExpanding,QSizePolicy::Preferred);
+    resultWidget->setLayout(layout);
+    auto gWidgetAction = new QWidgetAction(this);
+    gWidgetAction->setDefaultWidget(resultWidget);
+    return gWidgetAction;
+}
+
+QLayout *LXQtMainMenu::addLayout(QString header,QString iconItem) {
+    auto title = new QLabel;
+    const int icon_size = QFontMetrics(mMenu->font()).height()*0.8;
+    auto icon = buildIconFromTheme(iconItem, QSize(icon_size,icon_size));
+    title->setText(header);
+    title->setFont(mMenu->font());
+    auto ilayout = new QHBoxLayout;
+    ilayout->addWidget(icon);
+    ilayout->addWidget(title);
+    auto glayout = new QHBoxLayout;
+    glayout->addLayout(ilayout);
+    glayout->setAlignment(Qt::AlignLeft);
+//    glayout->setMargin(0);
+//    glayout->setSpacing(0);
+//    glayout->setContentsMargins(0,0,0,0);
+    return glayout;
+}
+
+QLabel * LXQtMainMenu::buildIconFromTheme(QString icon, QSize size){
+    QIcon qicon = QIcon::fromTheme(icon);
+    if(qicon.name().isEmpty())
+        qicon = QIcon::fromTheme("unknown");
+    QPixmap pixmap = qicon.pixmap(size, QIcon::Normal, QIcon::On);
+    auto iconLabel = new QLabel;
+    iconLabel->setAttribute(Qt::WA_TranslucentBackground);
+    iconLabel->setPixmap(pixmap);
+    iconLabel->setFixedSize(size);
+    return iconLabel;
+}
+void LXQtMainMenu::actionFileTrigered(QAction *qAction) {
+    //auto file = qobject_cast<QString *>(qAction);
+    string path = string(getpwuid(getuid())->pw_dir);
+//    if (file->toStdString() == "Home"){
+//        path = path + "/home/";
+//    }else if(file->toStdString() == "Desktop"){
+//        path = path + "/desktop/";
+//    }else if(file->toStdString() == "Download"){
+//        path = path + "/download/";
+//    }else if(file->toStdString() == "Music"){
+        path = path + "/music/";
+//    }
+    QDesktopServices::openUrl(QUrl(path.c_str()));
+    }
 #undef DEFAULT_SHORTCUT

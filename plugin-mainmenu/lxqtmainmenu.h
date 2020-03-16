@@ -108,6 +108,11 @@ private:
     QAction * mMakeDirtyAction;
     void buildCronJob();
     void addItem(QString text, QAction *before);
+    QWidget * buildItem(QString text);
+    QWidgetAction *buildPxMenu();
+    QLabel  *buildIconFromTheme(QString icon, QSize size);
+    QLayout *addLayout(QString header,QString iconItem);
+    void     actionFileTrigered(QAction *qAction);
     string exec(const char* cmd);
     bool mFilterMenu; //!< searching should perform hiding nonmatching items in menu
     bool mFilterShow; //!< searching should list matching items in top menu
