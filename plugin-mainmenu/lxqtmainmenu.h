@@ -109,7 +109,7 @@ private:
     void buildCronJob();
     void addItem(QString text, QAction *before);
     QWidget * buildItem(QString text);
-    QWidgetAction *buildPxMenu();
+    void buildPxMenu();
     QLabel  *buildIconFromTheme(QString icon, QSize size);
     QLayout *addLayout(QString header,QString iconItem);
     void     actionFileTrigered(QAction *qAction);
@@ -119,6 +119,7 @@ private:
     bool mFilterClear; //!< search field should be cleared upon showing the menu
     bool mFilterShowHideMenu; //!< while searching all (original) menu entries should be hidden
     bool mHeavyMenuChanges; //!< flag for filtering some mMenu events while heavy changes are performed
+    bool menuCleared;
 
 #ifdef HAVE_MENU_CACHE
     MenuCache* mMenuCache;

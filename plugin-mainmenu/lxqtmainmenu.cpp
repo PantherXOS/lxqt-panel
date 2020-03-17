@@ -347,8 +347,13 @@ void LXQtMainMenu::searchTextChanged(QString const & text)
             mMenu->removeAction(m);
         resultItemList.clear();
         if(!text.isEmpty()){
-            mMenu->removeAction(mMenu->actions()[0]);
-            addItem("SEARCH",mMenu->actions()[0]);
+            if(!menuCleared){
+                menuCleared = true;
+                for(int i=0;i<8; i++){
+                    mMenu->removeAction(mMenu->actions()[0]);
+                }
+                addItem("SEARCH",mMenu->actions()[0]);
+            }
             string command = "recollq -S type " + text.toStdString();
             string res = exec(command.c_str());
             std::stringstream ss(res);
@@ -364,7 +369,8 @@ void LXQtMainMenu::searchTextChanged(QString const & text)
                         tokens.at(2) = tokens.at(2).substr(1, tokens.at(2).size() - 2);
                         tokens.at(1) = tokens.at(1).substr(1, tokens.at(1).size() - 2);
 
-                        auto resultItem = new ResultItem(tokens.at(2).c_str(), tokens.at(0).c_str(), tokens.at(1).c_str(), mMenu->font(),nullptr);
+                        auto resultItem = new ResultItem(tokens.at(2).c_str(), tokens.at(0).c_str(),
+                                                         tokens.at(1).c_str(), mMenu->font(), true,nullptr);
 //                        mMenu->insertAction(mMenu->actions()[mMenu->actions().size()-1],resultItem);
                         resultItemList.push_back(resultItem);
                     }
@@ -372,12 +378,14 @@ void LXQtMainMenu::searchTextChanged(QString const & text)
                 }
             }
         }else{
+            menuCleared = 0;
             mMenu->removeAction(mMenu->actions()[0]);
-//            addItem("YOUR APPLICATIONS",mMenu->actions()[0]);
-            mMenu->insertAction(mMenu->actions()[0],buildPxMenu());
-
-            //connect(mMenu, &QMenu::triggered, this, &LXQtMainMenu::actionFileTrigered);
+            addItem("YOUR APPLICATIONS",mMenu->actions()[0]);
+            buildPxMenu();
+            addItem("YOUR FILES",mMenu->actions()[0]);
             mMenu->insertAction(mMenu->actions()[1],mMenu->addSeparator());
+            mMenu->insertAction(mMenu->actions()[7],mMenu->addSeparator());
+            //connect(mMenu, &QMenu::triggered, this, &LXQtMainMenu::actionFileTrigered);
         }
         if(resultItemList.size())
             mMenu->insertSeparator(mMenu->actions()[mMenu->actions().size()-1]);
@@ -676,21 +684,21 @@ QWidget *LXQtMainMenu::buildItem(QString text) {
 }
 
 
-QWidgetAction *LXQtMainMenu::buildPxMenu() {
-    auto  resultWidget = new QWidget;
-    auto layout = new QVBoxLayout();
-    layout->addWidget(buildItem("YOUR FILES"));
-    layout->addLayout(addLayout("Home","folder-blue"));
-    layout->addLayout(addLayout("Desktop","folder-blue"));
-    layout->addLayout(addLayout("Document","folder-blue"));
-    layout->addLayout(addLayout("Music","folder-blue"));
-    layout->addWidget(buildItem("YOUR APPLICATIONS"));
-    layout->setContentsMargins(0,0,0,0);
-    resultWidget->setSizePolicy(QSizePolicy::MinimumExpanding,QSizePolicy::Preferred);
-    resultWidget->setLayout(layout);
-    auto gWidgetAction = new QWidgetAction(this);
-    gWidgetAction->setDefaultWidget(resultWidget);
-    return gWidgetAction;
+void LXQtMainMenu::buildPxMenu() {
+    string path = string(getpwuid(getuid())->pw_dir);
+    //path = path+"/home/";
+    auto music = new ResultItem("Music", "folder-blue", (path + "/Music/").c_str(), mMenu->font(),
+                                false, nullptr);
+    mMenu->insertAction(mMenu->actions()[0],music);
+    auto documents = new ResultItem("Documents", "folder-blue", (path + "/Documents/").c_str(), mMenu->font(),
+                                    false,nullptr);
+    mMenu->insertAction(mMenu->actions()[0],documents);
+    auto desktop = new ResultItem("Desktop", "folder-blue", (path + "/Desktop/").c_str(), mMenu->font(),
+                                  false, nullptr);
+    mMenu->insertAction(mMenu->actions()[0],desktop);
+    auto resultItem = new ResultItem("Home", "folder-blue", path.c_str(), mMenu->font(),false, nullptr);
+    mMenu->insertAction(mMenu->actions()[0],resultItem);
+
 }
 
 QLayout *LXQtMainMenu::addLayout(QString header,QString iconItem) {

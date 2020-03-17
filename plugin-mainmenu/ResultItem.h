@@ -17,7 +17,8 @@
 class ResultItem : public QWidgetAction{
 Q_OBJECT
 public:
-    ResultItem(QString name, QString type, QString address,QFont mfont, QObject *parent= nullptr) : QWidgetAction(parent) {
+    ResultItem(QString name, QString type, QString address, QFont mfont, bool searchPart, QObject *parent = nullptr)
+            : QWidgetAction(parent) {
         auto title = new QLabel;
         title->setText(name);
         title->setFont(mfont);
@@ -32,6 +33,8 @@ public:
         int left,right,top,buttom;
         itemIcon->getContentsMargins(&left,&top,&right,&buttom);
         Tlayout->addWidget(title);
+        if(!searchPart)
+            Tlayout->setContentsMargins(2,2,2,2);
         Tlayout->setAlignment(Qt::AlignLeft);
 
         auto  resultWidget = new QWidget;
