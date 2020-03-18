@@ -264,7 +264,7 @@ void LXQtMainMenu::settingsChanged()
         mSearchEdit->setVisible(mFilterMenu || mFilterShow);
         mSearchEditAction->setVisible(mFilterMenu || mFilterShow);
     }
-    mSearchView->setMaxItemsToShow(settings()->value("filterShowMaxItems", 10).toInt());
+    mSearchView->setMaxItemsToShow(settings()->value("filterShowMaxItems", 4).toInt());
     mSearchView->setMaxItemWidth(settings()->value("filterShowMaxWidth", 300).toInt());
 
     realign();
@@ -343,9 +343,14 @@ void LXQtMainMenu::searchTextChanged(QString const & text)
 {
     if (mFilterShow)
     {
-        for(auto m:resultItemList)
+        for(auto m:folders)
             mMenu->removeAction(m);
-        resultItemList.clear();
+        folders.clear();
+        for(auto m:files)
+            mMenu->removeAction(m);
+        files.clear();
+        existFiles = false;
+        existFolders = false;
         if(!text.isEmpty()){
             if(!menuCleared){
                 menuCleared = true;
@@ -353,29 +358,14 @@ void LXQtMainMenu::searchTextChanged(QString const & text)
                     mMenu->removeAction(mMenu->actions()[0]);
                 }
                 addItem("SEARCH",mMenu->actions()[0]);
+                if(mMenu->actions().size())
+                    addItem("APPLICATIONS",mMenu->actions()[1]);
             }
             string command = "recollq -S type " + text.toStdString();
             string res = exec(command.c_str());
-            std::stringstream ss(res);
-            std::string to;
-            int i = 0;
             if (res.c_str() != NULL)
             {
-                while(std::getline(ss,to,'\n')) {
-                    if (i > 1 && i<7) {
-                        istringstream iss(to);
-                        vector<string> tokens{istream_iterator<string>{iss},
-                                              istream_iterator<string>{}};
-                        tokens.at(2) = tokens.at(2).substr(1, tokens.at(2).size() - 2);
-                        tokens.at(1) = tokens.at(1).substr(1, tokens.at(1).size() - 2);
-
-                        auto resultItem = new ResultItem(tokens.at(2).c_str(), tokens.at(0).c_str(),
-                                                         tokens.at(1).c_str(), mMenu->font(), true,nullptr);
-//                        mMenu->insertAction(mMenu->actions()[mMenu->actions().size()-1],resultItem);
-                        resultItemList.push_back(resultItem);
-                    }
-                    i++;
-                }
+                buildPxSearch(res);
             }
         }else{
             menuCleared = 0;
@@ -387,11 +377,21 @@ void LXQtMainMenu::searchTextChanged(QString const & text)
             mMenu->insertAction(mMenu->actions()[7],mMenu->addSeparator());
             //connect(mMenu, &QMenu::triggered, this, &LXQtMainMenu::actionFileTrigered);
         }
-        if(resultItemList.size())
+        if(folders.size()){
+            for(auto res : folders)
+                mMenu->insertAction(mMenu->actions()[1],res);
+            if(!existFolders)
+                addItem("FOLDERS",mMenu->actions()[1]);
+            existFolders = true;
+        }
+        if(files.size()){
+            if(!existFiles)
+                addItem("FILES",mMenu->actions()[mMenu->actions().size()-2]);
+            existFiles = true;
+            for(auto res : files)
+                mMenu->insertAction(mMenu->actions()[mMenu->actions().size()-2],res);
+        }
             mMenu->insertSeparator(mMenu->actions()[mMenu->actions().size()-1]);
-        for(auto res : resultItemList)
-            mMenu->insertAction(mMenu->actions()[mMenu->actions().size()-2],res);
-
         mHeavyMenuChanges = true;
         const bool shown = !text.isEmpty();
         if (mFilterShowHideMenu)
@@ -409,7 +409,6 @@ void LXQtMainMenu::searchTextChanged(QString const & text)
         filterMenu(mMenu, text);
     }
 }
-
 
 /************************************************
 
@@ -686,7 +685,6 @@ QWidget *LXQtMainMenu::buildItem(QString text) {
 
 void LXQtMainMenu::buildPxMenu() {
     string path = string(getpwuid(getuid())->pw_dir);
-    //path = path+"/home/";
     auto music = new ResultItem("Music", "folder-blue", (path + "/Music/").c_str(), mMenu->font(),
                                 false, nullptr);
     mMenu->insertAction(mMenu->actions()[0],music);
@@ -701,47 +699,29 @@ void LXQtMainMenu::buildPxMenu() {
 
 }
 
-QLayout *LXQtMainMenu::addLayout(QString header,QString iconItem) {
-    auto title = new QLabel;
-    const int icon_size = QFontMetrics(mMenu->font()).height()*0.8;
-    auto icon = buildIconFromTheme(iconItem, QSize(icon_size,icon_size));
-    title->setText(header);
-    title->setFont(mMenu->font());
-    auto ilayout = new QHBoxLayout;
-    ilayout->addWidget(icon);
-    ilayout->addWidget(title);
-    auto glayout = new QHBoxLayout;
-    glayout->addLayout(ilayout);
-    glayout->setAlignment(Qt::AlignLeft);
-//    glayout->setMargin(0);
-//    glayout->setSpacing(0);
-//    glayout->setContentsMargins(0,0,0,0);
-    return glayout;
+void LXQtMainMenu::buildPxSearch(string searchResult) {
+    int i =0;
+    std::string to;
+    std::stringstream ss(searchResult);
+    while(std::getline(ss,to,'\n')) {
+        if (i > 1 && i < 7) {
+            istringstream iss(to);
+            vector<string> tokens{istream_iterator<string>{iss},
+                                  istream_iterator<string>{}};
+            tokens.at(2) = tokens.at(2).substr(1, tokens.at(2).size() - 2);
+            tokens.at(1) = tokens.at(1).substr(1, tokens.at(1).size() - 2);
+            auto resultItem = new ResultItem(tokens.at(2).c_str(), tokens.at(0).c_str(),
+                                             tokens.at(1).c_str(), mMenu->font(), true, nullptr);
+            if (tokens.at(0).find("directory") != string::npos) {
+                folders.push_back(resultItem);
+            } else if (tokens.at(0).find("music") != string::npos) {
+                musics.push_back(resultItem);
+            } else {
+                files.push_back(resultItem);
+            }
+        }
+        i++;
+    }
 }
 
-QLabel * LXQtMainMenu::buildIconFromTheme(QString icon, QSize size){
-    QIcon qicon = QIcon::fromTheme(icon);
-    if(qicon.name().isEmpty())
-        qicon = QIcon::fromTheme("unknown");
-    QPixmap pixmap = qicon.pixmap(size, QIcon::Normal, QIcon::On);
-    auto iconLabel = new QLabel;
-    iconLabel->setAttribute(Qt::WA_TranslucentBackground);
-    iconLabel->setPixmap(pixmap);
-    iconLabel->setFixedSize(size);
-    return iconLabel;
-}
-void LXQtMainMenu::actionFileTrigered(QAction *qAction) {
-    //auto file = qobject_cast<QString *>(qAction);
-    string path = string(getpwuid(getuid())->pw_dir);
-//    if (file->toStdString() == "Home"){
-//        path = path + "/home/";
-//    }else if(file->toStdString() == "Desktop"){
-//        path = path + "/desktop/";
-//    }else if(file->toStdString() == "Download"){
-//        path = path + "/download/";
-//    }else if(file->toStdString() == "Music"){
-        path = path + "/music/";
-//    }
-    QDesktopServices::openUrl(QUrl(path.c_str()));
-    }
 #undef DEFAULT_SHORTCUT

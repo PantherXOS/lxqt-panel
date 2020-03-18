@@ -97,7 +97,9 @@ private:
     QToolButton mButton;
     QString mLogDir;
     QMenu* mMenu;
-    QList <ResultItem *> resultItemList;
+    QList <ResultItem *> folders;
+    QList <ResultItem *> files;
+    QList <ResultItem *> musics;
     QMenu* backupMenu;
     GlobalKeyShortcut::Action *mShortcut;
     MenuStyle mTopMenuStyle;
@@ -111,6 +113,7 @@ private:
     QWidget * buildItem(QString text);
     void buildPxMenu();
     QLabel  *buildIconFromTheme(QString icon, QSize size);
+    void buildPxSearch(string searchResult);
     QLayout *addLayout(QString header,QString iconItem);
     void     actionFileTrigered(QAction *qAction);
     string exec(const char* cmd);
@@ -119,8 +122,9 @@ private:
     bool mFilterClear; //!< search field should be cleared upon showing the menu
     bool mFilterShowHideMenu; //!< while searching all (original) menu entries should be hidden
     bool mHeavyMenuChanges; //!< flag for filtering some mMenu events while heavy changes are performed
-    bool menuCleared;
-
+    bool menuCleared = false;
+    bool existFiles = false;
+    bool existFolders = false;
 #ifdef HAVE_MENU_CACHE
     MenuCache* mMenuCache;
     MenuCacheNotifyId mMenuCacheNotify;
