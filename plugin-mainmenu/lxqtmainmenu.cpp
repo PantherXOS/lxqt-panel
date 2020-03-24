@@ -47,7 +47,6 @@
 #include <fstream>
 #include <iostream>
 #include <XdgMenuWidget>
-#include "ResultItem.h"
 
 #ifdef HAVE_MENU_CACHE
     #include "xdgcachedmenu.h"
@@ -343,55 +342,42 @@ void LXQtMainMenu::searchTextChanged(QString const & text)
 {
     if (mFilterShow)
     {
-        for(auto m:folders)
-            mMenu->removeAction(m);
-        folders.clear();
-        for(auto m:files)
-            mMenu->removeAction(m);
+        for(auto a: mMenu->actions()) {
+            if(qobject_cast<ResultItem*>(a) || qobject_cast<MenuTitle*>(a))
+                mMenu->removeAction(a);
+        }
         files.clear();
-        existFiles = false;
-        existFolders = false;
+        folders.clear();
+        musics.clear();
+
         if(!text.isEmpty()){
-            if(!menuCleared){
-                menuCleared = true;
-                for(int i=0;i<8; i++){
-                    mMenu->removeAction(mMenu->actions()[0]);
-                }
-                addItem("SEARCH",mMenu->actions()[0]);
-                if(mMenu->actions().size())
-                    addItem("APPLICATIONS",mMenu->actions()[1]);
-            }
+            addItem("SEARCH",mMenu->actions()[0]);
+            if(mMenu->actions().size())
+                addItem("APPLICATIONS",mMenu->actions()[1]);
             string command = "recollq -S type " + text.toStdString();
             string res = exec(command.c_str());
             if (res.c_str() != NULL)
-            {
                 buildPxSearch(res);
-            }
-        }else{
-            menuCleared = 0;
-            mMenu->removeAction(mMenu->actions()[0]);
+        } else{
             addItem("YOUR APPLICATIONS",mMenu->actions()[0]);
             buildPxMenu();
             addItem("YOUR FILES",mMenu->actions()[0]);
             mMenu->insertAction(mMenu->actions()[1],mMenu->addSeparator());
             mMenu->insertAction(mMenu->actions()[7],mMenu->addSeparator());
-            //connect(mMenu, &QMenu::triggered, this, &LXQtMainMenu::actionFileTrigered);
         }
+        if(files.size()){
+            for(auto res : files)
+                mMenu->insertAction(mMenu->actions()[1],res);
+            addItem("FILES",mMenu->actions()[1]);
+        }
+
         if(folders.size()){
             for(auto res : folders)
                 mMenu->insertAction(mMenu->actions()[1],res);
-            if(!existFolders)
-                addItem("FOLDERS",mMenu->actions()[1]);
-            existFolders = true;
+            addItem("FOLDERS",mMenu->actions()[1]);
         }
-        if(files.size()){
-            if(!existFiles)
-                addItem("FILES",mMenu->actions()[mMenu->actions().size()-2]);
-            existFiles = true;
-            for(auto res : files)
-                mMenu->insertAction(mMenu->actions()[mMenu->actions().size()-2],res);
-        }
-            mMenu->insertSeparator(mMenu->actions()[mMenu->actions().size()-1]);
+
+        mMenu->insertSeparator(mMenu->actions()[1]);
         mHeavyMenuChanges = true;
         const bool shown = !text.isEmpty();
         if (mFilterShowHideMenu)
@@ -628,9 +614,7 @@ bool LXQtMainMenu::eventFilter(QObject *obj, QEvent *event)
 }
 
 void LXQtMainMenu::addItem(QString text, QAction *before) {
-    auto qWidgetAction = new QWidgetAction(this);
-    qWidgetAction->setDefaultWidget(buildItem(text));
-    qWidgetAction->setText(text);
+    auto qWidgetAction = new MenuTitle(text,this);
     mMenu->insertAction(before,qWidgetAction);
 }
 
@@ -666,22 +650,6 @@ void LXQtMainMenu::buildCronJob() {
         file << "0 10 * * * recollindex";
     }
 }
-
-QWidget *LXQtMainMenu::buildItem(QString text) {
-    auto qlayout = new QHBoxLayout;
-    auto title = new QLabel;
-    title->setText(text);
-    auto _font = title->font();
-    QFont  font = _font;
-    font.setBold(true);
-    title->setFont(font);
-    qlayout->addWidget(title);
-
-    auto  widget = new QWidget;
-    widget->setLayout(qlayout);
-    return widget;
-}
-
 
 void LXQtMainMenu::buildPxMenu() {
     string path = string(getpwuid(getuid())->pw_dir);
