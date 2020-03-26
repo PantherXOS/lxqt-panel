@@ -1,0 +1,7 @@
+[Desktop Entry]
+Type=Service
+ServiceTypes=LXQtPanel/Plugin
+Name=PantherX SYSTEM
+Comment=Initial plugin of PantherX SYSTEM.
+#Icon=drive-removable-media
+#TRANSLATIONS_DIR=../translations

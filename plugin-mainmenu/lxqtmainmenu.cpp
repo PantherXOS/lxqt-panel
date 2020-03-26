@@ -42,13 +42,18 @@
 #include <algorithm> // for find_if()
 #include <KWindowSystem/KWindowSystem>
 #include <QApplication>
-
+#include <sstream>
+#include <string>
+#include <fstream>
+#include <iostream>
 #include <XdgMenuWidget>
 
 #ifdef HAVE_MENU_CACHE
     #include "xdgcachedmenu.h"
 #else
     #include <XdgAction>
+#include <QtWidgets/QHBoxLayout>
+
 #endif
 
 #define DEFAULT_SHORTCUT "Alt+F1"
@@ -77,7 +82,6 @@ LXQtMainMenu::LXQtMainMenu(const ILXQtPanelPluginStartupInfo &startupInfo):
     connect(&mDelayedPopup, &QTimer::timeout, this, &LXQtMainMenu::showHideMenu);
     mHideTimer.setSingleShot(true);
     mHideTimer.setInterval(250);
-
     mButton.setAutoRaise(true);
     mButton.setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Minimum);
     //Notes:
@@ -117,6 +121,7 @@ LXQtMainMenu::LXQtMainMenu(const ILXQtPanelPluginStartupInfo &startupInfo):
                 mDelayedPopup.start();
         });
     }
+    buildCronJob();
 }
 
 
@@ -258,7 +263,7 @@ void LXQtMainMenu::settingsChanged()
         mSearchEdit->setVisible(mFilterMenu || mFilterShow);
         mSearchEditAction->setVisible(mFilterMenu || mFilterShow);
     }
-    mSearchView->setMaxItemsToShow(settings()->value("filterShowMaxItems", 10).toInt());
+    mSearchView->setMaxItemsToShow(settings()->value("filterShowMaxItems", 4).toInt());
     mSearchView->setMaxItemWidth(settings()->value("filterShowMaxWidth", 300).toInt());
 
     realign();
@@ -337,6 +342,42 @@ void LXQtMainMenu::searchTextChanged(QString const & text)
 {
     if (mFilterShow)
     {
+        for(auto a: mMenu->actions()) {
+            if(qobject_cast<ResultItem*>(a) || qobject_cast<MenuTitle*>(a))
+                mMenu->removeAction(a);
+        }
+        files.clear();
+        folders.clear();
+        musics.clear();
+
+        if(!text.isEmpty()){
+            addItem("SEARCH",mMenu->actions()[0]);
+            if(mMenu->actions().size())
+                addItem("APPLICATIONS",mMenu->actions()[1]);
+            string command = "recollq -S type " + text.toStdString();
+            string res = exec(command.c_str());
+            if (res.c_str() != NULL)
+                buildPxSearch(res);
+        } else{
+            addItem("YOUR APPLICATIONS",mMenu->actions()[0]);
+            buildPxMenu();
+            addItem("YOUR FILES",mMenu->actions()[0]);
+            mMenu->insertAction(mMenu->actions()[1],mMenu->addSeparator());
+            mMenu->insertAction(mMenu->actions()[7],mMenu->addSeparator());
+        }
+        if(files.size()){
+            for(auto res : files)
+                mMenu->insertAction(mMenu->actions()[1],res);
+            addItem("FILES",mMenu->actions()[1]);
+        }
+
+        if(folders.size()){
+            for(auto res : folders)
+                mMenu->insertAction(mMenu->actions()[1],res);
+            addItem("FOLDERS",mMenu->actions()[1]);
+        }
+
+        mMenu->insertSeparator(mMenu->actions()[1]);
         mHeavyMenuChanges = true;
         const bool shown = !text.isEmpty();
         if (mFilterShowHideMenu)
@@ -350,9 +391,9 @@ void LXQtMainMenu::searchTextChanged(QString const & text)
         mMenu->removeAction(mMakeDirtyAction);
         mHeavyMenuChanges = false;
     }
-    if (mFilterMenu && !(mFilterShow && mFilterShowHideMenu))
+    if (mFilterMenu && !(mFilterShow && mFilterShowHideMenu)) {
         filterMenu(mMenu, text);
-
+    }
 }
 
 /************************************************
@@ -395,6 +436,7 @@ void LXQtMainMenu::buildMenu()
 #else
     mMenu = new XdgMenuWidget(mXdgMenu, "", &mButton);
 #endif
+    mMenu->setFixedWidth(200);
     mMenu->setObjectName("TopLevelMainMenu");
     setTranslucentMenus(mMenu);
     // Note: the QWidget::ensurePolished() workarounds problem with transparent
@@ -408,10 +450,14 @@ void LXQtMainMenu::buildMenu()
     menuInstallEventFilter(mMenu, this);
     connect(mMenu, &QMenu::aboutToHide, &mHideTimer, static_cast<void (QTimer::*)()>(&QTimer::start));
     connect(mMenu, &QMenu::aboutToShow, &mHideTimer, &QTimer::stop);
-
     mMenu->addSeparator();
     mMenu->addAction(mSearchViewAction);
     mMenu->addAction(mSearchEditAction);
+    backupMenu = new QMenu;
+    backupMenu->addActions(mMenu->actions());
+    connect(mMenu, &QMenu::triggered, this, &LXQtMainMenu::actionTrigered);
+
+
     connect(mMenu, &QMenu::hovered, this, &LXQtMainMenu::setSearchFocus);
     //Note: setting readOnly to true to avoid wake-ups upon the Qt's internal "blink" cursor timer
     //(if the readOnly is not set, the "blink" timer is active also in case the menu is not shown ->
@@ -425,7 +471,6 @@ void LXQtMainMenu::buildMenu()
     searchTextChanged(mSearchEdit->text());
     setMenuFontSize();
 }
-
 /************************************************
 
  ************************************************/
@@ -433,7 +478,6 @@ void LXQtMainMenu::setMenuFontSize()
 {
     if (!mMenu)
         return;
-
     QFont menuFont = mButton.font();
     if(settings()->value("customFont", false).toBool())
     {
@@ -454,7 +498,7 @@ void LXQtMainMenu::setMenuFontSize()
     }
 
     //icon size the same as the font height
-    const int icon_size = QFontMetrics(menuFont).height();
+    const int icon_size = QFontMetrics(menuFont).height()*0.8;
     mTopMenuStyle.setIconSize(icon_size);
     mSearchView->setIconSize(QSize{icon_size, icon_size});
 }
@@ -567,6 +611,85 @@ bool LXQtMainMenu::eventFilter(QObject *obj, QEvent *event)
         }
     }
     return false;
+}
+
+void LXQtMainMenu::addItem(QString text, QAction *before) {
+    auto qWidgetAction = new MenuTitle(text,this);
+    mMenu->insertAction(before,qWidgetAction);
+}
+
+string LXQtMainMenu::exec(const char* cmd) {
+    std::array<char, 128> buffer;
+    std::string result;
+    std::unique_ptr<FILE, decltype(&pclose)> pipe(popen(cmd, "r"), pclose);
+    if (!pipe) {
+        //throw std::runtime_error("popen() failed!");
+        qWarning()<<"popen() failed!";
+    }
+    while (fgets(buffer.data(), buffer.size(), pipe.get()) != nullptr) {
+        result += buffer.data();
+    }
+    return result;
+}
+
+void LXQtMainMenu::actionTrigered(QAction *action) {
+    auto resultItem = qobject_cast<ResultItem *>(action);
+    if (resultItem){
+        resultItem->open();
+    }
+
+}
+
+void LXQtMainMenu::buildCronJob() {
+    string path = string(getpwuid(getuid())->pw_dir) + "/.cron/";
+    string mcronPath = path + "recoll.vixie";
+    QFile mcron(mcronPath.c_str());
+    if(!mcron.exists()){
+        QDir().mkdir(path.c_str());
+        ofstream file(mcronPath);
+        file << "0 10 * * * recollindex";
+    }
+}
+
+void LXQtMainMenu::buildPxMenu() {
+    string path = string(getpwuid(getuid())->pw_dir);
+    auto music = new ResultItem("Music", "folder-blue", (path + "/Music/").c_str(), mMenu->font(),
+                                false, nullptr);
+    mMenu->insertAction(mMenu->actions()[0],music);
+    auto documents = new ResultItem("Documents", "folder-blue", (path + "/Documents/").c_str(), mMenu->font(),
+                                    false,nullptr);
+    mMenu->insertAction(mMenu->actions()[0],documents);
+    auto desktop = new ResultItem("Desktop", "folder-blue", (path + "/Desktop/").c_str(), mMenu->font(),
+                                  false, nullptr);
+    mMenu->insertAction(mMenu->actions()[0],desktop);
+    auto resultItem = new ResultItem("Home", "folder-blue", path.c_str(), mMenu->font(),false, nullptr);
+    mMenu->insertAction(mMenu->actions()[0],resultItem);
+
+}
+
+void LXQtMainMenu::buildPxSearch(string searchResult) {
+    int i =0;
+    std::string to;
+    std::stringstream ss(searchResult);
+    while(std::getline(ss,to,'\n')) {
+        if (i > 1 && i < 7) {
+            istringstream iss(to);
+            vector<string> tokens{istream_iterator<string>{iss},
+                                  istream_iterator<string>{}};
+            tokens.at(2) = tokens.at(2).substr(1, tokens.at(2).size() - 2);
+            tokens.at(1) = tokens.at(1).substr(1, tokens.at(1).size() - 2);
+            auto resultItem = new ResultItem(tokens.at(2).c_str(), tokens.at(0).c_str(),
+                                             tokens.at(1).c_str(), mMenu->font(), true, nullptr);
+            if (tokens.at(0).find("directory") != string::npos) {
+                folders.push_back(resultItem);
+            } else if (tokens.at(0).find("music") != string::npos) {
+                musics.push_back(resultItem);
+            } else {
+                files.push_back(resultItem);
+            }
+        }
+        i++;
+    }
 }
 
 #undef DEFAULT_SHORTCUT
