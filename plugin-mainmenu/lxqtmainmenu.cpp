@@ -92,7 +92,6 @@ LXQtMainMenu::LXQtMainMenu(const ILXQtPanelPluginStartupInfo &startupInfo):
     QTimer::singleShot(0, [this] { Q_ASSERT(mButton.parentWidget()); mButton.parentWidget()->installEventFilter(this); });
 
     connect(&mButton, &QToolButton::clicked, this, &LXQtMainMenu::showHideMenu);
-
     mSearchView = new ActionView;
     mSearchView->setVisible(false);
     connect(mSearchView, &QAbstractItemView::activated, this, &LXQtMainMenu::showHideMenu);
@@ -351,30 +350,30 @@ void LXQtMainMenu::searchTextChanged(QString const & text)
         musics.clear();
 
         if(!text.isEmpty()){
-            addItem("SEARCH",mMenu->actions()[0]);
+            addItem("SEARCH",false, mMenu->actions()[0]);
             if(mMenu->actions().size())
-                addItem("APPLICATIONS",mMenu->actions()[1]);
+                addItem("APPLICATIONS",true, mMenu->actions()[1]);
             string command = "recollq -S type " + text.toStdString();
             string res = exec(command.c_str());
             if (res.c_str() != NULL)
                 buildPxSearch(res);
         } else{
-            addItem("YOUR APPLICATIONS",mMenu->actions()[0]);
+            addItem("YOUR APPLICATIONS",false, mMenu->actions()[0]);
             buildPxMenu();
-            addItem("YOUR FILES",mMenu->actions()[0]);
+            addItem("YOUR FILES",false, mMenu->actions()[0]);
             mMenu->insertAction(mMenu->actions()[1],mMenu->addSeparator());
             mMenu->insertAction(mMenu->actions()[7],mMenu->addSeparator());
         }
         if(files.size()){
             for(auto res : files)
-                mMenu->insertAction(mMenu->actions()[1],res);
-            addItem("FILES",mMenu->actions()[1]);
+                mMenu->insertAction(mMenu->actions()[mMenu->actions().size()-1],res);
+            addItem("FILES",true, mMenu->actions()[mMenu->actions().size()-2]);
         }
 
         if(folders.size()){
             for(auto res : folders)
                 mMenu->insertAction(mMenu->actions()[1],res);
-            addItem("FOLDERS",mMenu->actions()[1]);
+            addItem("FOLDERS",true, mMenu->actions()[1]);
         }
 
         mMenu->insertSeparator(mMenu->actions()[1]);
@@ -384,6 +383,7 @@ void LXQtMainMenu::searchTextChanged(QString const & text)
             showHideMenuEntries(mMenu, !shown);
         if (shown)
             mSearchView->setFilter(text);
+        mSearchView.se
         mSearchView->setVisible(shown);
         mSearchViewAction->setVisible(shown);
         //TODO: how to force the menu to recalculate it's size in a more elegant way?
@@ -467,7 +467,6 @@ void LXQtMainMenu::buildMenu()
     mSearchEdit->setVisible(mFilterMenu || mFilterShow);
     mSearchEditAction->setVisible(mFilterMenu || mFilterShow);
     mSearchView->fillActions(mMenu);
-
     searchTextChanged(mSearchEdit->text());
     setMenuFontSize();
 }
@@ -613,8 +612,8 @@ bool LXQtMainMenu::eventFilter(QObject *obj, QEvent *event)
     return false;
 }
 
-void LXQtMainMenu::addItem(QString text, QAction *before) {
-    auto qWidgetAction = new MenuTitle(text,this);
+void LXQtMainMenu::addItem(QString text, bool setColor, QAction *before) {
+    auto qWidgetAction = new MenuTitle(text,setColor,this);
     mMenu->insertAction(before,qWidgetAction);
 }
 

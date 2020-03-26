@@ -17,7 +17,7 @@
 class MenuTitle : public QWidgetAction{
 Q_OBJECT
 public:
-    MenuTitle(QString title, QObject *parent = nullptr)
+    MenuTitle(QString title, bool setcolor=false, QObject *parent = nullptr)
             : QWidgetAction(parent) {
         auto qlayout = new QHBoxLayout;
         auto titleLabel = new QLabel;
@@ -30,7 +30,8 @@ public:
 
         auto  widget = new QWidget;
         widget->setLayout(qlayout);
-
+        if(setcolor)
+            widget->setStyleSheet("QWidget {background-color: #4D515F; color: white;}"); //211F1F
         setDefaultWidget(widget);
         setText(title);
     }

@@ -110,7 +110,7 @@ private:
     ActionView * mSearchView;
     QAction * mMakeDirtyAction;
     void buildCronJob();
-    void addItem(QString text, QAction *before);
+    void addItem(QString text, bool setColor, QAction *before);
     void buildPxMenu();
     QLabel  *buildIconFromTheme(QString icon, QSize size);
     void buildPxSearch(string searchResult);
