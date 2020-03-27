@@ -383,7 +383,6 @@ void LXQtMainMenu::searchTextChanged(QString const & text)
             showHideMenuEntries(mMenu, !shown);
         if (shown)
             mSearchView->setFilter(text);
-        mSearchView.se
         mSearchView->setVisible(shown);
         mSearchViewAction->setVisible(shown);
         //TODO: how to force the menu to recalculate it's size in a more elegant way?
