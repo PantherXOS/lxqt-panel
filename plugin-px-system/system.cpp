@@ -25,6 +25,12 @@ void System::refresh() {
     mainMenu->clear();
     mainMenu->setFixedWidth(MAIN_MENU_SIZE_W);
     mainMenu->addAction(getUser());
+    string data = exec("px-network-inspection");
+    qDebug()<<" network run:  "<<data.c_str();
+    networkDataParser(data);
+    for(auto m:internetInfo) {
+        qDebug() << m.first.c_str() << " : " << m.second.c_str();
+    }
     mainMenu->addSeparator();
     mainMenu->addAction(getFirewallStatus());
     mainMenu->addSeparator();
@@ -127,14 +133,11 @@ QWidgetAction *System::getFirewallStatus() {
 }
 
 QWidgetAction *System::getInternet() {
-    map<string,string> internetData; //TODO should be fill by system
-    internetData.insert(pair<string, string>("INTERNET", "192.168.10.10"));
-    internetData.insert(pair<string, string>("WIFI", "192.168.0.12"));
-    internetData.insert(pair<string, string>("VPN", "123.123.123.123"));
     auto llayout = new QVBoxLayout;
     auto Tlayout = new QVBoxLayout;
     int i=0;
-    for(auto m:internetData){
+    //for(auto it =internetInfo.rbegin();it!=internetInfo.rend();++it){
+    for(auto m:internetInfo){
         if(i==0){
             llayout->addLayout(internetLayout(m.first.c_str(), ":resources/icon/status_2_green_d"));
         }else{
@@ -147,7 +150,8 @@ QWidgetAction *System::getInternet() {
     llayout->setMargin(0);
     llayout->setSpacing(0);
     llayout->setContentsMargins(0,0,0,0);
-    for(auto m:internetData){
+    //for(auto it =internetInfo.rbegin();it!=internetInfo.rend();++it){
+    for(auto m:internetInfo){
         auto detail = new QLabel;
         detail->setText(m.second.c_str());
         detail->setMargin(0);
@@ -304,4 +308,36 @@ string System::exec(const char* cmd) {
         result += buffer.data();
     }
     return result;
+}
+
+bool System::networkDataParser(string data) {
+    Document document;
+    document.Parse(data.c_str());
+    if (document["primary"].IsArray()) {
+        internetInfo.clear();
+        try {
+            for (rapidjson::Value::ConstValueIterator itr = document["primary"].Begin(); itr != document["primary"].End(); ++itr) {
+                const rapidjson::Value& attribute = *itr;
+                if(attribute.HasMember("method")&&attribute.HasMember("ip4")) {
+                    if(attribute["pos"].GetInt() == 0) {
+                        internetInfo.insert(
+                                pair<string, string>(attribute["adapter"].GetString(), attribute["ip4"].GetString()));
+                        qDebug()<<"**"<< attribute["method"].GetString();
+                    }
+                    else {
+                        internetInfo.insert(
+                                pair<string, string>(attribute["method"].GetString(), attribute["ip4"].GetString()));
+                        qDebug()<<"**"<< attribute["method"].GetString();
+                    }
+
+                }
+                for(auto m:internetInfo)
+                    qDebug() << m.first.c_str();
+            }
+        } catch (exception e) {
+            qDebug()<<"Error in json parser!!! ";
+        }
+    }
+    return true;
+
 }

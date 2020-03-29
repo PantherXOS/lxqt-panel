@@ -37,8 +37,11 @@
 #include <array>
 #include "Settings.h"
 #include <lxqt/LXQt/Notification>
+#include "rapidjson/document.h"
+
 
 using namespace std;
+using namespace rapidjson;
 
 class System : public QObject, public ILXQtPanelPlugin
 {
@@ -75,9 +78,10 @@ private:
     QLayout *internetLayout(QString text, QString icon);
     QWidgetAction* generalItems(QString name,QString information,bool stat,QString icon);
     string exec(const char* cmd);
-
+    bool networkDataParser(string data);
     QToolButton mButton;
     bool mHidden;
+    map<string,string> internetInfo;
 //    bool isRun= false;
 //    std::thread statThread;
 };

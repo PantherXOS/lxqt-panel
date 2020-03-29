@@ -1,5 +1,7 @@
 set(PLUGIN "system")
 
+find_package(RapidJSON)
+
 set(HEADERS
         system.h
 		Settings.h
