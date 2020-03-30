@@ -5,6 +5,8 @@ set(HEADERS
     lxqtmainmenu.h
     menustyle.h
     lxqtmainmenuconfiguration.h
+    ResultItem.h
+    MenuTitle.h
 )
 
 set(SOURCES
@@ -39,7 +41,6 @@ if(MENUCACHE_FOUND)
     add_definitions(-DHAVE_MENU_CACHE=1)
 
 endif()
-
 
 set(QT_USE_QTXML 1)
 set(QT_USE_QTDBUS 1)

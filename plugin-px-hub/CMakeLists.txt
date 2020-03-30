@@ -31,7 +31,6 @@ set(SOURCES
 		rpc/Utils.cpp
 		)
 
-
 set(RESOURCES
     resources.qrc
 )

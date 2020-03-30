@@ -82,11 +82,11 @@ QLabel *hub::buildIconFromFile(QString file, QSize size){
 QWidgetAction* hub::buildAccountItem(AccountObject account) {
     QString statusIconFile;
     if(account.getStatus() == Status::online)
-        statusIconFile=":resources/icon/online";
+        statusIconFile=":resources/icon/status_0_green_o";
     else if(account.getStatus() == Status::offline)
-        statusIconFile=":resources/icon/offline";
+        statusIconFile=":resources/icon/status_0_red";
     else if(account.getStatus() == Status::none)
-        statusIconFile=":resources/icon/none";
+        statusIconFile=":resources/icon/status_0_grey";
     auto statusLabel = buildIconFromFile(statusIconFile,QSize(ACCOUNT_STATUS_ICON_SIZE,ACCOUNT_STATUS_ICON_SIZE));
     auto accountIcon = buildIconFromTheme(account.getIcon().c_str(),QSize(ACCOUNT_ICON_SIZE,ACCOUNT_ICON_SIZE));
     accountIcon->setContentsMargins(3,0,0,0);
