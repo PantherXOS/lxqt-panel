@@ -26,19 +26,14 @@ void System::refresh() {
     mainMenu->setFixedWidth(MAIN_MENU_SIZE_W);
     mainMenu->addAction(getUser());
     string data = exec("px-network-inspection");
-    qDebug()<<" network run:  "<<data.c_str();
     networkDataParser(data);
-    for(auto m:internetInfo) {
-        qDebug() << m.first.c_str() << " : " << m.second.c_str();
-    }
     mainMenu->addSeparator();
     mainMenu->addAction(getFirewallStatus());
     mainMenu->addSeparator();
     mainMenu->addAction(getInternet());
     mainMenu->addSeparator();
-    mainMenu->addAction(getVpnStatus());
-    mainMenu->addSeparator();
-    mainMenu->addAction(getWifiStatus());
+    getVpnStatus();
+    getWifiStatus();
     mainMenu->addSeparator();
     mainMenu->addAction(getBTStatus());
     mainMenu->addSeparator();
@@ -139,9 +134,15 @@ QWidgetAction *System::getInternet() {
     //for(auto it =internetInfo.rbegin();it!=internetInfo.rend();++it){
     for(auto m:internetInfo){
         if(i==0){
-            llayout->addLayout(internetLayout(m.first.c_str(), ":resources/icon/status_2_green_d"));
+            if(m.status)
+                llayout->addLayout(internetLayout(m.name.c_str(), ":resources/icon/status_2_green_d"));
+            else
+                llayout->addLayout(internetLayout(m.name.c_str(), ":resources/icon/status_2_grey_d"));
         }else{
-            llayout->addLayout(internetLayout(m.first.c_str(), ":resources/icon/status_3_green_ud"));
+            if(m.status)
+                llayout->addLayout(internetLayout(m.name.c_str(), ":resources/icon/status_3_green_ud"));
+            else
+                llayout->addLayout(internetLayout(m.name.c_str(), ":resources/icon/status_3_grey_ud"));
         }
         i++;
     }
@@ -153,7 +154,7 @@ QWidgetAction *System::getInternet() {
     //for(auto it =internetInfo.rbegin();it!=internetInfo.rend();++it){
     for(auto m:internetInfo){
         auto detail = new QLabel;
-        detail->setText(m.second.c_str());
+        detail->setText(m.value.c_str());
         detail->setMargin(0);
         detail->setContentsMargins(5,0,0,0);
         Tlayout->addWidget(detail);
@@ -196,12 +197,22 @@ Hlayout->setSpacing(0);
 return Hlayout;
 }
 
-QWidgetAction *System::getVpnStatus() {
-    return generalItems("VPN","OVPN-UK-1",true,"px-vpn");
+void System::getVpnStatus() {
+    for(auto info:internetInfo){
+        if (info.vpnStatus){
+            mainMenu->addAction(generalItems("VPN",info.profileName.c_str(),info.status,"px-vpn"));
+            mainMenu->addSeparator();
+        }
+    }
 }
 
-QWidgetAction *System::getWifiStatus() {
-    return generalItems("WIFI","HomeWifi",true,"px-wifi");
+void System::getWifiStatus() {
+    for(auto info:internetInfo){
+        if (info.wifiStatus){
+            mainMenu->addAction(generalItems("WIFI",info.profileName.c_str(),info.status,"px-wifi"));
+            mainMenu->addSeparator();
+        }
+    }
 }
 QWidgetAction *System::getBTStatus() {
     return generalItems("BT","Logitech z533",true,"px-bluetooth");
@@ -320,19 +331,30 @@ bool System::networkDataParser(string data) {
                 const rapidjson::Value& attribute = *itr;
                 if(attribute.HasMember("method")&&attribute.HasMember("ip4")) {
                     if(attribute["pos"].GetInt() == 0) {
-                        internetInfo.insert(
-                                pair<string, string>(attribute["adapter"].GetString(), attribute["ip4"].GetString()));
-                        qDebug()<<"**"<< attribute["method"].GetString();
+                        NetworkInformation networkInformation;
+                        networkInformation.name = attribute["adapter"].GetString();
+                        networkInformation.value = attribute["ip4"].GetString();
+                        if(attribute["status"].GetString() == string("ACTIVE"))
+                        networkInformation.status =true;
+                        internetInfo.push_back(networkInformation);
                     }
                     else {
-                        internetInfo.insert(
-                                pair<string, string>(attribute["method"].GetString(), attribute["ip4"].GetString()));
-                        qDebug()<<"**"<< attribute["method"].GetString();
+                        NetworkInformation networkInformation;
+                        networkInformation.name = attribute["method"].GetString();
+                        networkInformation.value = attribute["ip4"].GetString();
+                        if(attribute["status"].GetString() == string("ACTIVE"))
+                            networkInformation.status =true;
+                        if(attribute["type"].GetString() == string("virtual")){
+                            networkInformation.vpnStatus = true;
+                            networkInformation.profileName = attribute["profile"].GetString();
+                        }
+                        if(attribute["method"].GetString() == string("WIFI")){
+                            networkInformation.wifiStatus = true;
+                            networkInformation.profileName = attribute["essid"].GetString();
+                        }
+                        internetInfo.push_back(networkInformation);
                     }
-
                 }
-                for(auto m:internetInfo)
-                    qDebug() << m.first.c_str();
             }
         } catch (exception e) {
             qDebug()<<"Error in json parser!!! ";

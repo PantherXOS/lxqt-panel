@@ -38,6 +38,7 @@
 #include "Settings.h"
 #include <lxqt/LXQt/Notification>
 #include "rapidjson/document.h"
+#include "NetworkInformation.h"
 
 
 using namespace std;
@@ -71,8 +72,8 @@ private:
     QWidgetAction* getUser();
     QWidgetAction* getFirewallStatus();
     QWidgetAction* getInternet();
-    QWidgetAction* getVpnStatus();
-    QWidgetAction* getWifiStatus();
+    void getVpnStatus();
+    void getWifiStatus();
     QWidgetAction* getBTStatus();
     QWidgetAction* getUpdateStat();
     QLayout *internetLayout(QString text, QString icon);
@@ -81,7 +82,8 @@ private:
     bool networkDataParser(string data);
     QToolButton mButton;
     bool mHidden;
-    map<string,string> internetInfo;
+    string vpnName;
+    vector <NetworkInformation> internetInfo;
 //    bool isRun= false;
 //    std::thread statThread;
 };
