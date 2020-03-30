@@ -7,20 +7,12 @@ System::System(const ILXQtPanelPluginStartupInfo &startupInfo) :
     mHidden(false)
 {
     realign();
-//    refresh();
     mainMenu->setObjectName("LXQtMountPopup");
-    //mainMenu->addSeparator();
     mButton.setStyleSheet("QToolButton::menu-indicator { image: none; }");
     mButton.setMenu(mainMenu);
     mButton.setPopupMode(QToolButton::DelayedPopup);
-//    mButton.setAutoRaise(true);
-//    mButton.setCheckable(true);
     mButton.setIcon(QIcon::fromTheme("px-user"));
-    mButton.setText("UerTest");
     connect(&mButton, SIGNAL(pressed()),this,SLOT(refresh()));
-//    EventSubscriber * eventSubscriber = new EventSubscriber("hub");
-//    connect(eventSubscriber,SIGNAL(hubEvents(EventObject *)),this,SLOT(hubEventsHandler(EventObject *)));
-//    eventSubscriber->run();
 }
 
 void System::realign()
@@ -30,18 +22,18 @@ void System::realign()
 }
 
 void System::refresh() {
-    qDebug()<< "Start REFRESH";
     mainMenu->clear();
     mainMenu->setFixedWidth(MAIN_MENU_SIZE_W);
     mainMenu->addAction(getUser());
+    string data = exec("px-network-inspection");
+    networkDataParser(data);
     mainMenu->addSeparator();
     mainMenu->addAction(getFirewallStatus());
     mainMenu->addSeparator();
     mainMenu->addAction(getInternet());
     mainMenu->addSeparator();
-    mainMenu->addAction(getVpnStatus());
-    mainMenu->addSeparator();
-    mainMenu->addAction(getWifiStatus());
+    getVpnStatus();
+    getWifiStatus();
     mainMenu->addSeparator();
     mainMenu->addAction(getBTStatus());
     mainMenu->addSeparator();
@@ -136,18 +128,21 @@ QWidgetAction *System::getFirewallStatus() {
 }
 
 QWidgetAction *System::getInternet() {
-    map<string,string> internetData; //TODO should be fill by system
-    internetData.insert(pair<string, string>("INTERNET", "192.168.10.10"));
-    internetData.insert(pair<string, string>("WIFI", "192.168.0.12"));
-    internetData.insert(pair<string, string>("VPN", "123.123.123.123"));
     auto llayout = new QVBoxLayout;
     auto Tlayout = new QVBoxLayout;
     int i=0;
-    for(auto m:internetData){
+    //for(auto it =internetInfo.rbegin();it!=internetInfo.rend();++it){
+    for(auto m:internetInfo){
         if(i==0){
-            llayout->addLayout(internetLayout(m.first.c_str(), ":resources/icon/status_2_green_d"));
+            if(m.status)
+                llayout->addLayout(internetLayout(m.name.c_str(), ":resources/icon/status_2_green_d"));
+            else
+                llayout->addLayout(internetLayout(m.name.c_str(), ":resources/icon/status_2_grey_d"));
         }else{
-            llayout->addLayout(internetLayout(m.first.c_str(), ":resources/icon/status_3_green_ud"));
+            if(m.status)
+                llayout->addLayout(internetLayout(m.name.c_str(), ":resources/icon/status_3_green_ud"));
+            else
+                llayout->addLayout(internetLayout(m.name.c_str(), ":resources/icon/status_3_grey_ud"));
         }
         i++;
     }
@@ -156,9 +151,10 @@ QWidgetAction *System::getInternet() {
     llayout->setMargin(0);
     llayout->setSpacing(0);
     llayout->setContentsMargins(0,0,0,0);
-    for(auto m:internetData){
+    //for(auto it =internetInfo.rbegin();it!=internetInfo.rend();++it){
+    for(auto m:internetInfo){
         auto detail = new QLabel;
-        detail->setText(m.second.c_str());
+        detail->setText(m.value.c_str());
         detail->setMargin(0);
         detail->setContentsMargins(5,0,0,0);
         Tlayout->addWidget(detail);
@@ -182,90 +178,7 @@ QWidgetAction *System::getInternet() {
     qWidgetAction->setDefaultWidget(widget);
     return qWidgetAction;
 }
-//
-//void hub::updateButtonHandler() {
-//    refresh();
-//}
-//
-//void hub::hubEventsHandler(EventObject *eventObject){
-//    string popup;
-//    auto params = eventObject->getParams();
-//    if(eventObject->getEvent() == "Status_Change"){
-//       popup = params["account"].toStdString() + " is " + params["new-status"].toStdString();
-//        LXQt::Notification::notify(popup.c_str());
-//    }else if(eventObject->getEvent() == "Service_refresh"){
-//        popup = params["account"].toStdString() + " has 1 new message";
-//        LXQt::Notification::notify(popup.c_str());
-//    }
-//    refresh();
-//}
-//
-//QWidgetAction *hub::buildMessageItem(MessageObject message) {
-//    auto messageSender = new QLabel;
-//    string acc = message.getSender();
-//    if(acc.size()>MAX_ACCOUNT_SIZE)
-//        acc = acc.substr(0,MAX_ACCOUNT_SIZE)+"...";
-//    messageSender->setText(acc.c_str());
-//    messageSender->setFont(QFont("Helvetica",9,QFont::Bold));
-//
-//    auto llayout = new QHBoxLayout;
-//    llayout->addWidget(messageSender);
-//    llayout->setAlignment(Qt::AlignLeft);
-//    llayout->setMargin(0);
-//    llayout->setSpacing(0);
-//    llayout->setContentsMargins(0,0,0,0);
-//
-//    auto messageTime = new QLabel;
-//    messageTime->setText(message.getTime().c_str());
-//    messageTime->setFont(QFont("Helvetica",8));
-//
-//    auto rlayout = new QHBoxLayout;
-//    rlayout->addWidget(messageTime);
-//    rlayout->setAlignment(Qt::AlignRight);
-//    rlayout->setMargin(0);
-//    rlayout->setSpacing(0);
-//    rlayout->setContentsMargins(0,0,3,0);
-//
-//    auto qlayout = new QHBoxLayout;
-//    qlayout->addLayout(llayout);
-//    qlayout->addLayout(rlayout);
-//    qlayout->setMargin(0);
-//    qlayout->setSpacing(0);
-//    qlayout->setContentsMargins(0,0,0,0);
-//
-//    auto messagePreview = new QLabel;
-//    messagePreview->setText(message.getMessage().c_str());
-//    messagePreview->setFont(QFont("Helvetica",8));
-//
-//    auto Tlayout = new QVBoxLayout;
-//    Tlayout->addLayout(qlayout);
-//    Tlayout->addWidget(messagePreview);
-//    Tlayout->setAlignment(Qt::AlignTop);
-//    Tlayout->setMargin(0);
-//    Tlayout->setSpacing(0);
-//    Tlayout->setContentsMargins(7,0,0,0);
-//    auto messageIcon = buildIconFromTheme(message.getIcon().c_str(), QSize(MESSAGE_ICON_SIZE,MESSAGE_ICON_SIZE));
-//    auto ilayout = new QHBoxLayout;
-//    ilayout->addWidget(messageIcon);
-//    ilayout->setMargin(0);
-//    ilayout->setSpacing(0);
-//    ilayout->setContentsMargins(3,0,0,0);
-//
-//    auto glayout = new QHBoxLayout;
-//    glayout->addLayout(ilayout);
-//    glayout->addLayout(Tlayout);
-//    glayout->setMargin(0);
-//    glayout->setSpacing(0);
-//    glayout->setContentsMargins(0,0,0,0);
-//
-//    auto  resultWidget = new QWidget;
-//    resultWidget->setLayout(glayout);
-//    resultWidget->setSizePolicy(QSizePolicy::MinimumExpanding,QSizePolicy::Preferred);
-//
-//    auto gWidgetAction = new QWidgetAction(this);
-//    gWidgetAction->setDefaultWidget(resultWidget);
-//    return gWidgetAction;
-//}
+
 
 QLayout * System::internetLayout(QString text, QString icon) {
 auto statusLabel = buildIconFromFile(icon,QSize(ACCOUNT_STATUS_ICON_SIZE,ACCOUNT_STATUS_ICON_SIZE));
@@ -275,7 +188,6 @@ auto Hlayout = new QHBoxLayout;
 auto title = new QLabel;
 title->setText(text);
 title->setMargin(0);
-//title->setFont(QFont("default",11));
 title->setContentsMargins(9,0,0,0);
 Hlayout->addWidget(statusLabel);
 Hlayout->addWidget(title);
@@ -285,12 +197,22 @@ Hlayout->setSpacing(0);
 return Hlayout;
 }
 
-QWidgetAction *System::getVpnStatus() {
-    return generalItems("VPN","OVPN-UK-1",true,"px-vpn");
+void System::getVpnStatus() {
+    for(auto info:internetInfo){
+        if (info.vpnStatus){
+            mainMenu->addAction(generalItems("VPN",info.profileName.c_str(),info.status,"px-vpn"));
+            mainMenu->addSeparator();
+        }
+    }
 }
 
-QWidgetAction *System::getWifiStatus() {
-    return generalItems("WIFI","HomeWifi",true,"px-wifi");
+void System::getWifiStatus() {
+    for(auto info:internetInfo){
+        if (info.wifiStatus){
+            mainMenu->addAction(generalItems("WIFI",info.profileName.c_str(),info.status,"px-wifi"));
+            mainMenu->addSeparator();
+        }
+    }
 }
 QWidgetAction *System::getBTStatus() {
     return generalItems("BT","Logitech z533",true,"px-bluetooth");
@@ -397,4 +319,47 @@ string System::exec(const char* cmd) {
         result += buffer.data();
     }
     return result;
+}
+
+bool System::networkDataParser(string data) {
+    Document document;
+    document.Parse(data.c_str());
+    if (document["primary"].IsArray()) {
+        internetInfo.clear();
+        try {
+            for (rapidjson::Value::ConstValueIterator itr = document["primary"].Begin(); itr != document["primary"].End(); ++itr) {
+                const rapidjson::Value& attribute = *itr;
+                if(attribute.HasMember("method")&&attribute.HasMember("ip4")) {
+                    if(attribute["pos"].GetInt() == 0) {
+                        NetworkInformation networkInformation;
+                        networkInformation.name = attribute["adapter"].GetString();
+                        networkInformation.value = attribute["ip4"].GetString();
+                        if(attribute["status"].GetString() == string("ACTIVE"))
+                        networkInformation.status =true;
+                        internetInfo.push_back(networkInformation);
+                    }
+                    else {
+                        NetworkInformation networkInformation;
+                        networkInformation.name = attribute["method"].GetString();
+                        networkInformation.value = attribute["ip4"].GetString();
+                        if(attribute["status"].GetString() == string("ACTIVE"))
+                            networkInformation.status =true;
+                        if(attribute["type"].GetString() == string("virtual")){
+                            networkInformation.vpnStatus = true;
+                            networkInformation.profileName = attribute["profile"].GetString();
+                        }
+                        if(attribute["method"].GetString() == string("WIFI")){
+                            networkInformation.wifiStatus = true;
+                            networkInformation.profileName = attribute["essid"].GetString();
+                        }
+                        internetInfo.push_back(networkInformation);
+                    }
+                }
+            }
+        } catch (exception e) {
+            qDebug()<<"Error in json parser!!! ";
+        }
+    }
+    return true;
+
 }

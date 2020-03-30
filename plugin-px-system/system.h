@@ -37,8 +37,12 @@
 #include <array>
 #include "Settings.h"
 #include <lxqt/LXQt/Notification>
+#include "rapidjson/document.h"
+#include "NetworkInformation.h"
+
 
 using namespace std;
+using namespace rapidjson;
 
 class System : public QObject, public ILXQtPanelPlugin
 {
@@ -68,16 +72,18 @@ private:
     QWidgetAction* getUser();
     QWidgetAction* getFirewallStatus();
     QWidgetAction* getInternet();
-    QWidgetAction* getVpnStatus();
-    QWidgetAction* getWifiStatus();
+    void getVpnStatus();
+    void getWifiStatus();
     QWidgetAction* getBTStatus();
     QWidgetAction* getUpdateStat();
     QLayout *internetLayout(QString text, QString icon);
     QWidgetAction* generalItems(QString name,QString information,bool stat,QString icon);
     string exec(const char* cmd);
-
+    bool networkDataParser(string data);
     QToolButton mButton;
     bool mHidden;
+    string vpnName;
+    vector <NetworkInformation> internetInfo;
 //    bool isRun= false;
 //    std::thread statThread;
 };
