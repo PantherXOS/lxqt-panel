@@ -435,7 +435,7 @@ void LXQtMainMenu::buildMenu()
 #else
     mMenu = new XdgMenuWidget(mXdgMenu, "", &mButton);
 #endif
-    mMenu->setFixedWidth(200);
+   // mMenu->setFixedWidth(200);
     mMenu->setObjectName("TopLevelMainMenu");
     setTranslucentMenus(mMenu);
     // Note: the QWidget::ensurePolished() workarounds problem with transparent
