@@ -367,7 +367,7 @@ void LXQtMainMenu::searchTextChanged(QString const & text)
         if(files.size()){
             for(auto res : files)
                 mMenu->insertAction(mMenu->actions()[mMenu->actions().size()-1],res);
-            addItem("FILES",true, mMenu->actions()[mMenu->actions().size()-2]);
+            addItem("FILES",true, mMenu->actions()[mMenu->actions().size()-(musics.size()+files.size()+1)]);
         }
 
         if(folders.size()){
