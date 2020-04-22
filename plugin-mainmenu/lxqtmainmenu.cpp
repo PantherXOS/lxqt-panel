@@ -400,12 +400,40 @@ void LXQtMainMenu::searchTextChanged(QString const & text)
  ************************************************/
 void LXQtMainMenu::setSearchFocus(QAction *action)
 {
+    music->setHighlighted(false);
+    home->setHighlighted(false);
+    desktop->setHighlighted(false);
+    documents->setHighlighted(false);
+    for(auto f:files)
+            f->setHighlighted(false);
+    for(auto f:folders)
+            f->setHighlighted(false);
+    for(auto f:musics)
+            f->setHighlighted(false);
     if (mFilterMenu || mFilterShow)
     {
         if(action == mSearchEditAction)
             mSearchEdit->setFocus();
         else
             mSearchEdit->clearFocus();
+        if(action == music)
+            music->setHighlighted(true);
+        if(action == documents)
+            documents->setHighlighted(true);
+        if(action == desktop)
+            desktop->setHighlighted(true);
+        if(action == home)
+            home->setHighlighted(true);
+        for(auto f:files)
+            if(action == f)
+                f->setHighlighted(true);
+        for(auto f:folders)
+            if(action == f)
+                f->setHighlighted(true);
+        for(auto f:musics)
+            if(action == f)
+                f->setHighlighted(true);
+
     }
 }
 
@@ -635,7 +663,6 @@ void LXQtMainMenu::actionTrigered(QAction *action) {
     if (resultItem){
         resultItem->open();
     }
-
 }
 
 void LXQtMainMenu::buildCronJob() {
@@ -651,17 +678,17 @@ void LXQtMainMenu::buildCronJob() {
 
 void LXQtMainMenu::buildPxMenu() {
     string path = string(getpwuid(getuid())->pw_dir);
-    auto music = new ResultItem("Music", "folder-blue", (path + "/Music/").c_str(), mMenu->font(),
+    this->music = new ResultItem("Music", "folder-blue", (path + "/Music/").c_str(), mMenu->font(),
                                 false, nullptr);
     mMenu->insertAction(mMenu->actions()[0],music);
-    auto documents = new ResultItem("Documents", "folder-blue", (path + "/Documents/").c_str(), mMenu->font(),
+    documents = new ResultItem("Documents", "folder-blue", (path + "/Documents/").c_str(), mMenu->font(),
                                     false,nullptr);
     mMenu->insertAction(mMenu->actions()[0],documents);
-    auto desktop = new ResultItem("Desktop", "folder-blue", (path + "/Desktop/").c_str(), mMenu->font(),
+    desktop = new ResultItem("Desktop", "folder-blue", (path + "/Desktop/").c_str(), mMenu->font(),
                                   false, nullptr);
     mMenu->insertAction(mMenu->actions()[0],desktop);
-    auto resultItem = new ResultItem("Home", "folder-blue", path.c_str(), mMenu->font(),false, nullptr);
-    mMenu->insertAction(mMenu->actions()[0],resultItem);
+    home = new ResultItem("Home", "folder-blue", path.c_str(), mMenu->font(),false, nullptr);
+    mMenu->insertAction(mMenu->actions()[0],home);
 
 }
 

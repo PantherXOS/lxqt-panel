@@ -13,6 +13,8 @@
 #include <QFont>
 #include <QtGui/QDesktopServices>
 #include <QUrl>
+#include <QMouseEvent>
+
 
 class ResultItem : public QWidgetAction{
 Q_OBJECT
@@ -37,7 +39,8 @@ public:
             Tlayout->setContentsMargins(2,2,2,2);
         Tlayout->setAlignment(Qt::AlignLeft);
 
-        auto  resultWidget = new QWidget;
+        resultWidget = new QWidget;
+        resultWidget->setMouseTracking(true);
         resultWidget->setLayout(Tlayout);
         resultWidget->setSizePolicy(QSizePolicy::MinimumExpanding,QSizePolicy::Preferred);
         setDefaultWidget(resultWidget);
@@ -48,6 +51,7 @@ public:
     void open(){
         QDesktopServices::openUrl(QUrl(this->address));
     }
+
     QLabel * buildIconFromTheme(QString icon, QSize size){
         QIcon qicon = QIcon::fromTheme(icon);
         if(qicon.name().isEmpty())
@@ -59,16 +63,25 @@ public:
         iconLabel->setFixedSize(size);
         return iconLabel;
     }
+
     QString toString(){
         return  "Name   : "+ name +" ,"+
                 "Type    : "+ type +" ,"+
                 "Address : "+address;
     }
 
+    void setHighlighted(bool h)
+    {
+        resultWidget->setBackgroundRole(h ? QPalette::Highlight : QPalette::Window);
+        resultWidget->setAutoFillBackground(h);
+    }
 private:
     QString name;
     QString address;
     QString type;
+    QWidget*  resultWidget;
+
+
 };
 
 
