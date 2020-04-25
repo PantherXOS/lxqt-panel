@@ -339,6 +339,11 @@ static void setTranslucentMenus(QMenu * menu)
  ************************************************/
 void LXQtMainMenu::searchTextChanged(QString const & text)
 {
+    qDebug() << "mMenu->actions().size()" << mMenu->actions().size();
+    qDebug() << "mMenu->actions().lenght()" << mMenu->actions().length();
+    qDebug() << "mSearchView->actions().size()" << mSearchView->actions().size();
+    qDebug() << "mSearchView->actions().length()" << mSearchView->actions().length();
+    qDebug() << "mSearchViewAction->text()" << mSearchViewAction->text();
     if (mFilterShow)
     {
         for(auto a: mMenu->actions()) {
@@ -351,8 +356,9 @@ void LXQtMainMenu::searchTextChanged(QString const & text)
 
         if(!text.isEmpty()){
             addItem("SEARCH",false, mMenu->actions()[0]);
-            if(mMenu->actions().size())
+            if(mSearchView->getCount() != 0)
                 addItem("APPLICATIONS",true, mMenu->actions()[1]);
+
             string command = "recollq -S type " + text.toStdString();
             string res = exec(command.c_str());
             if (res.c_str() != NULL)
@@ -394,7 +400,6 @@ void LXQtMainMenu::searchTextChanged(QString const & text)
         filterMenu(mMenu, text);
     }
 }
-
 /************************************************
 
  ************************************************/
@@ -433,7 +438,6 @@ void LXQtMainMenu::setSearchFocus(QAction *action)
         for(auto f:musics)
             if(action == f)
                 f->setHighlighted(true);
-
     }
 }
 
@@ -689,7 +693,6 @@ void LXQtMainMenu::buildPxMenu() {
     mMenu->insertAction(mMenu->actions()[0],desktop);
     home = new ResultItem("Home", "folder-blue", path.c_str(), mMenu->font(),false, nullptr);
     mMenu->insertAction(mMenu->actions()[0],home);
-
 }
 
 void LXQtMainMenu::buildPxSearch(string searchResult) {

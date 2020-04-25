@@ -94,6 +94,8 @@ public:
      */
     void setMaxItemWidth(int max);
 
+    int getCount();
+
 public slots:
     /*! \brief Trigger action on currently active item
      */
@@ -109,6 +111,7 @@ private slots:
 
 private:
     void fillActionsRecursive(QMenu * menu);
+    int filterActioncount = 0 ;
 
 private:
     QStandardItemModel * mModel;

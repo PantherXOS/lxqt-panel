@@ -39,6 +39,7 @@
 #include <QScrollBar>
 #include <QProxyStyle>
 #include <QStyledItemDelegate>
+#include <QDebug>
 //==============================
 #ifdef HAVE_MENU_CACHE
 #include <QSortFilterProxyModel>
@@ -228,7 +229,7 @@ void ActionView::setFilter(QString const & filter)
 #else
     mProxy->setfilerString(filter);
 #endif
-    const int count = mProxy->rowCount();
+   const int count = mProxy->rowCount();
     if (0 < count)
     {
         if (count > mMaxItemsToShow)
@@ -240,6 +241,7 @@ void ActionView::setFilter(QString const & filter)
             setCurrentIndex(mProxy->index(count - 1, 0));
         }
     }
+    filterActioncount= count;
 }
 
 void ActionView::setMaxItemsToShow(int max)
@@ -315,5 +317,9 @@ void ActionView::fillActionsRecursive(QMenu * menu)
                 addAction(action);
         }
     }
+}
+
+int ActionView::getCount() {
+    return filterActioncount;
 }
 
