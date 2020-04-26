@@ -339,6 +339,11 @@ static void setTranslucentMenus(QMenu * menu)
  ************************************************/
 void LXQtMainMenu::searchTextChanged(QString const & text)
 {
+    qDebug() << "mMenu->actions().size()" << mMenu->actions().size();
+    qDebug() << "mMenu->actions().lenght()" << mMenu->actions().length();
+    qDebug() << "mSearchView->actions().size()" << mSearchView->actions().size();
+    qDebug() << "mSearchView->actions().length()" << mSearchView->actions().length();
+    qDebug() << "mSearchViewAction->text()" << mSearchViewAction->text();
     if (mFilterShow)
     {
         for(auto a: mMenu->actions()) {
@@ -349,10 +354,17 @@ void LXQtMainMenu::searchTextChanged(QString const & text)
         folders.clear();
         musics.clear();
 
+        const bool shown = !text.isEmpty();
+        if (mFilterShowHideMenu)
+            showHideMenuEntries(mMenu, !shown);
+        if (shown)
+            mSearchView->setFilter(text);
+
         if(!text.isEmpty()){
             addItem("SEARCH",false, mMenu->actions()[0]);
-            if(mMenu->actions().size())
+            if(mSearchView->getCount() != 0)
                 addItem("APPLICATIONS",true, mMenu->actions()[1]);
+
             string command = "recollq -S type " + text.toStdString();
             string res = exec(command.c_str());
             if (res.c_str() != NULL)
@@ -367,7 +379,7 @@ void LXQtMainMenu::searchTextChanged(QString const & text)
         if(files.size()){
             for(auto res : files)
                 mMenu->insertAction(mMenu->actions()[mMenu->actions().size()-1],res);
-            addItem("FILES",true, mMenu->actions()[mMenu->actions().size()-2]);
+            addItem("FILES",true, mMenu->actions()[mMenu->actions().size()-(musics.size()+files.size()+1)]);
         }
 
         if(folders.size()){
@@ -378,11 +390,7 @@ void LXQtMainMenu::searchTextChanged(QString const & text)
 
         mMenu->insertSeparator(mMenu->actions()[1]);
         mHeavyMenuChanges = true;
-        const bool shown = !text.isEmpty();
-        if (mFilterShowHideMenu)
-            showHideMenuEntries(mMenu, !shown);
-        if (shown)
-            mSearchView->setFilter(text);
+
         mSearchView->setVisible(shown);
         mSearchViewAction->setVisible(shown);
         //TODO: how to force the menu to recalculate it's size in a more elegant way?
@@ -394,18 +402,44 @@ void LXQtMainMenu::searchTextChanged(QString const & text)
         filterMenu(mMenu, text);
     }
 }
-
 /************************************************
 
  ************************************************/
 void LXQtMainMenu::setSearchFocus(QAction *action)
 {
+    music->setHighlighted(false);
+    home->setHighlighted(false);
+    desktop->setHighlighted(false);
+    documents->setHighlighted(false);
+    for(auto f:files)
+            f->setHighlighted(false);
+    for(auto f:folders)
+            f->setHighlighted(false);
+    for(auto f:musics)
+            f->setHighlighted(false);
     if (mFilterMenu || mFilterShow)
     {
         if(action == mSearchEditAction)
             mSearchEdit->setFocus();
         else
             mSearchEdit->clearFocus();
+        if(action == music)
+            music->setHighlighted(true);
+        if(action == documents)
+            documents->setHighlighted(true);
+        if(action == desktop)
+            desktop->setHighlighted(true);
+        if(action == home)
+            home->setHighlighted(true);
+        for(auto f:files)
+            if(action == f)
+                f->setHighlighted(true);
+        for(auto f:folders)
+            if(action == f)
+                f->setHighlighted(true);
+        for(auto f:musics)
+            if(action == f)
+                f->setHighlighted(true);
     }
 }
 
@@ -435,7 +469,7 @@ void LXQtMainMenu::buildMenu()
 #else
     mMenu = new XdgMenuWidget(mXdgMenu, "", &mButton);
 #endif
-    mMenu->setFixedWidth(200);
+   // mMenu->setFixedWidth(200);
     mMenu->setObjectName("TopLevelMainMenu");
     setTranslucentMenus(mMenu);
     // Note: the QWidget::ensurePolished() workarounds problem with transparent
@@ -635,7 +669,6 @@ void LXQtMainMenu::actionTrigered(QAction *action) {
     if (resultItem){
         resultItem->open();
     }
-
 }
 
 void LXQtMainMenu::buildCronJob() {
@@ -651,18 +684,17 @@ void LXQtMainMenu::buildCronJob() {
 
 void LXQtMainMenu::buildPxMenu() {
     string path = string(getpwuid(getuid())->pw_dir);
-    auto music = new ResultItem("Music", "folder-blue", (path + "/Music/").c_str(), mMenu->font(),
+    this->music = new ResultItem("Music", "folder-blue", (path + "/Music/").c_str(), mMenu->font(),
                                 false, nullptr);
     mMenu->insertAction(mMenu->actions()[0],music);
-    auto documents = new ResultItem("Documents", "folder-blue", (path + "/Documents/").c_str(), mMenu->font(),
+    documents = new ResultItem("Documents", "folder-blue", (path + "/Documents/").c_str(), mMenu->font(),
                                     false,nullptr);
     mMenu->insertAction(mMenu->actions()[0],documents);
-    auto desktop = new ResultItem("Desktop", "folder-blue", (path + "/Desktop/").c_str(), mMenu->font(),
+    desktop = new ResultItem("Desktop", "folder-blue", (path + "/Desktop/").c_str(), mMenu->font(),
                                   false, nullptr);
     mMenu->insertAction(mMenu->actions()[0],desktop);
-    auto resultItem = new ResultItem("Home", "folder-blue", path.c_str(), mMenu->font(),false, nullptr);
-    mMenu->insertAction(mMenu->actions()[0],resultItem);
-
+    home = new ResultItem("Home", "folder-blue", path.c_str(), mMenu->font(),false, nullptr);
+    mMenu->insertAction(mMenu->actions()[0],home);
 }
 
 void LXQtMainMenu::buildPxSearch(string searchResult) {
