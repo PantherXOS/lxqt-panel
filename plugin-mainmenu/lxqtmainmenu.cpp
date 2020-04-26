@@ -354,6 +354,12 @@ void LXQtMainMenu::searchTextChanged(QString const & text)
         folders.clear();
         musics.clear();
 
+        const bool shown = !text.isEmpty();
+        if (mFilterShowHideMenu)
+            showHideMenuEntries(mMenu, !shown);
+        if (shown)
+            mSearchView->setFilter(text);
+
         if(!text.isEmpty()){
             addItem("SEARCH",false, mMenu->actions()[0]);
             if(mSearchView->getCount() != 0)
@@ -384,11 +390,7 @@ void LXQtMainMenu::searchTextChanged(QString const & text)
 
         mMenu->insertSeparator(mMenu->actions()[1]);
         mHeavyMenuChanges = true;
-        const bool shown = !text.isEmpty();
-        if (mFilterShowHideMenu)
-            showHideMenuEntries(mMenu, !shown);
-        if (shown)
-            mSearchView->setFilter(text);
+
         mSearchView->setVisible(shown);
         mSearchViewAction->setVisible(shown);
         //TODO: how to force the menu to recalculate it's size in a more elegant way?
