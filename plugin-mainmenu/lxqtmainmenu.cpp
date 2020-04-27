@@ -339,11 +339,6 @@ static void setTranslucentMenus(QMenu * menu)
  ************************************************/
 void LXQtMainMenu::searchTextChanged(QString const & text)
 {
-    qDebug() << "mMenu->actions().size()" << mMenu->actions().size();
-    qDebug() << "mMenu->actions().lenght()" << mMenu->actions().length();
-    qDebug() << "mSearchView->actions().size()" << mSearchView->actions().size();
-    qDebug() << "mSearchView->actions().length()" << mSearchView->actions().length();
-    qDebug() << "mSearchViewAction->text()" << mSearchViewAction->text();
     if (mFilterShow)
     {
         for(auto a: mMenu->actions()) {

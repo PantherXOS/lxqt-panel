@@ -30,7 +30,6 @@ void System::realign()
 }
 
 void System::refresh() {
-    qDebug()<< "Start REFRESH";
     mainMenu->clear();
     mainMenu->setFixedWidth(MAIN_MENU_SIZE_W);
     mainMenu->addAction(getUser());
