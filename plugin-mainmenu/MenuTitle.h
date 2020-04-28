@@ -26,12 +26,14 @@ public:
         QFont  font = _font;
         font.setBold(true);
         titleLabel->setFont(font);
+        titleLabel->setObjectName("PxMenuLabel");
         qlayout->addWidget(titleLabel);
-
         auto  widget = new QWidget;
         widget->setLayout(qlayout);
-        if(setcolor)
-            widget->setStyleSheet("QWidget {background-color: #4D515F; color: white;}"); //211F1F
+        if(setcolor) {
+//            widget->setStyleSheet("QWidget {background-color: #211F1F; color: white;}"); //211F1F
+            widget->setObjectName("PxMenuTitle");
+        }
         setDefaultWidget(widget);
         setText(title);
     }

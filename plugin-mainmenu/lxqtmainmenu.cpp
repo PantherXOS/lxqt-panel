@@ -402,39 +402,12 @@ void LXQtMainMenu::searchTextChanged(QString const & text)
  ************************************************/
 void LXQtMainMenu::setSearchFocus(QAction *action)
 {
-    music->setHighlighted(false);
-    home->setHighlighted(false);
-    desktop->setHighlighted(false);
-    documents->setHighlighted(false);
-    for(auto f:files)
-            f->setHighlighted(false);
-    for(auto f:folders)
-            f->setHighlighted(false);
-    for(auto f:musics)
-            f->setHighlighted(false);
     if (mFilterMenu || mFilterShow)
     {
         if(action == mSearchEditAction)
             mSearchEdit->setFocus();
         else
             mSearchEdit->clearFocus();
-        if(action == music)
-            music->setHighlighted(true);
-        if(action == documents)
-            documents->setHighlighted(true);
-        if(action == desktop)
-            desktop->setHighlighted(true);
-        if(action == home)
-            home->setHighlighted(true);
-        for(auto f:files)
-            if(action == f)
-                f->setHighlighted(true);
-        for(auto f:folders)
-            if(action == f)
-                f->setHighlighted(true);
-        for(auto f:musics)
-            if(action == f)
-                f->setHighlighted(true);
     }
 }
 
@@ -472,7 +445,6 @@ void LXQtMainMenu::buildMenu()
     // https://bugs.kde.org/show_bug.cgi?id=368048
     mMenu->ensurePolished();
     mMenu->setStyle(&mTopMenuStyle);
-
     mMenu->addSeparator();
 
     menuInstallEventFilter(mMenu, this);
