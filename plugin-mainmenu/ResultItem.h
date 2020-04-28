@@ -22,6 +22,7 @@ public:
     ResultItem(QString name, QString type, QString address, QFont mfont, bool searchPart, QObject *parent = nullptr)
             : QWidgetAction(parent) {
         auto title = new QLabel;
+        setObjectName("ActionView");
         title->setText(name);
         title->setFont(mfont);
         std::replace( type.begin(), type.end(), '/', '-');
@@ -35,14 +36,15 @@ public:
         int left,right,top,buttom;
         itemIcon->getContentsMargins(&left,&top,&right,&buttom);
         Tlayout->addWidget(title);
-        if(!searchPart)
-            Tlayout->setContentsMargins(2,2,2,2);
+        //if(!searchPart)
+           // Tlayout->setContentsMargins(2,2,2,2);
         Tlayout->setAlignment(Qt::AlignLeft);
 
         resultWidget = new QWidget;
         resultWidget->setMouseTracking(true);
         resultWidget->setLayout(Tlayout);
         resultWidget->setSizePolicy(QSizePolicy::MinimumExpanding,QSizePolicy::Preferred);
+        resultWidget->setObjectName("PxMenuItem");
         setDefaultWidget(resultWidget);
         setText(name);
         address = address.remove(0,7);
@@ -70,11 +72,6 @@ public:
                 "Address : "+address;
     }
 
-    void setHighlighted(bool h)
-    {
-        resultWidget->setBackgroundRole(h ? QPalette::Highlight : QPalette::Window);
-        resultWidget->setAutoFillBackground(h);
-    }
 private:
     QString name;
     QString address;
