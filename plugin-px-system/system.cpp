@@ -7,7 +7,7 @@ System::System(const ILXQtPanelPluginStartupInfo &startupInfo) :
     mHidden(false)
 {
     realign();
-    mainMenu->setObjectName("LXQtMountPopup");
+    mainMenu->setObjectName("LXQtSystem");
     mButton.setStyleSheet("QToolButton::menu-indicator { image: none; }");
     mButton.setMenu(mainMenu);
     mButton.setPopupMode(QToolButton::DelayedPopup);
@@ -25,7 +25,8 @@ void System::refresh() {
     mainMenu->clear();
     mainMenu->setFixedWidth(MAIN_MENU_SIZE_W);
     mainMenu->addAction(getUser());
-    string data = exec("px-network-inspection");
+   // string data = exec("px-network-inspection");
+   string data = " { \"primary\": [ { \"pos\": 0, \"adapter\": \"PUBLIC\", \"method\": \"NONE\", \"type\": \"display\", \"ip4\": \"37.59.236.227\", \"ip6\": \"\", \"dns\": \"\", \"gateway\": \"\", \"status\": \"ACTIVE\" }, { \"pos\": 1, \"adapter\": \"enp0s3\", \"method\": \"LAN\", \"type\": \"physical\", \"ip4\": \"10.0.2.15\", \"ip6\": \"\", \"dns\": \"\", \"gateway\": \"10.0.2.2\", \"status\": \"ACTIVE\" }, { \"pos\": 2, \"adapter\": \"tun0\", \"method\": \"OPENVPN\", \"type\": \"virtual\", \"ip4\": \"172.16.100.93\", \"ip6\": \"\", \"dns\": \"\", \"gateway\": \"37.59.236.227\", \"status\": \"ACTIVE\", \"profile\": \"client_sinap\" } ] }";
     networkDataParser(data);
     mainMenu->addSeparator();
     mainMenu->addAction(getFirewallStatus());
@@ -37,8 +38,7 @@ void System::refresh() {
     mainMenu->addSeparator();
     mainMenu->addAction(getBTStatus());
     mainMenu->addSeparator();
-    mainMenu->addAction(getUpdateStat());
-    mButton.showMenu();
+    mainMenu->addAction(getUpdateStat());   mButton.showMenu();
 }
 
 QLabel *System::buildIconFromTheme(QString icon, QSize size){
@@ -114,9 +114,10 @@ QWidgetAction *System::getUser() {
     llayout->setAlignment(Qt::AlignLeft);
     llayout->setMargin(0);
     llayout->setSpacing(0);
-    llayout->setContentsMargins(5,0,0,0);
+    llayout->setContentsMargins(8,0,0,0);
 
     auto  widget = new QWidget;
+    widget->setObjectName("PxSystemItem");
     widget->setLayout(llayout);
     auto qWidgetAction = new QWidgetAction(this);
     qWidgetAction->setDefaultWidget(widget);
@@ -173,6 +174,7 @@ QWidgetAction *System::getInternet() {
     rlayout->setContentsMargins(3,0,0,0);
 
     auto  widget = new QWidget;
+    widget->setObjectName("PxSystemItem");
     widget->setLayout(rlayout);
     auto qWidgetAction = new QWidgetAction(this);
     qWidgetAction->setDefaultWidget(widget);
@@ -260,9 +262,10 @@ QWidgetAction* System::generalItems(QString name,QString information,bool stat,Q
     qlayout->addLayout(rlayout);
     qlayout->setMargin(0);
     qlayout->setSpacing(0);
-    qlayout->setContentsMargins(3,0,3,0);
+    qlayout->setContentsMargins(8,0,3,0);
 
     auto  widget = new QWidget;
+    widget->setObjectName("PxSystemItem");
     widget->setLayout(qlayout);
     auto qWidgetAction = new QWidgetAction(this);
     qWidgetAction->setDefaultWidget(widget);
@@ -300,6 +303,7 @@ QWidgetAction *System::getUpdateStat() {
     qlayout->setContentsMargins(0,0,3,0);
 
     auto  widget = new QWidget;
+    widget->setObjectName("PxSystemItem");
     widget->setLayout(qlayout);
     auto qWidgetAction = new QWidgetAction(this);
     qWidgetAction->setDefaultWidget(widget);
