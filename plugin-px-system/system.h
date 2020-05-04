@@ -54,15 +54,17 @@ public:
     virtual QString themeId() const { return "px-system"; }
     virtual ILXQtPanelPlugin::Flags flags() const { return HaveConfigDialog; }
     bool isSeparate() const { return true; }
-    QMenu *mainMenu = new QMenu;
+    QMenu *mainMenu;
 
 public slots:
     void realign();
+
 
 private slots:
 //    void hubEventsHandler(EventObject *eventObject);
 //    void updateButtonHandler();
     void refresh();
+    void hoverHandle(QAction* qAction);
 private:
     QLabel *buildIconFromFile(QString file, QSize size);
     QLabel *buildIconFromTheme(QString icon, QSize size);
