@@ -25,16 +25,16 @@ void hub::refresh() {
     // get accounts
     RPCHubClient rpcHubClient;
     vector<AccountObject> accounts= rpcHubClient.getAccountList();
-    //Test
-//    vector<AccountObject> accounts;
-//    AccountObject accountObject;
-//    accountObject.setTitle("Test");
-//    accountObject.setStatus(Status::online);
-//    accountObject.setUnread(11);
-//    accountObject.setIcon("px-user");
-//    for (int i=0;i<6;i++)
-//        accounts.push_back(accountObject);
-    //Finish test
+#if 0  //Test
+    vector<AccountObject> accounts;
+    AccountObject accountObject;
+    accountObject.setTitle("Test");
+    accountObject.setStatus(Status::online);
+    accountObject.setUnread(11);
+    accountObject.setIcon("px-user");
+    for (int i=0;i<6;i++)
+        accounts.push_back(accountObject);
+#endif//Finish test
 
     mainMenu->setFixedWidth(MAIN_MENU_SIZE_W);
     mainMenu->addAction(createTitle(tr("YOUR ACCOUNTS"), ""));
@@ -55,17 +55,16 @@ void hub::refresh() {
     // get messages
 
     vector<MessageObject> messageList = rpcHubClient.getMessageList(6);
-    //Test
-//    vector<MessageObject> messageList;
-//    MessageObject messageObject;
-//    messageObject.setSender("Fakhri");
-//    messageObject.setMessage("I hate U");
-//    messageObject.setTime("1577891410");
-//    messageObject.setIcon("px-user");
-//    for(int i=0; i<5;i++)
-//       messageList.push_back(messageObject);
-    // End Test
-
+#if 0 //Test
+    vector<MessageObject> messageList;
+    MessageObject messageObject;
+    messageObject.setSender("Fakhri");
+    messageObject.setMessage("This is test");
+    messageObject.setTime("1577891410");
+    messageObject.setIcon("px-user");
+    for(int i=0; i<5;i++)
+       messageList.push_back(messageObject);
+#endif
     for(auto &m : messageList){
         mainMenu->addAction(buildMessageItem(m));
         mainMenu->addSeparator();
