@@ -32,7 +32,8 @@ void hub::refresh() {
 //    accountObject.setStatus(Status::online);
 //    accountObject.setUnread(11);
 //    accountObject.setIcon("px-user");
-//    accounts.push_back(accountObject);
+//    for (int i=0;i<6;i++)
+//        accounts.push_back(accountObject);
     //Finish test
 
     mainMenu->setFixedWidth(MAIN_MENU_SIZE_W);
@@ -58,7 +59,7 @@ void hub::refresh() {
 //    vector<MessageObject> messageList;
 //    MessageObject messageObject;
 //    messageObject.setSender("Fakhri");
-//    messageObject.setMessage("I Love U");
+//    messageObject.setMessage("I hate U");
 //    messageObject.setTime("1577891410");
 //    messageObject.setIcon("px-user");
 //    for(int i=0; i<5;i++)
@@ -146,7 +147,7 @@ QWidgetAction* hub::buildAccountItem(AccountObject account) {
     qlayout->addLayout(rlayout);
 //    qlayout->setMargin(0);
     qlayout->setSpacing(0);
-//    qlayout->setContentsMargins(3,0,3,0);
+//    qlayout->setContentsMargins(0,2,0,2);
 
     auto  widget = new QWidget;
     widget->setObjectName("PxHubItem");
@@ -242,6 +243,7 @@ QWidgetAction *hub::buildMessageItem(MessageObject message) {
     auto messagePreview = new QLabel;
     messagePreview->setText(message.getMessage().c_str());
     messagePreview->setFont(QFont("Helvetica",8));
+    messagePreview->setContentsMargins(0,2,0,0);
 
     auto Tlayout = new QVBoxLayout;
     Tlayout->addLayout(qlayout);
@@ -260,9 +262,9 @@ QWidgetAction *hub::buildMessageItem(MessageObject message) {
     auto glayout = new QHBoxLayout;
     glayout->addLayout(ilayout);
     glayout->addLayout(Tlayout);
-    glayout->setMargin(0);
+//    glayout->setMargin(0);
     glayout->setSpacing(0);
-    glayout->setContentsMargins(0,0,0,0);
+//    glayout->setContentsMargins(0,0,0,0);
 
     auto  resultWidget = new QWidget;
     resultWidget->setObjectName("PxHubItem");
