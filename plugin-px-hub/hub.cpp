@@ -25,6 +25,17 @@ void hub::refresh() {
     // get accounts
     RPCHubClient rpcHubClient;
     vector<AccountObject> accounts= rpcHubClient.getAccountList();
+    //Test
+//    vector<AccountObject> accounts;
+//    AccountObject accountObject;
+//    accountObject.setTitle("Test");
+//    accountObject.setStatus(Status::online);
+//    accountObject.setUnread(11);
+//    accountObject.setIcon("px-user");
+//    for (int i=0;i<6;i++)
+//        accounts.push_back(accountObject);
+    //Finish test
+
     mainMenu->setFixedWidth(MAIN_MENU_SIZE_W);
     mainMenu->addAction(createTitle(tr("YOUR ACCOUNTS"), ""));
     for(const auto &s : accounts){
@@ -44,11 +55,22 @@ void hub::refresh() {
     // get messages
 
     vector<MessageObject> messageList = rpcHubClient.getMessageList(6);
+    //Test
+//    vector<MessageObject> messageList;
+//    MessageObject messageObject;
+//    messageObject.setSender("Fakhri");
+//    messageObject.setMessage("I hate U");
+//    messageObject.setTime("1577891410");
+//    messageObject.setIcon("px-user");
+//    for(int i=0; i<5;i++)
+//       messageList.push_back(messageObject);
+    // End Test
+
     for(auto &m : messageList){
         mainMenu->addAction(buildMessageItem(m));
         mainMenu->addSeparator();
     }
-    mainMenu->setObjectName("LXQtMountPopup");
+    //mainMenu->setObjectName("LXQtMountPopup");
     mainMenu->addSeparator();
     mButton.setStyleSheet("QToolButton::menu-indicator { image: none; }");
     mButton.setMenu(mainMenu);
@@ -123,11 +145,12 @@ QWidgetAction* hub::buildAccountItem(AccountObject account) {
     auto qlayout = new QHBoxLayout;
     qlayout->addLayout(llayout);
     qlayout->addLayout(rlayout);
-    qlayout->setMargin(0);
+//    qlayout->setMargin(0);
     qlayout->setSpacing(0);
-    qlayout->setContentsMargins(3,0,3,0);
+//    qlayout->setContentsMargins(0,2,0,2);
 
     auto  widget = new QWidget;
+    widget->setObjectName("PxHubItem");
     widget->setLayout(qlayout);
     auto qWidgetAction = new QWidgetAction(this);
     qWidgetAction->setDefaultWidget(widget);
@@ -158,6 +181,7 @@ QWidgetAction *hub::createTitle(QString title, QString icon) {
     mainLayout->addLayout(rlayout);
 
     auto sWidget = new QWidget;
+    sWidget->setObjectName("PxHubItem");
     sWidget->setLayout(mainLayout);
     sWidget->setContentsMargins(0,0,0,5);
     auto sWidgetAction = new QWidgetAction(this);
@@ -219,6 +243,7 @@ QWidgetAction *hub::buildMessageItem(MessageObject message) {
     auto messagePreview = new QLabel;
     messagePreview->setText(message.getMessage().c_str());
     messagePreview->setFont(QFont("Helvetica",8));
+    messagePreview->setContentsMargins(0,2,0,0);
 
     auto Tlayout = new QVBoxLayout;
     Tlayout->addLayout(qlayout);
@@ -237,11 +262,12 @@ QWidgetAction *hub::buildMessageItem(MessageObject message) {
     auto glayout = new QHBoxLayout;
     glayout->addLayout(ilayout);
     glayout->addLayout(Tlayout);
-    glayout->setMargin(0);
+//    glayout->setMargin(0);
     glayout->setSpacing(0);
-    glayout->setContentsMargins(0,0,0,0);
+//    glayout->setContentsMargins(0,0,0,0);
 
     auto  resultWidget = new QWidget;
+    resultWidget->setObjectName("PxHubItem");
     resultWidget->setLayout(glayout);
     resultWidget->setSizePolicy(QSizePolicy::MinimumExpanding,QSizePolicy::Preferred);
 
