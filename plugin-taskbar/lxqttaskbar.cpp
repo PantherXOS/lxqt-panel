@@ -38,7 +38,6 @@
 #include <QWheelEvent>
 #include <QFlag>
 #include <QX11Info>
-#include <QDebug>
 #include <QTimer>
 
 #include <lxqt-globalkeys.h>
@@ -69,7 +68,8 @@ LXQtTaskBar::LXQtTaskBar(ILXQtPanelPlugin *plugin, QWidget *parent) :
     mGroupingEnabled(true),
     mShowGroupOnHover(true),
     mIconByClass(false),
-    mCycleOnWheelScroll(true),
+    mWheelEventsAction(1),
+    mWheelDeltaThreshold(300),
     mPlugin(plugin),
     mPlaceHolder(new QWidget(this)),
     mStyle(new LeftAlignedTextStyle())
@@ -270,7 +270,7 @@ void LXQtTaskBar::groupBecomeEmptySlot()
 void LXQtTaskBar::addWindow(WId window)
 {
     // If grouping disabled group behaves like regular button
-    const QString group_id = mGroupingEnabled ? KWindowInfo(window, 0, NET::WM2WindowClass).windowClassClass() : QString("%1").arg(window);
+    const QString group_id = mGroupingEnabled ? QString::fromUtf8(KWindowInfo(window, 0, NET::WM2WindowClass).windowClassClass()) : QString::number(window);
 
     LXQtTaskGroup *group = nullptr;
     auto i_group = mKnownWindows.find(window);
@@ -449,28 +449,29 @@ void LXQtTaskBar::settingsChanged()
     bool showOnlyMinimizedTasksOld = mShowOnlyMinimizedTasks;
     const bool iconByClassOld = mIconByClass;
 
-    mButtonWidth = mPlugin->settings()->value("buttonWidth", 400).toInt();
-    mButtonHeight = mPlugin->settings()->value("buttonHeight", 100).toInt();
-    QString s = mPlugin->settings()->value("buttonStyle").toString().toUpper();
+    mButtonWidth = mPlugin->settings()->value(QStringLiteral("buttonWidth"), 400).toInt();
+    mButtonHeight = mPlugin->settings()->value(QStringLiteral("buttonHeight"), 100).toInt();
+    QString s = mPlugin->settings()->value(QStringLiteral("buttonStyle")).toString().toUpper();
 
-    if (s == "ICON")
+    if (s == QStringLiteral("ICON"))
         setButtonStyle(Qt::ToolButtonIconOnly);
-    else if (s == "TEXT")
+    else if (s == QStringLiteral("TEXT"))
         setButtonStyle(Qt::ToolButtonTextOnly);
     else
         setButtonStyle(Qt::ToolButtonTextBesideIcon);
 
-    mShowOnlyOneDesktopTasks = mPlugin->settings()->value("showOnlyOneDesktopTasks", mShowOnlyOneDesktopTasks).toBool();
-    mShowDesktopNum = mPlugin->settings()->value("showDesktopNum", mShowDesktopNum).toInt();
-    mShowOnlyCurrentScreenTasks = mPlugin->settings()->value("showOnlyCurrentScreenTasks", mShowOnlyCurrentScreenTasks).toBool();
-    mShowOnlyMinimizedTasks = mPlugin->settings()->value("showOnlyMinimizedTasks", mShowOnlyMinimizedTasks).toBool();
-    mAutoRotate = mPlugin->settings()->value("autoRotate", true).toBool();
-    mCloseOnMiddleClick = mPlugin->settings()->value("closeOnMiddleClick", true).toBool();
-    mRaiseOnCurrentDesktop = mPlugin->settings()->value("raiseOnCurrentDesktop", false).toBool();
-    mGroupingEnabled = mPlugin->settings()->value("groupingEnabled",true).toBool();
-    mShowGroupOnHover = mPlugin->settings()->value("showGroupOnHover",true).toBool();
-    mIconByClass = mPlugin->settings()->value("iconByClass", false).toBool();
-    mCycleOnWheelScroll = mPlugin->settings()->value("cycleOnWheelScroll", true).toBool();
+    mShowOnlyOneDesktopTasks = mPlugin->settings()->value(QStringLiteral("showOnlyOneDesktopTasks"), mShowOnlyOneDesktopTasks).toBool();
+    mShowDesktopNum = mPlugin->settings()->value(QStringLiteral("showDesktopNum"), mShowDesktopNum).toInt();
+    mShowOnlyCurrentScreenTasks = mPlugin->settings()->value(QStringLiteral("showOnlyCurrentScreenTasks"), mShowOnlyCurrentScreenTasks).toBool();
+    mShowOnlyMinimizedTasks = mPlugin->settings()->value(QStringLiteral("showOnlyMinimizedTasks"), mShowOnlyMinimizedTasks).toBool();
+    mAutoRotate = mPlugin->settings()->value(QStringLiteral("autoRotate"), true).toBool();
+    mCloseOnMiddleClick = mPlugin->settings()->value(QStringLiteral("closeOnMiddleClick"), true).toBool();
+    mRaiseOnCurrentDesktop = mPlugin->settings()->value(QStringLiteral("raiseOnCurrentDesktop"), false).toBool();
+    mGroupingEnabled = mPlugin->settings()->value(QStringLiteral("groupingEnabled"),true).toBool();
+    mShowGroupOnHover = mPlugin->settings()->value(QStringLiteral("showGroupOnHover"),true).toBool();
+    mIconByClass = mPlugin->settings()->value(QStringLiteral("iconByClass"), false).toBool();
+    mWheelEventsAction = mPlugin->settings()->value(QStringLiteral("wheelEventsAction"), 1).toInt();
+    mWheelDeltaThreshold = mPlugin->settings()->value(QStringLiteral("wheelDeltaThreshold"), 300).toInt();
 
     // Delete all groups if grouping feature toggled and start over
     if (groupingEnabledOld != mGroupingEnabled)
@@ -561,17 +562,23 @@ void LXQtTaskBar::realign()
  ************************************************/
 void LXQtTaskBar::wheelEvent(QWheelEvent* event)
 {
-    if (!mCycleOnWheelScroll)
+    // ignore wheel action unless user preference is "cycle windows"
+    if (mWheelEventsAction != 1)
         return QFrame::wheelEvent(event);
 
     static int threshold = 0;
-    threshold += abs(event->delta());
-    if (threshold < 300)
+
+    QPoint angleDelta = event->angleDelta();
+    Qt::Orientation orient = (qAbs(angleDelta.x()) > qAbs(angleDelta.y()) ? Qt::Horizontal : Qt::Vertical);
+    int delta = (orient == Qt::Horizontal ? angleDelta.x() : angleDelta.y());
+
+    threshold += abs(delta);
+    if (threshold < mWheelDeltaThreshold)
         return QFrame::wheelEvent(event);
     else
         threshold = 0;
 
-    int delta = event->delta() < 0 ? 1 : -1;
+    int D = delta < 0 ? 1 : -1;
 
     // create temporary list of visible groups in the same order like on the layout
     QList<LXQtTaskGroup*> list;
@@ -600,10 +607,10 @@ void LXQtTaskBar::wheelEvent(QWheelEvent* event)
     // switching between groups from temporary list in modulo addressing
     while (!button)
     {
-        button = group->getNextPrevChildButton(delta == 1, !(list.count() - 1));
+        button = group->getNextPrevChildButton(D == 1, !(list.count() - 1));
         if (button)
             button->raiseApplication();
-        int idx = (list.indexOf(group) + delta + list.count()) % list.count();
+        int idx = (list.indexOf(group) + D + list.count()) % list.count();
         group = list.at(idx);
     }
     QFrame::wheelEvent(event);
@@ -644,7 +651,7 @@ void LXQtTaskBar::registerShortcuts()
     QString description;
     for (int i = 1; i <= 10; ++i)
     {
-        path = QString("/panel/%1/task_%2").arg(mPlugin->settings()->group()).arg(i);
+        path = QStringLiteral("/panel/%1/task_%2").arg(mPlugin->settings()->group()).arg(i);
         description = tr("Activate task %1").arg(i);
 
         gshortcut = GlobalKeyShortcut::Client::instance()->addAction(QStringLiteral(), path, description, this);

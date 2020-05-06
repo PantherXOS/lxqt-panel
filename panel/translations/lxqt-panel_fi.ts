@@ -6,7 +6,7 @@
     <message>
         <location filename="../config/addplugindialog.ui" line="14"/>
         <source>Add Plugins</source>
-        <translation type="unfinished"></translation>
+        <translation>Lisää lisäosia</translation>
     </message>
     <message>
         <location filename="../config/addplugindialog.ui" line="22"/>
@@ -16,7 +16,7 @@
     <message>
         <location filename="../config/addplugindialog.ui" line="98"/>
         <source>Add Widget</source>
-        <translation>Lisää vempain</translation>
+        <translation>Lisää pienoisohjelma</translation>
     </message>
     <message>
         <location filename="../config/addplugindialog.ui" line="105"/>
@@ -62,13 +62,13 @@
     <message>
         <location filename="../config/configpanelwidget.ui" line="81"/>
         <source>Size:</source>
-        <translation type="unfinished">Koko:</translation>
+        <translation>Koko:</translation>
     </message>
     <message>
         <location filename="../config/configpanelwidget.ui" line="109"/>
         <location filename="../config/configpanelwidget.ui" line="153"/>
         <source> px</source>
-        <translation type="unfinished"></translation>
+        <translation> px</translation>
     </message>
     <message>
         <location filename="../config/configpanelwidget.ui" line="166"/>
@@ -78,22 +78,22 @@
     <message>
         <location filename="../config/configpanelwidget.ui" line="88"/>
         <source>Length:</source>
-        <translation type="unfinished">Pituus:</translation>
+        <translation>Pituus:</translation>
     </message>
     <message>
         <location filename="../config/configpanelwidget.ui" line="68"/>
         <source>&lt;p&gt;Negative pixel value sets the panel length to that many pixels less than available screen space.&lt;/p&gt;&lt;p/&gt;&lt;p&gt;&lt;i&gt;E.g. &quot;Length&quot; set to -100px, screen size is 1000px, then real panel length will be 900 px.&lt;/i&gt;&lt;/p&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;p&gt;Negatiivinen pikseliarvo asettaa paneelin pituuden yhtä monta pikseliä käytettävissä olevaa näyttötilaa pienemmäksi.&lt;/p&gt;&lt;p/&gt;&lt;p&gt;&lt;i&gt;Esimerkiksi jos &quot;Pituus&quot; on asetettu arvoon -100px, ja näytön koko on 1000px, tulee paneelin pituudeksi 900px.&lt;/i&gt;&lt;/p&gt;</translation>
     </message>
     <message>
         <location filename="../config/configpanelwidget.ui" line="96"/>
         <source>%</source>
-        <translation type="unfinished">%</translation>
+        <translation>%</translation>
     </message>
     <message>
         <location filename="../config/configpanelwidget.ui" line="101"/>
         <source>px</source>
-        <translation type="unfinished">pikseliä</translation>
+        <translation>px</translation>
     </message>
     <message>
         <location filename="../config/configpanelwidget.ui" line="202"/>
@@ -110,7 +110,7 @@
         <location filename="../config/configpanelwidget.ui" line="288"/>
         <location filename="../config/configpanelwidget.ui" line="314"/>
         <source> ms</source>
-        <translation type="unfinished"></translation>
+        <translation> ms</translation>
     </message>
     <message>
         <location filename="../config/configpanelwidget.ui" line="265"/>
@@ -120,26 +120,26 @@
     <message>
         <location filename="../config/configpanelwidget.ui" line="173"/>
         <source>Rows:</source>
-        <translation type="unfinished"></translation>
+        <translation>Rivejä:</translation>
     </message>
     <message>
         <location filename="../config/configpanelwidget.ui" line="219"/>
-        <location filename="../config/configpanelwidget.cpp" line="206"/>
+        <location filename="../config/configpanelwidget.cpp" line="211"/>
         <source>Left</source>
-        <translation type="unfinished">Vasemmalla</translation>
+        <translation>Vasemmalla</translation>
     </message>
     <message>
         <location filename="../config/configpanelwidget.ui" line="224"/>
-        <location filename="../config/configpanelwidget.cpp" line="207"/>
-        <location filename="../config/configpanelwidget.cpp" line="213"/>
+        <location filename="../config/configpanelwidget.cpp" line="212"/>
+        <location filename="../config/configpanelwidget.cpp" line="218"/>
         <source>Center</source>
-        <translation type="unfinished">Keskellä</translation>
+        <translation>Keskellä</translation>
     </message>
     <message>
         <location filename="../config/configpanelwidget.ui" line="229"/>
-        <location filename="../config/configpanelwidget.cpp" line="208"/>
+        <location filename="../config/configpanelwidget.cpp" line="213"/>
         <source>Right</source>
-        <translation type="unfinished">Oikealla</translation>
+        <translation>Oikealla</translation>
     </message>
     <message>
         <location filename="../config/configpanelwidget.ui" line="250"/>
@@ -158,47 +158,52 @@
         <translation>Esiintulemisen viive:</translation>
     </message>
     <message>
-        <location filename="../config/configpanelwidget.ui" line="330"/>
+        <location filename="../config/configpanelwidget.ui" line="327"/>
+        <source>Visible thin margin for hidden panel</source>
+        <translation>Näytä ohut osa piiloitetusta paneelista</translation>
+    </message>
+    <message>
+        <location filename="../config/configpanelwidget.ui" line="337"/>
         <source>Don&apos;t allow maximized windows go under the panel window</source>
         <translation>Älä salli suurennettujen ikkunoiden mennä paneelin alle</translation>
     </message>
     <message>
-        <location filename="../config/configpanelwidget.ui" line="333"/>
+        <location filename="../config/configpanelwidget.ui" line="340"/>
         <source>Reserve space on display</source>
         <translation>Varaa tilaa näytöltä</translation>
     </message>
     <message>
-        <location filename="../config/configpanelwidget.ui" line="349"/>
+        <location filename="../config/configpanelwidget.ui" line="356"/>
         <source>Custom styling</source>
-        <translation type="unfinished"></translation>
+        <translation>Ulkoasun muokkaaminen</translation>
     </message>
     <message>
-        <location filename="../config/configpanelwidget.ui" line="370"/>
+        <location filename="../config/configpanelwidget.ui" line="377"/>
         <source>Font color:</source>
         <translation>Fontin väri:</translation>
     </message>
     <message>
-        <location filename="../config/configpanelwidget.ui" line="410"/>
+        <location filename="../config/configpanelwidget.ui" line="417"/>
         <source>Background color:</source>
         <translation>Taustaväri:</translation>
     </message>
     <message>
-        <location filename="../config/configpanelwidget.ui" line="449"/>
+        <location filename="../config/configpanelwidget.ui" line="456"/>
         <source>Background opacity:</source>
         <translation>Taustan läpinäkyvyys:</translation>
     </message>
     <message>
-        <location filename="../config/configpanelwidget.ui" line="481"/>
+        <location filename="../config/configpanelwidget.ui" line="488"/>
         <source>&lt;small&gt;Compositing is required for panel transparency.&lt;/small&gt;</source>
         <translation>&lt;small&gt;Kompositointi tarvitaan läpinäkyvää paneelia varten&lt;/small&gt;</translation>
     </message>
     <message>
-        <location filename="../config/configpanelwidget.ui" line="509"/>
+        <location filename="../config/configpanelwidget.ui" line="516"/>
         <source>Background image:</source>
         <translation>Taustakuva:</translation>
     </message>
     <message>
-        <location filename="../config/configpanelwidget.ui" line="561"/>
+        <location filename="../config/configpanelwidget.ui" line="568"/>
         <source>A partial workaround for widget styles that
 cannot give a separate theme to the panel.
 
@@ -207,91 +212,98 @@ You might also want to disable:
 LXQt Appearance Configuration →
 Icons Theme →
 Colorize icons based on widget style (palette)</source>
-        <translation type="unfinished"></translation>
+        <translation>Osittainen kiertotapa pienoisohjelmatyyleille,
+jotka eivät voi antaa erillistä teemaa paneelille.
+
+Saatat myös haluta poistaa käytöstä:
+
+LXQtin ulkoasun hallinta →
+Kuvaketeema →
+Väritä kuvakkeet pienoisohjelmatyylin (paletti) mukaan</translation>
     </message>
     <message>
-        <location filename="../config/configpanelwidget.ui" line="571"/>
+        <location filename="../config/configpanelwidget.ui" line="578"/>
         <source>Override icon &amp;theme</source>
-        <translation type="unfinished"></translation>
+        <translation>Ohita kuvake &amp; teema</translation>
     </message>
     <message>
-        <location filename="../config/configpanelwidget.ui" line="586"/>
+        <location filename="../config/configpanelwidget.ui" line="593"/>
         <source>Icon theme for panels:</source>
-        <translation type="unfinished"></translation>
+        <translation>Kuvaketeema paneeleille:</translation>
     </message>
     <message>
         <location filename="../config/configpanelwidget.ui" line="208"/>
         <source>Alignment:</source>
-        <translation type="unfinished">Kohdistus:</translation>
+        <translation>Kohdistus:</translation>
     </message>
     <message>
         <location filename="../config/configpanelwidget.ui" line="237"/>
         <source>Position:</source>
-        <translation type="unfinished">Sijainti:</translation>
+        <translation>Sijainti:</translation>
     </message>
     <message>
-        <location filename="../config/configpanelwidget.cpp" line="172"/>
+        <location filename="../config/configpanelwidget.cpp" line="177"/>
         <source>Top of desktop</source>
-        <translation type="unfinished">Työpöydän yläosassa</translation>
+        <translation>Työpöydän yläosassa</translation>
     </message>
     <message>
-        <location filename="../config/configpanelwidget.cpp" line="173"/>
+        <location filename="../config/configpanelwidget.cpp" line="178"/>
         <source>Left of desktop</source>
-        <translation type="unfinished">Työpöydän vasemmassa laidassa</translation>
+        <translation>Työpöydän vasemmassa laidassa</translation>
     </message>
     <message>
-        <location filename="../config/configpanelwidget.cpp" line="174"/>
+        <location filename="../config/configpanelwidget.cpp" line="179"/>
         <source>Right of desktop</source>
-        <translation type="unfinished">Työpöydän oikeassa laidassa</translation>
+        <translation>Työpöydän oikeassa laidassa</translation>
     </message>
     <message>
-        <location filename="../config/configpanelwidget.cpp" line="175"/>
+        <location filename="../config/configpanelwidget.cpp" line="180"/>
         <source>Bottom of desktop</source>
-        <translation type="unfinished">Työpöydän alaosassa</translation>
+        <translation>Työpöydän alaosassa</translation>
     </message>
     <message>
-        <location filename="../config/configpanelwidget.cpp" line="184"/>
+        <location filename="../config/configpanelwidget.cpp" line="189"/>
         <source>Top of desktop %1</source>
-        <translation type="unfinished">Työpöydän %1 yläosassa</translation>
+        <translation>Työpöydän %1 yläosassa</translation>
     </message>
     <message>
-        <location filename="../config/configpanelwidget.cpp" line="185"/>
+        <location filename="../config/configpanelwidget.cpp" line="190"/>
         <source>Left of desktop %1</source>
-        <translation type="unfinished">Työpöydän %1 vasemmassa laidassa</translation>
+        <translation>Työpöydän %1 vasemmassa laidassa</translation>
     </message>
     <message>
-        <location filename="../config/configpanelwidget.cpp" line="186"/>
+        <location filename="../config/configpanelwidget.cpp" line="191"/>
         <source>Right of desktop %1</source>
-        <translation type="unfinished">Työpöydän %1 oikeassa laidassa</translation>
+        <translation>Työpöydän %1 oikeassa laidassa</translation>
     </message>
     <message>
-        <location filename="../config/configpanelwidget.cpp" line="187"/>
+        <location filename="../config/configpanelwidget.cpp" line="192"/>
         <source>Bottom of desktop %1</source>
-        <translation type="unfinished">Työpöydän %1 alaosassa</translation>
+        <translation>Työpöydän %1 alaosassa</translation>
     </message>
     <message>
-        <location filename="../config/configpanelwidget.cpp" line="212"/>
+        <location filename="../config/configpanelwidget.cpp" line="217"/>
         <source>Top</source>
-        <translation type="unfinished"></translation>
+        <translation>Yläreunassa</translation>
     </message>
     <message>
-        <location filename="../config/configpanelwidget.cpp" line="214"/>
+        <location filename="../config/configpanelwidget.cpp" line="219"/>
         <source>Bottom</source>
-        <translation type="unfinished"></translation>
+        <translation>Alareunassa</translation>
     </message>
     <message>
-        <location filename="../config/configpanelwidget.cpp" line="430"/>
-        <location filename="../config/configpanelwidget.cpp" line="446"/>
+        <location filename="../config/configpanelwidget.cpp" line="436"/>
+        <location filename="../config/configpanelwidget.cpp" line="452"/>
         <source>Pick color</source>
         <translation>Valitse väri</translation>
     </message>
     <message>
-        <location filename="../config/configpanelwidget.cpp" line="464"/>
+        <location filename="../config/configpanelwidget.cpp" line="470"/>
         <source>Images (*.png *.gif *.jpg)</source>
         <translation>Kuvat (*.png *.gif *.jpg)</translation>
     </message>
     <message>
-        <location filename="../config/configpanelwidget.cpp" line="464"/>
+        <location filename="../config/configpanelwidget.cpp" line="470"/>
         <source>Pick image</source>
         <translation>Valitse kuva</translation>
     </message>
@@ -301,7 +313,7 @@ Colorize icons based on widget style (palette)</source>
     <message>
         <location filename="../config/configpluginswidget.ui" line="14"/>
         <source>Configure Plugins</source>
-        <translation type="unfinished"></translation>
+        <translation>Säädä lisäosia</translation>
     </message>
     <message>
         <location filename="../config/configpluginswidget.ui" line="84"/>
@@ -335,56 +347,56 @@ Colorize icons based on widget style (palette)</source>
     <message>
         <location filename="../config/configpluginswidget.ui" line="161"/>
         <source>Remove</source>
-        <translation type="unfinished">Poista</translation>
+        <translation>Poista</translation>
     </message>
     <message>
         <location filename="../config/configpluginswidget.ui" line="182"/>
         <source>Configure</source>
-        <translation type="unfinished">Muokkaa</translation>
+        <translation>Asetukset</translation>
     </message>
 </context>
 <context>
     <name>LXQtPanel</name>
     <message>
-        <location filename="../lxqtpanel.cpp" line="1068"/>
-        <location filename="../lxqtpanel.cpp" line="1094"/>
+        <location filename="../lxqtpanel.cpp" line="1081"/>
+        <location filename="../lxqtpanel.cpp" line="1107"/>
         <source>Panel</source>
         <translation>Paneeli</translation>
     </message>
     <message>
-        <location filename="../lxqtpanel.cpp" line="1097"/>
+        <location filename="../lxqtpanel.cpp" line="1110"/>
         <source>Configure Panel</source>
         <translation>Muokkaa paneelia</translation>
     </message>
     <message>
-        <location filename="../lxqtpanel.cpp" line="1102"/>
+        <location filename="../lxqtpanel.cpp" line="1115"/>
         <source>Manage Widgets</source>
-        <translation type="unfinished"></translation>
+        <translation>Hallitse pienoisohjelmia</translation>
     </message>
     <message>
-        <location filename="../lxqtpanel.cpp" line="1108"/>
+        <location filename="../lxqtpanel.cpp" line="1121"/>
         <source>Add New Panel</source>
         <translation>Luo uusi paneeli</translation>
     </message>
     <message>
-        <location filename="../lxqtpanel.cpp" line="1115"/>
+        <location filename="../lxqtpanel.cpp" line="1128"/>
         <source>Remove Panel</source>
         <comment>Menu Item</comment>
         <translation>Poista paneeli</translation>
     </message>
     <message>
-        <location filename="../lxqtpanel.cpp" line="1120"/>
+        <location filename="../lxqtpanel.cpp" line="1133"/>
         <source>Lock This Panel</source>
         <translation>Lukitse paneeli</translation>
     </message>
     <message>
-        <location filename="../lxqtpanel.cpp" line="1273"/>
+        <location filename="../lxqtpanel.cpp" line="1286"/>
         <source>Remove Panel</source>
         <comment>Dialog Title</comment>
         <translation>Poista paneeli</translation>
     </message>
     <message>
-        <location filename="../lxqtpanel.cpp" line="1274"/>
+        <location filename="../lxqtpanel.cpp" line="1287"/>
         <source>Removing a panel can not be undone.
 Do you want to remove this panel?</source>
         <translation>Paneelin poistoa ei voi peruuttaa.
@@ -394,19 +406,19 @@ Haluatko varmasti poistaa tämän paneelin?</translation>
 <context>
     <name>Plugin</name>
     <message>
-        <location filename="../plugin.cpp" line="411"/>
+        <location filename="../plugin.cpp" line="432"/>
         <source>Configure &quot;%1&quot;</source>
-        <translation type="unfinished"></translation>
+        <translation>Säädä &quot;%1&quot;</translation>
     </message>
     <message>
-        <location filename="../plugin.cpp" line="416"/>
+        <location filename="../plugin.cpp" line="437"/>
         <source>Move &quot;%1&quot;</source>
-        <translation type="unfinished"></translation>
+        <translation>Siirrä &quot;%1&quot;</translation>
     </message>
     <message>
-        <location filename="../plugin.cpp" line="424"/>
+        <location filename="../plugin.cpp" line="445"/>
         <source>Remove &quot;%1&quot;</source>
-        <translation type="unfinished"></translation>
+        <translation>Poista &quot;%1&quot;</translation>
     </message>
 </context>
 <context>
@@ -414,7 +426,7 @@ Haluatko varmasti poistaa tämän paneelin?</translation>
     <message>
         <location filename="../lxqtpanelapplication.cpp" line="95"/>
         <source>Use alternate configuration file.</source>
-        <translation type="unfinished"></translation>
+        <translation>Käytä vaihtoehtoista asetustiedostoa.</translation>
     </message>
     <message>
         <location filename="../lxqtpanelapplication.cpp" line="96"/>

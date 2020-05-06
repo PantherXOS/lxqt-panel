@@ -6,7 +6,7 @@
     <message>
         <location filename="../config/addplugindialog.ui" line="14"/>
         <source>Add Plugins</source>
-        <translation>Bővítmény hozzáadás</translation>
+        <translation>Bővítmény hozzáadása</translation>
     </message>
     <message>
         <location filename="../config/addplugindialog.ui" line="22"/>
@@ -16,12 +16,12 @@
     <message>
         <location filename="../config/addplugindialog.ui" line="98"/>
         <source>Add Widget</source>
-        <translation>Elem hozzáadás</translation>
+        <translation>Elem hozzáadása</translation>
     </message>
     <message>
         <location filename="../config/addplugindialog.ui" line="105"/>
         <source>Close</source>
-        <translation>Bezár</translation>
+        <translation>Bezárás</translation>
     </message>
     <message>
         <location filename="../config/addplugindialog.cpp" line="115"/>
@@ -34,7 +34,7 @@
     <message>
         <location filename="../config/configpaneldialog.cpp" line="31"/>
         <source>Configure Panel</source>
-        <translation>Panelbeállítás</translation>
+        <translation>Panel beállítása</translation>
     </message>
     <message>
         <location filename="../config/configpaneldialog.cpp" line="38"/>
@@ -52,7 +52,7 @@
     <message>
         <location filename="../config/configpanelwidget.ui" line="20"/>
         <source>Configure panel</source>
-        <translation>Panelbeállítás</translation>
+        <translation>Panelbeállítások</translation>
     </message>
     <message>
         <location filename="../config/configpanelwidget.ui" line="44"/>
@@ -82,13 +82,13 @@
     <message>
         <location filename="../config/configpanelwidget.ui" line="101"/>
         <source>px</source>
-        <translation>pixel</translation>
+        <translation>px</translation>
     </message>
     <message>
         <location filename="../config/configpanelwidget.ui" line="109"/>
         <location filename="../config/configpanelwidget.ui" line="153"/>
         <source> px</source>
-        <translation> pixel</translation>
+        <translation> px</translation>
     </message>
     <message>
         <location filename="../config/configpanelwidget.ui" line="166"/>
@@ -103,7 +103,7 @@
     <message>
         <location filename="../config/configpanelwidget.ui" line="250"/>
         <source>A&amp;uto-hide</source>
-        <translation>A&amp;utomata elrejtés</translation>
+        <translation>A&amp;utomatikus elrejtés</translation>
     </message>
     <message>
         <location filename="../config/configpanelwidget.ui" line="262"/>
@@ -121,22 +121,27 @@
         <location filename="../config/configpanelwidget.ui" line="301"/>
         <location filename="../config/configpanelwidget.ui" line="311"/>
         <source>Zero means no delay</source>
-        <translation>Nulla esetén nincs várakozás</translation>
+        <translation>Nulla esetén nincs késleltetés</translation>
     </message>
     <message>
         <location filename="../config/configpanelwidget.ui" line="304"/>
         <source>Show with delay:</source>
-        <translation>Láthatósági késleltetés:</translation>
+        <translation>Megjelenítési késleltetés:</translation>
     </message>
     <message>
-        <location filename="../config/configpanelwidget.ui" line="330"/>
+        <location filename="../config/configpanelwidget.ui" line="327"/>
+        <source>Visible thin margin for hidden panel</source>
+        <translation type="unfinished">Vékony margó amikor rejtve van a panel</translation>
+    </message>
+    <message>
+        <location filename="../config/configpanelwidget.ui" line="337"/>
         <source>Don&apos;t allow maximized windows go under the panel window</source>
-        <translation>A maximalizált ablakok a panel alá nem lóghatnak</translation>
+        <translation>A maximalizált ablakok nem lóghatnak a panel alá</translation>
     </message>
     <message>
-        <location filename="../config/configpanelwidget.ui" line="333"/>
+        <location filename="../config/configpanelwidget.ui" line="340"/>
         <source>Reserve space on display</source>
-        <translation>A kijelzőn tartalékterület marad</translation>
+        <translation type="unfinished">A kijelzőn tartalékterület marad</translation>
     </message>
     <message>
         <location filename="../config/configpanelwidget.ui" line="237"/>
@@ -146,7 +151,7 @@
     <message>
         <location filename="../config/configpanelwidget.ui" line="265"/>
         <source>Animation duration:</source>
-        <translation>Animáció tartam:</translation>
+        <translation>Animáció időtartam:</translation>
     </message>
     <message>
         <location filename="../config/configpanelwidget.ui" line="208"/>
@@ -156,59 +161,59 @@
     <message>
         <location filename="../config/configpanelwidget.ui" line="173"/>
         <source>Rows:</source>
-        <translation type="unfinished"></translation>
+        <translation>Sorok:</translation>
     </message>
     <message>
         <location filename="../config/configpanelwidget.ui" line="219"/>
-        <location filename="../config/configpanelwidget.cpp" line="206"/>
+        <location filename="../config/configpanelwidget.cpp" line="211"/>
         <source>Left</source>
         <translation>Balra</translation>
     </message>
     <message>
         <location filename="../config/configpanelwidget.ui" line="224"/>
-        <location filename="../config/configpanelwidget.cpp" line="207"/>
-        <location filename="../config/configpanelwidget.cpp" line="213"/>
+        <location filename="../config/configpanelwidget.cpp" line="212"/>
+        <location filename="../config/configpanelwidget.cpp" line="218"/>
         <source>Center</source>
         <translation>Középre</translation>
     </message>
     <message>
         <location filename="../config/configpanelwidget.ui" line="229"/>
-        <location filename="../config/configpanelwidget.cpp" line="208"/>
+        <location filename="../config/configpanelwidget.cpp" line="213"/>
         <source>Right</source>
         <translation>Jobbra</translation>
     </message>
     <message>
-        <location filename="../config/configpanelwidget.ui" line="349"/>
+        <location filename="../config/configpanelwidget.ui" line="356"/>
         <source>Custom styling</source>
         <translation>Egyéni stílus</translation>
     </message>
     <message>
-        <location filename="../config/configpanelwidget.ui" line="370"/>
+        <location filename="../config/configpanelwidget.ui" line="377"/>
         <source>Font color:</source>
         <translation>Betűszín:</translation>
     </message>
     <message>
-        <location filename="../config/configpanelwidget.ui" line="410"/>
+        <location filename="../config/configpanelwidget.ui" line="417"/>
         <source>Background color:</source>
         <translation>Háttérszín:</translation>
     </message>
     <message>
-        <location filename="../config/configpanelwidget.ui" line="449"/>
+        <location filename="../config/configpanelwidget.ui" line="456"/>
         <source>Background opacity:</source>
         <translation>Háttér áttetszőség:</translation>
     </message>
     <message>
-        <location filename="../config/configpanelwidget.ui" line="481"/>
+        <location filename="../config/configpanelwidget.ui" line="488"/>
         <source>&lt;small&gt;Compositing is required for panel transparency.&lt;/small&gt;</source>
-        <translation>&lt;small&gt;Paneláttetszőséghez kompozitálás kell.&lt;/small&gt;</translation>
+        <translation>&lt;small&gt;A paneláttetszőséghez kompozitálás szükséges.&lt;/small&gt;</translation>
     </message>
     <message>
-        <location filename="../config/configpanelwidget.ui" line="509"/>
+        <location filename="../config/configpanelwidget.ui" line="516"/>
         <source>Background image:</source>
-        <translation>Háttér kép:</translation>
+        <translation>Háttérkép:</translation>
     </message>
     <message>
-        <location filename="../config/configpanelwidget.ui" line="561"/>
+        <location filename="../config/configpanelwidget.ui" line="568"/>
         <source>A partial workaround for widget styles that
 cannot give a separate theme to the panel.
 
@@ -220,78 +225,78 @@ Colorize icons based on widget style (palette)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../config/configpanelwidget.ui" line="571"/>
+        <location filename="../config/configpanelwidget.ui" line="578"/>
         <source>Override icon &amp;theme</source>
-        <translation type="unfinished"></translation>
+        <translation>Ikontéma &amp;felülbírálása</translation>
     </message>
     <message>
-        <location filename="../config/configpanelwidget.ui" line="586"/>
+        <location filename="../config/configpanelwidget.ui" line="593"/>
         <source>Icon theme for panels:</source>
-        <translation type="unfinished"></translation>
+        <translation>Ikontéma a panelhez:</translation>
     </message>
     <message>
-        <location filename="../config/configpanelwidget.cpp" line="172"/>
+        <location filename="../config/configpanelwidget.cpp" line="177"/>
         <source>Top of desktop</source>
-        <translation>Az asztal tetejére</translation>
+        <translation>Az asztal tetején</translation>
     </message>
     <message>
-        <location filename="../config/configpanelwidget.cpp" line="173"/>
+        <location filename="../config/configpanelwidget.cpp" line="178"/>
         <source>Left of desktop</source>
-        <translation>Az asztal bal oldalára</translation>
+        <translation>Az asztal bal oldalán</translation>
     </message>
     <message>
-        <location filename="../config/configpanelwidget.cpp" line="174"/>
+        <location filename="../config/configpanelwidget.cpp" line="179"/>
         <source>Right of desktop</source>
-        <translation>Az asztal jobb oldalára</translation>
+        <translation>Az asztal jobb oldalán</translation>
     </message>
     <message>
-        <location filename="../config/configpanelwidget.cpp" line="175"/>
+        <location filename="../config/configpanelwidget.cpp" line="180"/>
         <source>Bottom of desktop</source>
-        <translation>Az asztal aljára</translation>
+        <translation>Az asztal alján</translation>
     </message>
     <message>
-        <location filename="../config/configpanelwidget.cpp" line="184"/>
+        <location filename="../config/configpanelwidget.cpp" line="189"/>
         <source>Top of desktop %1</source>
-        <translation>A(z) %1. asztal tetejére</translation>
+        <translation>A(z) %1. asztal tetején</translation>
     </message>
     <message>
-        <location filename="../config/configpanelwidget.cpp" line="185"/>
+        <location filename="../config/configpanelwidget.cpp" line="190"/>
         <source>Left of desktop %1</source>
-        <translation>A(z) %1. asztal bal oldalára</translation>
+        <translation>A(z) %1. asztal bal oldalán</translation>
     </message>
     <message>
-        <location filename="../config/configpanelwidget.cpp" line="186"/>
+        <location filename="../config/configpanelwidget.cpp" line="191"/>
         <source>Right of desktop %1</source>
-        <translation>A(z) %1. asztal jobb oldalára</translation>
+        <translation>A(z) %1. asztal jobb oldalán</translation>
     </message>
     <message>
-        <location filename="../config/configpanelwidget.cpp" line="187"/>
+        <location filename="../config/configpanelwidget.cpp" line="192"/>
         <source>Bottom of desktop %1</source>
-        <translation>A(z) %1. asztal aljára</translation>
+        <translation>A(z) %1. asztal alján</translation>
     </message>
     <message>
-        <location filename="../config/configpanelwidget.cpp" line="212"/>
+        <location filename="../config/configpanelwidget.cpp" line="217"/>
         <source>Top</source>
-        <translation>Fenn</translation>
+        <translation>Fentre</translation>
     </message>
     <message>
-        <location filename="../config/configpanelwidget.cpp" line="214"/>
+        <location filename="../config/configpanelwidget.cpp" line="219"/>
         <source>Bottom</source>
-        <translation>Lenn</translation>
+        <translation>Lentre</translation>
     </message>
     <message>
-        <location filename="../config/configpanelwidget.cpp" line="430"/>
-        <location filename="../config/configpanelwidget.cpp" line="446"/>
+        <location filename="../config/configpanelwidget.cpp" line="436"/>
+        <location filename="../config/configpanelwidget.cpp" line="452"/>
         <source>Pick color</source>
         <translation>Színválasztás</translation>
     </message>
     <message>
-        <location filename="../config/configpanelwidget.cpp" line="464"/>
+        <location filename="../config/configpanelwidget.cpp" line="470"/>
         <source>Pick image</source>
-        <translation>Képválasztás</translation>
+        <translation>Kép kiválasztása</translation>
     </message>
     <message>
-        <location filename="../config/configpanelwidget.cpp" line="464"/>
+        <location filename="../config/configpanelwidget.cpp" line="470"/>
         <source>Images (*.png *.gif *.jpg)</source>
         <translation>Képek (*.png *.gif *.jpg)</translation>
     </message>
@@ -301,17 +306,17 @@ Colorize icons based on widget style (palette)</source>
     <message>
         <location filename="../config/configpluginswidget.ui" line="14"/>
         <source>Configure Plugins</source>
-        <translation>Bővítménybeállítás</translation>
+        <translation type="unfinished">Bővítménybeállítások</translation>
     </message>
     <message>
         <location filename="../config/configpluginswidget.ui" line="84"/>
         <source>Note: changes made in this page cannot be reset.</source>
-        <translation>Megjegyzés: ezek a változtatások maradandóak.</translation>
+        <translation>Megjegyzés: ezeket a változtatásokat nem lehet visszavonni.</translation>
     </message>
     <message>
         <location filename="../config/configpluginswidget.ui" line="112"/>
         <source>Move up</source>
-        <translation>Föl</translation>
+        <translation>Fel</translation>
     </message>
     <message>
         <location filename="../config/configpluginswidget.ui" line="115"/>
@@ -320,7 +325,7 @@ Colorize icons based on widget style (palette)</source>
         <location filename="../config/configpluginswidget.ui" line="164"/>
         <location filename="../config/configpluginswidget.ui" line="185"/>
         <source>...</source>
-        <translation></translation>
+        <translation>...</translation>
     </message>
     <message>
         <location filename="../config/configpluginswidget.ui" line="126"/>
@@ -346,65 +351,65 @@ Colorize icons based on widget style (palette)</source>
 <context>
     <name>LXQtPanel</name>
     <message>
-        <location filename="../lxqtpanel.cpp" line="1068"/>
-        <location filename="../lxqtpanel.cpp" line="1094"/>
+        <location filename="../lxqtpanel.cpp" line="1081"/>
+        <location filename="../lxqtpanel.cpp" line="1107"/>
         <source>Panel</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../lxqtpanel.cpp" line="1097"/>
+        <location filename="../lxqtpanel.cpp" line="1110"/>
         <source>Configure Panel</source>
-        <translation>Panelbeállítás</translation>
+        <translation>Panel beállítása</translation>
     </message>
     <message>
-        <location filename="../lxqtpanel.cpp" line="1102"/>
+        <location filename="../lxqtpanel.cpp" line="1115"/>
         <source>Manage Widgets</source>
-        <translation>Bővítménykezelés</translation>
+        <translation>Bővítmények kezelése</translation>
     </message>
     <message>
-        <location filename="../lxqtpanel.cpp" line="1108"/>
+        <location filename="../lxqtpanel.cpp" line="1121"/>
         <source>Add New Panel</source>
         <translation>Új panel</translation>
     </message>
     <message>
-        <location filename="../lxqtpanel.cpp" line="1115"/>
+        <location filename="../lxqtpanel.cpp" line="1128"/>
         <source>Remove Panel</source>
         <comment>Menu Item</comment>
-        <translation>Panel törlés</translation>
+        <translation>Panel törlése</translation>
     </message>
     <message>
-        <location filename="../lxqtpanel.cpp" line="1120"/>
+        <location filename="../lxqtpanel.cpp" line="1133"/>
         <source>Lock This Panel</source>
-        <translation>A panel zárolása</translation>
+        <translation>Panel zárolása</translation>
     </message>
     <message>
-        <location filename="../lxqtpanel.cpp" line="1273"/>
+        <location filename="../lxqtpanel.cpp" line="1286"/>
         <source>Remove Panel</source>
         <comment>Dialog Title</comment>
-        <translation>Panel törlés</translation>
+        <translation>Panel törlése</translation>
     </message>
     <message>
-        <location filename="../lxqtpanel.cpp" line="1274"/>
+        <location filename="../lxqtpanel.cpp" line="1287"/>
         <source>Removing a panel can not be undone.
 Do you want to remove this panel?</source>
         <translation>A panel törlése végleges.
-Valóban töröljük?</translation>
+Valóban törli?</translation>
     </message>
 </context>
 <context>
     <name>Plugin</name>
     <message>
-        <location filename="../plugin.cpp" line="411"/>
+        <location filename="../plugin.cpp" line="432"/>
         <source>Configure &quot;%1&quot;</source>
         <translation>&quot;%1&quot; beállítása</translation>
     </message>
     <message>
-        <location filename="../plugin.cpp" line="416"/>
+        <location filename="../plugin.cpp" line="437"/>
         <source>Move &quot;%1&quot;</source>
-        <translation>&quot;%1&quot; mozgatása</translation>
+        <translation>&quot;%1&quot; áthelyezése</translation>
     </message>
     <message>
-        <location filename="../plugin.cpp" line="424"/>
+        <location filename="../plugin.cpp" line="445"/>
         <source>Remove &quot;%1&quot;</source>
         <translation>&quot;%1&quot; törlése</translation>
     </message>

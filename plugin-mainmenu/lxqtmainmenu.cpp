@@ -438,7 +438,7 @@ void LXQtMainMenu::buildMenu()
     mMenu = new XdgMenuWidget(mXdgMenu, "", &mButton);
 #endif
    // mMenu->setFixedWidth(200);
-    mMenu->setObjectName("TopLevelMainMenu");
+    mMenu->setObjectName(QStringLiteral("TopLevelMainMenu"));
     setTranslucentMenus(mMenu);
     // Note: the QWidget::ensurePolished() workarounds problem with transparent
     // QLineEdit (mSearchEditAction) in menu with Breeze style

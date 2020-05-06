@@ -370,7 +370,3 @@ bool System::networkDataParser(string data) {
 
 }
 
-void System::hoverHandle(QAction* qAction) {
-    qDebug() << "In hover ****";
-
-}

@@ -61,15 +61,11 @@ public slots:
 
 
 private slots:
-//    void hubEventsHandler(EventObject *eventObject);
-//    void updateButtonHandler();
     void refresh();
-    void hoverHandle(QAction* qAction);
+
 private:
     QLabel *buildIconFromFile(QString file, QSize size);
     QLabel *buildIconFromTheme(QString icon, QSize size);
-//    QWidgetAction* buildAccountItem(AccountObject account);
-//    QWidgetAction* buildMessageItem(MessageObject message);
     QWidgetAction *createTitle(QString title, QString icon);
     QWidgetAction* getUser();
     QWidgetAction* getFirewallStatus();
@@ -86,8 +82,6 @@ private:
     bool mHidden;
     string vpnName;
     vector <NetworkInformation> internetInfo;
-//    bool isRun= false;
-//    std::thread statThread;
 };
 
 

@@ -52,7 +52,7 @@ VolumeButton::VolumeButton(ILXQtPanelPlugin *plugin, QWidget* parent):
     // initial icon for button. It will be replaced after devices scan.
     // In the worst case - no soundcard/pulse - is found it remains
     // in the button but at least the button is not blank ("invisible")
-    handleStockIconChanged("dialog-error");
+    handleStockIconChanged(QStringLiteral("dialog-error"));
     m_volumePopup = new VolumePopup(this);
 
     m_popupHideTimer.setInterval(1000);
@@ -103,7 +103,7 @@ void VolumeButton::mouseMoveEvent(QMouseEvent *event)
     QString tooltip = toolTip();
     if (!tooltip.isEmpty())
     {
-        *(tooltip.rbegin()) = 'X';
+        *(tooltip.rbegin()) = QLatin1Char('X');
         QToolTip::showText(event->globalPos(), tooltip);
         QToolTip::showText(event->globalPos(), toolTip());
     }

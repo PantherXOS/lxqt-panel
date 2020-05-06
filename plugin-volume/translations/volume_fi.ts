@@ -4,34 +4,34 @@
 <context>
     <name>LXQtVolume</name>
     <message>
-        <location filename="../lxqtvolume.cpp" line="63"/>
+        <location filename="../lxqtvolume.cpp" line="64"/>
         <source>Increase sound volume</source>
         <translation>Suurenna äänenvoimakkuutta</translation>
     </message>
     <message>
-        <location filename="../lxqtvolume.cpp" line="69"/>
+        <location filename="../lxqtvolume.cpp" line="70"/>
         <source>Decrease sound volume</source>
         <translation>Pienennä äänenvoimakkuutta</translation>
     </message>
     <message>
-        <location filename="../lxqtvolume.cpp" line="75"/>
+        <location filename="../lxqtvolume.cpp" line="76"/>
         <source>Mute/unmute sound volume</source>
-        <translation type="unfinished"></translation>
+        <translation>Mykistä/poista mykistys</translation>
     </message>
     <message>
-        <location filename="../lxqtvolume.cpp" line="136"/>
+        <location filename="../lxqtvolume.cpp" line="137"/>
         <source>Volume Control: The following shortcuts can not be registered: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Äänenvoimakkuuden hallinta: Seuraavia pikavalintoja ei voida rekisteröidä: %1</translation>
     </message>
     <message>
-        <location filename="../lxqtvolume.cpp" line="286"/>
+        <location filename="../lxqtvolume.cpp" line="291"/>
         <source>Volume: %1%%2</source>
-        <translation type="unfinished"></translation>
+        <translation>Äänenvoimakkuus: %1%%2</translation>
     </message>
     <message>
-        <location filename="../lxqtvolume.cpp" line="286"/>
+        <location filename="../lxqtvolume.cpp" line="291"/>
         <source>(muted)</source>
-        <translation type="unfinished"></translation>
+        <translation>(mykistetty)</translation>
     </message>
 </context>
 <context>
@@ -39,7 +39,7 @@
     <message>
         <location filename="../lxqtvolumeconfiguration.ui" line="14"/>
         <source>Volume Control Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Äänenvoimakkuuden hallinnan asetukset</translation>
     </message>
     <message>
         <location filename="../lxqtvolumeconfiguration.ui" line="20"/>
@@ -49,7 +49,7 @@
     <message>
         <location filename="../lxqtvolumeconfiguration.ui" line="28"/>
         <source>ALSA</source>
-        <translation type="unfinished"></translation>
+        <translation>ALSA</translation>
     </message>
     <message>
         <location filename="../lxqtvolumeconfiguration.ui" line="35"/>
@@ -59,7 +59,7 @@
     <message>
         <location filename="../lxqtvolumeconfiguration.ui" line="42"/>
         <source>OSS</source>
-        <translation type="unfinished"></translation>
+        <translation>OSS</translation>
     </message>
     <message>
         <location filename="../lxqtvolumeconfiguration.ui" line="57"/>
@@ -84,15 +84,20 @@
     <message>
         <location filename="../lxqtvolumeconfiguration.ui" line="84"/>
         <source>Always notify about volume changes</source>
-        <translation type="unfinished"></translation>
+        <translation>Ilmoita aina äänenvoimakkuuden muutoksista</translation>
     </message>
     <message>
-        <location filename="../lxqtvolumeconfiguration.ui" line="99"/>
+        <location filename="../lxqtvolumeconfiguration.ui" line="91"/>
+        <source>Notify about volume changes with keyboard</source>
+        <translation>Ilmoita näppäimistöllä tehdystä äänenvoimakkuuden muutoksesta</translation>
+    </message>
+    <message>
+        <location filename="../lxqtvolumeconfiguration.ui" line="106"/>
         <source>Volume adjust step</source>
         <translation>Äänenvoimakkuuden säätöväli</translation>
     </message>
     <message>
-        <location filename="../lxqtvolumeconfiguration.ui" line="118"/>
+        <location filename="../lxqtvolumeconfiguration.ui" line="125"/>
         <source>External Mixer</source>
         <translation>Ulkoinen mikseri</translation>
     </message>
@@ -107,7 +112,7 @@
     <message>
         <location filename="../volumepopup.cpp" line="55"/>
         <source>Mi&amp;xer</source>
-        <translation type="unfinished"></translation>
+        <translation>Mikseri</translation>
     </message>
 </context>
 </TS>

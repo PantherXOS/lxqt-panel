@@ -115,20 +115,20 @@ LXQtPanelApplication::LXQtPanelApplication(int& argc, char** argv)
     connect(this, &QCoreApplication::aboutToQuit, this, &LXQtPanelApplication::cleanup);
 
 
-    QStringList panels = d->mSettings->value("panels").toStringList();
+    QStringList panels = d->mSettings->value(QStringLiteral("panels")).toStringList();
 
     // WARNING: Giving a separate icon theme to the panel is wrong and has side effects.
     // However, it is optional and can be used as the last resort for avoiding a low
     // contrast in the case of symbolic SVG icons. (The correct way of doing that is
     // using a Qt widget style that can assign a separate theme/QPalette to the panel.)
     mGlobalIconTheme = QIcon::themeName();
-    const QString iconTheme = d->mSettings->value("iconTheme").toString();
+    const QString iconTheme = d->mSettings->value(QStringLiteral("iconTheme")).toString();
     if (!iconTheme.isEmpty())
         QIcon::setThemeName(iconTheme);
 
     if (panels.isEmpty())
     {
-        panels << "panel1";
+        panels << QStringLiteral("panel1");
     }
 
     for(const QString& i : qAsConst(panels))
@@ -151,15 +151,15 @@ void LXQtPanelApplication::addNewPanel()
 {
     Q_D(LXQtPanelApplication);
 
-    QString name("panel_" + QUuid::createUuid().toString());
+    QString name(QStringLiteral("panel_") + QUuid::createUuid().toString());
 
     LXQtPanel *p = addPanel(name);
     int screenNum = p->screenNum();
     ILXQtPanel::Position newPanelPosition = d->computeNewPanelPosition(p, screenNum);
     p->setPosition(screenNum, newPanelPosition, true);
-    QStringList panels = d->mSettings->value("panels").toStringList();
+    QStringList panels = d->mSettings->value(QStringLiteral("panels")).toStringList();
     panels << name;
-    d->mSettings->setValue("panels", panels);
+    d->mSettings->setValue(QStringLiteral("panels"), panels);
 
     // Poupup the configuration dialog to allow user configuration right away
     p->showConfigDialog();
@@ -195,7 +195,7 @@ void LXQtPanelApplication::reloadPanelsAsNeeded()
     // LXQtPanelApplication::screenDestroyed().
 
     // qDebug() << "LXQtPanelApplication::reloadPanelsAsNeeded()";
-    const QStringList names = d->mSettings->value("panels").toStringList();
+    const QStringList names = d->mSettings->value(QStringLiteral("panels")).toStringList();
     for(const QString& name : names)
     {
         bool found = false;
@@ -255,8 +255,8 @@ void LXQtPanelApplication::screenDestroyed(QObject* screenObj)
             // delete and then re-create the panel ourselves
             QString name = panel->name();
             panel->saveSettings(false);
-            delete panel; // delete the panel, so Qt does not have a chance to set a new screen to it.
             mPanels.removeAll(panel);
+            delete panel; // delete the panel, so Qt does not have a chance to set a new screen to it.
             reloadNeeded = true;
             qDebug() << "Workaround Qt 5 bug #40681: delete panel:" << name;
         }
@@ -274,9 +274,9 @@ void LXQtPanelApplication::removePanel(LXQtPanel* panel)
 
     mPanels.removeAll(panel);
 
-    QStringList panels = d->mSettings->value("panels").toStringList();
+    QStringList panels = d->mSettings->value(QStringLiteral("panels")).toStringList();
     panels.removeAll(panel->name());
-    d->mSettings->setValue("panels", panels);
+    d->mSettings->setValue(QStringLiteral("panels"), panels);
 
     panel->deleteLater();
 }
@@ -295,7 +295,7 @@ void LXQtPanelApplication::setIconTheme(const QString &iconTheme)
 {
     Q_D(LXQtPanelApplication);
 
-    d->mSettings->setValue("iconTheme", iconTheme == mGlobalIconTheme ? QString() : iconTheme);
+    d->mSettings->setValue(QStringLiteral("iconTheme"), iconTheme == mGlobalIconTheme ? QString() : iconTheme);
     QString newTheme = iconTheme.isEmpty() ? mGlobalIconTheme : iconTheme;
     if (newTheme != QIcon::themeName())
     {

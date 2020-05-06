@@ -4,105 +4,105 @@
 <context>
     <name>LXQtTaskBar</name>
     <message>
-        <location filename="../lxqttaskbar.cpp" line="648"/>
+        <location filename="../lxqttaskbar.cpp" line="650"/>
         <source>Activate task %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Aktiviraj opravilo %1</translation>
     </message>
 </context>
 <context>
     <name>LXQtTaskButton</name>
     <message>
-        <location filename="../lxqttaskbutton.cpp" line="513"/>
+        <location filename="../lxqttaskbutton.cpp" line="576"/>
         <source>Application</source>
         <translation>Program</translation>
     </message>
     <message>
-        <location filename="../lxqttaskbutton.cpp" line="547"/>
+        <location filename="../lxqttaskbutton.cpp" line="610"/>
         <source>To &amp;Desktop</source>
         <translation>&amp;Na namizje</translation>
     </message>
     <message>
-        <location filename="../lxqttaskbutton.cpp" line="549"/>
+        <location filename="../lxqttaskbutton.cpp" line="612"/>
         <source>&amp;All Desktops</source>
         <translation>&amp;Vsa namizja</translation>
     </message>
     <message>
-        <location filename="../lxqttaskbutton.cpp" line="557"/>
+        <location filename="../lxqttaskbutton.cpp" line="620"/>
         <source>Desktop &amp;%1</source>
         <translation>Namizje &amp;%1</translation>
     </message>
     <message>
-        <location filename="../lxqttaskbutton.cpp" line="564"/>
+        <location filename="../lxqttaskbutton.cpp" line="627"/>
         <source>&amp;To Current Desktop</source>
         <translation>Na &amp;trenutno namizje</translation>
     </message>
     <message>
-        <location filename="../lxqttaskbutton.cpp" line="572"/>
+        <location filename="../lxqttaskbutton.cpp" line="635"/>
         <source>&amp;Move</source>
-        <translation type="unfinished"></translation>
+        <translation>P&amp;remakni</translation>
     </message>
     <message>
-        <location filename="../lxqttaskbutton.cpp" line="575"/>
+        <location filename="../lxqttaskbutton.cpp" line="638"/>
         <source>Resi&amp;ze</source>
-        <translation type="unfinished"></translation>
+        <translation>Nastavi &amp;velikost</translation>
     </message>
     <message>
-        <location filename="../lxqttaskbutton.cpp" line="582"/>
+        <location filename="../lxqttaskbutton.cpp" line="645"/>
         <source>Ma&amp;ximize</source>
         <translation>&amp;Razpni</translation>
     </message>
     <message>
-        <location filename="../lxqttaskbutton.cpp" line="589"/>
+        <location filename="../lxqttaskbutton.cpp" line="652"/>
         <source>Maximize vertically</source>
         <translation>Razpni navpično</translation>
     </message>
     <message>
-        <location filename="../lxqttaskbutton.cpp" line="594"/>
+        <location filename="../lxqttaskbutton.cpp" line="657"/>
         <source>Maximize horizontally</source>
         <translation>Razpni vodoravno</translation>
     </message>
     <message>
-        <location filename="../lxqttaskbutton.cpp" line="600"/>
+        <location filename="../lxqttaskbutton.cpp" line="663"/>
         <source>&amp;Restore</source>
         <translation>&amp;Obnovi</translation>
     </message>
     <message>
-        <location filename="../lxqttaskbutton.cpp" line="604"/>
+        <location filename="../lxqttaskbutton.cpp" line="667"/>
         <source>Mi&amp;nimize</source>
         <translation>Po&amp;manjšaj</translation>
     </message>
     <message>
-        <location filename="../lxqttaskbutton.cpp" line="610"/>
+        <location filename="../lxqttaskbutton.cpp" line="673"/>
         <source>Roll down</source>
-        <translation>Razvij</translation>
+        <translation>Minimiziraj</translation>
     </message>
     <message>
-        <location filename="../lxqttaskbutton.cpp" line="616"/>
+        <location filename="../lxqttaskbutton.cpp" line="679"/>
         <source>Roll up</source>
-        <translation>Zvij</translation>
+        <translation>Maksimiziraj</translation>
     </message>
     <message>
-        <location filename="../lxqttaskbutton.cpp" line="624"/>
+        <location filename="../lxqttaskbutton.cpp" line="687"/>
         <source>&amp;Layer</source>
         <translation>&amp;Plast</translation>
     </message>
     <message>
-        <location filename="../lxqttaskbutton.cpp" line="626"/>
+        <location filename="../lxqttaskbutton.cpp" line="689"/>
         <source>Always on &amp;top</source>
         <translation>Vedno na &amp;vrhu</translation>
     </message>
     <message>
-        <location filename="../lxqttaskbutton.cpp" line="632"/>
+        <location filename="../lxqttaskbutton.cpp" line="695"/>
         <source>&amp;Normal</source>
         <translation>&amp;Običajno</translation>
     </message>
     <message>
-        <location filename="../lxqttaskbutton.cpp" line="638"/>
+        <location filename="../lxqttaskbutton.cpp" line="701"/>
         <source>Always on &amp;bottom</source>
         <translation>Vedno na &amp;dnu</translation>
     </message>
     <message>
-        <location filename="../lxqttaskbutton.cpp" line="646"/>
+        <location filename="../lxqttaskbutton.cpp" line="709"/>
         <source>&amp;Close</source>
         <translation>&amp;Zapri</translation>
     </message>
@@ -112,12 +112,12 @@
     <message>
         <location filename="../lxqttaskgroup.cpp" line="82"/>
         <source>Group</source>
-        <translation type="unfinished"></translation>
+        <translation>Skupina</translation>
     </message>
     <message>
         <location filename="../lxqttaskgroup.cpp" line="84"/>
         <source>Close group</source>
-        <translation type="unfinished"></translation>
+        <translation>Zapri skupino</translation>
     </message>
 </context>
 <context>
@@ -125,88 +125,99 @@
     <message>
         <location filename="../lxqttaskbarconfiguration.ui" line="14"/>
         <source>Task Manager Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Nastavitve vrstice s programi</translation>
     </message>
     <message>
         <location filename="../lxqttaskbarconfiguration.ui" line="20"/>
         <source>General</source>
-        <translation type="unfinished"></translation>
+        <translation>Splošno</translation>
     </message>
     <message>
         <location filename="../lxqttaskbarconfiguration.ui" line="43"/>
         <source>Show only windows from desktop</source>
-        <translation type="unfinished"></translation>
+        <translation>Prikaži le okna iz namizja</translation>
     </message>
     <message>
         <location filename="../lxqttaskbarconfiguration.ui" line="55"/>
         <source>Show only windows from &amp;panel&apos;s screen</source>
-        <translation type="unfinished"></translation>
+        <translation>Prikaži le okna, kjer je orodna vrstica</translation>
     </message>
     <message>
         <location filename="../lxqttaskbarconfiguration.ui" line="62"/>
         <source>Show only minimized windows</source>
-        <translation type="unfinished"></translation>
+        <translation>Prikaži le minimizirana okna</translation>
     </message>
     <message>
         <location filename="../lxqttaskbarconfiguration.ui" line="69"/>
         <source>Raise minimized windows on current desktop</source>
-        <translation type="unfinished"></translation>
+        <translation>Maksimiziraj minimizirana okna na trenutnem namizju</translation>
     </message>
     <message>
-        <location filename="../lxqttaskbarconfiguration.ui" line="83"/>
+        <location filename="../lxqttaskbarconfiguration.cpp" line="49"/>
         <source>Cycle windows on wheel scrolling</source>
-        <translation type="unfinished"></translation>
+        <translation>Preklapljaj med okni ob vrtenju miškinega kolesca</translation>
     </message>
     <message>
-        <location filename="../lxqttaskbarconfiguration.ui" line="93"/>
+        <location filename="../lxqttaskbarconfiguration.ui" line="143"/>
         <source>Window &amp;grouping</source>
-        <translation type="unfinished"></translation>
+        <translation>Okna v skupina&amp;h</translation>
     </message>
     <message>
-        <location filename="../lxqttaskbarconfiguration.ui" line="102"/>
+        <location filename="../lxqttaskbarconfiguration.ui" line="152"/>
         <source>Show popup on mouse hover</source>
-        <translation type="unfinished"></translation>
+        <translation>Prikaži pojavno okno, če je miška nad skupino</translation>
+    </message>
+    <message>
+        <location filename="../lxqttaskbarconfiguration.ui" line="162"/>
+        <source>Appearance</source>
+        <translation>Izgled</translation>
+    </message>
+    <message>
+        <location filename="../lxqttaskbarconfiguration.ui" line="181"/>
+        <source>Maximum button width</source>
+        <translation>Največja širina gumba</translation>
+    </message>
+    <message>
+        <location filename="../lxqttaskbarconfiguration.ui" line="125"/>
+        <location filename="../lxqttaskbarconfiguration.ui" line="194"/>
+        <location filename="../lxqttaskbarconfiguration.ui" line="220"/>
+        <source> px</source>
+        <translation> px</translation>
+    </message>
+    <message>
+        <location filename="../lxqttaskbarconfiguration.ui" line="86"/>
+        <source>Mouse Wheel</source>
+        <translation>Miškino kolesce</translation>
     </message>
     <message>
         <location filename="../lxqttaskbarconfiguration.ui" line="112"/>
-        <source>Appearance</source>
-        <translation type="unfinished"></translation>
+        <source>Wheel Delta Threshold</source>
+        <translation>Delta prag (threshold) kolesca</translation>
     </message>
     <message>
-        <location filename="../lxqttaskbarconfiguration.ui" line="131"/>
-        <source>Maximum button width</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../lxqttaskbarconfiguration.ui" line="144"/>
-        <location filename="../lxqttaskbarconfiguration.ui" line="170"/>
-        <source> px</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../lxqttaskbarconfiguration.ui" line="157"/>
+        <location filename="../lxqttaskbarconfiguration.ui" line="207"/>
         <source>Maximum button height</source>
-        <translation type="unfinished"></translation>
+        <translation>Največja širina gumba</translation>
     </message>
     <message>
-        <location filename="../lxqttaskbarconfiguration.ui" line="190"/>
+        <location filename="../lxqttaskbarconfiguration.ui" line="240"/>
         <source>Use icons by WindowClass, if available</source>
-        <translation type="unfinished"></translation>
+        <translation>Uporabi ikone atributa WindowClass, če so na voljo</translation>
     </message>
     <message>
-        <location filename="../lxqttaskbarconfiguration.ui" line="183"/>
+        <location filename="../lxqttaskbarconfiguration.ui" line="233"/>
         <source>Auto&amp;rotate buttons when the panel is vertical</source>
-        <translation type="unfinished"></translation>
+        <translation>Samodejno obrni gumbe, če je v&amp;rstica navpična</translation>
     </message>
     <message>
-        <location filename="../lxqttaskbarconfiguration.ui" line="121"/>
+        <location filename="../lxqttaskbarconfiguration.ui" line="171"/>
         <source>Button style</source>
-        <translation>Slog z gumbi</translation>
+        <translation>Slog gumbov</translation>
     </message>
     <message>
         <location filename="../lxqttaskbarconfiguration.ui" line="76"/>
         <source>Close on middle-click</source>
-        <translation type="unfinished"></translation>
+        <translation>Zapri ob srednjem kliku</translation>
     </message>
     <message>
         <location filename="../lxqttaskbarconfiguration.cpp" line="44"/>
@@ -216,17 +227,32 @@
     <message>
         <location filename="../lxqttaskbarconfiguration.cpp" line="45"/>
         <source>Only icon</source>
-        <translation>Samo ikona</translation>
+        <translation>Le ikona</translation>
     </message>
     <message>
         <location filename="../lxqttaskbarconfiguration.cpp" line="46"/>
         <source>Only text</source>
-        <translation>Samo besedilo</translation>
+        <translation>Le besedilo</translation>
     </message>
     <message>
         <location filename="../lxqttaskbarconfiguration.cpp" line="48"/>
+        <source>Disabled</source>
+        <translation>Onemogočen</translation>
+    </message>
+    <message>
+        <location filename="../lxqttaskbarconfiguration.cpp" line="50"/>
+        <source>Scroll up to raise, down to minimize</source>
+        <translation>Kolesce gor/dor za maksimizacijo/minimizacijo</translation>
+    </message>
+    <message>
+        <location filename="../lxqttaskbarconfiguration.cpp" line="51"/>
+        <source>Scroll up to minimize, down to raise</source>
+        <translation>Kolesce gor/dol za minimizacijo/maksimizacijo</translation>
+    </message>
+    <message>
+        <location filename="../lxqttaskbarconfiguration.cpp" line="53"/>
         <source>Current</source>
-        <translation type="unfinished"></translation>
+        <translation>Trenutno</translation>
     </message>
 </context>
 </TS>

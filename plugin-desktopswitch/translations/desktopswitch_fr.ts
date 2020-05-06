@@ -4,13 +4,13 @@
 <context>
     <name>DesktopSwitch</name>
     <message>
-        <location filename="../desktopswitch.cpp" line="84"/>
+        <location filename="../desktopswitch.cpp" line="85"/>
         <source>Switch to desktop %1</source>
         <translation>Basculer vers le bureau %1</translation>
     </message>
     <message>
-        <location filename="../desktopswitch.cpp" line="141"/>
-        <location filename="../desktopswitch.cpp" line="151"/>
+        <location filename="../desktopswitch.cpp" line="144"/>
+        <location filename="../desktopswitch.cpp" line="155"/>
         <source>Desktop %1</source>
         <translation>Bureau %1</translation>
     </message>
@@ -53,7 +53,17 @@
         <translation>Aucun</translation>
     </message>
     <message>
+        <location filename="../desktopswitchconfiguration.ui" line="72"/>
+        <source>If checked, widget will be just an indicator</source>
+        <translation>Si coché, le widget ne sera qu&apos;un indicateur</translation>
+    </message>
+    <message>
         <location filename="../desktopswitchconfiguration.ui" line="75"/>
+        <source>Show only active desktop</source>
+        <translation>Afficher uniquement le bureau actif</translation>
+    </message>
+    <message>
+        <location filename="../desktopswitchconfiguration.ui" line="85"/>
         <source>Desktop names</source>
         <translation>Noms des bureaux</translation>
     </message>

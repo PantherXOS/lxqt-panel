@@ -30,6 +30,9 @@
 #include "ilxqtpanelplugin.h"
 #include "pluginsettings_p.h"
 #include "lxqtpanel.h"
+
+#include <KWindowSystem>
+
 #include <QDebug>
 #include <QProcessEnvironment>
 #include <QStringList>
@@ -50,24 +53,42 @@
 #include <XdgIcon>
 
 // statically linked built-in plugins
+#if defined(WITH_DESKTOPSWITCH_PLUGIN)
 #include "../plugin-desktopswitch/desktopswitch.h" // desktopswitch
 extern void * loadPluginTranslation_desktopswitch_helper;
+#endif
+#if defined(WITH_MAINMENU_PLUGIN)
 #include "../plugin-mainmenu/lxqtmainmenu.h" // mainmenu
 extern void * loadPluginTranslation_mainmenu_helper;
+#endif
+#if defined(WITH_QUICKLAUNCH_PLUGIN)
 #include "../plugin-quicklaunch/lxqtquicklaunchplugin.h" // quicklaunch
 extern void * loadPluginTranslation_quicklaunch_helper;
+#endif
+#if defined(WITH_SHOWDESKTOP_PLUGIN)
 #include "../plugin-showdesktop/showdesktop.h" // showdesktop
 extern void * loadPluginTranslation_showdesktop_helper;
+#endif
+#if defined(WITH_SPACER_PLUGIN)
 #include "../plugin-spacer/spacer.h" // spacer
 extern void * loadPluginTranslation_spacer_helper;
+#endif
+#if defined(WITH_STATUSNOTIFIER_PLUGIN)
 #include "../plugin-statusnotifier/statusnotifier.h" // statusnotifier
 extern void * loadPluginTranslation_statusnotifier_helper;
+#endif
+#if defined(WITH_TASKBAR_PLUGIN)
 #include "../plugin-taskbar/lxqttaskbarplugin.h" // taskbar
 extern void * loadPluginTranslation_taskbar_helper;
+#endif
+#if defined(WITH_TRAY_PLUGIN)
 #include "../plugin-tray/lxqttrayplugin.h" // tray
 extern void * loadPluginTranslation_tray_helper;
+#endif
+#if defined(WITH_WORLDCLOCK_PLUGIN)
 #include "../plugin-worldclock/lxqtworldclock.h" // worldclock
 extern void * loadPluginTranslation_worldclock_helper;
+#endif
 
 QColor Plugin::mMoveMarkerColor= QColor(255, 0, 0, 255);
 
@@ -89,8 +110,8 @@ Plugin::Plugin(const LXQt::PluginInfo &desktopFile, LXQt::Settings *settings, co
     mName = desktopFile.name();
 
     QStringList dirs;
-    dirs << QProcessEnvironment::systemEnvironment().value("LXQTPANEL_PLUGIN_PATH").split(":");
-    dirs << PLUGIN_DIR;
+    dirs << QProcessEnvironment::systemEnvironment().value(QStringLiteral("LXQTPANEL_PLUGIN_PATH")).split(QStringLiteral(":"));
+    dirs << QStringLiteral(PLUGIN_DIR);
 
     bool found = false;
     if(ILXQtPanelPluginLibrary const * pluginLib = findStaticPlugin(desktopFile.id()))
@@ -101,7 +122,7 @@ Plugin::Plugin(const LXQt::PluginInfo &desktopFile, LXQt::Settings *settings, co
     }
     else {
         // this plugin is a dynamically loadable module
-        QString baseName = QString("lib%1.so").arg(desktopFile.id());
+        QString baseName = QStringLiteral("lib%1.so").arg(desktopFile.id());
         for(const QString &dirName : qAsConst(dirs))
         {
             QFileInfo fi(QDir(dirName), baseName);
@@ -117,17 +138,17 @@ Plugin::Plugin(const LXQt::PluginInfo &desktopFile, LXQt::Settings *settings, co
     if (!isLoaded())
     {
         if (!found)
-            qWarning() << QString("Plugin %1 not found in the").arg(desktopFile.id()) << dirs;
+            qWarning() << QStringLiteral("Plugin %1 not found in the").arg(desktopFile.id()) << dirs;
 
         return;
     }
 
-    setObjectName(mPlugin->themeId() + "Plugin");
+    setObjectName(mPlugin->themeId() + QStringLiteral("Plugin"));
 
     // plugin handle for easy context menu
     setProperty("NeedsHandle", mPlugin->flags().testFlag(ILXQtPanelPlugin::NeedsHandle));
 
-    QString s = mSettings->value("alignment").toString();
+    QString s = mSettings->value(QStringLiteral("alignment")).toString();
 
     // Retrun default value
     if (s.isEmpty())
@@ -138,7 +159,7 @@ Plugin::Plugin(const LXQt::PluginInfo &desktopFile, LXQt::Settings *settings, co
     }
     else
     {
-        mAlignment = (s.toUpper() == "RIGHT") ?
+        mAlignment = (s.toUpper() == QLatin1String("RIGHT")) ?
                     Plugin::AlignRight :
                     Plugin::AlignLeft;
 
@@ -255,7 +276,7 @@ bool Plugin::loadLib(ILXQtPanelPluginLibrary const * pluginLib)
     mPlugin = pluginLib->instance(startupInfo);
     if (!mPlugin)
     {
-        qWarning() << QString("Can't load plugin \"%1\". Plugin can't build ILXQtPanelPlugin.").arg(mDesktopFile.id());
+        qWarning() << QStringLiteral("Can't load plugin \"%1\". Plugin can't build ILXQtPanelPlugin.").arg(mDesktopFile.id());
         return false;
     }
 
@@ -290,7 +311,7 @@ bool Plugin::loadModule(const QString &libraryName)
     ILXQtPanelPluginLibrary* pluginLib= qobject_cast<ILXQtPanelPluginLibrary*>(obj);
     if (!pluginLib)
     {
-        qWarning() << QString("Can't load plugin \"%1\". Plugin is not a ILXQtPanelPluginLibrary.").arg(mPluginLoader->fileName());
+        qWarning() << QStringLiteral("Can't load plugin \"%1\". Plugin is not a ILXQtPanelPluginLibrary.").arg(mPluginLoader->fileName());
         delete obj;
         return false;
     }
@@ -340,8 +361,8 @@ void Plugin::settingsChanged()
  ************************************************/
 void Plugin::saveSettings()
 {
-    mSettings->setValue("alignment", (mAlignment == AlignLeft) ? "Left" : "Right");
-    mSettings->setValue("type", mDesktopFile.id());
+    mSettings->setValue(QStringLiteral("alignment"), (mAlignment == AlignLeft) ? QStringLiteral("Left") : QStringLiteral("Right"));
+    mSettings->setValue(QStringLiteral("type"), mDesktopFile.id());
     mSettings->sync();
 
 }
@@ -401,7 +422,7 @@ void Plugin::showEvent(QShowEvent *)
  ************************************************/
 QMenu *Plugin::popupMenu() const
 {
-    QString name = this->name().replace("&", "&&");
+    QString name = this->name().replace(QLatin1String("&"), QLatin1String("&&"));
     QMenu* menu = new QMenu(windowTitle());
 
     if (mPlugin->flags().testFlag(ILXQtPanelPlugin::HaveConfigDialog))
@@ -413,7 +434,7 @@ QMenu *Plugin::popupMenu() const
         connect(configAction, SIGNAL(triggered()), this, SLOT(showConfigureDialog()));
     }
 
-    QAction* moveAction = new QAction(XdgIcon::fromTheme("transform-move"), tr("Move \"%1\"").arg(name), menu);
+    QAction* moveAction = new QAction(XdgIcon::fromTheme(QStringLiteral("transform-move")), tr("Move \"%1\"").arg(name), menu);
     menu->addAction(moveAction);
     connect(moveAction, SIGNAL(triggered()), this, SIGNAL(startMove()));
 

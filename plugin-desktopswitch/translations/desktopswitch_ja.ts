@@ -4,13 +4,13 @@
 <context>
     <name>DesktopSwitch</name>
     <message>
-        <location filename="../desktopswitch.cpp" line="84"/>
+        <location filename="../desktopswitch.cpp" line="85"/>
         <source>Switch to desktop %1</source>
-        <translation>デスクトップ%1に切り替える</translation>
+        <translation>デスクトップ %1 に切り替える</translation>
     </message>
     <message>
-        <location filename="../desktopswitch.cpp" line="141"/>
-        <location filename="../desktopswitch.cpp" line="151"/>
+        <location filename="../desktopswitch.cpp" line="144"/>
+        <location filename="../desktopswitch.cpp" line="155"/>
         <source>Desktop %1</source>
         <translation>デスクトップ %1</translation>
     </message>
@@ -20,12 +20,12 @@
     <message>
         <location filename="../desktopswitchconfiguration.ui" line="14"/>
         <source>DesktopSwitch settings</source>
-        <translation>DesktopSwitch の設定</translation>
+        <translation>デスクトップ切り替えの設定</translation>
     </message>
     <message>
         <location filename="../desktopswitchconfiguration.ui" line="46"/>
         <source>Number of rows:</source>
-        <translation>段の数:</translation>
+        <translation>行数:</translation>
     </message>
     <message>
         <location filename="../desktopswitchconfiguration.ui" line="39"/>
@@ -50,10 +50,20 @@
     <message>
         <location filename="../desktopswitchconfiguration.ui" line="64"/>
         <source>None</source>
-        <translation>None</translation>
+        <translation>なし</translation>
+    </message>
+    <message>
+        <location filename="../desktopswitchconfiguration.ui" line="72"/>
+        <source>If checked, widget will be just an indicator</source>
+        <translation>チェックすると、ウィジェットがインジケーターのみになります</translation>
     </message>
     <message>
         <location filename="../desktopswitchconfiguration.ui" line="75"/>
+        <source>Show only active desktop</source>
+        <translation>アクティブなデスクトップのみを表示する</translation>
+    </message>
+    <message>
+        <location filename="../desktopswitchconfiguration.ui" line="85"/>
         <source>Desktop names</source>
         <translation>デスクトップの名前</translation>
     </message>

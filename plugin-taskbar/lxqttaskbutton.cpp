@@ -67,8 +67,12 @@ void LeftAlignedTextStyle::drawItemText(QPainter * painter, const QRect & rect, 
             , const QPalette & pal, bool enabled, const QString & text
             , QPalette::ColorRole textRole) const
 {
-    QString txt = QFontMetrics(painter->font()).elidedText(text, Qt::ElideRight, rect.width());
-    return QProxyStyle::drawItemText(painter, rect, (flags & ~Qt::AlignHCenter) | Qt::AlignLeft, pal, enabled, txt, textRole);
+    QString txt = text;
+    // get the button text because the text that's given to this function may be middle-elided
+    if (const QToolButton *tb = dynamic_cast<const QToolButton*>(painter->device()))
+        txt = tb->text();
+    txt = QFontMetrics(painter->font()).elidedText(txt, Qt::ElideRight, rect.width());
+    QProxyStyle::drawItemText(painter, rect, (flags & ~Qt::AlignHCenter) | Qt::AlignLeft, pal, enabled, txt, textRole);
 }
 
 
@@ -80,10 +84,12 @@ LXQtTaskButton::LXQtTaskButton(const WId window, LXQtTaskBar * taskbar, QWidget 
     mWindow(window),
     mUrgencyHint(false),
     mOrigin(Qt::TopLeftCorner),
-    mDrawPixmap(false),
     mParentTaskBar(taskbar),
     mPlugin(mParentTaskBar->plugin()),
-    mDNDTimer(new QTimer(this))
+    mIconSize(mPlugin->panel()->iconSize()),
+    mWheelDelta(0),
+    mDNDTimer(new QTimer(this)),
+    mWheelTimer(new QTimer(this))
 {
     Q_ASSERT(taskbar);
 
@@ -101,6 +107,13 @@ LXQtTaskButton::LXQtTaskButton(const WId window, LXQtTaskBar * taskbar, QWidget 
     mDNDTimer->setSingleShot(true);
     mDNDTimer->setInterval(700);
     connect(mDNDTimer, SIGNAL(timeout()), this, SLOT(activateWithDraggable()));
+
+    mWheelTimer->setSingleShot(true);
+    mWheelTimer->setInterval(250);
+    connect(mWheelTimer, &QTimer::timeout, [this] {
+        mWheelDelta = 0; // forget previous wheel deltas
+    });
+
     connect(LXQt::Settings::globalSettings(), SIGNAL(iconThemeChanged()), this, SLOT(updateIcon()));
     connect(mParentTaskBar, &LXQtTaskBar::iconByClassChanged, this, &LXQtTaskButton::updateIcon);
 }
@@ -119,7 +132,7 @@ void LXQtTaskButton::updateText()
 {
     KWindowInfo info(mWindow, NET::WMVisibleName | NET::WMName);
     QString title = info.visibleName().isEmpty() ? info.name() : info.visibleName();
-    setText(title.replace("&", "&&"));
+    setText(title.replace(QStringLiteral("&"), QStringLiteral("&&")));
     setToolTip(title);
 }
 
@@ -135,7 +148,12 @@ void LXQtTaskButton::updateIcon()
     }
     if (ico.isNull())
     {
-        ico = KWindowSystem::icon(mWindow);
+#if QT_VERSION >= 0x050600
+        int devicePixels = mIconSize * devicePixelRatioF();
+#else
+        int devicePixels = mIconSize * devicePixelRatio();
+#endif
+        ico = KWindowSystem::icon(mWindow, devicePixels, devicePixels);
     }
     setIcon(ico.isNull() ? XdgIcon::defaultApplicationIcon() : ico);
 }
@@ -145,7 +163,13 @@ void LXQtTaskButton::updateIcon()
  ************************************************/
 void LXQtTaskButton::refreshIconGeometry(QRect const & geom)
 {
-    NETWinInfo info(QX11Info::connection(),
+    xcb_connection_t* x11conn = QX11Info::connection();
+
+    if (!x11conn) {
+        return;
+    }
+
+    NETWinInfo info(x11conn,
                     windowId(),
                     (WId) QX11Info::appRootWindow(),
                     NET::WMIconGeometry,
@@ -161,6 +185,26 @@ void LXQtTaskButton::refreshIconGeometry(QRect const & geom)
         nrect.size.width = geom.width();
         info.setIconGeometry(nrect);
     }
+}
+
+/************************************************
+
+ ************************************************/
+void LXQtTaskButton::changeEvent(QEvent *event)
+{
+    if (event->type() == QEvent::StyleChange)
+    {
+        // When the icon size changes, the panel doesn't emit any specific
+        // signal, but it triggers a stylesheet update, which we can detect
+        int newIconSize = mPlugin->panel()->iconSize();
+        if (newIconSize != mIconSize)
+        {
+            mIconSize = newIconSize;
+            updateIcon();
+        }
+    }
+
+    QToolButton::changeEvent(event);
 }
 
 /************************************************
@@ -229,7 +273,7 @@ void LXQtTaskButton::mousePressEvent(QMouseEvent* event)
  ************************************************/
 void LXQtTaskButton::mouseReleaseEvent(QMouseEvent* event)
 {
-    if (event->button() == Qt::LeftButton)
+    if (!sDraggging && event->button() == Qt::LeftButton)
     {
         if (isChecked())
             minimizeApplication();
@@ -237,6 +281,61 @@ void LXQtTaskButton::mouseReleaseEvent(QMouseEvent* event)
             raiseApplication();
     }
     QToolButton::mouseReleaseEvent(event);
+}
+
+/************************************************
+
+ ************************************************/
+void LXQtTaskButton::wheelEvent(QWheelEvent* event)
+{
+    // ignore wheel event if it is not "raise", "minimize" or "move" window
+    if (mParentTaskBar->wheelEventsAction() < 2 || mParentTaskBar->wheelEventsAction() > 5)
+        return QToolButton::wheelEvent(event);
+
+    QPoint angleDelta = event->angleDelta();
+    Qt::Orientation orient = (qAbs(angleDelta.x()) > qAbs(angleDelta.y()) ? Qt::Horizontal : Qt::Vertical);
+    int delta = (orient == Qt::Horizontal ? angleDelta.x() : angleDelta.y());
+
+    if (!mWheelTimer->isActive())
+        mWheelDelta += abs(delta);
+    else
+    {
+        // NOTE: We should consider a short delay after the last wheel event
+        // in order to distinguish between separate wheel rotations; otherwise,
+        // a wheel delta threshold will not make much sense because the delta
+        // might have been increased due to a previous and separate wheel rotation.
+        mWheelTimer->start();
+    }
+
+    if (mWheelDelta < mParentTaskBar->wheelDeltaThreshold())
+        return QToolButton::wheelEvent(event);
+    else
+    {
+        mWheelDelta = 0;
+        mWheelTimer->start(); // start to distinguish between separate wheel rotations
+    }
+
+    int D = delta < 0 ? 1 : -1;
+
+    if (mParentTaskBar->wheelEventsAction() == 4)
+    {
+        moveApplicationToPrevNextDesktop(D < 0);
+    }
+    else if (mParentTaskBar->wheelEventsAction() == 5)
+    {
+        moveApplicationToPrevNextDesktop(D > 0);
+    }
+    else
+    {
+        if (mParentTaskBar->wheelEventsAction() == 3)
+            D *= -1;
+        if (D < 0)
+            raiseApplication();
+        else if (D > 0)
+            minimizeApplication();
+    }
+
+    QToolButton::wheelEvent(event);
 }
 
 /************************************************
@@ -257,6 +356,7 @@ QMimeData * LXQtTaskButton::mimeData()
  ************************************************/
 void LXQtTaskButton::mouseMoveEvent(QMouseEvent* event)
 {
+    QAbstractButton::mouseMoveEvent(event);
     if (!(event->buttons() & Qt::LeftButton))
         return;
 
@@ -286,9 +386,13 @@ void LXQtTaskButton::mouseMoveEvent(QMouseEvent* event)
     // if button is dropped out of panel (e.g. on desktop)
     // it is not deleted automatically by Qt
     drag->deleteLater();
-    sDraggging = false;
 
-    QAbstractButton::mouseMoveEvent(event);
+    // release mouse appropriately, by positioning the event outside
+    // the button rectangle (otherwise, the button will be toggled)
+    QMouseEvent releasingEvent(QEvent::MouseButtonRelease, QPoint(-1,-1), Qt::LeftButton, Qt::NoButton, Qt::NoModifier);
+    mouseReleaseEvent(&releasingEvent);
+
+    sDraggging = false;
 }
 
 /************************************************
@@ -458,6 +562,24 @@ void LXQtTaskButton::moveApplicationToDesktop()
         return;
 
     KWindowSystem::setOnDesktop(mWindow, desk);
+}
+
+/************************************************
+
+ ************************************************/
+void LXQtTaskButton::moveApplicationToPrevNextDesktop(bool next)
+{
+    int deskNum = KWindowSystem::numberOfDesktops();
+    if (deskNum <= 1)
+        return;
+    int targetDesk = KWindowInfo(mWindow, NET::WMDesktop).desktop() + (next ? 1 : -1);
+    // wrap around
+    if (targetDesk > deskNum)
+        targetDesk = 1;
+    else if (targetDesk < 1)
+        targetDesk = deskNum;
+
+    KWindowSystem::setOnDesktop(mWindow, targetDesk);
 }
 
 /************************************************
@@ -643,7 +765,7 @@ void LXQtTaskButton::contextMenuEvent(QContextMenuEvent* event)
 
     /********** Kill menu **********/
     menu->addSeparator();
-    a = menu->addAction(XdgIcon::fromTheme("process-stop"), tr("&Close"));
+    a = menu->addAction(XdgIcon::fromTheme(QStringLiteral("process-stop")), tr("&Close"));
     connect(a, SIGNAL(triggered(bool)), this, SLOT(closeApplication()));
     menu->setGeometry(mParentTaskBar->panel()->calculatePopupWindowPos(mapToGlobal(event->pos()), menu->sizeHint()));
     mPlugin->willShowWindow(menu);
@@ -733,70 +855,39 @@ void LXQtTaskButton::paintEvent(QPaintEvent *event)
     }
 
     QSize sz = size();
-    QSize adjSz = sz;
+    bool transpose = false;
     QTransform transform;
-    QPoint originPoint;
 
     switch (mOrigin)
     {
     case Qt::TopLeftCorner:
-        transform.rotate(0.0);
-        originPoint = QPoint(0.0, 0.0);
         break;
 
     case Qt::TopRightCorner:
         transform.rotate(90.0);
-        originPoint = QPoint(0.0, -sz.width());
-        adjSz.transpose();
+        transform.translate(0.0, -sz.width());
+        transpose = true;
         break;
 
     case Qt::BottomRightCorner:
         transform.rotate(180.0);
-        originPoint = QPoint(-sz.width(), -sz.height());
+        transform.translate(-sz.width(), -sz.height());
         break;
 
     case Qt::BottomLeftCorner:
         transform.rotate(270.0);
-        originPoint = QPoint(-sz.height(), 0.0);
-        adjSz.transpose();
+        transform.translate(-sz.height(), 0.0);
+        transpose = true;
         break;
     }
 
-    bool drawPixmapNextTime = false;
-
-    if (!mDrawPixmap)
-    {
-        mPixmap = QPixmap(adjSz);
-        mPixmap.fill(QColor(0, 0, 0, 0));
-
-        if (adjSz != sz)
-            resize(adjSz); // this causes paint event to be repeated - next time we'll paint the pixmap to the widget surface.
-
-        // copied from QToolButton::paintEvent   {
-        QStylePainter painter(&mPixmap, this);
-        QStyleOptionToolButton opt;
-        initStyleOption(&opt);
-        painter.drawComplexControl(QStyle::CC_ToolButton, opt);
-        // }
-
-        if (adjSz != sz)
-        {
-            resize(sz);
-            drawPixmapNextTime = true;
-        }
-        else
-            mDrawPixmap = true; // transfer the pixmap to the widget now!
-    }
-    if (mDrawPixmap)
-    {
-        QPainter painter(this);
-        painter.setTransform(transform);
-        painter.drawPixmap(originPoint, mPixmap);
-
-        drawPixmapNextTime = false;
-    }
-
-    mDrawPixmap = drawPixmapNextTime;
+    QStylePainter painter(this);
+    painter.setTransform(transform);
+    QStyleOptionToolButton opt;
+    initStyleOption(&opt);
+    if (transpose)
+        opt.rect = opt.rect.transposed();
+    painter.drawComplexControl(QStyle::CC_ToolButton, opt);
 }
 
 bool LXQtTaskButton::hasDragAndDropHover() const

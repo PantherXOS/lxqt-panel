@@ -43,7 +43,7 @@ LXQtNetworkMonitorConfiguration::LXQtNetworkMonitorConfiguration(PluginSettings 
     ui(new Ui::LXQtNetworkMonitorConfiguration)
 {
     setAttribute(Qt::WA_DeleteOnClose);
-    setObjectName("NetworkMonitorConfigurationWindow");
+    setObjectName(QStringLiteral("NetworkMonitorConfigurationWindow"));
     ui->setupUi(this);
 
     connect(ui->buttons, SIGNAL(clicked(QAbstractButton*)), this, SLOT(dialogButtonsAction(QAbstractButton*)));
@@ -60,13 +60,13 @@ LXQtNetworkMonitorConfiguration::~LXQtNetworkMonitorConfiguration()
 
 void LXQtNetworkMonitorConfiguration::saveSettings()
 {
-    settings().setValue("icon", ui->iconCB->currentIndex());
-    settings().setValue("interface", ui->interfaceCB->currentText());
+    settings().setValue(QStringLiteral("icon"), ui->iconCB->currentIndex());
+    settings().setValue(QStringLiteral("interface"), ui->interfaceCB->currentText());
 }
 
 void LXQtNetworkMonitorConfiguration::loadSettings()
 {
-    ui->iconCB->setCurrentIndex(settings().value("icon", 1).toInt());
+    ui->iconCB->setCurrentIndex(settings().value(QStringLiteral("icon"), 1).toInt());
 
     int count;
 #ifdef STATGRAB_NEWER_THAN_0_90
@@ -77,8 +77,8 @@ void LXQtNetworkMonitorConfiguration::loadSettings()
     sg_network_iface_stats* stats = sg_get_network_iface_stats(&count);
 #endif
     for (int ix = 0; ix < count; ix++)
-        ui->interfaceCB->addItem(stats[ix].interface_name);
+        ui->interfaceCB->addItem(QLatin1String(stats[ix].interface_name));
 
-    QString interface = settings().value("interface").toString();
+    QString interface = settings().value(QStringLiteral("interface")).toString();
     ui->interfaceCB->setCurrentIndex(qMax(qMin(0, count - 1), ui->interfaceCB->findText(interface)));
 }

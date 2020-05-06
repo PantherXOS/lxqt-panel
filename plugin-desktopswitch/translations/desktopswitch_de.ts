@@ -4,13 +4,13 @@
 <context>
     <name>DesktopSwitch</name>
     <message>
-        <location filename="../desktopswitch.cpp" line="84"/>
+        <location filename="../desktopswitch.cpp" line="85"/>
         <source>Switch to desktop %1</source>
-        <translation>Zu Schreibtisch %1 wechseln</translation>
+        <translation>Wechsele zu Arbeitsfläche %1</translation>
     </message>
     <message>
-        <location filename="../desktopswitch.cpp" line="141"/>
-        <location filename="../desktopswitch.cpp" line="151"/>
+        <location filename="../desktopswitch.cpp" line="144"/>
+        <location filename="../desktopswitch.cpp" line="155"/>
         <source>Desktop %1</source>
         <translation>Arbeitsfläche %1</translation>
     </message>
@@ -20,7 +20,7 @@
     <message>
         <location filename="../desktopswitchconfiguration.ui" line="14"/>
         <source>DesktopSwitch settings</source>
-        <translation>Einstellungen für Schreibtischumschalter</translation>
+        <translation>Einstellungen für Arbeitsflächenumschalter</translation>
     </message>
     <message>
         <location filename="../desktopswitchconfiguration.ui" line="20"/>
@@ -30,12 +30,12 @@
     <message>
         <location filename="../desktopswitchconfiguration.ui" line="39"/>
         <source>Desktop labels:</source>
-        <translation>Schreibtischbezeichnungen:</translation>
+        <translation>Arbeitsflächenbezeichnungen:</translation>
     </message>
     <message>
         <location filename="../desktopswitchconfiguration.ui" line="46"/>
         <source>Number of rows:</source>
-        <translation>Anzahl der Zeilen:</translation>
+        <translation>Zeilenanzahl:</translation>
     </message>
     <message>
         <location filename="../desktopswitchconfiguration.ui" line="54"/>
@@ -53,9 +53,19 @@
         <translation>Keine</translation>
     </message>
     <message>
+        <location filename="../desktopswitchconfiguration.ui" line="72"/>
+        <source>If checked, widget will be just an indicator</source>
+        <translation>Wenn diese Option aktiviert ist, ist das Widget nur ein Indikator</translation>
+    </message>
+    <message>
         <location filename="../desktopswitchconfiguration.ui" line="75"/>
+        <source>Show only active desktop</source>
+        <translation>Nur aktiven Desktop anzeigen</translation>
+    </message>
+    <message>
+        <location filename="../desktopswitchconfiguration.ui" line="85"/>
         <source>Desktop names</source>
-        <translation>Schreibtischnamen</translation>
+        <translation>Arbeitsflächennamen</translation>
     </message>
 </context>
 </TS>

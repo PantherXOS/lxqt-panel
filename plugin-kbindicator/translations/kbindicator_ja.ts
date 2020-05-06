@@ -13,7 +13,7 @@
         <location filename="../src/content.cpp" line="46"/>
         <source>CapsLock</source>
         <comment>Tooltip for CapsLock indicator</comment>
-        <translation>CapsLock</translation>
+        <translation>Caps Lock</translation>
     </message>
     <message>
         <location filename="../src/content.cpp" line="50"/>
@@ -25,7 +25,7 @@
         <location filename="../src/content.cpp" line="52"/>
         <source>NumLock</source>
         <comment>Tooltip for NumLock indicator</comment>
-        <translation>NumLock</translation>
+        <translation>Num Lock</translation>
     </message>
     <message>
         <location filename="../src/content.cpp" line="57"/>
@@ -37,7 +37,7 @@
         <location filename="../src/content.cpp" line="59"/>
         <source>ScrollLock</source>
         <comment>Tooltip for ScrollLock indicator</comment>
-        <translation>ScrollLock</translation>
+        <translation>Scroll Lock</translation>
     </message>
     <message>
         <location filename="../src/content.cpp" line="90"/>
@@ -47,7 +47,7 @@
     <message>
         <location filename="../src/content.cpp" line="90"/>
         <source>Variant</source>
-        <translation type="unfinished"></translation>
+        <translation>バリアント</translation>
     </message>
 </context>
 <context>
@@ -55,57 +55,57 @@
     <message>
         <location filename="../src/kbdstateconfig.ui" line="14"/>
         <source>Keyboard state settings</source>
-        <translation type="unfinished"></translation>
+        <translation>キーボード状態の設定</translation>
     </message>
     <message>
         <location filename="../src/kbdstateconfig.ui" line="20"/>
         <source>Lock Indicators</source>
-        <translation type="unfinished"></translation>
+        <translation>ロックインジケーター</translation>
     </message>
     <message>
         <location filename="../src/kbdstateconfig.ui" line="26"/>
         <source>Show Caps Lock</source>
-        <translation type="unfinished"></translation>
+        <translation>Caps Lock を表示する</translation>
     </message>
     <message>
         <location filename="../src/kbdstateconfig.ui" line="33"/>
         <source>Show Num Lock</source>
-        <translation type="unfinished"></translation>
+        <translation>Num Lock を表示する</translation>
     </message>
     <message>
         <location filename="../src/kbdstateconfig.ui" line="40"/>
         <source>Show Scroll Lock</source>
-        <translation type="unfinished"></translation>
+        <translation>Scroll Lock を表示する</translation>
     </message>
     <message>
         <location filename="../src/kbdstateconfig.ui" line="50"/>
         <source>Keyboard Layout Indicator</source>
-        <translation type="unfinished"></translation>
+        <translation>キーボードレイアウトインジケーター</translation>
     </message>
     <message>
         <location filename="../src/kbdstateconfig.ui" line="62"/>
         <source>Switching policy</source>
-        <translation type="unfinished"></translation>
+        <translation>切り替えのポリシー</translation>
     </message>
     <message>
         <location filename="../src/kbdstateconfig.ui" line="69"/>
         <source>Global</source>
-        <translation type="unfinished"></translation>
+        <translation>全体</translation>
     </message>
     <message>
         <location filename="../src/kbdstateconfig.ui" line="79"/>
         <source>Window</source>
-        <translation type="unfinished"></translation>
+        <translation>ウィンドウ</translation>
     </message>
     <message>
         <location filename="../src/kbdstateconfig.ui" line="89"/>
         <source>Application</source>
-        <translation type="unfinished"></translation>
+        <translation>アプリケーション</translation>
     </message>
     <message>
         <location filename="../src/kbdstateconfig.ui" line="102"/>
         <source>Configure layouts</source>
-        <translation type="unfinished"></translation>
+        <translation>レイアウトの設定</translation>
     </message>
 </context>
 </TS>

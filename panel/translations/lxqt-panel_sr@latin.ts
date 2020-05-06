@@ -6,27 +6,27 @@
     <message>
         <location filename="../config/addplugindialog.ui" line="14"/>
         <source>Add Plugins</source>
-        <translation type="unfinished"></translation>
+        <translation>Dodaj Plagine</translation>
     </message>
     <message>
         <location filename="../config/addplugindialog.ui" line="22"/>
         <source>Search:</source>
-        <translation type="unfinished"></translation>
+        <translation>Pretraga:</translation>
     </message>
     <message>
         <location filename="../config/addplugindialog.ui" line="98"/>
         <source>Add Widget</source>
-        <translation type="unfinished"></translation>
+        <translation>Dodaj vidžet</translation>
     </message>
     <message>
         <location filename="../config/addplugindialog.ui" line="105"/>
         <source>Close</source>
-        <translation type="unfinished"></translation>
+        <translation>Zatvori</translation>
     </message>
     <message>
         <location filename="../config/addplugindialog.cpp" line="115"/>
         <source>(only one instance can run at a time)</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">(istovremeno se može pokrenuti samo jedna instanca)</translation>
     </message>
 </context>
 <context>
@@ -34,17 +34,17 @@
     <message>
         <location filename="../config/configpaneldialog.cpp" line="31"/>
         <source>Configure Panel</source>
-        <translation type="unfinished"></translation>
+        <translation>Konfigurišite panel</translation>
     </message>
     <message>
         <location filename="../config/configpaneldialog.cpp" line="38"/>
         <source>Panel</source>
-        <translation type="unfinished">Automatsko suspendovanje</translation>
+        <translation type="unfinished">Panel</translation>
     </message>
     <message>
         <location filename="../config/configpaneldialog.cpp" line="42"/>
         <source>Widgets</source>
-        <translation type="unfinished"></translation>
+        <translation>Vidžet</translation>
     </message>
 </context>
 <context>
@@ -52,17 +52,17 @@
     <message>
         <location filename="../config/configpanelwidget.ui" line="20"/>
         <source>Configure panel</source>
-        <translation type="unfinished"></translation>
+        <translation>Konfigurišite panel</translation>
     </message>
     <message>
         <location filename="../config/configpanelwidget.ui" line="44"/>
         <source>Size</source>
-        <translation type="unfinished"></translation>
+        <translation>Veličina</translation>
     </message>
     <message>
         <location filename="../config/configpanelwidget.ui" line="81"/>
         <source>Size:</source>
-        <translation type="unfinished"></translation>
+        <translation>Veličina:</translation>
     </message>
     <message>
         <location filename="../config/configpanelwidget.ui" line="109"/>
@@ -73,38 +73,38 @@
     <message>
         <location filename="../config/configpanelwidget.ui" line="166"/>
         <source>Icon size:</source>
-        <translation type="unfinished"></translation>
+        <translation>Veličina ikone:</translation>
     </message>
     <message>
         <location filename="../config/configpanelwidget.ui" line="88"/>
         <source>Length:</source>
-        <translation type="unfinished"></translation>
+        <translation>Dužina:</translation>
     </message>
     <message>
         <location filename="../config/configpanelwidget.ui" line="68"/>
         <source>&lt;p&gt;Negative pixel value sets the panel length to that many pixels less than available screen space.&lt;/p&gt;&lt;p/&gt;&lt;p&gt;&lt;i&gt;E.g. &quot;Length&quot; set to -100px, screen size is 1000px, then real panel length will be 900 px.&lt;/i&gt;&lt;/p&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;p&gt;Negativna vrednost piksela postavlja dužinu panela na broj piksela manje od raspoloživog prostora ekrana.&lt;/p&gt;&lt;p/&gt;&lt;p&gt;&lt;i&gt;na primer &quot;Dužina&quot; postavljeno na -100px, veličina ekrana je 1000 px, tada će stvarna dužina panela biti 900 px.&lt;/i&gt;&lt;/p&gt;</translation>
     </message>
     <message>
         <location filename="../config/configpanelwidget.ui" line="96"/>
         <source>%</source>
-        <translation type="unfinished"></translation>
+        <translation>%</translation>
     </message>
     <message>
         <location filename="../config/configpanelwidget.ui" line="101"/>
         <source>px</source>
-        <translation type="unfinished"></translation>
+        <translation>px</translation>
     </message>
     <message>
         <location filename="../config/configpanelwidget.ui" line="202"/>
         <source>Alignment &amp;&amp; position</source>
-        <translation type="unfinished"></translation>
+        <translation>Poravnanje i položaj</translation>
     </message>
     <message>
         <location filename="../config/configpanelwidget.ui" line="262"/>
         <location filename="../config/configpanelwidget.ui" line="285"/>
         <source>Zero means no animation</source>
-        <translation type="unfinished"></translation>
+        <translation>Nula znači da nema animacije</translation>
     </message>
     <message>
         <location filename="../config/configpanelwidget.ui" line="288"/>
@@ -115,31 +115,31 @@
     <message>
         <location filename="../config/configpanelwidget.ui" line="265"/>
         <source>Animation duration:</source>
-        <translation type="unfinished"></translation>
+        <translation>Trajanje animacije:</translation>
     </message>
     <message>
         <location filename="../config/configpanelwidget.ui" line="173"/>
         <source>Rows:</source>
-        <translation type="unfinished"></translation>
+        <translation>Redovi:</translation>
     </message>
     <message>
         <location filename="../config/configpanelwidget.ui" line="219"/>
-        <location filename="../config/configpanelwidget.cpp" line="206"/>
+        <location filename="../config/configpanelwidget.cpp" line="211"/>
         <source>Left</source>
-        <translation type="unfinished"></translation>
+        <translation>Levo</translation>
     </message>
     <message>
         <location filename="../config/configpanelwidget.ui" line="224"/>
-        <location filename="../config/configpanelwidget.cpp" line="207"/>
-        <location filename="../config/configpanelwidget.cpp" line="213"/>
+        <location filename="../config/configpanelwidget.cpp" line="212"/>
+        <location filename="../config/configpanelwidget.cpp" line="218"/>
         <source>Center</source>
-        <translation type="unfinished"></translation>
+        <translation>Centar</translation>
     </message>
     <message>
         <location filename="../config/configpanelwidget.ui" line="229"/>
-        <location filename="../config/configpanelwidget.cpp" line="208"/>
+        <location filename="../config/configpanelwidget.cpp" line="213"/>
         <source>Right</source>
-        <translation type="unfinished"></translation>
+        <translation>Desno</translation>
     </message>
     <message>
         <location filename="../config/configpanelwidget.ui" line="250"/>
@@ -150,55 +150,60 @@
         <location filename="../config/configpanelwidget.ui" line="301"/>
         <location filename="../config/configpanelwidget.ui" line="311"/>
         <source>Zero means no delay</source>
-        <translation type="unfinished"></translation>
+        <translation>Nula znači bez zakašnjenja</translation>
     </message>
     <message>
         <location filename="../config/configpanelwidget.ui" line="304"/>
         <source>Show with delay:</source>
-        <translation type="unfinished"></translation>
+        <translation>Prikaži sa zakašnjenjem:</translation>
     </message>
     <message>
-        <location filename="../config/configpanelwidget.ui" line="330"/>
+        <location filename="../config/configpanelwidget.ui" line="327"/>
+        <source>Visible thin margin for hidden panel</source>
+        <translation>Vidljiva tanka margina za skriveni panel</translation>
+    </message>
+    <message>
+        <location filename="../config/configpanelwidget.ui" line="337"/>
         <source>Don&apos;t allow maximized windows go under the panel window</source>
-        <translation type="unfinished"></translation>
+        <translation>Ne dozvolite da maksimizirani prozori idu ispod prozora panela</translation>
     </message>
     <message>
-        <location filename="../config/configpanelwidget.ui" line="333"/>
+        <location filename="../config/configpanelwidget.ui" line="340"/>
         <source>Reserve space on display</source>
-        <translation type="unfinished"></translation>
+        <translation>Rezervišite prostor na displeju</translation>
     </message>
     <message>
-        <location filename="../config/configpanelwidget.ui" line="349"/>
+        <location filename="../config/configpanelwidget.ui" line="356"/>
         <source>Custom styling</source>
-        <translation type="unfinished"></translation>
+        <translation>Prilagođeni stil</translation>
     </message>
     <message>
-        <location filename="../config/configpanelwidget.ui" line="370"/>
+        <location filename="../config/configpanelwidget.ui" line="377"/>
         <source>Font color:</source>
-        <translation type="unfinished"></translation>
+        <translation>Boja fonta:</translation>
     </message>
     <message>
-        <location filename="../config/configpanelwidget.ui" line="410"/>
+        <location filename="../config/configpanelwidget.ui" line="417"/>
         <source>Background color:</source>
-        <translation type="unfinished"></translation>
+        <translation>Boja pozadine:</translation>
     </message>
     <message>
-        <location filename="../config/configpanelwidget.ui" line="449"/>
+        <location filename="../config/configpanelwidget.ui" line="456"/>
         <source>Background opacity:</source>
-        <translation type="unfinished"></translation>
+        <translation>Neprozirnost pozadine:</translation>
     </message>
     <message>
-        <location filename="../config/configpanelwidget.ui" line="481"/>
+        <location filename="../config/configpanelwidget.ui" line="488"/>
         <source>&lt;small&gt;Compositing is required for panel transparency.&lt;/small&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../config/configpanelwidget.ui" line="509"/>
+        <location filename="../config/configpanelwidget.ui" line="516"/>
         <source>Background image:</source>
-        <translation type="unfinished"></translation>
+        <translation>Pozadinska slika:</translation>
     </message>
     <message>
-        <location filename="../config/configpanelwidget.ui" line="561"/>
+        <location filename="../config/configpanelwidget.ui" line="568"/>
         <source>A partial workaround for widget styles that
 cannot give a separate theme to the panel.
 
@@ -207,15 +212,22 @@ You might also want to disable:
 LXQt Appearance Configuration →
 Icons Theme →
 Colorize icons based on widget style (palette)</source>
-        <translation type="unfinished"></translation>
+        <translation>Delimično rešenje za stilove vidžeta koji
+ne može dati posebnu temu panelu.
+
+Takođe biste mogli da onemogućite:
+
+Konfiguracija izgleda LXQt →
+Tema ikona →
+Oboji ikone na osnovu stila vidžeta (paleta)</translation>
     </message>
     <message>
-        <location filename="../config/configpanelwidget.ui" line="571"/>
+        <location filename="../config/configpanelwidget.ui" line="578"/>
         <source>Override icon &amp;theme</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../config/configpanelwidget.ui" line="586"/>
+        <location filename="../config/configpanelwidget.ui" line="593"/>
         <source>Icon theme for panels:</source>
         <translation type="unfinished"></translation>
     </message>
@@ -230,68 +242,68 @@ Colorize icons based on widget style (palette)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../config/configpanelwidget.cpp" line="172"/>
+        <location filename="../config/configpanelwidget.cpp" line="177"/>
         <source>Top of desktop</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../config/configpanelwidget.cpp" line="173"/>
+        <location filename="../config/configpanelwidget.cpp" line="178"/>
         <source>Left of desktop</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../config/configpanelwidget.cpp" line="174"/>
+        <location filename="../config/configpanelwidget.cpp" line="179"/>
         <source>Right of desktop</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../config/configpanelwidget.cpp" line="175"/>
+        <location filename="../config/configpanelwidget.cpp" line="180"/>
         <source>Bottom of desktop</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../config/configpanelwidget.cpp" line="184"/>
+        <location filename="../config/configpanelwidget.cpp" line="189"/>
         <source>Top of desktop %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../config/configpanelwidget.cpp" line="185"/>
+        <location filename="../config/configpanelwidget.cpp" line="190"/>
         <source>Left of desktop %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../config/configpanelwidget.cpp" line="186"/>
+        <location filename="../config/configpanelwidget.cpp" line="191"/>
         <source>Right of desktop %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../config/configpanelwidget.cpp" line="187"/>
+        <location filename="../config/configpanelwidget.cpp" line="192"/>
         <source>Bottom of desktop %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../config/configpanelwidget.cpp" line="212"/>
+        <location filename="../config/configpanelwidget.cpp" line="217"/>
         <source>Top</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../config/configpanelwidget.cpp" line="214"/>
+        <location filename="../config/configpanelwidget.cpp" line="219"/>
         <source>Bottom</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../config/configpanelwidget.cpp" line="430"/>
-        <location filename="../config/configpanelwidget.cpp" line="446"/>
+        <location filename="../config/configpanelwidget.cpp" line="436"/>
+        <location filename="../config/configpanelwidget.cpp" line="452"/>
         <source>Pick color</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../config/configpanelwidget.cpp" line="464"/>
+        <location filename="../config/configpanelwidget.cpp" line="470"/>
         <source>Images (*.png *.gif *.jpg)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../config/configpanelwidget.cpp" line="464"/>
+        <location filename="../config/configpanelwidget.cpp" line="470"/>
         <source>Pick image</source>
         <translation type="unfinished"></translation>
     </message>
@@ -346,45 +358,45 @@ Colorize icons based on widget style (palette)</source>
 <context>
     <name>LXQtPanel</name>
     <message>
-        <location filename="../lxqtpanel.cpp" line="1068"/>
-        <location filename="../lxqtpanel.cpp" line="1094"/>
+        <location filename="../lxqtpanel.cpp" line="1081"/>
+        <location filename="../lxqtpanel.cpp" line="1107"/>
         <source>Panel</source>
         <translation>Automatsko suspendovanje</translation>
     </message>
     <message>
-        <location filename="../lxqtpanel.cpp" line="1097"/>
+        <location filename="../lxqtpanel.cpp" line="1110"/>
         <source>Configure Panel</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../lxqtpanel.cpp" line="1102"/>
+        <location filename="../lxqtpanel.cpp" line="1115"/>
         <source>Manage Widgets</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../lxqtpanel.cpp" line="1108"/>
+        <location filename="../lxqtpanel.cpp" line="1121"/>
         <source>Add New Panel</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../lxqtpanel.cpp" line="1115"/>
+        <location filename="../lxqtpanel.cpp" line="1128"/>
         <source>Remove Panel</source>
         <comment>Menu Item</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../lxqtpanel.cpp" line="1120"/>
+        <location filename="../lxqtpanel.cpp" line="1133"/>
         <source>Lock This Panel</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../lxqtpanel.cpp" line="1273"/>
+        <location filename="../lxqtpanel.cpp" line="1286"/>
         <source>Remove Panel</source>
         <comment>Dialog Title</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../lxqtpanel.cpp" line="1274"/>
+        <location filename="../lxqtpanel.cpp" line="1287"/>
         <source>Removing a panel can not be undone.
 Do you want to remove this panel?</source>
         <translation type="unfinished"></translation>
@@ -393,17 +405,17 @@ Do you want to remove this panel?</source>
 <context>
     <name>Plugin</name>
     <message>
-        <location filename="../plugin.cpp" line="411"/>
+        <location filename="../plugin.cpp" line="432"/>
         <source>Configure &quot;%1&quot;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../plugin.cpp" line="416"/>
+        <location filename="../plugin.cpp" line="437"/>
         <source>Move &quot;%1&quot;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../plugin.cpp" line="424"/>
+        <location filename="../plugin.cpp" line="445"/>
         <source>Remove &quot;%1&quot;</source>
         <translation type="unfinished"></translation>
     </message>
