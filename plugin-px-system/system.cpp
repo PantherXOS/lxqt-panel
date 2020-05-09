@@ -9,10 +9,10 @@ System::System(const ILXQtPanelPluginStartupInfo &startupInfo) :
     mainMenu = new QMenu;
     realign();
     //mainMenu->setObjectName("MainMenu");
-    mButton.setStyleSheet("QToolButton::menu-indicator { image: none; }");
+    mButton.setStyleSheet(QString::fromStdString("QToolButton::menu-indicator { image: none; }"));
     mButton.setMenu(mainMenu);
     mButton.setPopupMode(QToolButton::DelayedPopup);
-    mButton.setIcon(QIcon::fromTheme("px-user"));
+    mButton.setIcon(QIcon::fromTheme(QString::fromStdString("px-user")));
     connect(&mButton, SIGNAL(pressed()),this,SLOT(refresh()));
 }
 
@@ -68,7 +68,7 @@ QLabel *System::buildIconFromFile(QString file, QSize size){
 QWidgetAction *System::createTitle(QString title, QString icon) {
     auto subject = new QLabel;
     subject->setText(title);
-    subject->setFont(QFont("Helvetica",11,QFont::Bold));
+    subject->setFont(QFont(QString::fromStdString("Helvetica"),11,QFont::Bold));
 
     auto slayout = new QHBoxLayout;
     slayout->setAlignment(Qt::AlignLeft);
@@ -79,7 +79,7 @@ QWidgetAction *System::createTitle(QString title, QString icon) {
         auto qPushButton = new QPushButton();
         qPushButton->setIcon(QIcon::fromTheme(icon));
         qPushButton->setIconSize(QSize(UPDATE_ICON_SIZE,UPDATE_ICON_SIZE));
-        qPushButton->setStyleSheet("QPushButton {background-color: transparent; border:0px;}");
+        qPushButton->setStyleSheet(QString::fromStdString("QPushButton {background-color: transparent; border:0px;}"));
         connect(qPushButton,SIGNAL(released()),this,SLOT(updateButtonHandler()));
         rlayout->addWidget(qPushButton);
         rlayout->setAlignment(Qt::AlignRight);
@@ -99,14 +99,14 @@ QWidgetAction *System::createTitle(QString title, QString icon) {
 
 QWidgetAction *System::getUser() {
 
-    auto accountIcon = buildIconFromTheme("px-user",QSize(ACCOUNT_ICON_SIZE,ACCOUNT_ICON_SIZE));
+    auto accountIcon = buildIconFromTheme(QString::fromStdString("px-user"),QSize(ACCOUNT_ICON_SIZE,ACCOUNT_ICON_SIZE));
     accountIcon->setContentsMargins(0,0,0,0);
     auto accountTitle = new QLabel;
     string acc = exec("whoami").c_str();
     acc = acc.substr(0, acc.find("\n", 0));
     if(acc.size()>MAX_ACCOUNT_SIZE)
         acc = acc.substr(0,MAX_ACCOUNT_SIZE)+"...";
-    accountTitle->setText(acc.c_str());
+    accountTitle->setText(QString::fromStdString(acc));
     accountTitle->setMargin(0);
     accountTitle->setContentsMargins(7,0,0,0);
 
@@ -119,7 +119,7 @@ QWidgetAction *System::getUser() {
 //    llayout->setContentsMargins(8,0,0,0);
 
     auto  widget = new QWidget;
-    widget->setObjectName("PxSystemItem");
+    widget->setObjectName(QString::fromStdString("PxSystemItem"));
     widget->setLayout(llayout);
     auto qWidgetAction = new QWidgetAction(this);
     qWidgetAction->setDefaultWidget(widget);
@@ -127,7 +127,7 @@ QWidgetAction *System::getUser() {
 }
 
 QWidgetAction *System::getFirewallStatus() {
-    return generalItems("FIREWALL","",false,"px-firewall");
+    return generalItems(QString::fromStdString("FIREWALL"),QString::fromStdString(""),false,QString::fromStdString("px-firewall"));
 }
 
 QWidgetAction *System::getInternet() {
@@ -138,18 +138,18 @@ QWidgetAction *System::getInternet() {
     for(auto m:internetInfo){
         if(i==0){
             if(m.status)
-                llayout->addLayout(internetLayout(m.name.c_str(), ":resources/icon/status_2_green_d"));
+                llayout->addLayout(internetLayout(QString::fromStdString(m.name), QString::fromStdString(":resources/icon/status_2_green_d")));
             else
-                llayout->addLayout(internetLayout(m.name.c_str(), ":resources/icon/status_2_grey_d"));
+                llayout->addLayout(internetLayout(QString::fromStdString(m.name), QString::fromStdString(":resources/icon/status_2_grey_d")));
         }else{
             if(m.status)
-                llayout->addLayout(internetLayout(m.name.c_str(), ":resources/icon/status_3_green_ud"));
+                llayout->addLayout(internetLayout(QString::fromStdString(m.name), QString::fromStdString(":resources/icon/status_3_green_ud")));
             else
-                llayout->addLayout(internetLayout(m.name.c_str(), ":resources/icon/status_3_grey_ud"));
+                llayout->addLayout(internetLayout(QString::fromStdString(m.name), QString::fromStdString(":resources/icon/status_3_grey_ud")));
         }
         i++;
     }
-    llayout->addLayout(internetLayout("YOU", ":resources/icon/status_1_green_u"));
+    llayout->addLayout(internetLayout(QString::fromStdString("YOU"), QString::fromStdString(":resources/icon/status_1_green_u")));
     llayout->setAlignment(Qt::AlignTop);
     llayout->setMargin(0);
     llayout->setSpacing(0);
@@ -157,7 +157,7 @@ QWidgetAction *System::getInternet() {
     //for(auto it =internetInfo.rbegin();it!=internetInfo.rend();++it){
     for(auto m:internetInfo){
         auto detail = new QLabel;
-        detail->setText(m.value.c_str());
+        detail->setText(QString::fromStdString(m.value));
         detail->setMargin(0);
         detail->setContentsMargins(5,0,0,0);
         Tlayout->addWidget(detail);
@@ -176,7 +176,7 @@ QWidgetAction *System::getInternet() {
     //rlayout->setContentsMargins(3,0,0,0);
 
     auto  widget = new QWidget;
-    widget->setObjectName("PxSystemItem");
+    widget->setObjectName(QString::fromStdString("PxSystemItem"));
     widget->setLayout(rlayout);
     auto qWidgetAction = new QWidgetAction(this);
     qWidgetAction->setDefaultWidget(widget);
@@ -204,7 +204,7 @@ return Hlayout;
 void System::getVpnStatus() {
     for(auto info:internetInfo){
         if (info.vpnStatus){
-            mainMenu->addAction(generalItems("VPN",info.profileName.c_str(),info.status,"px-vpn"));
+            mainMenu->addAction(generalItems(QString::fromStdString("VPN"),QString::fromStdString(info.profileName),info.status,QString::fromStdString("px-vpn")));
             mainMenu->addSeparator();
         }
     }
@@ -213,22 +213,22 @@ void System::getVpnStatus() {
 void System::getWifiStatus() {
     for(auto info:internetInfo){
         if (info.wifiStatus){
-            mainMenu->addAction(generalItems("WIFI",info.profileName.c_str(),info.status,"px-wifi"));
+            mainMenu->addAction(generalItems(QString::fromStdString("WIFI"),QString::fromStdString(info.profileName),info.status,QString::fromStdString("px-wifi")));
             mainMenu->addSeparator();
         }
     }
 }
 QWidgetAction *System::getBTStatus() {
-    return generalItems("BT","Logitech z533",true,"px-bluetooth");
+    return generalItems(QString::fromStdString("BT"),QString::fromStdString("Logitech z533"),true,QString::fromStdString("px-bluetooth"));
 }
 
 QWidgetAction* System::generalItems(QString name,QString information,bool stat,QString icon){
     QString statusIconFile;
     if(stat){
-        statusIconFile=":resources/icon/status_0_green_o";
+        statusIconFile=QString::fromStdString(":resources/icon/status_0_green_o");
     }
     else{
-        statusIconFile=":resources/icon/status_0_grey";
+        statusIconFile=QString::fromStdString(":resources/icon/status_0_grey");
     }
     auto statusLabel = buildIconFromFile(statusIconFile,QSize(ACCOUNT_STATUS_ICON_SIZE,ACCOUNT_STATUS_ICON_SIZE));
     auto firewallIcon = buildIconFromTheme(icon,QSize(ACCOUNT_ICON_SIZE,ACCOUNT_ICON_SIZE));
@@ -267,7 +267,7 @@ QWidgetAction* System::generalItems(QString name,QString information,bool stat,Q
    // qlayout->setContentsMargins(8,0,3,0);
 
     auto  widget = new QWidget;
-    widget->setObjectName("PxSystemItem");
+    widget->setObjectName(QString::fromStdString("PxSystemItem"));
     widget->setLayout(qlayout);
     auto qWidgetAction = new QWidgetAction(this);
     qWidgetAction->setDefaultWidget(widget);
@@ -275,12 +275,12 @@ QWidgetAction* System::generalItems(QString name,QString information,bool stat,Q
 }
 
 QWidgetAction *System::getUpdateStat() {
-    auto updatelIcon = buildIconFromTheme("panther",QSize(20,20));
+    auto updatelIcon = buildIconFromTheme(QString::fromStdString("panther"),QSize(20,20));
     updatelIcon->setContentsMargins(0,0,0,0);
     auto title = new QLabel;
-    title->setText("Your panther is secure and up to date.");
+    title->setText(QString::fromStdString("Your panther is secure and up to date."));
     title->setMargin(0);
-    title->setFont(QFont("Helvetica",8));
+    title->setFont(QFont(QString::fromStdString("Helvetica"),8));
     title->setContentsMargins(8,0,0,0);
 
     auto llayout = new QHBoxLayout;
@@ -305,7 +305,7 @@ QWidgetAction *System::getUpdateStat() {
     //qlayout->setContentsMargins(0,0,3,0);
 
     auto  widget = new QWidget;
-    widget->setObjectName("PxSystemItem");
+    widget->setObjectName(QString::fromStdString("PxSystemItem"));
     widget->setLayout(qlayout);
     auto qWidgetAction = new QWidgetAction(this);
     qWidgetAction->setDefaultWidget(widget);
@@ -369,4 +369,3 @@ bool System::networkDataParser(string data) {
     return true;
 
 }
-

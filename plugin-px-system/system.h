@@ -51,7 +51,7 @@ public:
     explicit System(const ILXQtPanelPluginStartupInfo &startupInfo);
 
     virtual QWidget *widget() { return &mButton; }
-    virtual QString themeId() const { return "px-system"; }
+    virtual QString themeId() const { return QString::fromStdString("px-system"); }
     virtual ILXQtPanelPlugin::Flags flags() const { return HaveConfigDialog; }
     bool isSeparate() const { return true; }
     QMenu *mainMenu;
