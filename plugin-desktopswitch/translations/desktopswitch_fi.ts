@@ -4,13 +4,13 @@
 <context>
     <name>DesktopSwitch</name>
     <message>
-        <location filename="../desktopswitch.cpp" line="84"/>
+        <location filename="../desktopswitch.cpp" line="85"/>
         <source>Switch to desktop %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Siirry työpöydälle %1</translation>
     </message>
     <message>
-        <location filename="../desktopswitch.cpp" line="141"/>
-        <location filename="../desktopswitch.cpp" line="151"/>
+        <location filename="../desktopswitch.cpp" line="144"/>
+        <location filename="../desktopswitch.cpp" line="155"/>
         <source>Desktop %1</source>
         <translation>Työpöytä %1</translation>
     </message>
@@ -20,7 +20,7 @@
     <message>
         <location filename="../desktopswitchconfiguration.ui" line="14"/>
         <source>DesktopSwitch settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Työpöydän vaihtajan asetukset</translation>
     </message>
     <message>
         <location filename="../desktopswitchconfiguration.ui" line="46"/>
@@ -30,7 +30,7 @@
     <message>
         <location filename="../desktopswitchconfiguration.ui" line="39"/>
         <source>Desktop labels:</source>
-        <translation type="unfinished"></translation>
+        <translation>Työpöydän nimikkeet:</translation>
     </message>
     <message>
         <location filename="../desktopswitchconfiguration.ui" line="20"/>
@@ -53,7 +53,17 @@
         <translation>Ei mitään</translation>
     </message>
     <message>
+        <location filename="../desktopswitchconfiguration.ui" line="72"/>
+        <source>If checked, widget will be just an indicator</source>
+        <translation>Käytä vain työpöydän ilmaisimena</translation>
+    </message>
+    <message>
         <location filename="../desktopswitchconfiguration.ui" line="75"/>
+        <source>Show only active desktop</source>
+        <translation>Näytä vain aktiivinen työpöytä</translation>
+    </message>
+    <message>
+        <location filename="../desktopswitchconfiguration.ui" line="85"/>
         <source>Desktop names</source>
         <translation>Työpöytien nimet</translation>
     </message>

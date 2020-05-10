@@ -36,13 +36,13 @@ void EventSubscriber::run() {
                 capnp::InputStreamMessageReader reader(strm);
                 EventObject *eventObject=new EventObject;
                 EventData::Reader evtData = reader.getRoot<EventData>();
-                eventObject->setEvent(evtData.getEvent().cStr());
-                eventObject->setSource(evtData.getSource().cStr());
+                eventObject->setEvent(QString::fromStdString(evtData.getEvent()));
+                eventObject->setSource(QString::fromStdString(evtData.getSource()));
                 eventObject->setTime(evtData.getTime());
-                eventObject->setTopic(evtData.getTopic().cStr());
+                eventObject->setTopic(QString::fromStdString(evtData.getTopic()));
                 map<QString,QString> m;
                 for (const auto &param : evtData.getParams()) {
-                    m.insert(pair<QString, QString>(param.getKey().cStr(), param.getValue().cStr()));
+                    m.insert(pair<QString, QString>(QString::fromStdString(param.getKey()), QString::fromStdString(param.getValue())));
                 }
                 eventObject->setParams(m);
                 qDebug() <<eventObject->toString();

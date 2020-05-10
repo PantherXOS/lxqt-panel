@@ -61,11 +61,11 @@ LXQtQuickLaunch::LXQtQuickLaunch(ILXQtPanelPlugin *plugin, QWidget* parent) :
     QString exec;
     QString icon;
 
-    const auto apps = mPlugin->settings()->readArray("apps");
+    const auto apps = mPlugin->settings()->readArray(QStringLiteral("apps"));
     for (const QMap<QString, QVariant> &app : apps)
     {
-        desktop = app.value("desktop", "").toString();
-        file = app.value("file", "").toString();
+        desktop = app.value(QStringLiteral("desktop"), QString()).toString();
+        file = app.value(QStringLiteral("file"), QString()).toString();
         if (!desktop.isEmpty())
         {
             XdgDesktopFile xdg;
@@ -88,9 +88,9 @@ LXQtQuickLaunch::LXQtQuickLaunch(ILXQtPanelPlugin *plugin, QWidget* parent) :
         }
         else
         {
-            execname = app.value("name", "").toString();
-            exec = app.value("exec", "").toString();
-            icon = app.value("icon", "").toString();
+            execname = app.value(QStringLiteral("name"), QString()).toString();
+            exec = app.value(QStringLiteral("exec"), QString()).toString();
+            icon = app.value(QStringLiteral("icon"), QString()).toString();
             if (icon.isNull())
             {
                 qDebug() << "Icon" << icon << "is not valid (isNull). Skipped.";
@@ -172,6 +172,12 @@ void LXQtQuickLaunch::addButton(QuickLaunchAction* action)
 
 void LXQtQuickLaunch::dragEnterEvent(QDragEnterEvent *e)
 {
+    if (mPlugin->panel()->isLocked())
+    {
+        e->ignore();
+        return;
+    }
+
     // Getting URL from mainmenu...
     if (e->mimeData()->hasUrls())
     {
@@ -188,6 +194,12 @@ void LXQtQuickLaunch::dragEnterEvent(QDragEnterEvent *e)
 
 void LXQtQuickLaunch::dropEvent(QDropEvent *e)
 {
+    if (mPlugin->panel()->isLocked())
+    {
+        e->ignore();
+        return;
+    }
+
     const auto urls = e->mimeData()->urls().toSet();
     for (const QUrl &url : urls)
     {
@@ -202,7 +214,7 @@ void LXQtQuickLaunch::dropEvent(QDropEvent *e)
         }
         else if (fi.exists() && fi.isExecutable() && !fi.isDir())
         {
-            addButton(new QuickLaunchAction(fileName, fileName, "", this));
+            addButton(new QuickLaunchAction(fileName, fileName, QLatin1String(""), this));
         }
         else if (fi.exists())
         {
@@ -286,7 +298,7 @@ void LXQtQuickLaunch::buttonMoveRight()
 void LXQtQuickLaunch::saveSettings()
 {
     PluginSettings *settings = mPlugin->settings();
-    settings->remove("apps");
+    settings->remove(QStringLiteral("apps"));
 
     QList<QMap<QString, QVariant> > hashList;
     int size = mLayout->count();
@@ -307,7 +319,7 @@ void LXQtQuickLaunch::saveSettings()
         hashList << map;
     }
 
-    settings->setArray("apps", hashList);
+    settings->setArray(QStringLiteral("apps"), hashList);
 }
 
 
@@ -317,7 +329,7 @@ void LXQtQuickLaunch::showPlaceHolder()
     {
         mPlaceHolder = new QLabel(this);
         mPlaceHolder->setAlignment(Qt::AlignCenter);
-        mPlaceHolder->setObjectName("QuickLaunchPlaceHolder");
+        mPlaceHolder->setObjectName(QStringLiteral("QuickLaunchPlaceHolder"));
         mPlaceHolder->setText(tr("Drop application\nicons here"));
     }
 

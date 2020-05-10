@@ -4,9 +4,14 @@
 <context>
     <name>DirectoryMenu</name>
     <message>
-        <location filename="../directorymenu.cpp" line="120"/>
+        <location filename="../directorymenu.cpp" line="125"/>
         <source>Open</source>
-        <translation>Nyit</translation>
+        <translation>Megnyitás</translation>
+    </message>
+    <message>
+        <location filename="../directorymenu.cpp" line="129"/>
+        <source>Open in terminal</source>
+        <translation>Megnyitás terminálban</translation>
     </message>
 </context>
 <context>
@@ -19,7 +24,7 @@
     <message>
         <location filename="../directorymenuconfiguration.ui" line="20"/>
         <source>Appearance</source>
-        <translation>Kinézet</translation>
+        <translation>Megjelenés</translation>
     </message>
     <message>
         <location filename="../directorymenuconfiguration.ui" line="26"/>
@@ -37,29 +42,40 @@
         <translation>Ikon:</translation>
     </message>
     <message>
-        <location filename="../directorymenuconfiguration.cpp" line="91"/>
+        <location filename="../directorymenuconfiguration.ui" line="66"/>
+        <source>Terminal</source>
+        <translation>Terminál</translation>
+    </message>
+    <message>
+        <location filename="../directorymenuconfiguration.ui" line="73"/>
+        <location filename="../directorymenuconfiguration.cpp" line="112"/>
+        <source>Choose Default Terminal</source>
+        <translation>Alapértelmezett terminál kiválasztása</translation>
+    </message>
+    <message>
+        <location filename="../directorymenuconfiguration.cpp" line="96"/>
         <source>Choose Base Directory</source>
-        <translation>Aapkönyvtár kijelölés</translation>
+        <translation>Alapkönyvtár kiválasztása</translation>
     </message>
     <message>
-        <location filename="../directorymenuconfiguration.cpp" line="107"/>
+        <location filename="../directorymenuconfiguration.cpp" line="126"/>
         <source>Choose Icon</source>
-        <translation>Ikon kijelölés</translation>
+        <translation>Ikon kiválasztása</translation>
     </message>
     <message>
-        <location filename="../directorymenuconfiguration.cpp" line="107"/>
+        <location filename="../directorymenuconfiguration.cpp" line="126"/>
         <source>Icons (*.png *.xpm *.jpg)</source>
         <translation>Ikonok (*.png *.xpm *.jpg)</translation>
     </message>
     <message>
-        <location filename="../directorymenuconfiguration.cpp" line="116"/>
+        <location filename="../directorymenuconfiguration.cpp" line="135"/>
         <source>Directory Menu</source>
         <translation>Könyvtármenü</translation>
     </message>
     <message>
-        <location filename="../directorymenuconfiguration.cpp" line="116"/>
+        <location filename="../directorymenuconfiguration.cpp" line="135"/>
         <source>An error occurred while loading the icon.</source>
-        <translation>Az ikon betöltése sikertelen.</translation>
+        <translation>Hiba történt az ikon betöltése közben.</translation>
     </message>
 </context>
 </TS>

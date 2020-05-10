@@ -103,6 +103,7 @@ public slots:
     void updateIcon();
 
 protected:
+    virtual void changeEvent(QEvent *event);
     virtual void dragEnterEvent(QDragEnterEvent *event);
     virtual void dragMoveEvent(QDragMoveEvent * event);
     virtual void dragLeaveEvent(QDragLeaveEvent *event);
@@ -110,6 +111,7 @@ protected:
     void mousePressEvent(QMouseEvent *event);
     void mouseReleaseEvent(QMouseEvent *event);
     void mouseMoveEvent(QMouseEvent *event);
+    void wheelEvent(QWheelEvent* event);
     virtual void contextMenuEvent(QContextMenuEvent *event);
     void paintEvent(QPaintEvent *);
 
@@ -120,18 +122,23 @@ protected:
     inline ILXQtPanelPlugin * plugin() const { return mPlugin; }
 
 private:
+    void moveApplicationToPrevNextDesktop(bool next);
+
     WId mWindow;
     bool mUrgencyHint;
     QPoint mDragStartPosition;
     Qt::Corner mOrigin;
-    QPixmap mPixmap;
-    bool mDrawPixmap;
     LXQtTaskBar * mParentTaskBar;
     ILXQtPanelPlugin * mPlugin;
+    int mIconSize;
+    int mWheelDelta;
 
     // Timer for when draggind something into a button (the button's window
     // must be activated so that the use can continue dragging to the window
     QTimer * mDNDTimer;
+
+    // Timer for distinguishing between separate mouse wheel rotations
+    QTimer * mWheelTimer;
 
 private slots:
     void activateWithDraggable();

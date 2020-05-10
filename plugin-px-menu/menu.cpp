@@ -10,7 +10,7 @@ Menu::Menu(const ILXQtPanelPluginStartupInfo &startupInfo) :
     realign();
     refresh();
     qDebug()<<QDesktopServices::openUrl(QUrl::fromLocalFile("file:///home/panther/flower"));
-    mainMenu->setObjectName("LXQtMountPopup");
+    mainMenu->setObjectName(QString::fromStdString("LXQtMountPopup"));
    }
 
 void Menu::realign()
@@ -23,26 +23,25 @@ void Menu::refresh() {
     mainMenu->clear();
 
     mainMenu->setFixedWidth(MAIN_MENU_SIZE_W);
-    mainMenu->addAction(createTitle(tr("YOUR FILES"), ""));
+    mainMenu->addAction(createTitle(tr("YOUR FILES"), QString::fromStdString("")));
 
-      mainMenu->addSeparator();
-
-
-    mainMenu->addAction(createTitle(tr("YOUR APPLICATIONS"), ""));
-
-    mainMenu->setObjectName("LXQtMountPopup");
     mainMenu->addSeparator();
-    mButton.setStyleSheet("QToolButton::menu-indicator { image: none; }");
+
+    mainMenu->addAction(createTitle(tr("YOUR APPLICATIONS"), QString::fromStdString("")));
+
+    mainMenu->setObjectName(QString::fromStdString("LXQtMountPopup");
+    mainMenu->addSeparator();
+    mButton.setStyleSheet(QString::fromStdString("QToolButton::menu-indicator { image: none; }"));
     mButton.setMenu(mainMenu);
     mButton.setPopupMode(QToolButton::InstantPopup);
     mButton.setAutoRaise(true);
-    mButton.setIcon(QIcon::fromTheme("px-user"));
+    mButton.setIcon(QIcon::fromTheme(QString::fromStdString("px-user")));
 }
 
 QWidgetAction *Menu::createTitle(QString title, QString icon) {
     auto subject = new QLabel;
     subject->setText(title);
-    subject->setFont(QFont("Helvetica",11,QFont::Bold));
+    subject->setFont(QFont(QString::fromStdString("Helvetica"),11,QFont::Bold));
 
     auto slayout = new QHBoxLayout;
     slayout->setAlignment(Qt::AlignLeft);
@@ -53,7 +52,7 @@ QWidgetAction *Menu::createTitle(QString title, QString icon) {
         auto qPushButton = new QPushButton();
         qPushButton->setIcon(QIcon::fromTheme(icon));
         qPushButton->setIconSize(QSize(UPDATE_ICON_SIZE,UPDATE_ICON_SIZE));
-        qPushButton->setStyleSheet("QPushButton {background-color: transparent; border:0px;}");
+        qPushButton->setStyleSheet(QString::fromStdString("QPushButton {background-color: transparent; border:0px;}"));
         connect(qPushButton,SIGNAL(released()),this,SLOT(updateButtonHandler()));
         rlayout->addWidget(qPushButton);
         rlayout->setAlignment(Qt::AlignRight);

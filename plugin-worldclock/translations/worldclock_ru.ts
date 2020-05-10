@@ -4,7 +4,7 @@
 <context>
     <name>LXQtWorldClock</name>
     <message>
-        <location filename="../lxqtworldclock.cpp" line="241"/>
+        <location filename="../lxqtworldclock.cpp" line="244"/>
         <source>&apos;&lt;b&gt;&apos;HH:mm:ss&apos;&lt;/b&gt;&lt;br/&gt;&lt;font size=&quot;-2&quot;&gt;&apos;ddd, d MMM yyyy&apos;&lt;br/&gt;&apos;TT&apos;&lt;/font&gt;&apos;</source>
         <translation></translation>
     </message>
@@ -146,9 +146,14 @@
         <translation></translation>
     </message>
     <message>
+        <location filename="../lxqtworldclockconfiguration.ui" line="535"/>
+        <source>Show &amp;week number</source>
+        <translation>Показывать номера недель</translation>
+    </message>
+    <message>
         <location filename="../lxqtworldclockconfiguration.ui" line="201"/>
         <location filename="../lxqtworldclockconfiguration.ui" line="436"/>
-        <location filename="../lxqtworldclockconfiguration.cpp" line="579"/>
+        <location filename="../lxqtworldclockconfiguration.cpp" line="584"/>
         <source>Custom name</source>
         <translation>Своё имя</translation>
     </message>
@@ -228,12 +233,12 @@
         <translation>Авто&amp;поворот для вертикальной панели</translation>
     </message>
     <message>
-        <location filename="../lxqtworldclockconfiguration.cpp" line="103"/>
+        <location filename="../lxqtworldclockconfiguration.cpp" line="106"/>
         <source>&apos;&lt;b&gt;&apos;HH:mm:ss&apos;&lt;/b&gt;&lt;br/&gt;&lt;font size=&quot;-2&quot;&gt;&apos;ddd, d MMM yyyy&apos;&lt;br/&gt;&apos;TT&apos;&lt;/font&gt;&apos;</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../lxqtworldclockconfiguration.cpp" line="578"/>
+        <location filename="../lxqtworldclockconfiguration.cpp" line="583"/>
         <source>Input custom time zone name</source>
         <translation>Введите своё имя для часового пояса</translation>
     </message>
@@ -322,7 +327,7 @@
 &lt;/table&gt;
 &lt;br/&gt;&lt;b&gt;Примечания.&lt;/b&gt;
 &lt;ul&gt;
-&lt;li&gt;Любые символы в шаблоне, не входящие в диапазоны [&apos;a&apos; … &apos;z&apos;] и [&apos;A&apos; … &apos;Z&apos;] будут  рассматриваться как фактический текст. В частности, такие символы, как &apos;:&apos;, &apos;.&apos;, &apos; &apos;, &apos;#&apos; и &apos;@&apos;, будут отображаться в результирующем тексте, даже если они не заключены в одинарные кавычки. Одиночная кавычка используется для «экранирования» латинских букв. Две одинарные кавычки подряд, внутри или вне других кавычек, представляют собой «настоящие» одинарные кавычки.&lt;/li&gt;
+&lt;li&gt;Любые символы в шаблоне, не входящие в диапазоны [&apos;a&apos; … &apos;z&apos;] и [&apos;A&apos; … &apos;Z&apos;] будут рассматриваться как фактический текст. В частности, такие символы, как &apos;:&apos;, &apos;.&apos;, &apos; &apos;, &apos;#&apos; и &apos;@&apos;, будут отображаться в результирующем тексте, даже если они не заключены в одинарные кавычки. Одиночная кавычка используется для «экранирования» латинских букв. Две одинарные кавычки подряд, внутри или вне других кавычек, представляют собой «настоящие» одинарные кавычки.&lt;/li&gt;
 &lt;li&gt;Минимальный интервал обновления составляет 1 секунда. Если z или zzz включены в формат, то время будет отображаться с миллисекундами, но не обновляется каждую миллисекунду (во избежание значительного снижения производительности).&lt;/li&gt;
 &lt;/ul&gt;
 </translation>

@@ -43,7 +43,6 @@
 #include <QX11Info>
 #include <QDebug>
 #include <QString>
-#include <QDesktopWidget>
 #include <QMenu>
 #include <QMessageBox>
 #include <QDropEvent>
@@ -87,10 +86,10 @@
  ************************************************/
 ILXQtPanel::Position LXQtPanel::strToPosition(const QString& str, ILXQtPanel::Position defaultValue)
 {
-    if (str.toUpper() == "TOP")    return LXQtPanel::PositionTop;
-    if (str.toUpper() == "LEFT")   return LXQtPanel::PositionLeft;
-    if (str.toUpper() == "RIGHT")  return LXQtPanel::PositionRight;
-    if (str.toUpper() == "BOTTOM") return LXQtPanel::PositionBottom;
+    if (str.toUpper() == QLatin1String("TOP"))    return LXQtPanel::PositionTop;
+    if (str.toUpper() == QLatin1String("LEFT"))   return LXQtPanel::PositionLeft;
+    if (str.toUpper() == QLatin1String("RIGHT"))  return LXQtPanel::PositionRight;
+    if (str.toUpper() == QLatin1String("BOTTOM")) return LXQtPanel::PositionBottom;
     return defaultValue;
 }
 
@@ -103,13 +102,13 @@ QString LXQtPanel::positionToStr(ILXQtPanel::Position position)
     switch (position)
     {
     case LXQtPanel::PositionTop:
-        return QString("Top");
+        return QStringLiteral("Top");
     case LXQtPanel::PositionLeft:
-        return QString("Left");
+        return QStringLiteral("Left");
     case LXQtPanel::PositionRight:
-        return QString("Right");
+        return QStringLiteral("Right");
     case LXQtPanel::PositionBottom:
-        return QString("Bottom");
+        return QStringLiteral("Bottom");
     }
 
     return QString();
@@ -171,12 +170,12 @@ LXQtPanel::LXQtPanel(const QString &configGroup, LXQt::Settings *settings, QWidg
     //Allows data from drag and drop operations to be dropped onto the widget (see QWidget::setAcceptDrops()).
     setAttribute(Qt::WA_AcceptDrops);
 
-    setWindowTitle("LXQt Panel");
-    setObjectName(QString("LXQtPanel %1").arg(configGroup));
+    setWindowTitle(QStringLiteral("LXQt Panel"));
+    setObjectName(QStringLiteral("LXQtPanel %1").arg(configGroup));
 
     //LXQtPanel (inherits QFrame) -> lav (QGridLayout) -> LXQtPanelWidget (QFrame) -> LXQtPanelLayout
     LXQtPanelWidget = new QFrame(this);
-    LXQtPanelWidget->setObjectName("BackgroundWidget");
+    LXQtPanelWidget->setObjectName(QStringLiteral("BackgroundWidget"));
     QGridLayout* lav = new QGridLayout();
     lav->setContentsMargins(0, 0, 0, 0);
     setLayout(lav);
@@ -199,14 +198,24 @@ LXQtPanel::LXQtPanel(const QString &configGroup, LXQt::Settings *settings, QWidg
     mShowDelayTimer.setInterval(PANEL_SHOW_DELAY);
     connect(&mShowDelayTimer, &QTimer::timeout, [this] { showPanel(mAnimationTime > 0); });
 
-    connect(QApplication::desktop(), &QDesktopWidget::resized, this, &LXQtPanel::ensureVisible);
-    connect(QApplication::desktop(), &QDesktopWidget::screenCountChanged, this, &LXQtPanel::ensureVisible);
-
-    // connecting to QDesktopWidget::workAreaResized shouldn't be necessary,
-    // as we've already connceted to QDesktopWidget::resized, but it actually
-    // is. Read mode on https://github.com/lxqt/lxqt-panel/pull/310
-    connect(QApplication::desktop(), &QDesktopWidget::workAreaResized,
-            this, &LXQtPanel::ensureVisible);
+    // screen updates
+    connect(qApp, &QApplication::screenAdded, this, [this] (QScreen* newScreen) {
+        connect(newScreen, &QScreen::virtualGeometryChanged, this, &LXQtPanel::ensureVisible);
+        connect(newScreen, &QScreen::geometryChanged, this, &LXQtPanel::ensureVisible);
+        ensureVisible();
+    });
+    connect(qApp, &QApplication::screenRemoved, this, [this] (QScreen* oldScreen) {
+        disconnect(oldScreen, &QScreen::virtualGeometryChanged, this, &LXQtPanel::ensureVisible);
+        disconnect(oldScreen, &QScreen::geometryChanged, this, &LXQtPanel::ensureVisible);
+        // wait until the screen is really removed because it may contain the panel
+        QTimer::singleShot(0, this, &LXQtPanel::ensureVisible);
+    });
+    const auto screens = QApplication::screens();
+    for(const auto& screen : screens)
+    {
+        connect(screen, &QScreen::virtualGeometryChanged, this, &LXQtPanel::ensureVisible);
+        connect(screen, &QScreen::geometryChanged, this, &LXQtPanel::ensureVisible);
+    }
 
     connect(LXQt::Settings::globalSettings(), SIGNAL(settingsChanged()), this, SLOT(update()));
     connect(lxqtApp, SIGNAL(themeChanged()), this, SLOT(realign()));
@@ -219,6 +228,9 @@ LXQtPanel::LXQtPanel(const QString &configGroup, LXQt::Settings *settings, QWidg
     ensureVisible();
 
     loadPlugins();
+
+    // NOTE: Some (X11) WMs may need the geometry to be set before QWidget::show().
+    setPanelGeometry();
 
     show();
 
@@ -240,45 +252,45 @@ void LXQtPanel::readSettings()
 
     // Let Hidability be the first thing we read
     // so that every call to realign() is without side-effect
-    mHidable = mSettings->value(CFG_KEY_HIDABLE, mHidable).toBool();
+    mHidable = mSettings->value(QStringLiteral(CFG_KEY_HIDABLE), mHidable).toBool();
     mHidden = mHidable;
 
-    mVisibleMargin = mSettings->value(CFG_KEY_VISIBLE_MARGIN, mVisibleMargin).toBool();
+    mVisibleMargin = mSettings->value(QStringLiteral(CFG_KEY_VISIBLE_MARGIN), mVisibleMargin).toBool();
 
-    mAnimationTime = mSettings->value(CFG_KEY_ANIMATION, mAnimationTime).toInt();
-    mShowDelayTimer.setInterval(mSettings->value(CFG_KEY_SHOW_DELAY, mShowDelayTimer.interval()).toInt());
+    mAnimationTime = mSettings->value(QStringLiteral(CFG_KEY_ANIMATION), mAnimationTime).toInt();
+    mShowDelayTimer.setInterval(mSettings->value(QStringLiteral(CFG_KEY_SHOW_DELAY), mShowDelayTimer.interval()).toInt());
 
     // By default we are using size & count from theme.
-    setPanelSize(mSettings->value(CFG_KEY_PANELSIZE, PANEL_DEFAULT_SIZE).toInt(), false);
-    setIconSize(mSettings->value(CFG_KEY_ICONSIZE, PANEL_DEFAULT_ICON_SIZE).toInt(), false);
-    setLineCount(mSettings->value(CFG_KEY_LINECNT, PANEL_DEFAULT_LINE_COUNT).toInt(), false);
+    setPanelSize(mSettings->value(QStringLiteral(CFG_KEY_PANELSIZE), PANEL_DEFAULT_SIZE).toInt(), false);
+    setIconSize(mSettings->value(QStringLiteral(CFG_KEY_ICONSIZE), PANEL_DEFAULT_ICON_SIZE).toInt(), false);
+    setLineCount(mSettings->value(QStringLiteral(CFG_KEY_LINECNT), PANEL_DEFAULT_LINE_COUNT).toInt(), false);
 
-    setLength(mSettings->value(CFG_KEY_LENGTH, 100).toInt(),
-              mSettings->value(CFG_KEY_PERCENT, true).toBool(),
+    setLength(mSettings->value(QStringLiteral(CFG_KEY_LENGTH), 100).toInt(),
+              mSettings->value(QStringLiteral(CFG_KEY_PERCENT), true).toBool(),
               false);
 
-    mScreenNum = mSettings->value(CFG_KEY_SCREENNUM, QApplication::desktop()->primaryScreen()).toInt();
+    mScreenNum = mSettings->value(QStringLiteral(CFG_KEY_SCREENNUM), 0).toInt();
     setPosition(mScreenNum,
-                strToPosition(mSettings->value(CFG_KEY_POSITION).toString(), PositionBottom),
+                strToPosition(mSettings->value(QStringLiteral(CFG_KEY_POSITION)).toString(), PositionBottom),
                 false);
 
-    setAlignment(Alignment(mSettings->value(CFG_KEY_ALIGNMENT, mAlignment).toInt()), false);
+    setAlignment(Alignment(mSettings->value(QStringLiteral(CFG_KEY_ALIGNMENT), mAlignment).toInt()), false);
 
-    QColor color = mSettings->value(CFG_KEY_FONTCOLOR, "").value<QColor>();
+    QColor color = mSettings->value(QStringLiteral(CFG_KEY_FONTCOLOR), QString()).value<QColor>();
     if (color.isValid())
         setFontColor(color, true);
 
-    setOpacity(mSettings->value(CFG_KEY_OPACITY, 100).toInt(), true);
-    mReserveSpace = mSettings->value(CFG_KEY_RESERVESPACE, true).toBool();
-    color = mSettings->value(CFG_KEY_BACKGROUNDCOLOR, "").value<QColor>();
+    setOpacity(mSettings->value(QStringLiteral(CFG_KEY_OPACITY), 100).toInt(), true);
+    mReserveSpace = mSettings->value(QStringLiteral(CFG_KEY_RESERVESPACE), true).toBool();
+    color = mSettings->value(QStringLiteral(CFG_KEY_BACKGROUNDCOLOR), QString()).value<QColor>();
     if (color.isValid())
         setBackgroundColor(color, true);
 
-    QString image = mSettings->value(CFG_KEY_BACKGROUNDIMAGE, "").toString();
+    QString image = mSettings->value(QStringLiteral(CFG_KEY_BACKGROUNDIMAGE), QString()).toString();
     if (!image.isEmpty())
         setBackgroundImage(image, false);
 
-    mLockPanel = mSettings->value(CFG_KEY_LOCKPANEL, false).toBool();
+    mLockPanel = mSettings->value(QStringLiteral(CFG_KEY_LOCKPANEL), false).toBool();
 
     mSettings->endGroup();
 }
@@ -301,30 +313,30 @@ void LXQtPanel::saveSettings(bool later)
     //Note: save/load of plugin names is completely handled by mPlugins object
     //mSettings->setValue(CFG_KEY_PLUGINS, mPlugins->pluginNames());
 
-    mSettings->setValue(CFG_KEY_PANELSIZE, mPanelSize);
-    mSettings->setValue(CFG_KEY_ICONSIZE, mIconSize);
-    mSettings->setValue(CFG_KEY_LINECNT, mLineCount);
+    mSettings->setValue(QStringLiteral(CFG_KEY_PANELSIZE), mPanelSize);
+    mSettings->setValue(QStringLiteral(CFG_KEY_ICONSIZE), mIconSize);
+    mSettings->setValue(QStringLiteral(CFG_KEY_LINECNT), mLineCount);
 
-    mSettings->setValue(CFG_KEY_LENGTH, mLength);
-    mSettings->setValue(CFG_KEY_PERCENT, mLengthInPercents);
+    mSettings->setValue(QStringLiteral(CFG_KEY_LENGTH), mLength);
+    mSettings->setValue(QStringLiteral(CFG_KEY_PERCENT), mLengthInPercents);
 
-    mSettings->setValue(CFG_KEY_SCREENNUM, mScreenNum);
-    mSettings->setValue(CFG_KEY_POSITION, positionToStr(mPosition));
+    mSettings->setValue(QStringLiteral(CFG_KEY_SCREENNUM), mScreenNum);
+    mSettings->setValue(QStringLiteral(CFG_KEY_POSITION), positionToStr(mPosition));
 
-    mSettings->setValue(CFG_KEY_ALIGNMENT, mAlignment);
+    mSettings->setValue(QStringLiteral(CFG_KEY_ALIGNMENT), mAlignment);
 
-    mSettings->setValue(CFG_KEY_FONTCOLOR, mFontColor.isValid() ? mFontColor : QColor());
-    mSettings->setValue(CFG_KEY_BACKGROUNDCOLOR, mBackgroundColor.isValid() ? mBackgroundColor : QColor());
-    mSettings->setValue(CFG_KEY_BACKGROUNDIMAGE, QFileInfo(mBackgroundImage).exists() ? mBackgroundImage : QString());
-    mSettings->setValue(CFG_KEY_OPACITY, mOpacity);
-    mSettings->setValue(CFG_KEY_RESERVESPACE, mReserveSpace);
+    mSettings->setValue(QStringLiteral(CFG_KEY_FONTCOLOR), mFontColor.isValid() ? mFontColor : QColor());
+    mSettings->setValue(QStringLiteral(CFG_KEY_BACKGROUNDCOLOR), mBackgroundColor.isValid() ? mBackgroundColor : QColor());
+    mSettings->setValue(QStringLiteral(CFG_KEY_BACKGROUNDIMAGE), QFileInfo(mBackgroundImage).exists() ? mBackgroundImage : QString());
+    mSettings->setValue(QStringLiteral(CFG_KEY_OPACITY), mOpacity);
+    mSettings->setValue(QStringLiteral(CFG_KEY_RESERVESPACE), mReserveSpace);
 
-    mSettings->setValue(CFG_KEY_HIDABLE, mHidable);
-    mSettings->setValue(CFG_KEY_VISIBLE_MARGIN, mVisibleMargin);
-    mSettings->setValue(CFG_KEY_ANIMATION, mAnimationTime);
-    mSettings->setValue(CFG_KEY_SHOW_DELAY, mShowDelayTimer.interval());
+    mSettings->setValue(QStringLiteral(CFG_KEY_HIDABLE), mHidable);
+    mSettings->setValue(QStringLiteral(CFG_KEY_VISIBLE_MARGIN), mVisibleMargin);
+    mSettings->setValue(QStringLiteral(CFG_KEY_ANIMATION), mAnimationTime);
+    mSettings->setValue(QStringLiteral(CFG_KEY_SHOW_DELAY), mShowDelayTimer.interval());
 
-    mSettings->setValue(CFG_KEY_LOCKPANEL, mLockPanel);
+    mSettings->setValue(QStringLiteral(CFG_KEY_LOCKPANEL), mLockPanel);
 
     mSettings->endGroup();
 }
@@ -373,9 +385,9 @@ void LXQtPanel::show()
 QStringList pluginDesktopDirs()
 {
     QStringList dirs;
-    dirs << QString(getenv("LXQT_PANEL_PLUGINS_DIR")).split(':', QString::SkipEmptyParts);
-    dirs << QString("%1/%2").arg(XdgDirs::dataHome(), "/lxqt/lxqt-panel");
-    dirs << PLUGIN_DESKTOPS_DIR;
+    dirs << QString::fromLocal8Bit(qgetenv("LXQT_PANEL_PLUGINS_DIR")).split(QLatin1Char(':'), QString::SkipEmptyParts);
+    dirs << QStringLiteral("%1/%2").arg(XdgDirs::dataHome(), QStringLiteral("/lxqt/lxqt-panel"));
+    dirs << QStringLiteral(PLUGIN_DESKTOPS_DIR);
     return dirs;
 }
 
@@ -386,7 +398,7 @@ QStringList pluginDesktopDirs()
 void LXQtPanel::loadPlugins()
 {
     QString names_key(mConfigGroup);
-    names_key += '/';
+    names_key += QLatin1Char('/');
     names_key += QLatin1String(CFG_KEY_PLUGINS);
     mPlugins.reset(new PanelPluginsModel(this, names_key, pluginDesktopDirs()));
 
@@ -414,7 +426,11 @@ int LXQtPanel::getReserveDimension()
 
 void LXQtPanel::setPanelGeometry(bool animate)
 {
-    const QRect currentScreen = QApplication::desktop()->screenGeometry(mActualScreenNum);
+    const auto screens = QApplication::screens();
+    if (mActualScreenNum >= screens.size())
+        return;
+    const QRect currentScreen = screens.at(mActualScreenNum)->geometry();
+
     QRect rect;
 
     if (isHorizontal())
@@ -600,9 +616,9 @@ void LXQtPanel::updateWmStrut()
     if(wid == 0 || !isVisible())
         return;
 
-    if (mReserveSpace)
+    if (mReserveSpace && QApplication::primaryScreen())
     {
-        const QRect wholeScreen = QApplication::desktop()->geometry();
+        const QRect wholeScreen = QApplication::primaryScreen()->virtualGeometry();
         const QRect rect = geometry();
         // NOTE: https://standards.freedesktop.org/wm-spec/wm-spec-latest.html
         // Quote from the EWMH spec: " Note that the strut is relative to the screen edge, and not the edge of the xinerama monitor."
@@ -661,39 +677,50 @@ void LXQtPanel::updateWmStrut()
 
 
 /************************************************
-  The panel can't be placed on boundary of two displays.
+  The panel can be placed only at the edges of the virtual screen.
   This function checks if the panel can be placed on the display
   @screenNum on @position.
  ************************************************/
 bool LXQtPanel::canPlacedOn(int screenNum, LXQtPanel::Position position)
 {
-    QDesktopWidget* dw = QApplication::desktop();
-
-    switch (position)
+    const auto screens = QApplication::screens();
+    if (screens.size() > screenNum)
     {
-    case LXQtPanel::PositionTop:
-        for (int i = 0; i < dw->screenCount(); ++i)
-            if (dw->screenGeometry(i).bottom() < dw->screenGeometry(screenNum).top())
-                return false;
-        return true;
+        const QRect screenGeometry = screens.at(screenNum)->geometry();
+        switch (position)
+        {
+        case LXQtPanel::PositionTop:
+            for (const auto& screen : screens)
+            {
+                if (screen->geometry().top() < screenGeometry.top())
+                    return false;
+            }
+            return true;
 
-    case LXQtPanel::PositionBottom:
-        for (int i = 0; i < dw->screenCount(); ++i)
-            if (dw->screenGeometry(i).top() > dw->screenGeometry(screenNum).bottom())
-                return false;
-        return true;
+        case LXQtPanel::PositionBottom:
+            for (const auto& screen : screens)
+            {
+                if (screen->geometry().bottom() > screenGeometry.bottom())
+                    return false;
+            }
+            return true;
 
-    case LXQtPanel::PositionLeft:
-        for (int i = 0; i < dw->screenCount(); ++i)
-            if (dw->screenGeometry(i).right() < dw->screenGeometry(screenNum).left())
-                return false;
-        return true;
+        case LXQtPanel::PositionLeft:
+            for (const auto& screen : screens)
+            {
+                if (screen->geometry().left() < screenGeometry.left())
+                    return false;
+            }
+            return true;
 
-    case LXQtPanel::PositionRight:
-        for (int i = 0; i < dw->screenCount(); ++i)
-            if (dw->screenGeometry(i).left() > dw->screenGeometry(screenNum).right())
-                return false;
-        return true;
+        case LXQtPanel::PositionRight:
+            for (const auto& screen : screens)
+            {
+                if (screen->geometry().right() > screenGeometry.right())
+                    return false;
+            }
+            return true;
+        }
     }
 
     return false;
@@ -707,7 +734,7 @@ int LXQtPanel::findAvailableScreen(LXQtPanel::Position position)
 {
     int current = mScreenNum;
 
-    for (int i = current; i < QApplication::desktop()->screenCount(); ++i)
+    for (int i = current; i < QApplication::screens().size(); ++i)
         if (canPlacedOn(i, position))
             return i;
 
@@ -764,29 +791,34 @@ void LXQtPanel::showAddPluginDialog()
  ************************************************/
 void LXQtPanel::updateStyleSheet()
 {
+    // NOTE: This is a workaround for Qt >= 5.13, which might not completely
+    // update the style sheet (especially positioned backgrounds of plugins
+    // with NeedsHandle="true") if it is not reset first.
+    setStyleSheet(QString());
+
     QStringList sheet;
-    sheet << QString("Plugin > QAbstractButton, LXQtTray { qproperty-iconSize: %1px %1px; }").arg(mIconSize);
-    sheet << QString("Plugin > * > QAbstractButton, TrayIcon { qproperty-iconSize: %1px %1px; }").arg(mIconSize);
+    sheet << QStringLiteral("Plugin > QAbstractButton, LXQtTray { qproperty-iconSize: %1px %1px; }").arg(mIconSize);
+    sheet << QStringLiteral("Plugin > * > QAbstractButton, TrayIcon { qproperty-iconSize: %1px %1px; }").arg(mIconSize);
 
     if (mFontColor.isValid())
-        sheet << QString("Plugin * { color: " + mFontColor.name() + "; }");
+        sheet << QString(QStringLiteral("Plugin * { color: ") + mFontColor.name() + QStringLiteral("; }"));
 
     QString object = LXQtPanelWidget->objectName();
 
     if (mBackgroundColor.isValid())
     {
-        QString color = QString("%1, %2, %3, %4")
+        QString color = QStringLiteral("%1, %2, %3, %4")
             .arg(mBackgroundColor.red())
             .arg(mBackgroundColor.green())
             .arg(mBackgroundColor.blue())
             .arg((float) mOpacity / 100);
-        sheet << QString("LXQtPanel #BackgroundWidget { background-color: rgba(" + color + "); }");
+        sheet << QString(QStringLiteral("LXQtPanel #BackgroundWidget { background-color: rgba(") + color + QStringLiteral("); }"));
     }
 
     if (QFileInfo(mBackgroundImage).exists())
-        sheet << QString("LXQtPanel #BackgroundWidget { background-image: url('" + mBackgroundImage + "');}");
+        sheet << QString(QStringLiteral("LXQtPanel #BackgroundWidget { background-image: url('") + mBackgroundImage + QStringLiteral("');}"));
 
-    setStyleSheet(sheet.join("\n"));
+    setStyleSheet(sheet.join(QStringLiteral("\n")));
 }
 
 
@@ -1081,7 +1113,7 @@ void LXQtPanel::showPopupMenu(Plugin *plugin)
     PopupMenu * menu = new PopupMenu(tr("Panel"), this);
     menu->setAttribute(Qt::WA_DeleteOnClose);
 
-    menu->setIcon(XdgIcon::fromTheme("configure-toolbars"));
+    menu->setIcon(XdgIcon::fromTheme(QStringLiteral("configure-toolbars")));
 
     // Plugin Menu ..............................
     if (plugin)
@@ -1111,7 +1143,7 @@ void LXQtPanel::showPopupMenu(Plugin *plugin)
                    this, SLOT(showConfigDialog())
                   )->setDisabled(mLockPanel);
 
-    menu->addAction(XdgIcon::fromTheme("preferences-plugin"),
+    menu->addAction(XdgIcon::fromTheme(QStringLiteral("preferences-plugin")),
                    tr("Manage Widgets"),
                    this, SLOT(showAddPluginDialog())
                   )->setDisabled(mLockPanel);
@@ -1186,22 +1218,25 @@ QRect LXQtPanel::calculatePopupWindowPos(QPoint const & absolutePos, QSize const
 
     QRect res(QPoint(x, y), windowSize);
 
-    QRect screen = QApplication::desktop()->screenGeometry(this);
+    QRect panelScreen;
+    const auto screens = QApplication::screens();
+    if (mActualScreenNum < screens.size())
+        panelScreen = screens.at(mActualScreenNum)->geometry();
     // NOTE: We cannot use AvailableGeometry() which returns the work area here because when in a
     // multihead setup with different resolutions. In this case, the size of the work area is limited
     // by the smallest monitor and may be much smaller than the current screen and we will place the
     // menu at the wrong place. This is very bad for UX. So let's use the full size of the screen.
-    if (res.right() > screen.right())
-        res.moveRight(screen.right());
+    if (res.right() > panelScreen.right())
+        res.moveRight(panelScreen.right());
 
-    if (res.bottom() > screen.bottom())
-        res.moveBottom(screen.bottom());
+    if (res.bottom() > panelScreen.bottom())
+        res.moveBottom(panelScreen.bottom());
 
-    if (res.left() < screen.left())
-        res.moveLeft(screen.left());
+    if (res.left() < panelScreen.left())
+        res.moveLeft(panelScreen.left());
 
-    if (res.top() < screen.top())
-        res.moveTop(screen.top());
+    if (res.top() < panelScreen.top())
+        res.moveTop(panelScreen.top());
 
     return res;
 }
@@ -1292,7 +1327,7 @@ void LXQtPanel::userRequestForDeletion()
     }
 
     mSettings->beginGroup(mConfigGroup);
-    const QStringList plugins = mSettings->value("plugins").toStringList();
+    const QStringList plugins = mSettings->value(QStringLiteral("plugins")).toStringList();
     mSettings->endGroup();
 
     for(const QString& i : plugins)
@@ -1327,7 +1362,7 @@ void LXQtPanel::hidePanel()
 
 void LXQtPanel::hidePanelWork()
 {
-    if (!geometry().contains(QCursor::pos()))
+    if (!testAttribute(Qt::WA_UnderMouse))
     {
         if (!mStandaloneWindows->isAnyWindowShown())
         {
@@ -1390,7 +1425,7 @@ void LXQtPanel::setShowDelay(int showDelay, bool save)
 
 QString LXQtPanel::iconTheme() const
 {
-    return mSettings->value("iconTheme").toString();
+    return mSettings->value(QStringLiteral("iconTheme")).toString();
 }
 
 void LXQtPanel::setIconTheme(const QString& iconTheme)

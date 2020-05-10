@@ -19,15 +19,16 @@
 class ResultItem : public QWidgetAction{
 Q_OBJECT
 public:
-    ResultItem(QString name, QString type, QString address, QFont mfont, bool searchPart, QObject *parent = nullptr)
+    ResultItem(QString name, QString type, QString address, QFont mfont, QObject *parent = nullptr)
             : QWidgetAction(parent) {
+        std::string _type = type.toStdString();
         auto title = new QLabel;
-        setObjectName("ActionView");
+        setObjectName(QString::fromStdString("ActionView"));
         title->setText(name);
         title->setFont(mfont);
-        std::replace( type.begin(), type.end(), '/', '-');
+        std::replace( _type.begin(), _type.end(), '/', '-');
         this->name = name;
-        this->type = type;
+        this->type = QString::fromStdString(_type);
         this->address = address;
         const int icon_size = QFontMetrics(mfont).height()*0.8;
         auto itemIcon = buildIconFromTheme(type,QSize(icon_size,icon_size));
@@ -44,7 +45,7 @@ public:
         resultWidget->setMouseTracking(true);
         resultWidget->setLayout(Tlayout);
         resultWidget->setSizePolicy(QSizePolicy::MinimumExpanding,QSizePolicy::Preferred);
-        resultWidget->setObjectName("PxMenuItem");
+        resultWidget->setObjectName(QString::fromStdString("PxMenuItem"));
         setDefaultWidget(resultWidget);
         setText(name);
         address = address.remove(0,7);
@@ -57,7 +58,7 @@ public:
     QLabel * buildIconFromTheme(QString icon, QSize size){
         QIcon qicon = QIcon::fromTheme(icon);
         if(qicon.name().isEmpty())
-            qicon = QIcon::fromTheme("unknown");
+            qicon = QIcon::fromTheme(QString::fromStdString("unknown"));
         QPixmap pixmap = qicon.pixmap(size, QIcon::Normal, QIcon::On);
         auto iconLabel = new QLabel;
         iconLabel->setAttribute(Qt::WA_TranslucentBackground);
@@ -67,9 +68,9 @@ public:
     }
 
     QString toString(){
-        return  "Name   : "+ name +" ,"+
-                "Type    : "+ type +" ,"+
-                "Address : "+address;
+        return  QString::fromStdString("Name   : ") + name + QString::fromStdString(" ,")+
+                QString::fromStdString("Type    : ") + type + QString::fromStdString(" ,")+
+                QString::fromStdString("Address : ") + address;
     }
 
 private:

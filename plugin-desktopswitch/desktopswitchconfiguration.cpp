@@ -34,7 +34,7 @@ DesktopSwitchConfiguration::DesktopSwitchConfiguration(PluginSettings *settings,
     ui(new Ui::DesktopSwitchConfiguration)
 {
     setAttribute(Qt::WA_DeleteOnClose);
-    setObjectName("DesktopSwitchConfigurationWindow");
+    setObjectName(QStringLiteral("DesktopSwitchConfigurationWindow"));
     ui->setupUi(this);
 
     connect(ui->buttons, SIGNAL(clicked(QAbstractButton*)), this, SLOT(dialogButtonsAction(QAbstractButton*)));
@@ -43,6 +43,7 @@ DesktopSwitchConfiguration::DesktopSwitchConfiguration(PluginSettings *settings,
 
     connect(ui->rowsSB, SIGNAL(valueChanged(int)), this, SLOT(rowsChanged(int)));
     connect(ui->labelTypeCB, SIGNAL(currentIndexChanged(int)), this, SLOT(labelTypeChanged(int)));
+    connect(ui->showOnlyActiveCB, &QAbstractButton::toggled, [this] (bool checked) { this->settings().setValue(QStringLiteral("showOnlyActive"), checked); });
 
     loadDesktopsNames();
 }
@@ -54,8 +55,9 @@ DesktopSwitchConfiguration::~DesktopSwitchConfiguration()
 
 void DesktopSwitchConfiguration::loadSettings()
 {
-    ui->rowsSB->setValue(settings().value("rows", 1).toInt());
-    ui->labelTypeCB->setCurrentIndex(settings().value("labelType", 0).toInt());
+    ui->rowsSB->setValue(settings().value(QStringLiteral("rows"), 1).toInt());
+    ui->labelTypeCB->setCurrentIndex(settings().value(QStringLiteral("labelType"), 0).toInt());
+    ui->showOnlyActiveCB->setChecked(settings().value(QStringLiteral("showOnlyActive"), false).toBool());
 }
 
 void DesktopSwitchConfiguration::loadDesktopsNames()
@@ -64,7 +66,7 @@ void DesktopSwitchConfiguration::loadDesktopsNames()
     for (int i = 1; i <= n; i++)
     {
         QLineEdit *edit = new QLineEdit(KWindowSystem::desktopName(i), this);
-        ((QFormLayout *) ui->namesGroupBox->layout())->addRow(QString("Desktop %1:").arg(i), edit);
+        ((QFormLayout *) ui->namesGroupBox->layout())->addRow(QStringLiteral("Desktop %1:").arg(i), edit);
 
         // C++11 rocks!
         QTimer *timer = new QTimer(this);
@@ -77,10 +79,10 @@ void DesktopSwitchConfiguration::loadDesktopsNames()
 
 void DesktopSwitchConfiguration::rowsChanged(int value)
 {
-    settings().setValue("rows", value);
+    settings().setValue(QStringLiteral("rows"), value);
 }
 
 void DesktopSwitchConfiguration::labelTypeChanged(int type)
 {
-    settings().setValue("labelType", type);
+    settings().setValue(QStringLiteral("labelType"), type);
 }

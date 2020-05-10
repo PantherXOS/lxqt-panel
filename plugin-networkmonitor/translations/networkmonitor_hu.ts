@@ -41,12 +41,12 @@
     <message>
         <location filename="../lxqtnetworkmonitor.cpp" line="209"/>
         <source>TiB</source>
-        <translation>Tib</translation>
+        <translation>TiB</translation>
     </message>
     <message>
         <location filename="../lxqtnetworkmonitor.cpp" line="209"/>
         <source>PiB</source>
-        <translation>Pib</translation>
+        <translation>PiB</translation>
     </message>
 </context>
 <context>
@@ -54,7 +54,7 @@
     <message>
         <location filename="../lxqtnetworkmonitorconfiguration.ui" line="14"/>
         <source>Network Monitor settings</source>
-        <translation>Hálózatfigyelő beállítás</translation>
+        <translation>Hálózatfigyelő beállítások</translation>
     </message>
     <message>
         <location filename="../lxqtnetworkmonitorconfiguration.ui" line="20"/>
@@ -84,7 +84,7 @@
     <message>
         <location filename="../lxqtnetworkmonitorconfiguration.ui" line="83"/>
         <source>Wireless</source>
-        <translation>Drótnélküli</translation>
+        <translation>Vezeték nélküli</translation>
     </message>
     <message>
         <location filename="../lxqtnetworkmonitorconfiguration.ui" line="95"/>

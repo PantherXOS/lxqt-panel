@@ -38,7 +38,7 @@ LXQtCpuLoadConfiguration::LXQtCpuLoadConfiguration(PluginSettings *settings, QWi
     ui(new Ui::LXQtCpuLoadConfiguration)
 {
     setAttribute(Qt::WA_DeleteOnClose);
-    setObjectName("CpuLoadConfigurationWindow");
+    setObjectName(QStringLiteral("CpuLoadConfigurationWindow"));
     ui->setupUi(this);
 
     fillBarOrientations();
@@ -65,20 +65,20 @@ LXQtCpuLoadConfiguration::~LXQtCpuLoadConfiguration()
 
 void LXQtCpuLoadConfiguration::fillBarOrientations()
 {
-    ui->barOrientationCOB->addItem(trUtf8("Bottom up"), BAR_ORIENT_BOTTOMUP);
-    ui->barOrientationCOB->addItem(trUtf8("Top down"), BAR_ORIENT_TOPDOWN);
-    ui->barOrientationCOB->addItem(trUtf8("Left to right"), BAR_ORIENT_LEFTRIGHT);
-    ui->barOrientationCOB->addItem(trUtf8("Right to left"), BAR_ORIENT_RIGHTLEFT);
+    ui->barOrientationCOB->addItem(tr("Bottom up"), QStringLiteral(BAR_ORIENT_BOTTOMUP));
+    ui->barOrientationCOB->addItem(tr("Top down"), QStringLiteral(BAR_ORIENT_TOPDOWN));
+    ui->barOrientationCOB->addItem(tr("Left to right"), QStringLiteral(BAR_ORIENT_LEFTRIGHT));
+    ui->barOrientationCOB->addItem(tr("Right to left"), QStringLiteral(BAR_ORIENT_RIGHTLEFT));
 }
 
 void LXQtCpuLoadConfiguration::loadSettings()
 {
-    ui->showTextCB->setChecked(settings().value("showText", false).toBool());
-    ui->barWidthSB->setValue(settings().value("barWidth", 20).toInt());
-    ui->updateIntervalSpinBox->setValue(settings().value("updateInterval", 1000).toInt() / 1000.0);
+    ui->showTextCB->setChecked(settings().value(QStringLiteral("showText"), false).toBool());
+    ui->barWidthSB->setValue(settings().value(QStringLiteral("barWidth"), 20).toInt());
+    ui->updateIntervalSpinBox->setValue(settings().value(QStringLiteral("updateInterval"), 1000).toInt() / 1000.0);
 
     int boIndex = ui->barOrientationCOB->findData(
-            settings().value("barOrientation", BAR_ORIENT_BOTTOMUP));
+            settings().value(QStringLiteral("barOrientation"), QStringLiteral(BAR_ORIENT_BOTTOMUP)));
     boIndex = (boIndex < 0) ? 1 : boIndex;
     ui->barOrientationCOB->setCurrentIndex(boIndex);
 
@@ -93,20 +93,20 @@ void LXQtCpuLoadConfiguration::loadSettings()
 
 void LXQtCpuLoadConfiguration::showTextChanged(bool value)
 {
-    settings().setValue("showText", value);
+    settings().setValue(QStringLiteral("showText"), value);
 }
 
 void LXQtCpuLoadConfiguration::barWidthChanged(int value)
 {
-    settings().setValue("barWidth", value);
+    settings().setValue(QStringLiteral("barWidth"), value);
 }
 
 void LXQtCpuLoadConfiguration::updateIntervalChanged(double value)
 {
-    settings().setValue("updateInterval", value*1000);
+    settings().setValue(QStringLiteral("updateInterval"), value*1000);
 }
 
 void LXQtCpuLoadConfiguration::barOrientationChanged(int index)
 {
-    settings().setValue("barOrientation", ui->barOrientationCOB->itemData(index).toString());
+    settings().setValue(QStringLiteral("barOrientation"), ui->barOrientationCOB->itemData(index).toString());
 }
