@@ -268,7 +268,7 @@ void LXQtMainMenu::settingsChanged()
         if (mFilterClear && !mMenu->isVisible())
             mSearchEdit->clear();
     }
-    mSearchView->setMaxItemsToShow(settings()->value(QString::fromStdString("filterShowMaxItems"), 10).toInt());
+    mSearchView->setMaxItemsToShow(settings()->value(QString::fromStdString("filterShowMaxItems"), 4).toInt());
     mSearchView->setMaxItemWidth(settings()->value(QString::fromStdString("filterShowMaxWidth"), 300).toInt());
 
     realign();
