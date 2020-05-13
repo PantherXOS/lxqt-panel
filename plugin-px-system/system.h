@@ -39,6 +39,7 @@
 #include <lxqt/LXQt/Notification>
 #include "rapidjson/document.h"
 #include "NetworkInformation.h"
+#include "CheckUpdate.h"
 
 
 using namespace std;
@@ -62,6 +63,7 @@ public slots:
 
 private slots:
     void refresh();
+    void updateHandler(QString packages);
 
 private:
     QLabel *buildIconFromFile(QString file, QSize size);
@@ -82,6 +84,7 @@ private:
     bool mHidden;
     string vpnName;
     vector <NetworkInformation> internetInfo;
+    QLabel *updateTextLabel;
 };
 
 

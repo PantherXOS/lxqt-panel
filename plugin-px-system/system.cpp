@@ -275,16 +275,19 @@ QWidgetAction* System::generalItems(QString name,QString information,bool stat,Q
 }
 
 QWidgetAction *System::getUpdateStat() {
+    CheckUpdate *checkUpdate = new CheckUpdate();
+    connect(checkUpdate,SIGNAL(checkUpdateReady(QString )),this,SLOT(updateHandler(QString )));
+    checkUpdate->run();
     auto updatelIcon = buildIconFromTheme(QString::fromStdString("panther"),QSize(20,20));
     updatelIcon->setContentsMargins(0,0,0,0);
-    auto title = new QLabel;
-    title->setText(QString::fromStdString("Your panther is secure and up to date."));
-    title->setMargin(0);
-    title->setFont(QFont(QString::fromStdString("Helvetica"),8));
-    title->setContentsMargins(8,0,0,0);
+    updateTextLabel = new QLabel;
+    updateTextLabel->setText(QString::fromStdString("Checking for updates . . ."));
+    updateTextLabel->setMargin(0);
+    updateTextLabel->setFont(QFont(QString::fromStdString("Helvetica"), 8));
+    updateTextLabel->setContentsMargins(8, 0, 0, 0);
 
     auto llayout = new QHBoxLayout;
-    llayout->addWidget(title);
+    llayout->addWidget(updateTextLabel);
     llayout->setAlignment(Qt::AlignLeft);
     llayout->setMargin(0);
     llayout->setSpacing(0);
@@ -297,22 +300,18 @@ QWidgetAction *System::getUpdateStat() {
     rlayout->setSpacing(0);
     rlayout->setContentsMargins(0,0,0,0);
 
-    auto qlayout = new QHBoxLayout;
-    qlayout->addLayout(llayout);
-    qlayout->addLayout(rlayout);
-    //qlayout->setMargin(0);
-    qlayout->setSpacing(0);
-    //qlayout->setContentsMargins(0,0,3,0);
+    auto updateLayout = new QHBoxLayout;
+    updateLayout->addLayout(llayout);
+    updateLayout->addLayout(rlayout);
+    updateLayout->setSpacing(0);
 
-    auto  widget = new QWidget;
-    widget->setObjectName(QString::fromStdString("PxSystemItem"));
-    widget->setLayout(qlayout);
-    auto qWidgetAction = new QWidgetAction(this);
-    qWidgetAction->setDefaultWidget(widget);
-    return qWidgetAction;
+    QWidget *widgetAction = new QWidget;
+    widgetAction->setObjectName(QString::fromStdString("PxSystemItem"));
+    widgetAction->setLayout(updateLayout);
+    auto updateWidgetAction = new QWidgetAction(this);
+    updateWidgetAction->setDefaultWidget(widgetAction);
+    return updateWidgetAction;
 }
-
-
 
 string System::exec(const char* cmd) {
     std::array<char, 128> buffer;
@@ -367,5 +366,27 @@ bool System::networkDataParser(string data) {
         }
     }
     return true;
+}
+
+void System::updateHandler(QString packages) {
+    string out = packages.toStdString().c_str();
+    if(!packages.isEmpty()){
+        std::string delimiter = ",";
+        std::string token;
+        size_t pos = 0;
+        int count;
+        while((pos = out.find(delimiter)) != std::string::npos) {
+                token = out.substr(0, pos);
+                out.erase(0, pos + delimiter.length());
+                count++;
+            }
+        string message = "some packages need to be updated.";
+        string tooltip = packages.toStdString().substr(0, packages.toStdString().size()-1);
+        tooltip += " need to be updated.";
+        updateTextLabel->setToolTip(QString::fromStdString(tooltip));
+        updateTextLabel->setText(QString::fromStdString(message));
+    }else{
+        updateTextLabel->setText(QString::fromStdString("Your panther is secure and up to date."));
+    }
 
 }
