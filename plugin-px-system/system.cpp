@@ -374,13 +374,17 @@ void System::updateHandler(QString packages) {
         std::string delimiter = ",";
         std::string token;
         size_t pos = 0;
-        int count;
+        int count = 0;
         while((pos = out.find(delimiter)) != std::string::npos) {
                 token = out.substr(0, pos);
                 out.erase(0, pos + delimiter.length());
                 count++;
             }
-        string message = "some packages need to be updated.";
+        string message;
+        if (count == 1)
+            message = to_string(count) +" package needs to be updated.";
+        else
+            message = to_string(count) +" packages need to be updated.";
         string tooltip = packages.toStdString().substr(0, packages.toStdString().size()-1);
         tooltip += " need to be updated.";
         updateTextLabel->setToolTip(QString::fromStdString(tooltip));
