@@ -6,10 +6,12 @@ set(HEADERS
         system.h
 		Settings.h
 		NetworkInformation.h
+		CheckUpdate.h
 		)
 
 set(SOURCES
 		system.cpp
+		CheckUpdate.cpp
 		)
 
 set(RESOURCES
