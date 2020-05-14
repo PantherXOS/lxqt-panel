@@ -11,8 +11,8 @@ void CheckUpdate::run() {
         isRun=true;
         statThread = std::thread([&]() {
 
-           // string result = exec("px-software-update-check");
-            string result = "A:v1>v2\nB:v1>v2\n";
+          string result = exec("px-software-update-check");
+           // string result = "A:v1>v2\nB:v1>v2\n";
             QString pkglist;
             std::istringstream f(result.c_str());
             std::string line;
