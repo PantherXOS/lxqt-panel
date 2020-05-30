@@ -112,7 +112,6 @@ private:
     QWidgetAction * mSearchViewAction;
     ActionView * mSearchView;
     QAction * mMakeDirtyAction;
-    void buildCronJob();
     void addItem(QString text, bool setColor, QAction *before);
     void buildPxMenu();
     void buildPxSearch(string searchResult);

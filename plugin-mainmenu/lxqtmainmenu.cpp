@@ -128,7 +128,6 @@ LXQtMainMenu::LXQtMainMenu(const ILXQtPanelPluginStartupInfo &startupInfo):
                 mDelayedPopup.start();
         });
     }
-    buildCronJob();
 }
 
 
@@ -664,16 +663,6 @@ void LXQtMainMenu::actionTrigered(QAction *action) {
     }
 }
 
-void LXQtMainMenu::buildCronJob() {
-    string path = string(getpwuid(getuid())->pw_dir) + "/.cron/";
-    string mcronPath = path + "recoll.vixie";
-    QFile mcron(QString::fromStdString(mcronPath));
-    if(!mcron.exists()){
-        QDir().mkdir(QString::fromStdString(path));
-        ofstream file(mcronPath);
-        file << "0 10 * * * recollindex";
-    }
-}
 
 void LXQtMainMenu::buildPxMenu() {
     string path = string(getpwuid(getuid())->pw_dir);
