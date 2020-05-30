@@ -4,9 +4,14 @@
 <context>
     <name>DirectoryMenu</name>
     <message>
-        <location filename="../directorymenu.cpp" line="120"/>
+        <location filename="../directorymenu.cpp" line="125"/>
         <source>Open</source>
         <translation>Åpne</translation>
+    </message>
+    <message>
+        <location filename="../directorymenu.cpp" line="129"/>
+        <source>Open in terminal</source>
+        <translation>Åpne i terminal</translation>
     </message>
 </context>
 <context>
@@ -24,12 +29,12 @@
     <message>
         <location filename="../directorymenuconfiguration.ui" line="26"/>
         <source>Base directory:</source>
-        <translation>Mappe å vise:</translation>
+        <translation>Basismappe:</translation>
     </message>
     <message>
         <location filename="../directorymenuconfiguration.ui" line="39"/>
         <source>BaseDirectoryName</source>
-        <translation>Navn på mappe å vise</translation>
+        <translation>Basismappenavn</translation>
     </message>
     <message>
         <location filename="../directorymenuconfiguration.ui" line="46"/>
@@ -37,27 +42,38 @@
         <translation>Symbol:</translation>
     </message>
     <message>
-        <location filename="../directorymenuconfiguration.cpp" line="91"/>
-        <source>Choose Base Directory</source>
-        <translation>Velg mappe å vise</translation>
+        <location filename="../directorymenuconfiguration.ui" line="66"/>
+        <source>Terminal</source>
+        <translation>Terminal</translation>
     </message>
     <message>
-        <location filename="../directorymenuconfiguration.cpp" line="107"/>
+        <location filename="../directorymenuconfiguration.ui" line="73"/>
+        <location filename="../directorymenuconfiguration.cpp" line="112"/>
+        <source>Choose Default Terminal</source>
+        <translation>Velg standard terminal</translation>
+    </message>
+    <message>
+        <location filename="../directorymenuconfiguration.cpp" line="96"/>
+        <source>Choose Base Directory</source>
+        <translation>Velg basismappe</translation>
+    </message>
+    <message>
+        <location filename="../directorymenuconfiguration.cpp" line="126"/>
         <source>Choose Icon</source>
         <translation>Velg symbol</translation>
     </message>
     <message>
-        <location filename="../directorymenuconfiguration.cpp" line="107"/>
+        <location filename="../directorymenuconfiguration.cpp" line="126"/>
         <source>Icons (*.png *.xpm *.jpg)</source>
         <translation>Symboler (*.png *.xpm *.jpg)</translation>
     </message>
     <message>
-        <location filename="../directorymenuconfiguration.cpp" line="116"/>
+        <location filename="../directorymenuconfiguration.cpp" line="135"/>
         <source>Directory Menu</source>
         <translation>Mappemeny</translation>
     </message>
     <message>
-        <location filename="../directorymenuconfiguration.cpp" line="116"/>
+        <location filename="../directorymenuconfiguration.cpp" line="135"/>
         <source>An error occurred while loading the icon.</source>
         <translation>En feil oppstod da symbolet ble lastet inn.</translation>
     </message>

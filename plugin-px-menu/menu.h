@@ -47,7 +47,7 @@ public:
     explicit Menu(const ILXQtPanelPluginStartupInfo &startupInfo);
 
     virtual QWidget *widget() { return &mButton; }
-    virtual QString themeId() const { return "px-menu"; }
+    virtual QString themeId() const { return QString::fromStdString("px-menu"); }
     virtual ILXQtPanelPlugin::Flags flags() const { return HaveConfigDialog; }
     bool isSeparate() const { return true; }
     QMenu *mainMenu = new QMenu;

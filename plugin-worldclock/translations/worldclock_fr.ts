@@ -4,7 +4,7 @@
 <context>
     <name>LXQtWorldClock</name>
     <message>
-        <location filename="../lxqtworldclock.cpp" line="241"/>
+        <location filename="../lxqtworldclock.cpp" line="244"/>
         <source>&apos;&lt;b&gt;&apos;HH:mm:ss&apos;&lt;/b&gt;&lt;br/&gt;&lt;font size=&quot;-2&quot;&gt;&apos;ddd, d MMM yyyy&apos;&lt;br/&gt;&apos;TT&apos;&lt;/font&gt;&apos;</source>
         <translation>&apos;&lt;b&gt;&apos;HH:mm:ss&apos;&lt;/b&gt; &lt;br/&gt;&lt;font size=&quot;-2&quot;&gt;&apos;ddd, d MMM yyyy&apos;&lt;br/&gt;&apos;TT&apos;&lt;/font&gt;&apos;</translation>
     </message>
@@ -36,14 +36,14 @@
         <location filename="../lxqtworldclockconfiguration.ui" line="176"/>
         <location filename="../lxqtworldclockconfiguration.ui" line="272"/>
         <source>Short</source>
-        <translation>Court</translation>
+        <translation>12h</translation>
     </message>
     <message>
         <location filename="../lxqtworldclockconfiguration.ui" line="55"/>
         <location filename="../lxqtworldclockconfiguration.ui" line="181"/>
         <location filename="../lxqtworldclockconfiguration.ui" line="277"/>
         <source>Long</source>
-        <translation>Long</translation>
+        <translation>24h</translation>
     </message>
     <message>
         <location filename="../lxqtworldclockconfiguration.ui" line="60"/>
@@ -123,7 +123,7 @@
     <message>
         <location filename="../lxqtworldclockconfiguration.ui" line="201"/>
         <location filename="../lxqtworldclockconfiguration.ui" line="436"/>
-        <location filename="../lxqtworldclockconfiguration.cpp" line="579"/>
+        <location filename="../lxqtworldclockconfiguration.cpp" line="584"/>
         <source>Custom name</source>
         <translation>Nom personnalisé</translation>
     </message>
@@ -228,12 +228,17 @@
         <translation>Auto&amp;rotation lorsque le panneau est vertical</translation>
     </message>
     <message>
-        <location filename="../lxqtworldclockconfiguration.cpp" line="103"/>
+        <location filename="../lxqtworldclockconfiguration.ui" line="535"/>
+        <source>Show &amp;week number</source>
+        <translation>Afficher &amp;jour de la semaine</translation>
+    </message>
+    <message>
+        <location filename="../lxqtworldclockconfiguration.cpp" line="106"/>
         <source>&apos;&lt;b&gt;&apos;HH:mm:ss&apos;&lt;/b&gt;&lt;br/&gt;&lt;font size=&quot;-2&quot;&gt;&apos;ddd, d MMM yyyy&apos;&lt;br/&gt;&apos;TT&apos;&lt;/font&gt;&apos;</source>
         <translation>&apos;&lt;b&gt;&apos;HH:mm:ss&apos;&lt;/b&gt; &lt;br/&gt;&lt;font size=&quot;-2&quot;&gt;&apos;ddd, d MMM yyyy&apos;&lt;br/&gt;&apos;TT&apos;&lt;/font&gt;&apos;</translation>
     </message>
     <message>
-        <location filename="../lxqtworldclockconfiguration.cpp" line="578"/>
+        <location filename="../lxqtworldclockconfiguration.cpp" line="583"/>
         <source>Input custom time zone name</source>
         <translation>Entrez le nom du fuseau horaire personnalisé</translation>
     </message>

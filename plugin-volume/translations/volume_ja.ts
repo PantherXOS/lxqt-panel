@@ -4,34 +4,34 @@
 <context>
     <name>LXQtVolume</name>
     <message>
-        <location filename="../lxqtvolume.cpp" line="63"/>
+        <location filename="../lxqtvolume.cpp" line="64"/>
         <source>Increase sound volume</source>
         <translation>音量を上げる</translation>
     </message>
     <message>
-        <location filename="../lxqtvolume.cpp" line="69"/>
+        <location filename="../lxqtvolume.cpp" line="70"/>
         <source>Decrease sound volume</source>
         <translation>音量を下げる</translation>
     </message>
     <message>
-        <location filename="../lxqtvolume.cpp" line="75"/>
+        <location filename="../lxqtvolume.cpp" line="76"/>
         <source>Mute/unmute sound volume</source>
         <translation>ミュート/解除</translation>
     </message>
     <message>
-        <location filename="../lxqtvolume.cpp" line="136"/>
+        <location filename="../lxqtvolume.cpp" line="137"/>
         <source>Volume Control: The following shortcuts can not be registered: %1</source>
-        <translation>音量制御: このショートカットは登録することができません: %1</translation>
+        <translation>音量調節: このショートカットは登録することができません: %1</translation>
     </message>
     <message>
-        <location filename="../lxqtvolume.cpp" line="286"/>
+        <location filename="../lxqtvolume.cpp" line="291"/>
         <source>Volume: %1%%2</source>
-        <translation type="unfinished">音量: %1% {1%%2?}</translation>
+        <translation>音量: %1%%2</translation>
     </message>
     <message>
-        <location filename="../lxqtvolume.cpp" line="286"/>
+        <location filename="../lxqtvolume.cpp" line="291"/>
         <source>(muted)</source>
-        <translation type="unfinished"></translation>
+        <translation>(消音)</translation>
     </message>
 </context>
 <context>
@@ -39,7 +39,7 @@
     <message>
         <location filename="../lxqtvolumeconfiguration.ui" line="14"/>
         <source>Volume Control Settings</source>
-        <translation>音量制御の設定</translation>
+        <translation>音量調節の設定</translation>
     </message>
     <message>
         <location filename="../lxqtvolumeconfiguration.ui" line="20"/>
@@ -49,7 +49,7 @@
     <message>
         <location filename="../lxqtvolumeconfiguration.ui" line="28"/>
         <source>ALSA</source>
-        <translation type="unfinished"></translation>
+        <translation>ALSA</translation>
     </message>
     <message>
         <location filename="../lxqtvolumeconfiguration.ui" line="35"/>
@@ -64,7 +64,7 @@
     <message>
         <location filename="../lxqtvolumeconfiguration.ui" line="57"/>
         <source>Behavior</source>
-        <translation>挙動</translation>
+        <translation>動作</translation>
     </message>
     <message>
         <location filename="../lxqtvolumeconfiguration.ui" line="63"/>
@@ -74,12 +74,12 @@
     <message>
         <location filename="../lxqtvolumeconfiguration.ui" line="70"/>
         <source>Show on mouse click</source>
-        <translation>マウスのクリックで表示</translation>
+        <translation>マウスのクリックで表示する</translation>
     </message>
     <message>
         <location filename="../lxqtvolumeconfiguration.ui" line="77"/>
         <source>Allow volume beyond 100% (0dB)</source>
-        <translation>100% (0dB)を超える音量を許可</translation>
+        <translation>100% (0dB) を超える音量を許可する</translation>
     </message>
     <message>
         <location filename="../lxqtvolumeconfiguration.ui" line="84"/>
@@ -87,12 +87,17 @@
         <translation>音量の変更時には常に通知する</translation>
     </message>
     <message>
-        <location filename="../lxqtvolumeconfiguration.ui" line="99"/>
+        <location filename="../lxqtvolumeconfiguration.ui" line="91"/>
+        <source>Notify about volume changes with keyboard</source>
+        <translation>キーボードでの音量変更を通知する</translation>
+    </message>
+    <message>
+        <location filename="../lxqtvolumeconfiguration.ui" line="106"/>
         <source>Volume adjust step</source>
         <translation>音量変更のステップ幅</translation>
     </message>
     <message>
-        <location filename="../lxqtvolumeconfiguration.ui" line="118"/>
+        <location filename="../lxqtvolumeconfiguration.ui" line="125"/>
         <source>External Mixer</source>
         <translation>外部ミキサー</translation>
     </message>
@@ -107,7 +112,7 @@
     <message>
         <location filename="../volumepopup.cpp" line="55"/>
         <source>Mi&amp;xer</source>
-        <translation>ミキサー(&amp;x)</translation>
+        <translation>ミキサー(&amp;X)</translation>
     </message>
 </context>
 </TS>

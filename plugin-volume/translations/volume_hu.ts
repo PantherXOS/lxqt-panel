@@ -4,34 +4,34 @@
 <context>
     <name>LXQtVolume</name>
     <message>
-        <location filename="../lxqtvolume.cpp" line="63"/>
+        <location filename="../lxqtvolume.cpp" line="64"/>
         <source>Increase sound volume</source>
         <translation>Hangosítás</translation>
     </message>
     <message>
-        <location filename="../lxqtvolume.cpp" line="69"/>
+        <location filename="../lxqtvolume.cpp" line="70"/>
         <source>Decrease sound volume</source>
         <translation>Halkítás</translation>
     </message>
     <message>
-        <location filename="../lxqtvolume.cpp" line="75"/>
+        <location filename="../lxqtvolume.cpp" line="76"/>
         <source>Mute/unmute sound volume</source>
-        <translation>Némítás/megszólaltatás</translation>
+        <translation>Némítás/visszahangosítás</translation>
     </message>
     <message>
-        <location filename="../lxqtvolume.cpp" line="136"/>
+        <location filename="../lxqtvolume.cpp" line="137"/>
         <source>Volume Control: The following shortcuts can not be registered: %1</source>
-        <translation>Hangerőszabályozó: A %1 gyorsbillentyű regisztrálhatatlan</translation>
+        <translation>Hangerőszabályzó: A %1 gyorsbillentyű nincs beállítva</translation>
     </message>
     <message>
-        <location filename="../lxqtvolume.cpp" line="286"/>
+        <location filename="../lxqtvolume.cpp" line="291"/>
         <source>Volume: %1%%2</source>
-        <translation type="unfinished">Hangerő: %1% {1%%2?}</translation>
+        <translation>Hangerő: %1%%2</translation>
     </message>
     <message>
-        <location filename="../lxqtvolume.cpp" line="286"/>
+        <location filename="../lxqtvolume.cpp" line="291"/>
         <source>(muted)</source>
-        <translation type="unfinished"></translation>
+        <translation>(némítva)</translation>
     </message>
 </context>
 <context>
@@ -39,7 +39,7 @@
     <message>
         <location filename="../lxqtvolumeconfiguration.ui" line="14"/>
         <source>Volume Control Settings</source>
-        <translation>Hangszabályzó beállítás</translation>
+        <translation>Hangerőszabályzó beállítások</translation>
     </message>
     <message>
         <location filename="../lxqtvolumeconfiguration.ui" line="20"/>
@@ -49,7 +49,7 @@
     <message>
         <location filename="../lxqtvolumeconfiguration.ui" line="28"/>
         <source>ALSA</source>
-        <translation type="unfinished"></translation>
+        <translation>ALSA</translation>
     </message>
     <message>
         <location filename="../lxqtvolumeconfiguration.ui" line="35"/>
@@ -69,12 +69,12 @@
     <message>
         <location filename="../lxqtvolumeconfiguration.ui" line="63"/>
         <source>Mute on middle click</source>
-        <translation>Középkattintásra némul</translation>
+        <translation>Némítás középső kattintásra</translation>
     </message>
     <message>
         <location filename="../lxqtvolumeconfiguration.ui" line="70"/>
         <source>Show on mouse click</source>
-        <translation>Egérkattintásra látszik</translation>
+        <translation>Megnyitás csak kattintásra</translation>
     </message>
     <message>
         <location filename="../lxqtvolumeconfiguration.ui" line="77"/>
@@ -84,15 +84,20 @@
     <message>
         <location filename="../lxqtvolumeconfiguration.ui" line="84"/>
         <source>Always notify about volume changes</source>
-        <translation>A hangerőváltozásról mindig értesít</translation>
+        <translation>Hangerőváltoztatásnál mindig értesítsen</translation>
     </message>
     <message>
-        <location filename="../lxqtvolumeconfiguration.ui" line="99"/>
+        <location filename="../lxqtvolumeconfiguration.ui" line="91"/>
+        <source>Notify about volume changes with keyboard</source>
+        <translation>Értesítés amikor a billentyűzetről változtatja a hangerőt</translation>
+    </message>
+    <message>
+        <location filename="../lxqtvolumeconfiguration.ui" line="106"/>
         <source>Volume adjust step</source>
         <translation>Lépésköz</translation>
     </message>
     <message>
-        <location filename="../lxqtvolumeconfiguration.ui" line="118"/>
+        <location filename="../lxqtvolumeconfiguration.ui" line="125"/>
         <source>External Mixer</source>
         <translation>Külső keverő</translation>
     </message>
@@ -102,7 +107,7 @@
     <message>
         <location filename="../volumepopup.cpp" line="54"/>
         <source>Launch mixer</source>
-        <translation>Keverő futtatása</translation>
+        <translation>Keverő indítása</translation>
     </message>
     <message>
         <location filename="../volumepopup.cpp" line="55"/>

@@ -52,16 +52,18 @@ QuickLaunchButton::QuickLaunchButton(QuickLaunchAction * act, ILXQtPanelPlugin *
     setDefaultAction(mAct);
     mAct->setParent(this);
 
-    mMoveLeftAct = new QAction(XdgIcon::fromTheme("go-previous"), tr("Move left"), this);
+    const QString dndStr = QStringLiteral(" ") + tr("(Ctrl + DND)");
+
+    mMoveLeftAct = new QAction(XdgIcon::fromTheme(QStringLiteral("go-previous")), tr("Move left") + dndStr, this);
     connect(mMoveLeftAct, SIGNAL(triggered()), this, SIGNAL(movedLeft()));
 
-    mMoveRightAct = new QAction(XdgIcon::fromTheme("go-next"), tr("Move right"), this);
+    mMoveRightAct = new QAction(XdgIcon::fromTheme(QStringLiteral("go-next")), tr("Move right") + dndStr, this);
     connect(mMoveRightAct, SIGNAL(triggered()), this, SIGNAL(movedRight()));
 
 
-    mDeleteAct = new QAction(XdgIcon::fromTheme("dialog-close"), tr("Remove from quicklaunch"), this);
+    mDeleteAct = new QAction(XdgIcon::fromTheme(QStringLiteral("dialog-close")), tr("Remove from quicklaunch"), this);
     connect(mDeleteAct, SIGNAL(triggered()), this, SLOT(selfRemove()));
-    addAction(mDeleteAct);
+
     mMenu = new QMenu(this);
     mMenu->addAction(mAct);
     mMenu->addActions(mAct->addtitionalActions());
@@ -70,7 +72,6 @@ QuickLaunchButton::QuickLaunchButton(QuickLaunchAction * act, ILXQtPanelPlugin *
     mMenu->addAction(mMoveRightAct);
     mMenu->addSeparator();
     mMenu->addAction(mDeleteAct);
-
 
     setContextMenuPolicy(Qt::CustomContextMenu);
     connect(this, SIGNAL(customContextMenuRequested(const QPoint&)),
@@ -95,8 +96,9 @@ void QuickLaunchButton::this_customContextMenuRequested(const QPoint & /*pos*/)
 {
     LXQtQuickLaunch *panel = qobject_cast<LXQtQuickLaunch*>(parent());
 
-    mMoveLeftAct->setEnabled( panel && panel->indexOfButton(this) > 0);
-    mMoveRightAct->setEnabled(panel && panel->indexOfButton(this) < panel->countOfButtons() - 1);
+    mMoveLeftAct->setEnabled(!mPlugin->panel()->isLocked() && panel && panel->indexOfButton(this) > 0);
+    mMoveRightAct->setEnabled(!mPlugin->panel()->isLocked() && panel && panel->indexOfButton(this) < panel->countOfButtons() - 1);
+    mDeleteAct->setEnabled(!mPlugin->panel()->isLocked());
     mPlugin->willShowWindow(mMenu);
     mMenu->popup(mPlugin->panel()->calculatePopupWindowPos(mapToGlobal({0, 0}), mMenu->sizeHint()).topLeft());
 }
@@ -105,17 +107,6 @@ void QuickLaunchButton::this_customContextMenuRequested(const QPoint & /*pos*/)
 void QuickLaunchButton::selfRemove()
 {
     emit buttonDeleted();
-}
-
-
-void QuickLaunchButton::paintEvent(QPaintEvent *)
-{
-    // Do not paint that ugly "has menu" arrow
-    QStylePainter p(this);
-    QStyleOptionToolButton opt;
-    initStyleOption(&opt);
-    opt.features &= (~ QStyleOptionToolButton::HasMenu);
-    p.drawComplexControl(QStyle::CC_ToolButton, opt);
 }
 
 
@@ -133,7 +124,7 @@ void QuickLaunchButton::mousePressEvent(QMouseEvent *e)
 
 void QuickLaunchButton::mouseMoveEvent(QMouseEvent *e)
 {
-    if (!(e->buttons() & Qt::LeftButton))
+    if (mPlugin->panel()->isLocked() || !(e->buttons() & Qt::LeftButton))
     {
         return;
     }
@@ -165,7 +156,7 @@ void QuickLaunchButton::mouseMoveEvent(QMouseEvent *e)
 
 void QuickLaunchButton::dragMoveEvent(QDragMoveEvent * e)
 {
-    if (e->mimeData()->hasFormat(MIMETYPE))
+    if (!mPlugin->panel()->isLocked() && e->mimeData()->hasFormat(QStringLiteral(MIMETYPE)))
         e->acceptProposedAction();
     else
         e->ignore();
@@ -174,9 +165,11 @@ void QuickLaunchButton::dragMoveEvent(QDragMoveEvent * e)
 
 void QuickLaunchButton::dragEnterEvent(QDragEnterEvent *e)
 {
-    const ButtonMimeData *mimeData = qobject_cast<const ButtonMimeData*>(e->mimeData());
-    if (mimeData && mimeData->button())
-    {
-        emit switchButtons(mimeData->button(), this);
+    if (!mPlugin->panel()->isLocked()) {
+        const ButtonMimeData *mimeData = qobject_cast<const ButtonMimeData*>(e->mimeData());
+        if (mimeData && mimeData->button())
+        {
+            emit switchButtons(mimeData->button(), this);
+        }
     }
 }

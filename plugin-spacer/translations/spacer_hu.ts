@@ -6,7 +6,7 @@
     <message>
         <location filename="../spacerconfiguration.ui" line="14"/>
         <source>Spacer Settings</source>
-        <translation>Távtartóbeállítás</translation>
+        <translation>Távtartó beállítása</translation>
     </message>
     <message>
         <location filename="../spacerconfiguration.ui" line="20"/>
@@ -16,27 +16,27 @@
     <message>
         <location filename="../spacerconfiguration.ui" line="40"/>
         <source>Space type:</source>
-        <translation>Táv típus:</translation>
+        <translation>Típus:</translation>
     </message>
     <message>
         <location filename="../spacerconfiguration.ui" line="57"/>
         <source>fixed</source>
-        <translation type="unfinished"></translation>
+        <translation>rögzített</translation>
     </message>
     <message>
         <location filename="../spacerconfiguration.ui" line="71"/>
         <source>expandable</source>
-        <translation type="unfinished"></translation>
+        <translation>bővíthető</translation>
     </message>
     <message>
         <location filename="../spacerconfiguration.cpp" line="34"/>
         <source>lined</source>
-        <translation>vonalas</translation>
+        <translation>vonal</translation>
     </message>
     <message>
         <location filename="../spacerconfiguration.cpp" line="35"/>
         <source>dotted</source>
-        <translation>pontozott</translation>
+        <translation>pontok</translation>
     </message>
     <message>
         <location filename="../spacerconfiguration.cpp" line="36"/>

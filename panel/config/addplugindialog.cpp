@@ -49,9 +49,9 @@ AddPluginDialog::AddPluginDialog(QWidget *parent):
     ui->setupUi(this);
 
     QStringList desktopFilesDirs;
-    desktopFilesDirs << QString(getenv("LXQT_PANEL_PLUGINS_DIR")).split(':', QString::SkipEmptyParts);
-    desktopFilesDirs << QString("%1/%2").arg(XdgDirs::dataHome(), "/lxqt/lxqt-panel");
-    desktopFilesDirs << PLUGIN_DESKTOPS_DIR;
+    desktopFilesDirs << QString::fromLocal8Bit(qgetenv("LXQT_PANEL_PLUGINS_DIR")).split(QLatin1Char(':'), QString::SkipEmptyParts);
+    desktopFilesDirs << QStringLiteral("%1/%2").arg(XdgDirs::dataHome(), QStringLiteral("/lxqt/lxqt-panel"));
+    desktopFilesDirs << QStringLiteral(PLUGIN_DESKTOPS_DIR);
 
     mPlugins = LXQt::PluginInfo::search(desktopFilesDirs, QLatin1String("LXQtPanel/Plugin"), QLatin1String("*"));
     std::sort(mPlugins.begin(), mPlugins.end(), [](const LXQt::PluginInfo &p1, const LXQt::PluginInfo &p2) {
@@ -90,17 +90,17 @@ void AddPluginDialog::filter()
     const int curr_item = 0 < pluginList->count() ? pluginList->currentRow() : 0;
     pluginList->clear();
 
-    static QIcon fallIco = XdgIcon::fromTheme("preferences-plugin");
+    static QIcon fallIco = XdgIcon::fromTheme(QStringLiteral("preferences-plugin"));
 
     int pluginCount = mPlugins.length();
     for (int i = 0; i < pluginCount; ++i)
     {
         const LXQt::PluginInfo &plugin = mPlugins.at(i);
 
-        QString s = QString("%1 %2 %3 %4 %5").arg(plugin.name(),
+        QString s = QStringLiteral("%1 %2 %3 %4 %5").arg(plugin.name(),
                                                plugin.comment(),
-                                               plugin.value("Name").toString(),
-                                               plugin.value("Comment").toString(),
+                                               plugin.value(QStringLiteral("Name")).toString(),
+                                               plugin.value(QStringLiteral("Comment")).toString(),
                                                plugin.id());
         if (!s.contains(ui->searchEdit->text(), Qt::CaseInsensitive))
             continue;
@@ -111,10 +111,10 @@ void AddPluginDialog::filter()
         {
             item->setFlags(item->flags() & ~Qt::ItemIsEnabled);
             item->setBackground(palette().brush(QPalette::Disabled, QPalette::Text));
-            item->setText(QString("<b>%1</b> (%2)<br>%3<br><small>%4</small>")
+            item->setText(QStringLiteral("<b>%1</b> (%2)<br>%3<br><small>%4</small>")
                     .arg(plugin.name(), plugin.id(), plugin.comment(), tr("(only one instance can run at a time)")));
         } else
-            item->setText(QString("<b>%1</b> (%2)<br>%3").arg(plugin.name(), plugin.id(), plugin.comment()));
+            item->setText(QStringLiteral("<b>%1</b> (%2)<br>%3").arg(plugin.name(), plugin.id(), plugin.comment()));
         item->setIcon(plugin.icon(fallIco));
         item->setData(INDEX_ROLE, i);
     }

@@ -7,6 +7,8 @@
 
 #include <QObject>
 #include <string>
+#include <stdio.h>
+
 using namespace std;
 
 class EventObject : public QObject {
@@ -57,13 +59,13 @@ public:
     }
 
     QString toString(){
-        QString str = "Event: \n\r\ttopic : "+ topic + "\n\r\t" +
-                     "time  : " + to_string(time).c_str() + "\n\r\t" +
-                     "source: " + source + "\n\r\t" +
-                     "event : " + event  + "\n\r\t" +
-                     "params: " + "\n\r\t\t";
+        QString str = QString::fromStdString("Event: \n\r\ttopic : ")+ topic + QString::fromStdString("\n\r\t") +
+                      QString::fromStdString("time  : ") + QString::fromStdString(to_string(time)) + QString::fromStdString("\n\r\t") +
+                      QString::fromStdString("source: ") + source + QString::fromStdString("\n\r\t") +
+                      QString::fromStdString("event : ") + event  + QString::fromStdString("\n\r\t") +
+                      QString::fromStdString("params: ") + QString::fromStdString("\n\r\t\t");
         for (auto p : params)
-            str += "{ " + p.first + " : " + p.second + " }\n\r\t\t";
+            str += QString::fromStdString("{ ") + p.first + QString::fromStdString(" : ") + p.second + QString::fromStdString(" }\n\r\t\t");
         return str;
     }
 

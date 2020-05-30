@@ -54,7 +54,7 @@ public:
     ~LXQtVolume();
 
     virtual QWidget *widget();
-    virtual QString themeId() const { return "Volume"; }
+    virtual QString themeId() const { return QStringLiteral("Volume"); }
     virtual ILXQtPanelPlugin::Flags flags() const { return PreferRightAlignment | HaveConfigDialog ; }
     void realign();
     QDialog *configureDialog();
@@ -80,6 +80,7 @@ private:
     LXQt::Notification *m_notification;
     QPointer<LXQtVolumeConfiguration> m_configDialog;
     bool m_allwaysShowNotifications;
+    bool m_showKeyboardNotifications;
 };
 
 

@@ -8,5 +8,8 @@
         <file>resources/icon/status_1_green_u.svg</file>
         <file>resources/icon/status_2_green_d.svg</file>
         <file>resources/icon/status_3_green_ud.svg</file>
+        <file>resources/icon/status_1_grey_u.svg</file>
+        <file>resources/icon/status_2_grey_d.svg</file>
+        <file>resources/icon/status_3_grey_ud.svg</file>
     </qresource>
 </RCC>

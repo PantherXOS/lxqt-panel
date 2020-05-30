@@ -4,20 +4,21 @@
 <context>
     <name>LXQtQuickLaunch</name>
     <message>
-        <location filename="../lxqtquicklaunch.cpp" line="214"/>
+        <location filename="../lxqtquicklaunch.cpp" line="226"/>
         <source>Drop Error</source>
         <translation>Error al remover</translation>
     </message>
     <message>
-        <location filename="../lxqtquicklaunch.cpp" line="215"/>
+        <location filename="../lxqtquicklaunch.cpp" line="227"/>
         <source>File/URL &apos;%1&apos; cannot be embedded into QuickLaunch for now</source>
         <translation>Archivo/URL &apos;%1&apos; no puede ser empotrado en la barra de lanzadores por ahora</translation>
     </message>
     <message>
-        <location filename="../lxqtquicklaunch.cpp" line="321"/>
+        <location filename="../lxqtquicklaunch.cpp" line="333"/>
         <source>Drop application
 icons here</source>
-        <translation type="unfinished"></translation>
+        <translation>Ponga los iconos de
+las aplicaciones aquí</translation>
     </message>
 </context>
 <context>

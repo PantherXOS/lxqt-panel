@@ -33,7 +33,7 @@
 #include <KWindowSystem/KWindowSystem>
 #include <QDebug>
 #include <QListView>
-#include <QDesktopWidget>
+#include <QScreen>
 #include <QWindow>
 #include <QColorDialog>
 #include <QFileDialog>
@@ -151,9 +151,9 @@ void ConfigPanelWidget::reset()
     ui->spinBox_length->setValue(mOldLength);
 
     mFontColor.setNamedColor(mOldFontColor.name());
-    ui->pushButton_customFontColor->setStyleSheet(QString("background: %1").arg(mOldFontColor.name()));
+    ui->pushButton_customFontColor->setStyleSheet(QStringLiteral("background: %1").arg(mOldFontColor.name()));
     mBackgroundColor.setNamedColor(mOldBackgroundColor.name());
-    ui->pushButton_customBgColor->setStyleSheet(QString("background: %1").arg(mOldBackgroundColor.name()));
+    ui->pushButton_customBgColor->setStyleSheet(QStringLiteral("background: %1").arg(mOldBackgroundColor.name()));
     ui->lineEdit_customBgImage->setText(mOldBackgroundImage);
     ui->slider_opacity->setValue(mOldOpacity);
     ui->checkBox_reserveSpace->setChecked(mOldReserveSpace);
@@ -171,7 +171,7 @@ void ConfigPanelWidget::reset()
  ************************************************/
 void ConfigPanelWidget::fillComboBox_position()
 {
-    int screenCount = QApplication::desktop()->screenCount();
+    int screenCount = QApplication::screens().size();
     if (screenCount == 1)
     {
         addPosition(tr("Top of desktop"), 0, LXQtPanel::PositionTop);
@@ -384,13 +384,16 @@ void ConfigPanelWidget::widthTypeChanged()
  ************************************************/
 int ConfigPanelWidget::getMaxLength()
 {
-    QDesktopWidget* dw = QApplication::desktop();
-
-    if (mPosition == ILXQtPanel::PositionTop ||
-        mPosition == ILXQtPanel::PositionBottom)
-        return dw->screenGeometry(mScreenNum).width();
-    else
-        return dw->screenGeometry(mScreenNum).height();
+    auto screens = QApplication::screens();
+    if (screens.size() > mScreenNum)
+    {
+        if (mPosition == ILXQtPanel::PositionTop ||
+            mPosition == ILXQtPanel::PositionBottom)
+            return screens.at(mScreenNum)->geometry().width();
+        else
+            return screens.at(mScreenNum)->geometry().height();
+    }
+    return 0;
 }
 
 
@@ -438,7 +441,7 @@ void ConfigPanelWidget::pickFontColor()
     if (d.exec() && d.currentColor().isValid())
     {
         mFontColor.setNamedColor(d.currentColor().name());
-        ui->pushButton_customFontColor->setStyleSheet(QString("background: %1").arg(mFontColor.name()));
+        ui->pushButton_customFontColor->setStyleSheet(QStringLiteral("background: %1").arg(mFontColor.name()));
         editChanged();
     }
 }
@@ -454,7 +457,7 @@ void ConfigPanelWidget::pickBackgroundColor()
     if (d.exec() && d.currentColor().isValid())
     {
         mBackgroundColor.setNamedColor(d.currentColor().name());
-        ui->pushButton_customBgColor->setStyleSheet(QString("background: %1").arg(mBackgroundColor.name()));
+        ui->pushButton_customBgColor->setStyleSheet(QStringLiteral("background: %1").arg(mBackgroundColor.name()));
         editChanged();
     }
 }

@@ -81,7 +81,7 @@ void LXQtTaskGroup::contextMenuEvent(QContextMenuEvent *event)
 
     QMenu * menu = new QMenu(tr("Group"));
     menu->setAttribute(Qt::WA_DeleteOnClose);
-    QAction *a = menu->addAction(XdgIcon::fromTheme("process-stop"), tr("Close group"));
+    QAction *a = menu->addAction(XdgIcon::fromTheme(QStringLiteral("process-stop")), tr("Close group"));
     connect(a, SIGNAL(triggered()), this, SLOT(closeGroup()));
     connect(menu, &QMenu::aboutToHide, [this] {
         mPreventPopup = false;
@@ -344,7 +344,7 @@ void LXQtTaskGroup::regroup()
     else
     {
         mSingleButton = false;
-        QString t = QString("%1 - %2 windows").arg(mGroupName).arg(cont);
+        QString t = QString(QStringLiteral("%1 - %2 windows")).arg(mGroupName).arg(cont);
         setText(t);
         setToolTip(parentTaskBar()->isShowGroupOnHover() ? QString() : t);
     }
@@ -490,7 +490,7 @@ int LXQtTaskGroup::recalculateFrameHeight() const
 int LXQtTaskGroup::recalculateFrameWidth() const
 {
     const QFontMetrics fm = fontMetrics();
-    int max = 100 * fm.width (' '); // elide after the max width
+    int max = 100 * fm.width (QLatin1Char(' ')); // elide after the max width
     int txtWidth = 0;
     for (LXQtTaskButton *btn : qAsConst(mButtonHash))
         txtWidth = qMax(fm.width(btn->text()), txtWidth);
@@ -584,6 +584,35 @@ void LXQtTaskGroup::mouseMoveEvent(QMouseEvent* event)
 /************************************************
 
  ************************************************/
+
+void LXQtTaskGroup::mouseReleaseEvent(QMouseEvent* event)
+{
+    // do nothing on left button release if there is a group
+    if (event->button() == Qt::LeftButton && visibleButtonsCount() == 1)
+        LXQtTaskButton::mouseReleaseEvent(event);
+    else
+        QToolButton::mouseReleaseEvent(event);
+}
+
+/************************************************
+
+ ************************************************/
+
+void LXQtTaskGroup::wheelEvent(QWheelEvent* event)
+{
+    if (mSingleButton)
+    {
+        LXQtTaskButton::wheelEvent(event);
+        return;
+    }
+    // if there are multiple buttons, just show the popup
+    setPopupVisible(true);
+    QToolButton::wheelEvent(event);
+}
+
+/************************************************
+
+ ************************************************/
 bool LXQtTaskGroup::onWindowChanged(WId window, NET::Properties prop, NET::Properties2 prop2)
 { // returns true if the class is preserved
     bool needsRefreshVisibility{false};
@@ -601,7 +630,7 @@ bool LXQtTaskGroup::onWindowChanged(WId window, NET::Properties prop, NET::Prope
         if (parentTaskBar()->isGroupingEnabled() && prop2.testFlag(NET::WM2WindowClass))
         {
             KWindowInfo info(window, 0, NET::WM2WindowClass);
-            if (info.windowClassClass() != mGroupName)
+            if (QString::fromUtf8(info.windowClassClass()) != mGroupName)
             {
                 onWindowRemoved(window);
                 return false;

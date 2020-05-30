@@ -37,8 +37,13 @@
 #include <array>
 #include "Settings.h"
 #include <lxqt/LXQt/Notification>
+#include "rapidjson/document.h"
+#include "NetworkInformation.h"
+#include "CheckUpdate.h"
+
 
 using namespace std;
+using namespace rapidjson;
 
 class System : public QObject, public ILXQtPanelPlugin
 {
@@ -47,39 +52,39 @@ public:
     explicit System(const ILXQtPanelPluginStartupInfo &startupInfo);
 
     virtual QWidget *widget() { return &mButton; }
-    virtual QString themeId() const { return "px-system"; }
+    virtual QString themeId() const { return QString::fromStdString("px-system"); }
     virtual ILXQtPanelPlugin::Flags flags() const { return HaveConfigDialog; }
     bool isSeparate() const { return true; }
-    QMenu *mainMenu = new QMenu;
+    QMenu *mainMenu;
 
 public slots:
     void realign();
 
+
 private slots:
-//    void hubEventsHandler(EventObject *eventObject);
-//    void updateButtonHandler();
     void refresh();
+    void updateHandler(QString packages);
+
 private:
     QLabel *buildIconFromFile(QString file, QSize size);
     QLabel *buildIconFromTheme(QString icon, QSize size);
-//    QWidgetAction* buildAccountItem(AccountObject account);
-//    QWidgetAction* buildMessageItem(MessageObject message);
     QWidgetAction *createTitle(QString title, QString icon);
     QWidgetAction* getUser();
     QWidgetAction* getFirewallStatus();
     QWidgetAction* getInternet();
-    QWidgetAction* getVpnStatus();
-    QWidgetAction* getWifiStatus();
+    void getVpnStatus();
+    void getWifiStatus();
     QWidgetAction* getBTStatus();
     QWidgetAction* getUpdateStat();
     QLayout *internetLayout(QString text, QString icon);
     QWidgetAction* generalItems(QString name,QString information,bool stat,QString icon);
     string exec(const char* cmd);
-
+    bool networkDataParser(string data);
     QToolButton mButton;
     bool mHidden;
-//    bool isRun= false;
-//    std::thread statThread;
+    string vpnName;
+    vector <NetworkInformation> internetInfo;
+    QLabel *updateTextLabel;
 };
 
 

@@ -6,7 +6,7 @@
     <message>
         <location filename="../button.cpp" line="38"/>
         <source>Removable media/devices manager</source>
-        <translation>リムーバルメディア/デバイスの管理</translation>
+        <translation>リムーバブルメディア/デバイスの管理</translation>
     </message>
 </context>
 <context>
@@ -19,22 +19,22 @@
     <message>
         <location filename="../configuration.ui" line="20"/>
         <source>Behaviour</source>
-        <translation>挙動</translation>
+        <translation>動作</translation>
     </message>
     <message>
         <location filename="../configuration.ui" line="26"/>
         <source>When a device is connected:</source>
-        <translation type="unfinished"></translation>
+        <translation>デバイスが接続された時:</translation>
     </message>
     <message>
         <location filename="../configuration.cpp" line="40"/>
         <source>Popup menu</source>
-        <translation>メニューをポップアップ</translation>
+        <translation>メニューのポップアップ</translation>
     </message>
     <message>
         <location filename="../configuration.cpp" line="41"/>
         <source>Show info</source>
-        <translation>情報を表示</translation>
+        <translation>情報の表示</translation>
     </message>
     <message>
         <location filename="../configuration.cpp" line="42"/>
@@ -57,7 +57,7 @@
     <message>
         <location filename="../actions/deviceaction_info.cpp" line="50"/>
         <source>Removable media/devices manager</source>
-        <translation>リムーバルメディア/デバイスの管理</translation>
+        <translation>リムーバブルメディア/デバイスの管理</translation>
     </message>
 </context>
 <context>
@@ -71,7 +71,7 @@
         <location filename="../menudiskitem.cpp" line="157"/>
         <location filename="../menudiskitem.cpp" line="178"/>
         <source>Removable media/devices manager</source>
-        <translation>リムーバルメディア/デバイスの管理</translation>
+        <translation>リムーバブルメディア/デバイスの管理</translation>
     </message>
     <message>
         <location filename="../menudiskitem.cpp" line="176"/>

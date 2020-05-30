@@ -4,7 +4,7 @@
 <context>
     <name>LXQtTaskBar</name>
     <message>
-        <location filename="../lxqttaskbar.cpp" line="648"/>
+        <location filename="../lxqttaskbar.cpp" line="650"/>
         <source>Activate task %1</source>
         <translation>アクティブなタスク %1</translation>
     </message>
@@ -12,97 +12,97 @@
 <context>
     <name>LXQtTaskButton</name>
     <message>
-        <location filename="../lxqttaskbutton.cpp" line="513"/>
+        <location filename="../lxqttaskbutton.cpp" line="576"/>
         <source>Application</source>
         <translation>アプリケーション</translation>
     </message>
     <message>
-        <location filename="../lxqttaskbutton.cpp" line="547"/>
+        <location filename="../lxqttaskbutton.cpp" line="610"/>
         <source>To &amp;Desktop</source>
         <translation>デスクトップへ(&amp;D)</translation>
     </message>
     <message>
-        <location filename="../lxqttaskbutton.cpp" line="549"/>
+        <location filename="../lxqttaskbutton.cpp" line="612"/>
         <source>&amp;All Desktops</source>
         <translation>すべてのデスクトップ(&amp;A)</translation>
     </message>
     <message>
-        <location filename="../lxqttaskbutton.cpp" line="557"/>
+        <location filename="../lxqttaskbutton.cpp" line="620"/>
         <source>Desktop &amp;%1</source>
         <translation>デスクトップ &amp;%1</translation>
     </message>
     <message>
-        <location filename="../lxqttaskbutton.cpp" line="564"/>
+        <location filename="../lxqttaskbutton.cpp" line="627"/>
         <source>&amp;To Current Desktop</source>
         <translation>現在のデスクトップへ(&amp;T)</translation>
     </message>
     <message>
-        <location filename="../lxqttaskbutton.cpp" line="572"/>
+        <location filename="../lxqttaskbutton.cpp" line="635"/>
         <source>&amp;Move</source>
-        <translation>移動（&amp;M）</translation>
+        <translation>移動(&amp;M)</translation>
     </message>
     <message>
-        <location filename="../lxqttaskbutton.cpp" line="575"/>
+        <location filename="../lxqttaskbutton.cpp" line="638"/>
         <source>Resi&amp;ze</source>
-        <translation>リサイズ（&amp;z）</translation>
+        <translation>サイズの変更(&amp;Z)</translation>
     </message>
     <message>
-        <location filename="../lxqttaskbutton.cpp" line="582"/>
+        <location filename="../lxqttaskbutton.cpp" line="645"/>
         <source>Ma&amp;ximize</source>
-        <translation>最大化(&amp;x)</translation>
+        <translation>最大化(&amp;X)</translation>
     </message>
     <message>
-        <location filename="../lxqttaskbutton.cpp" line="589"/>
+        <location filename="../lxqttaskbutton.cpp" line="652"/>
         <source>Maximize vertically</source>
         <translation>縦方向の最大化</translation>
     </message>
     <message>
-        <location filename="../lxqttaskbutton.cpp" line="594"/>
+        <location filename="../lxqttaskbutton.cpp" line="657"/>
         <source>Maximize horizontally</source>
         <translation>横方向の最大化</translation>
     </message>
     <message>
-        <location filename="../lxqttaskbutton.cpp" line="600"/>
+        <location filename="../lxqttaskbutton.cpp" line="663"/>
         <source>&amp;Restore</source>
         <translation>復元(&amp;R)</translation>
     </message>
     <message>
-        <location filename="../lxqttaskbutton.cpp" line="604"/>
+        <location filename="../lxqttaskbutton.cpp" line="667"/>
         <source>Mi&amp;nimize</source>
         <translation>最小化(&amp;N)</translation>
     </message>
     <message>
-        <location filename="../lxqttaskbutton.cpp" line="610"/>
+        <location filename="../lxqttaskbutton.cpp" line="673"/>
         <source>Roll down</source>
         <translation>広げる</translation>
     </message>
     <message>
-        <location filename="../lxqttaskbutton.cpp" line="616"/>
+        <location filename="../lxqttaskbutton.cpp" line="679"/>
         <source>Roll up</source>
         <translation>たたむ</translation>
     </message>
     <message>
-        <location filename="../lxqttaskbutton.cpp" line="624"/>
+        <location filename="../lxqttaskbutton.cpp" line="687"/>
         <source>&amp;Layer</source>
         <translation>レイヤー(&amp;L)</translation>
     </message>
     <message>
-        <location filename="../lxqttaskbutton.cpp" line="626"/>
+        <location filename="../lxqttaskbutton.cpp" line="689"/>
         <source>Always on &amp;top</source>
         <translation>常に手前に表示(&amp;T)</translation>
     </message>
     <message>
-        <location filename="../lxqttaskbutton.cpp" line="632"/>
+        <location filename="../lxqttaskbutton.cpp" line="695"/>
         <source>&amp;Normal</source>
         <translation>通常(&amp;N)</translation>
     </message>
     <message>
-        <location filename="../lxqttaskbutton.cpp" line="638"/>
+        <location filename="../lxqttaskbutton.cpp" line="701"/>
         <source>Always on &amp;bottom</source>
         <translation>常に奥に表示(&amp;B)</translation>
     </message>
     <message>
-        <location filename="../lxqttaskbutton.cpp" line="646"/>
+        <location filename="../lxqttaskbutton.cpp" line="709"/>
         <source>&amp;Close</source>
         <translation>閉じる(&amp;C)</translation>
     </message>
@@ -125,42 +125,42 @@
     <message>
         <location filename="../lxqttaskbarconfiguration.ui" line="14"/>
         <source>Task Manager Settings</source>
-        <translation>タスクマネージャーの設定</translation>
+        <translation>タスク管理の設定</translation>
     </message>
     <message>
-        <location filename="../lxqttaskbarconfiguration.ui" line="183"/>
+        <location filename="../lxqttaskbarconfiguration.ui" line="233"/>
         <source>Auto&amp;rotate buttons when the panel is vertical</source>
-        <translation>パネルが垂直なときにはボタンを回転(&amp;R)</translation>
+        <translation>パネルが垂直なときにはボタンを回転させる(&amp;R)</translation>
     </message>
     <message>
-        <location filename="../lxqttaskbarconfiguration.ui" line="121"/>
+        <location filename="../lxqttaskbarconfiguration.ui" line="171"/>
         <source>Button style</source>
         <translation>ボタンのスタイル</translation>
     </message>
     <message>
         <location filename="../lxqttaskbarconfiguration.ui" line="20"/>
         <source>General</source>
-        <translation type="unfinished"></translation>
+        <translation>一般</translation>
     </message>
     <message>
         <location filename="../lxqttaskbarconfiguration.ui" line="43"/>
         <source>Show only windows from desktop</source>
-        <translation type="unfinished"></translation>
+        <translation>次のデスクトップのウィンドウのみを表示する</translation>
     </message>
     <message>
         <location filename="../lxqttaskbarconfiguration.ui" line="55"/>
         <source>Show only windows from &amp;panel&apos;s screen</source>
-        <translation type="unfinished"></translation>
+        <translation>パネルのある画面のウィンドウのみを表示する(&amp;P)</translation>
     </message>
     <message>
         <location filename="../lxqttaskbarconfiguration.ui" line="62"/>
         <source>Show only minimized windows</source>
-        <translation type="unfinished"></translation>
+        <translation>最小化されたウィンドウのみを表示する</translation>
     </message>
     <message>
         <location filename="../lxqttaskbarconfiguration.ui" line="69"/>
         <source>Raise minimized windows on current desktop</source>
-        <translation type="unfinished"></translation>
+        <translation>最小化されたウィンドウを選択した時には現在のデスクトップに移動させる</translation>
     </message>
     <message>
         <location filename="../lxqttaskbarconfiguration.ui" line="76"/>
@@ -168,45 +168,56 @@
         <translation>中ボタンのクリックで閉じる</translation>
     </message>
     <message>
-        <location filename="../lxqttaskbarconfiguration.ui" line="83"/>
+        <location filename="../lxqttaskbarconfiguration.cpp" line="49"/>
         <source>Cycle windows on wheel scrolling</source>
-        <translation type="unfinished"></translation>
+        <translation>ホイールスクロールでウィンドウの切り替え</translation>
     </message>
     <message>
-        <location filename="../lxqttaskbarconfiguration.ui" line="93"/>
+        <location filename="../lxqttaskbarconfiguration.ui" line="143"/>
         <source>Window &amp;grouping</source>
-        <translation type="unfinished"></translation>
+        <translation>ウィンドウのグループ化(&amp;G)</translation>
     </message>
     <message>
-        <location filename="../lxqttaskbarconfiguration.ui" line="102"/>
+        <location filename="../lxqttaskbarconfiguration.ui" line="152"/>
         <source>Show popup on mouse hover</source>
-        <translation type="unfinished"></translation>
+        <translation>マウスを合わせるとポップアップでタイトルを表示する</translation>
+    </message>
+    <message>
+        <location filename="../lxqttaskbarconfiguration.ui" line="162"/>
+        <source>Appearance</source>
+        <translation>外観</translation>
+    </message>
+    <message>
+        <location filename="../lxqttaskbarconfiguration.ui" line="181"/>
+        <source>Maximum button width</source>
+        <translation>ボタンの最大幅</translation>
+    </message>
+    <message>
+        <location filename="../lxqttaskbarconfiguration.ui" line="125"/>
+        <location filename="../lxqttaskbarconfiguration.ui" line="194"/>
+        <location filename="../lxqttaskbarconfiguration.ui" line="220"/>
+        <source> px</source>
+        <translation> ピクセル</translation>
+    </message>
+    <message>
+        <location filename="../lxqttaskbarconfiguration.ui" line="86"/>
+        <source>Mouse Wheel</source>
+        <translation>マウスのホイール</translation>
     </message>
     <message>
         <location filename="../lxqttaskbarconfiguration.ui" line="112"/>
-        <source>Appearance</source>
-        <translation type="unfinished"></translation>
+        <source>Wheel Delta Threshold</source>
+        <translation>ホイールの変化量のしきい値</translation>
     </message>
     <message>
-        <location filename="../lxqttaskbarconfiguration.ui" line="131"/>
-        <source>Maximum button width</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../lxqttaskbarconfiguration.ui" line="144"/>
-        <location filename="../lxqttaskbarconfiguration.ui" line="170"/>
-        <source> px</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../lxqttaskbarconfiguration.ui" line="157"/>
+        <location filename="../lxqttaskbarconfiguration.ui" line="207"/>
         <source>Maximum button height</source>
-        <translation type="unfinished"></translation>
+        <translation>ボタンの最大高</translation>
     </message>
     <message>
-        <location filename="../lxqttaskbarconfiguration.ui" line="190"/>
+        <location filename="../lxqttaskbarconfiguration.ui" line="240"/>
         <source>Use icons by WindowClass, if available</source>
-        <translation type="unfinished"></translation>
+        <translation>可能であれば WindowClass のアイコンを使用する</translation>
     </message>
     <message>
         <location filename="../lxqttaskbarconfiguration.cpp" line="44"/>
@@ -225,8 +236,23 @@
     </message>
     <message>
         <location filename="../lxqttaskbarconfiguration.cpp" line="48"/>
+        <source>Disabled</source>
+        <translation>無効</translation>
+    </message>
+    <message>
+        <location filename="../lxqttaskbarconfiguration.cpp" line="50"/>
+        <source>Scroll up to raise, down to minimize</source>
+        <translation>スクロールアップで最前面、スクロールダウンで最小化</translation>
+    </message>
+    <message>
+        <location filename="../lxqttaskbarconfiguration.cpp" line="51"/>
+        <source>Scroll up to minimize, down to raise</source>
+        <translation>スクロールアップで最小化、スクロールダウンで最前面</translation>
+    </message>
+    <message>
+        <location filename="../lxqttaskbarconfiguration.cpp" line="53"/>
         <source>Current</source>
-        <translation type="unfinished"></translation>
+        <translation>現在のデスクトップ</translation>
     </message>
 </context>
 </TS>

@@ -45,6 +45,7 @@
 #include <QKeySequence>
 #include <string>
 #include <iostream>
+
 #include "menustyle.h"
 #include <memory>
 #include "ResultItem.h"
@@ -55,6 +56,7 @@
 #include <QDir>
 
 using namespace std;
+
 
 class QMenu;
 class QWidgetAction;
@@ -79,7 +81,7 @@ public:
     LXQtMainMenu(const ILXQtPanelPluginStartupInfo &startupInfo);
     ~LXQtMainMenu();
 
-    QString themeId() const { return "MainMenu"; }
+    QString themeId() const { return QStringLiteral("MainMenu"); }
     virtual ILXQtPanelPlugin::Flags flags() const { return HaveConfigDialog ; }
 
     QWidget *widget() { return &mButton; }
@@ -101,7 +103,8 @@ private:
     QList <ResultItem *> folders;
     QList <ResultItem *> files;
     QList <ResultItem *> musics;
-    QMenu* backupMenu;
+//    QMenu* backupMenu;
+
     GlobalKeyShortcut::Action *mShortcut;
     MenuStyle mTopMenuStyle;
     QWidgetAction * mSearchEditAction;
@@ -111,20 +114,18 @@ private:
     QAction * mMakeDirtyAction;
     void addItem(QString text, bool setColor, QAction *before);
     void buildPxMenu();
-    QLabel  *buildIconFromTheme(QString icon, QSize size);
     void buildPxSearch(string searchResult);
-    QLayout *addLayout(QString header,QString iconItem);
-    void     actionFileTrigered(QAction *qAction);
     string exec(const char* cmd);
     bool mFilterMenu; //!< searching should perform hiding nonmatching items in menu
     bool mFilterShow; //!< searching should list matching items in top menu
     bool mFilterClear; //!< search field should be cleared upon showing the menu
     bool mFilterShowHideMenu; //!< while searching all (original) menu entries should be hidden
     bool mHeavyMenuChanges; //!< flag for filtering some mMenu events while heavy changes are performed
-    ResultItem* music;
+    ResultItem* music = nullptr;
     ResultItem* documents;
     ResultItem* home;
     ResultItem* desktop;
+
 #ifdef HAVE_MENU_CACHE
     MenuCache* mMenuCache;
     MenuCacheNotifyId mMenuCacheNotify;
@@ -135,20 +136,20 @@ private:
 
     QTimer mDelayedPopup;
     QTimer mHideTimer;
+    QTimer mSearchTimer;
     QString mMenuFile;
 
 protected slots:
-
     virtual void settingsChanged();
     void buildMenu();
 
 private slots:
     void showMenu();
     void showHideMenu();
-    void searchTextChanged(QString const & text);
+    void searchMenu();
     void setSearchFocus(QAction *action);
     void actionTrigered(QAction *action);
-    };
+};
 
 class LXQtMainMenuPluginLibrary: public QObject, public ILXQtPanelPluginLibrary
 {

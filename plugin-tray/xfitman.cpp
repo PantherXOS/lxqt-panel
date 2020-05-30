@@ -72,10 +72,10 @@ XfitMan::XfitMan()
 Atom XfitMan::atom(const char* atomName)
 {
     static QHash<QString, Atom> hash;
-    if (hash.contains(atomName))
-        return hash.value(atomName);
+    if (hash.contains(QString::fromUtf8(atomName)))
+        return hash.value(QString::fromUtf8(atomName));
     Atom atom = XInternAtom(QX11Info::display(), atomName, false);
-    hash[atomName] = atom;
+    hash[QString::fromUtf8(atomName)] = atom;
     return atom;
 }
 
@@ -145,7 +145,7 @@ bool XfitMan::getClientIcon(Window _wid, QPixmap& _pixreturn) const
     }
 
     QImage img (data[0], data[1], QImage::Format_ARGB32);
-    for (int i=0; i<img.byteCount()/4; ++i)
+    for (int i=0; i<img.sizeInBytes()/4; ++i)
         ((uint*)img.bits())[i] = data[i+2];
 
     _pixreturn = QPixmap::fromImage(img);
@@ -174,7 +174,7 @@ bool XfitMan::getClientIcon(Window _wid, QIcon *icon) const
     {
         QImage img (d[0], d[1], QImage::Format_ARGB32);
         d+=2;
-        for (int i=0; i<img.byteCount()/4; ++i, ++d)
+        for (int i=0; i<img.sizeInBytes()/4; ++i, ++d)
             ((uint*)img.bits())[i] = *d;
 
         icon->addPixmap(QPixmap::fromImage(img));
@@ -197,7 +197,7 @@ XfitMan::~XfitMan()
 // i got the idea for this from taskbar-plugin of LXPanel - so credits fly out :)
 QString XfitMan::getWindowTitle(Window _wid) const
 {
-    QString name = "";
+    QString name = QLatin1String("");
     //first try the modern net-wm ones
     unsigned long length;
     unsigned char *data = nullptr;
@@ -224,7 +224,7 @@ QString XfitMan::getWindowTitle(Window _wid) const
     {
         if (getWindowProperty(_wid, atom("XA_WM_NAME"), XA_STRING, &length, &data))
         {
-            name = (char*) data;
+            name =  QString::fromUtf8(reinterpret_cast<char *>(data));
             XFree(data);
         }
     }
@@ -232,7 +232,7 @@ QString XfitMan::getWindowTitle(Window _wid) const
     if (name.isEmpty())
     {
         Status ok = XFetchName(QX11Info::display(), _wid, (char**) &data);
-        name = QString((char*) data);
+        name = QString::fromUtf8(reinterpret_cast<char *> (data));
         if (0 != ok) XFree(data);
     }
 
@@ -258,7 +258,7 @@ QString XfitMan::getApplicationName(Window _wid) const
     {
         if (hint.res_name)
         {
-            ret = hint.res_name;
+            ret = QString::fromUtf8(hint.res_name);
             XFree(hint.res_name);
         }
         if (hint.res_class)

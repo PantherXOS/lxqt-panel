@@ -58,7 +58,7 @@ Popup::Popup(ILXQtPanelPlugin * plugin, QWidget* parent):
     mPlaceholder(nullptr),
     mDisplayCount(0)
 {
-    setObjectName("LXQtMountPopup");
+    setObjectName(QStringLiteral("LXQtMountPopup"));
     setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
     setLayout(new QVBoxLayout(this));
     layout()->setMargin(0);
@@ -66,7 +66,7 @@ Popup::Popup(ILXQtPanelPlugin * plugin, QWidget* parent):
     setAttribute(Qt::WA_AlwaysShowToolTips);
 
     mPlaceholder = new QLabel(tr("No devices are available"), this);
-    mPlaceholder->setObjectName("NoDiskLabel");
+    mPlaceholder->setObjectName(QStringLiteral("NoDiskLabel"));
     layout()->addWidget(mPlaceholder);
 
     //Perform the potential long time operation after object construction
@@ -76,7 +76,7 @@ Popup::Popup(ILXQtPanelPlugin * plugin, QWidget* parent):
         {
             delete aux_timer; //cleanup
             const auto devices = Solid::Device::listFromType(Solid::DeviceInterface::StorageAccess);
-            for (const Solid::Device& device : Solid::Device::listFromType(Solid::DeviceInterface::StorageAccess))
+            for (const Solid::Device& device : devices)
                 if (hasRemovableParent(device))
                     addItem(device);
         });
