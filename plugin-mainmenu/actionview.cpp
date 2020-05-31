@@ -234,11 +234,11 @@ void ActionView::setFilter(QString const & filter)
     {
         if (count > mMaxItemsToShow)
         {
-            setCurrentIndex(mProxy->index(mMaxItemsToShow - 1, 0));
+           // setCurrentIndex(mProxy->index(mMaxItemsToShow - 1, 0));
             verticalScrollBar()->triggerAction(QScrollBar::SliderToMinimum);
         } else
         {
-            setCurrentIndex(mProxy->index(count - 1, 0));
+           // setCurrentIndex(mProxy->index(count - 1, 0));
         }
     }
     filterActioncount= count;
