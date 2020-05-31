@@ -110,6 +110,7 @@ LXQtMainMenu::LXQtMainMenu(const ILXQtPanelPluginStartupInfo &startupInfo):
     });
 
     connect(mSearchEdit, &QLineEdit::returnPressed, [this] () {
+        mMenu->hide();
         string command = "recoll -q " + this->searchText;
         this->searchText = "";
         pressEnterSearch(command);
@@ -674,9 +675,11 @@ void LXQtMainMenu::actionTrigered(QAction *action) {
     if (resultItem){
         resultItem->open();
     } else if (menuTitle){
-        string command = "recoll -q " + this->searchText;
-        this->searchText = "";
-        pressEnterSearch(command);
+       if(menuTitle->text() == QString::fromStdString("FOLDERS")){
+           string command = "recoll -q " + this->searchText+" mime:inode/directory";
+           this->searchText = "";
+           pressEnterSearch(command);
+       }
     }
 }
 

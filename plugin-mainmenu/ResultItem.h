@@ -48,7 +48,7 @@ public:
         resultWidget->setObjectName(QString::fromStdString("PxMenuItem"));
         setDefaultWidget(resultWidget);
         setText(name);
-        address = address.remove(0,7);
+//        address = address.remove(0,6);
         setToolTip(address);
     }
     void open(){
