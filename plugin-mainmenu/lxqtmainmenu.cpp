@@ -108,7 +108,14 @@ LXQtMainMenu::LXQtMainMenu(const ILXQtPanelPluginStartupInfo &startupInfo):
     connect(mSearchEdit, &QLineEdit::textChanged, [this] (QString const &) {
         mSearchTimer.start();
     });
-    connect(mSearchEdit, &QLineEdit::returnPressed, mSearchView, &ActionView::activateCurrent);
+
+    connect(mSearchEdit, &QLineEdit::returnPressed, [this] () {
+        string command = "recoll -q " + this->searchText;
+        this->searchText = "";
+        pressEnterSearch(command);
+    });
+
+//    connect(mSearchEdit, &QLineEdit::returnPressed, mSearchView, &ActionView::activateCurrent);
     mSearchEditAction->setDefaultWidget(mSearchEdit);
     QTimer::singleShot(0, [this] { settingsChanged(); });
 
@@ -359,37 +366,42 @@ void LXQtMainMenu::searchMenu()
             showHideMenuEntries(mMenu, !shown);
         if (shown)
             mSearchView->setFilter(text);
-            if(!text.isEmpty()) {
-                addItem(QString::fromStdString("SEARCH"), false, mMenu->actions()[0]);
-                if (mSearchView->getCount() != 0)
-                    addItem(QString::fromStdString("APPLICATIONS"), true, mMenu->actions()[1]);
+        if(!text.isEmpty()) {
+            addItem(QString::fromStdString("SEARCH"), false, mMenu->actions()[0]);
+            if (mSearchView->getCount() != 0)
+                addItem(QString::fromStdString("APPLICATIONS"), true, mMenu->actions()[1]);
 
-                string command = "recollq -S type " + text.toStdString();
-                string res = exec(command.c_str());
-                if (res.c_str() != NULL)
-                    buildPxSearch(res);
-            } else {
-                addItem(QString::fromStdString("YOUR APPLICATIONS"), false, mMenu->actions()[0]);
-                buildPxMenu();
-                addItem(QString::fromStdString("YOUR FILES"), false, mMenu->actions()[0]);
-                mMenu->insertAction(mMenu->actions()[1], mMenu->addSeparator());
-                mMenu->insertAction(mMenu->actions()[7], mMenu->addSeparator());
-            }
-            if(files.size()) {
-                for (auto res : files)
-                    mMenu->insertAction(mMenu->actions()[mMenu->actions().size() - 1], res);
-                addItem(QString::fromStdString("FILES"), true,
-                        mMenu->actions()[mMenu->actions().size() - (musics.size() + files.size() + 1)]);
-            }
-            if(folders.size()) {
-                for (auto res : folders)
-                    mMenu->insertAction(mMenu->actions()[1], res);
-                addItem(QString::fromStdString("FOLDERS"), true, mMenu->actions()[1]);
-            }
-
-            mMenu->insertSeparator(mMenu->actions()[1]);
-            mHeavyMenuChanges = true;
-
+            string command = "recollq -S type " + text.toStdString();
+            this->searchText = text.toStdString();
+            string res = exec(command.c_str());
+            if (res.c_str() != NULL)
+                buildPxSearch(res);
+        } else {
+            addItem(QString::fromStdString("YOUR APPLICATIONS"), false, mMenu->actions()[0]);
+            buildPxMenu();
+            addItem(QString::fromStdString("YOUR FILES"), false, mMenu->actions()[0]);
+            mMenu->insertAction(mMenu->actions()[1], mMenu->addSeparator());
+            mMenu->insertAction(mMenu->actions()[7], mMenu->addSeparator());
+        }
+        if(folders.size()) {
+            for (auto res : folders)
+                mMenu->insertAction(mMenu->actions()[1], res);
+            addItem(QString::fromStdString("FOLDERS"), true, mMenu->actions()[1]);
+        }
+        if(files.size()) {
+            for (auto res : files)
+                mMenu->insertAction(mMenu->actions()[mMenu->actions().size() - 1], res);
+            addItem(QString::fromStdString("FILES"), true,
+                    mMenu->actions()[mMenu->actions().size() - files.size() - 1]);
+        }
+        if(musics.size()) {
+            for (auto res : musics)
+                mMenu->insertAction(mMenu->actions()[mMenu->actions().size() - 1], res);
+            addItem(QString::fromStdString("MUSICS"), true,
+                    mMenu->actions()[mMenu->actions().size() - musics.size() - 1]);
+        }
+        mMenu->insertSeparator(mMenu->actions()[1]);
+        mHeavyMenuChanges = true;
 
         mSearchView->setVisible(shown);
         mSearchViewAction->setVisible(shown);
@@ -658,8 +670,13 @@ string LXQtMainMenu::exec(const char* cmd) {
 
 void LXQtMainMenu::actionTrigered(QAction *action) {
     auto resultItem = qobject_cast<ResultItem *>(action);
+    auto menuTitle = qobject_cast<MenuTitle *>(action);
     if (resultItem){
         resultItem->open();
+    } else if (menuTitle){
+        string command = "recoll -q " + this->searchText;
+        this->searchText = "";
+        pressEnterSearch(command);
     }
 }
 
@@ -693,7 +710,7 @@ void LXQtMainMenu::buildPxSearch(string searchResult) {
                                              QString::fromStdString(tokens.at(1)), mMenu->font(), nullptr);
             if (tokens.at(0).find("directory") != string::npos) {
                 folders.push_back(resultItem);
-            } else if (tokens.at(0).find("music") != string::npos) {
+            } else if (tokens.at(0).find("audio") != string::npos) {
                 musics.push_back(resultItem);
             } else {
                 files.push_back(resultItem);
@@ -701,6 +718,20 @@ void LXQtMainMenu::buildPxSearch(string searchResult) {
         }
         i++;
     }
+}
+
+void  LXQtMainMenu::pressEnterSearch(string command){
+    QThread thread;
+    QEventLoop loop;
+    QObject context;
+    context.moveToThread(&thread);
+    QObject::connect(&thread, &QThread::started, &context, [&]() {
+    //string command = "recoll -q " + this->searchText;
+    string res = exec(command.c_str());
+    });
+    thread.start();
+    loop.exec();
+    thread.quit();
 }
 
 #undef DEFAULT_SHORTCUT

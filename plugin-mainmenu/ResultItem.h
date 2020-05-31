@@ -31,7 +31,7 @@ public:
         this->type = QString::fromStdString(_type);
         this->address = address;
         const int icon_size = QFontMetrics(mfont).height()*0.8;
-        auto itemIcon = buildIconFromTheme(type,QSize(icon_size,icon_size));
+        auto itemIcon = buildIconFromTheme(QString::fromStdString(_type),QSize(icon_size,icon_size));
         auto Tlayout = new QHBoxLayout;
         Tlayout->addWidget(itemIcon);
         int left,right,top,buttom;
