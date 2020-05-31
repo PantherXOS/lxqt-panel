@@ -45,6 +45,7 @@
 #include <QKeySequence>
 #include <string>
 #include <iostream>
+#include <QThread>
 
 #include "menustyle.h"
 #include <memory>
@@ -100,6 +101,7 @@ private:
     QToolButton mButton;
     QString mLogDir;
     QMenu* mMenu;
+    string searchText;
     QList <ResultItem *> folders;
     QList <ResultItem *> files;
     QList <ResultItem *> musics;
@@ -115,6 +117,7 @@ private:
     void addItem(QString text, bool setColor, QAction *before);
     void buildPxMenu();
     void buildPxSearch(string searchResult);
+    void pressEnterSearch(string command);
     string exec(const char* cmd);
     bool mFilterMenu; //!< searching should perform hiding nonmatching items in menu
     bool mFilterShow; //!< searching should list matching items in top menu
