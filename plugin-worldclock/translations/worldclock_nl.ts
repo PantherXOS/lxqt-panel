@@ -4,7 +4,7 @@
 <context>
     <name>LXQtWorldClock</name>
     <message>
-        <location filename="../lxqtworldclock.cpp" line="244"/>
+        <location filename="../lxqtworldclock.cpp" line="246"/>
         <source>&apos;&lt;b&gt;&apos;HH:mm:ss&apos;&lt;/b&gt;&lt;br/&gt;&lt;font size=&quot;-2&quot;&gt;&apos;ddd, d MMM yyyy&apos;&lt;br/&gt;&apos;TT&apos;&lt;/font&gt;&apos;</source>
         <translation>&apos;&lt;b&gt;&apos;UU:mm:ss&apos;&lt;/b&gt;&lt;br/&gt;&lt;font size=&quot;-2&quot;&gt;&apos;ddd, d MMM jjjj&apos;&lt;br/&gt;&apos;TT&apos;&lt;/font&gt;&apos;</translation>
     </message>
@@ -14,7 +14,7 @@
     <message>
         <location filename="../lxqtworldclockconfiguration.ui" line="14"/>
         <source>World Clock Settings</source>
-        <translation>Instellingen van Wereldklok</translation>
+        <translation>Instellingen van Klok</translation>
     </message>
     <message>
         <location filename="../lxqtworldclockconfiguration.ui" line="24"/>
@@ -123,7 +123,7 @@
     <message>
         <location filename="../lxqtworldclockconfiguration.ui" line="201"/>
         <location filename="../lxqtworldclockconfiguration.ui" line="436"/>
-        <location filename="../lxqtworldclockconfiguration.cpp" line="584"/>
+        <location filename="../lxqtworldclockconfiguration.cpp" line="586"/>
         <source>Custom name</source>
         <translation>Aangepaste naam</translation>
     </message>
@@ -229,16 +229,21 @@
     </message>
     <message>
         <location filename="../lxqtworldclockconfiguration.ui" line="535"/>
-        <source>Show &amp;week number</source>
-        <translation>Toon &amp;weeknummer</translation>
+        <source>Show &amp;week numbers in popup calendar</source>
+        <translation>Toon &amp;weeknummers in popupkalender</translation>
     </message>
     <message>
-        <location filename="../lxqtworldclockconfiguration.cpp" line="106"/>
+        <location filename="../lxqtworldclockconfiguration.ui" line="545"/>
+        <source>S&amp;how tooltip</source>
+        <translation>Toon &amp;tooltip</translation>
+    </message>
+    <message>
+        <location filename="../lxqtworldclockconfiguration.cpp" line="107"/>
         <source>&apos;&lt;b&gt;&apos;HH:mm:ss&apos;&lt;/b&gt;&lt;br/&gt;&lt;font size=&quot;-2&quot;&gt;&apos;ddd, d MMM yyyy&apos;&lt;br/&gt;&apos;TT&apos;&lt;/font&gt;&apos;</source>
         <translation>&apos;&lt;b&gt;&apos;UU:mm:ss&apos;&lt;/b&gt;&lt;br/&gt;&lt;font size=&quot;-2&quot;&gt;&apos;ddd, d MMM jjjj&apos;&lt;br/&gt;&apos;TT&apos;&lt;/font&gt;&apos;</translation>
     </message>
     <message>
-        <location filename="../lxqtworldclockconfiguration.cpp" line="583"/>
+        <location filename="../lxqtworldclockconfiguration.cpp" line="585"/>
         <source>Input custom time zone name</source>
         <translation>Geef aangepaste naam in voor tijdzone</translation>
     </message>
@@ -248,7 +253,7 @@
     <message>
         <location filename="../lxqtworldclockconfigurationmanualformat.ui" line="14"/>
         <source>World Clock Manual Format Configuration</source>
-        <translation>Handmatig instellen wereldklokformaat</translation>
+        <translation>Handmatig instellen klokweergave</translation>
     </message>
     <message>
         <location filename="../lxqtworldclockconfigurationmanualformat.ui" line="83"/>
@@ -334,7 +339,7 @@
     <message>
         <location filename="../lxqtworldclockconfigurationtimezones.ui" line="14"/>
         <source>World Clock Time Zones</source>
-        <translation>Tijdzones van Wereldklok</translation>
+        <translation>Tijdzones van Klok</translation>
     </message>
     <message>
         <location filename="../lxqtworldclockconfigurationtimezones.ui" line="36"/>

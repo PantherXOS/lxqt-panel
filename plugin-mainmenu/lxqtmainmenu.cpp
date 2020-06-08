@@ -362,6 +362,7 @@ void LXQtMainMenu::searchMenu()
         files.clear();
         folders.clear();
         musics.clear();
+        mHeavyMenuChanges = true;
         const bool shown = !text.isEmpty();
         if (mFilterShowHideMenu)
             showHideMenuEntries(mMenu, !shown);
