@@ -6,7 +6,7 @@
     <message>
         <location filename="../lxqtquicklaunch.cpp" line="226"/>
         <source>Drop Error</source>
-        <translation>Neerzetfout</translation>
+        <translation>Sleepfout</translation>
     </message>
     <message>
         <location filename="../lxqtquicklaunch.cpp" line="227"/>
@@ -17,26 +17,31 @@
         <location filename="../lxqtquicklaunch.cpp" line="333"/>
         <source>Drop application
 icons here</source>
-        <translation>Zet pictogrammen van
-toepassingen hier neer</translation>
+        <translation>Sleep pictogrammen van
+toepassingen hiernaartoe</translation>
     </message>
 </context>
 <context>
     <name>QuickLaunchButton</name>
     <message>
         <location filename="../quicklaunchbutton.cpp" line="55"/>
+        <source>(Ctrl + DND)</source>
+        <translation>Ctrl + slepen</translation>
+    </message>
+    <message>
+        <location filename="../quicklaunchbutton.cpp" line="57"/>
         <source>Move left</source>
         <translation>Verplaats naar links</translation>
     </message>
     <message>
-        <location filename="../quicklaunchbutton.cpp" line="58"/>
+        <location filename="../quicklaunchbutton.cpp" line="60"/>
         <source>Move right</source>
         <translation>Verplaats naar rechts</translation>
     </message>
     <message>
-        <location filename="../quicklaunchbutton.cpp" line="62"/>
+        <location filename="../quicklaunchbutton.cpp" line="64"/>
         <source>Remove from quicklaunch</source>
-        <translation>Verwijder uit snelstartbalk</translation>
+        <translation>Verwijder uit snelstarter</translation>
     </message>
 </context>
 </TS>

@@ -4,7 +4,7 @@
 <context>
     <name>LXQtTaskBar</name>
     <message>
-        <location filename="../lxqttaskbar.cpp" line="650"/>
+        <location filename="../lxqttaskbar.cpp" line="655"/>
         <source>Activate task %1</source>
         <translation>Activeer taak %1</translation>
     </message>
@@ -12,97 +12,97 @@
 <context>
     <name>LXQtTaskButton</name>
     <message>
-        <location filename="../lxqttaskbutton.cpp" line="576"/>
+        <location filename="../lxqttaskbutton.cpp" line="635"/>
         <source>Application</source>
-        <translation>Toepassing</translation>
+        <translation>Applicatie</translation>
     </message>
     <message>
-        <location filename="../lxqttaskbutton.cpp" line="610"/>
+        <location filename="../lxqttaskbutton.cpp" line="669"/>
         <source>To &amp;Desktop</source>
         <translation>Naar &amp;bureaublad</translation>
     </message>
     <message>
-        <location filename="../lxqttaskbutton.cpp" line="612"/>
+        <location filename="../lxqttaskbutton.cpp" line="671"/>
         <source>&amp;All Desktops</source>
         <translation>&amp;Alle bureaubladen</translation>
     </message>
     <message>
-        <location filename="../lxqttaskbutton.cpp" line="620"/>
+        <location filename="../lxqttaskbutton.cpp" line="679"/>
         <source>Desktop &amp;%1</source>
         <translation>Bureaublad &amp;%1</translation>
     </message>
     <message>
-        <location filename="../lxqttaskbutton.cpp" line="627"/>
+        <location filename="../lxqttaskbutton.cpp" line="686"/>
         <source>&amp;To Current Desktop</source>
         <translation>&amp;Naar huidig bureaublad</translation>
     </message>
     <message>
-        <location filename="../lxqttaskbutton.cpp" line="635"/>
+        <location filename="../lxqttaskbutton.cpp" line="694"/>
         <source>&amp;Move</source>
-        <translation>Verplaatsen</translation>
+        <translation>&amp;Verplaatsen</translation>
     </message>
     <message>
-        <location filename="../lxqttaskbutton.cpp" line="638"/>
+        <location filename="../lxqttaskbutton.cpp" line="697"/>
         <source>Resi&amp;ze</source>
-        <translation>Herschalen</translation>
+        <translation>&amp;Herschalen</translation>
     </message>
     <message>
-        <location filename="../lxqttaskbutton.cpp" line="645"/>
+        <location filename="../lxqttaskbutton.cpp" line="704"/>
         <source>Ma&amp;ximize</source>
         <translation>Ma&amp;ximaliseren</translation>
     </message>
     <message>
-        <location filename="../lxqttaskbutton.cpp" line="652"/>
+        <location filename="../lxqttaskbutton.cpp" line="711"/>
         <source>Maximize vertically</source>
         <translation>Verticaal maximaliseren</translation>
     </message>
     <message>
-        <location filename="../lxqttaskbutton.cpp" line="657"/>
+        <location filename="../lxqttaskbutton.cpp" line="716"/>
         <source>Maximize horizontally</source>
         <translation>Horizontaal maximaliseren</translation>
     </message>
     <message>
-        <location filename="../lxqttaskbutton.cpp" line="663"/>
+        <location filename="../lxqttaskbutton.cpp" line="722"/>
         <source>&amp;Restore</source>
         <translation>&amp;Herstellen</translation>
     </message>
     <message>
-        <location filename="../lxqttaskbutton.cpp" line="667"/>
+        <location filename="../lxqttaskbutton.cpp" line="726"/>
         <source>Mi&amp;nimize</source>
         <translation>Mi&amp;nimaliseren</translation>
     </message>
     <message>
-        <location filename="../lxqttaskbutton.cpp" line="673"/>
+        <location filename="../lxqttaskbutton.cpp" line="732"/>
         <source>Roll down</source>
         <translation>Uitrollen</translation>
     </message>
     <message>
-        <location filename="../lxqttaskbutton.cpp" line="679"/>
+        <location filename="../lxqttaskbutton.cpp" line="738"/>
         <source>Roll up</source>
         <translation>Oprollen</translation>
     </message>
     <message>
-        <location filename="../lxqttaskbutton.cpp" line="687"/>
+        <location filename="../lxqttaskbutton.cpp" line="746"/>
         <source>&amp;Layer</source>
         <translation>&amp;Laag</translation>
     </message>
     <message>
-        <location filename="../lxqttaskbutton.cpp" line="689"/>
+        <location filename="../lxqttaskbutton.cpp" line="748"/>
         <source>Always on &amp;top</source>
-        <translation>Altijd bovenop</translation>
+        <translation>Altijd &amp;bovenop</translation>
     </message>
     <message>
-        <location filename="../lxqttaskbutton.cpp" line="695"/>
+        <location filename="../lxqttaskbutton.cpp" line="754"/>
         <source>&amp;Normal</source>
         <translation>&amp;Normaal</translation>
     </message>
     <message>
-        <location filename="../lxqttaskbutton.cpp" line="701"/>
+        <location filename="../lxqttaskbutton.cpp" line="760"/>
         <source>Always on &amp;bottom</source>
-        <translation>Altijd onderop</translation>
+        <translation>Altijd &amp;onderop</translation>
     </message>
     <message>
-        <location filename="../lxqttaskbutton.cpp" line="709"/>
+        <location filename="../lxqttaskbutton.cpp" line="768"/>
         <source>&amp;Close</source>
         <translation>&amp;Sluiten</translation>
     </message>
@@ -117,7 +117,7 @@
     <message>
         <location filename="../lxqttaskgroup.cpp" line="84"/>
         <source>Close group</source>
-        <translation>Sluit groep</translation>
+        <translation>Groep sluiten</translation>
     </message>
 </context>
 <context>
@@ -125,7 +125,7 @@
     <message>
         <location filename="../lxqttaskbarconfiguration.ui" line="14"/>
         <source>Task Manager Settings</source>
-        <translation>Instellingen van taakbeheerder</translation>
+        <translation>Instellingen van Taakbalk</translation>
     </message>
     <message>
         <location filename="../lxqttaskbarconfiguration.ui" line="20"/>
@@ -140,7 +140,7 @@
     <message>
         <location filename="../lxqttaskbarconfiguration.ui" line="55"/>
         <source>Show only windows from &amp;panel&apos;s screen</source>
-        <translation>Toon alleen vensters van &amp;balk&apos;s scherm</translation>
+        <translation>Toon alleen vensters van scherm van &amp;werkbalk</translation>
     </message>
     <message>
         <location filename="../lxqttaskbarconfiguration.ui" line="62"/>
@@ -155,7 +155,7 @@
     <message>
         <location filename="../lxqttaskbarconfiguration.cpp" line="49"/>
         <source>Cycle windows on wheel scrolling</source>
-        <translation>Bladeren door vensters bij muiswieldraaien</translation>
+        <translation>Blader door vensters bij scrollen met muiswiel</translation>
     </message>
     <message>
         <location filename="../lxqttaskbarconfiguration.ui" line="143"/>
@@ -165,7 +165,7 @@
     <message>
         <location filename="../lxqttaskbarconfiguration.ui" line="152"/>
         <source>Show popup on mouse hover</source>
-        <translation>Toon opduikvenster bij zweven met muispijl</translation>
+        <translation>Toon popupvenster bij zweven met muis</translation>
     </message>
     <message>
         <location filename="../lxqttaskbarconfiguration.ui" line="162"/>
@@ -202,12 +202,12 @@
     <message>
         <location filename="../lxqttaskbarconfiguration.ui" line="240"/>
         <source>Use icons by WindowClass, if available</source>
-        <translation>Gebruik pictogrammen van WindowClass, indien beschikbaar</translation>
+        <translation>Gebruik pictogrammen van vensterklasse, indien beschikbaar</translation>
     </message>
     <message>
         <location filename="../lxqttaskbarconfiguration.ui" line="233"/>
         <source>Auto&amp;rotate buttons when the panel is vertical</source>
-        <translation>Draai knoppen automatisch als de balk verticaal is</translation>
+        <translation>&amp;Draai knoppen automatisch als de balk verticaal is</translation>
     </message>
     <message>
         <location filename="../lxqttaskbarconfiguration.ui" line="171"/>
@@ -250,7 +250,17 @@
         <translation>Scrol omhoog om te minimaliseren, naar beneden om naar boven te brengen</translation>
     </message>
     <message>
+        <location filename="../lxqttaskbarconfiguration.cpp" line="52"/>
+        <source>Scroll up to move to next desktop, down to previous</source>
+        <translation>Scrol omhoog om naar het volgende bureaublad te gaan, omlaag voor het vorige bureablad</translation>
+    </message>
+    <message>
         <location filename="../lxqttaskbarconfiguration.cpp" line="53"/>
+        <source>Scroll up to move to previous desktop, down to next</source>
+        <translation>Scrol omhoog om naar het vorige bureaublad te gaan, omlaag voor het volgende bureablad</translation>
+    </message>
+    <message>
+        <location filename="../lxqttaskbarconfiguration.cpp" line="55"/>
         <source>Current</source>
         <translation>Huidig</translation>
     </message>
