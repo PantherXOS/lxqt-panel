@@ -34,11 +34,7 @@ public:
         auto itemIcon = buildIconFromTheme(QString::fromStdString(_type),QSize(icon_size,icon_size));
         auto Tlayout = new QHBoxLayout;
         Tlayout->addWidget(itemIcon);
-        int left,right,top,buttom;
-        itemIcon->getContentsMargins(&left,&top,&right,&buttom);
         Tlayout->addWidget(title);
-        //if(!searchPart)
-           // Tlayout->setContentsMargins(2,2,2,2);
         Tlayout->setAlignment(Qt::AlignLeft);
 
         resultWidget = new QWidget;
@@ -48,7 +44,6 @@ public:
         resultWidget->setObjectName(QString::fromStdString("PxMenuItem"));
         setDefaultWidget(resultWidget);
         setText(name);
-//        address = address.remove(0,6);
         setToolTip(address);
     }
     void open(){
