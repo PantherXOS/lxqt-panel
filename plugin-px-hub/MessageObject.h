@@ -46,7 +46,7 @@ public:
     }
 
     void setMessage(const string &_message) {
-        this->message = _message.substr(1, _message.length() - 2);
+        this->message = _message;
     }
 
     const string getIcon() const {

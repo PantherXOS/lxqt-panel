@@ -42,10 +42,6 @@ void hub::refresh() {
         mainMenu->addAction(buildAccountItem(s));
         mainMenu->addSeparator();
     }
-  //  mainMenu->addSeparator();
-//    QAction* separator1 = mainMenu->addSeparator();
-//    separator1->setObjectName("separator1");
-//    mainMenu->setStyleSheet("QToolBar::separator#separator1 {color: white; background-color: white; width: 30; height: 30px; }");
     auto seperator1 = new LineSeperator();
     auto sWidgetAction = new QWidgetAction(this);
     sWidgetAction->setDefaultWidget(seperator1);
@@ -239,8 +235,11 @@ QWidgetAction *hub::buildMessageItem(MessageObject message) {
     qlayout->setSpacing(0);
     qlayout->setContentsMargins(0,0,0,0);
 
+    auto _message = message.getMessage().substr(0, MAX_MESSAGE_SIZE);
+    if (message.getMessage().size() >= MAX_MESSAGE_SIZE)
+        _message += "...";
     auto messagePreview = new QLabel;
-    messagePreview->setText(QString::fromStdString(message.getMessage()));
+    messagePreview->setText(QString::fromStdString(_message));
     messagePreview->setFont(QFont(QString::fromStdString("Helvetica"),8));
     messagePreview->setContentsMargins(0,2,0,0);
 
