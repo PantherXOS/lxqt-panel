@@ -65,7 +65,6 @@ void hub::refresh() {
         mainMenu->addAction(buildMessageItem(m));
         mainMenu->addSeparator();
     }
-    //mainMenu->setObjectName("LXQtMountPopup");
     mainMenu->addSeparator();
     mButton.setStyleSheet(QString::fromStdString(("QToolButton::menu-indicator { image: none; }")));
     mButton.setMenu(mainMenu);
@@ -176,7 +175,7 @@ QWidgetAction *hub::createTitle(QString title, QString icon) {
     mainLayout->addLayout(rlayout);
 
     auto sWidget = new QWidget;
-    sWidget->setObjectName(QString::fromStdString("PxHubItem"));
+    sWidget->setObjectName(QString::fromStdString("PxHubTitle"));
     sWidget->setLayout(mainLayout);
     sWidget->setContentsMargins(0,0,0,5);
     auto sWidgetAction = new QWidgetAction(this);
