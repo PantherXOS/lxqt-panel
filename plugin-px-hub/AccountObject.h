@@ -17,11 +17,11 @@ using namespace std;
 
 class AccountObject {
 public:
-    int getTime() const {
+    string getTime() const {
         return time;
     }
 
-    void setTime(int time) {
+    void setTime(string time) {
         AccountObject::time = time;
     }
 
@@ -82,8 +82,8 @@ public:
     }
 
 private:
-    int time,unread;
-    string type,icon,link,altLink,title;
+    int unread;
+    string time, type,icon,link,altLink,title;
     Status  status;
 
 };

@@ -31,7 +31,7 @@ vector<AccountObject> RPCHubClient::getAccountList() {
                     account.setStatus(Status::offline);
                     break;
             }
-            account.setTime(act.getTime());
+            account.setTime(act.getTime().cStr());
             account.setUnread(act.getUnread());
             account.setType(act.getType().cStr());
             account.setIcon(act.getIcon().cStr());
@@ -63,7 +63,7 @@ vector<MessageObject> RPCHubClient::getMessageList(int n) {
             msgObj.setSender(msg.getSender().cStr());
             msgObj.setLink(msg.getLink().cStr());
             msgObj.setAltLink(msg.getAltLink().cStr());
-            msgObj.setTime(UTILS::timestampToString(msg.getTime()));
+            msgObj.setTime(msg.getTime().cStr());
             messageList.push_back(msgObj);
         }
     } catch (kj::Exception e){

@@ -217,7 +217,9 @@ QWidgetAction *hub::buildMessageItem(MessageObject message) {
     llayout->setContentsMargins(0,0,0,0);
 
     auto messageTime = new QLabel;
-    messageTime->setText(QString::fromStdString(message.getTime()));
+    QDateTime dt = QDateTime::fromString(QString::fromStdString(message.getTime()), 
+                                         QString::fromStdString("yyyy-MM-ddThh:mm:ss.zzzZ"));
+    messageTime->setText(dt.toString(QString::fromStdString("yyyy-mm-dd hh:mm")));
     messageTime->setFont(QFont(QString::fromStdString("Helvetica"),8));
 
     auto rlayout = new QHBoxLayout;

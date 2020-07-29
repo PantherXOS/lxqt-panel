@@ -1,7 +1,7 @@
 @0xc893ae030f1e9308;
 
 struct AccountStatus{
-	    time	@0 : UInt64;
+	    time	@0 : Text;
         type    @1 : Text;
         icon    @2 : Text;
         link    @3 : Text;
@@ -20,7 +20,7 @@ struct AccountStatus{
 }
 
 struct Message{
-	    time	    @0 : UInt64;
+	    time	    @0 : Text;
 	    msgId	    @1 : Text;
 	    account     @2 : Text;
         source      @3 : Text;

@@ -25,6 +25,7 @@
 #include <QFrame>
 #include <QFont>
 #include <QIcon>
+#include <QDateTime>
 #include "../panel/ilxqtpanelplugin.h"
 
 #include "rpc/RPCHubClient.h"
