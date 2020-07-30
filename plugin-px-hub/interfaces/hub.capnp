@@ -33,13 +33,14 @@ struct Message{
         title       @10: Text;
         message     @11: Text;
         subType     @12: Text;
+        unread      @13: Bool;
 }
 
 interface HubReader{
-        getLastMessages @0 (count: Int8 ) -> (messages:List(Message));
-        getLastMessage @1 (account: Text ) -> (message: Message);
-        getAccountStatus @2 (account: Text) -> (accountStatus: AccountStatus);
-        getAccountsStatus @3 () -> (accountsStatus:List(AccountStatus));
+        getLastMessages     @0 (count: Int8 )   -> (messages:List(Message));
+        getLastMessage      @1 (account: Text ) -> (message: Message);
+        getAccountStatus    @2 (account: Text)  -> (accountStatus: AccountStatus);
+        getAccountsStatus   @3 ()               -> (accountsStatus:List(AccountStatus));
 }
 
 struct HubEvent {

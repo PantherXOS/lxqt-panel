@@ -10,10 +10,11 @@ using namespace std;
 class MessageObject{
 private:
     string time, message, icon, sender, link, altLink;
+    bool unread;
 public:
     const string toString(){
         string _str = "{" + sender + ", " + time + ", " + icon + ", " + link + ", " + altLink
-                + ", " + message +"}";
+                + ", " + message + ", " + to_string(unread) +"}";
         return _str;
     }
 
@@ -63,6 +64,14 @@ public:
 
     void setSender(const string sender) {
         MessageObject::sender = sender;
+    }
+
+    bool isUnread(){
+        return unread;
+    }
+
+    void setUnread(bool unread){
+        MessageObject::unread = unread;
     }
 };
 

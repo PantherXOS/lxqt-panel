@@ -107,6 +107,10 @@ QWidgetAction* hub::buildAccountItem(AccountObject account) {
     auto accountIcon = buildIconFromTheme(QString::fromStdString(account.getIcon()),QSize(ACCOUNT_ICON_SIZE,ACCOUNT_ICON_SIZE));
     accountIcon->setContentsMargins(3,0,0,0);
     auto accountTitle = new QLabel;
+    QFont accountTitleFont = accountTitle->font();
+    accountTitleFont.setPointSize(ACCOUNT_TITLE_FONT_SIZE);
+    accountTitle->setFont(accountTitleFont);
+
     string acc = account.getTitle();
     if(acc.size()>MAX_ACCOUNT_SIZE)
         acc = acc.substr(0,MAX_ACCOUNT_SIZE)+"...";
@@ -153,8 +157,11 @@ QWidgetAction* hub::buildAccountItem(AccountObject account) {
 
 QWidgetAction *hub::createTitle(QString title, QString icon) {
     auto subject = new QLabel;
+    auto titleFont = subject->font();
+    titleFont.setPointSize(HUB_TITLE_FONT_SIZE);
+
     subject->setText(title);
-    subject->setFont(QFont(QString::fromStdString("Helvetica"),11,QFont::Bold));
+    subject->setFont(titleFont);
 
     auto slayout = new QHBoxLayout;
     slayout->setAlignment(Qt::AlignLeft);
@@ -203,11 +210,21 @@ void hub::hubEventsHandler(EventObject *eventObject){
 
 QWidgetAction *hub::buildMessageItem(MessageObject message) {
     auto messageSender = new QLabel;
+    QFont messageSenderFont = messageSender->font();
+    messageSenderFont.setPointSize(MSG_SENDER_FONT_SIZE);
+    
+    QFont messageTimeFont = messageSender->font();
+    messageTimeFont.setPointSize(MSG_TIME_FONT_SIZE);
+
+    QFont messagePreviewFont = messageSender->font();
+    messagePreviewFont.setPointSize(MSG_PREVIEW_FONT_SIZE);
+    if(message.isUnread())
+        messagePreviewFont.setBold(true);
     string acc = message.getSender();
     if(acc.size()>MAX_ACCOUNT_SIZE)
         acc = acc.substr(0,MAX_ACCOUNT_SIZE)+"...";
     messageSender->setText(QString::fromStdString(acc));
-    messageSender->setFont(QFont(QString::fromStdString("Helvetica"),9,QFont::Bold));
+    messageSender->setFont(messageSenderFont);
 
     auto llayout = new QHBoxLayout;
     llayout->addWidget(messageSender);
@@ -220,7 +237,7 @@ QWidgetAction *hub::buildMessageItem(MessageObject message) {
     QDateTime dt = QDateTime::fromString(QString::fromStdString(message.getTime()), 
                                          QString::fromStdString("yyyy-MM-ddThh:mm:ss.zzzZ"));
     messageTime->setText(dt.toString(QString::fromStdString("yyyy-mm-dd hh:mm")));
-    messageTime->setFont(QFont(QString::fromStdString("Helvetica"),8));
+    messageTime->setFont(messageTimeFont);
 
     auto rlayout = new QHBoxLayout;
     rlayout->addWidget(messageTime);
@@ -241,7 +258,7 @@ QWidgetAction *hub::buildMessageItem(MessageObject message) {
         _message += "...";
     auto messagePreview = new QLabel;
     messagePreview->setText(QString::fromStdString(_message));
-    messagePreview->setFont(QFont(QString::fromStdString("Helvetica"),8));
+    messagePreview->setFont(messagePreviewFont);
     messagePreview->setContentsMargins(0,2,0,0);
 
     auto Tlayout = new QVBoxLayout;

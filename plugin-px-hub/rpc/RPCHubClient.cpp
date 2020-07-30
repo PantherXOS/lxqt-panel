@@ -64,6 +64,7 @@ vector<MessageObject> RPCHubClient::getMessageList(int n) {
             msgObj.setLink(msg.getLink().cStr());
             msgObj.setAltLink(msg.getAltLink().cStr());
             msgObj.setTime(msg.getTime().cStr());
+            msgObj.setUnread(msg.getUnread());
             messageList.push_back(msgObj);
         }
     } catch (kj::Exception e){
