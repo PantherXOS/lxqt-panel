@@ -218,8 +218,12 @@ QWidgetAction *hub::buildMessageItem(MessageObject message) {
 
     QFont messagePreviewFont = messageSender->font();
     messagePreviewFont.setPointSize(MSG_PREVIEW_FONT_SIZE);
-    if(message.isUnread())
-        messagePreviewFont.setBold(true);
+    if(message.isUnread()){
+        messageSenderFont.setItalic(true);
+        messageTimeFont.setItalic(true);
+        messagePreviewFont.setPointSize(MSG_UNREAD_PREVIEW_FONT_SIZE);
+        messagePreviewFont.setItalic(true);
+    }
     string acc = message.getSender();
     if(acc.size()>MAX_ACCOUNT_SIZE)
         acc = acc.substr(0,MAX_ACCOUNT_SIZE)+"...";
@@ -253,11 +257,18 @@ QWidgetAction *hub::buildMessageItem(MessageObject message) {
     qlayout->setSpacing(0);
     qlayout->setContentsMargins(0,0,0,0);
 
-    auto _message = message.getMessage().substr(0, MAX_MESSAGE_SIZE);
-    if (message.getMessage().size() >= MAX_MESSAGE_SIZE)
-        _message += "...";
+
+    QFontMetrics fm(messagePreviewFont);
+    int textWidth =fm.width(QString::fromStdString(message.getMessage()));
+    auto _msg = message.getMessage();
+    while(textWidth > MAX_MESSAGE_SIZE_WIDTH){
+        _msg = _msg.substr(0, _msg.size() - 6);
+        _msg += "...";
+        textWidth =fm.width(QString::fromStdString(_msg));
+    }
+    
     auto messagePreview = new QLabel;
-    messagePreview->setText(QString::fromStdString(_message));
+    messagePreview->setText(QString::fromStdString(_msg));
     messagePreview->setFont(messagePreviewFont);
     messagePreview->setContentsMargins(0,2,0,0);
 
