@@ -239,7 +239,7 @@ QWidgetAction *hub::buildMessageItem(MessageObject message) {
 
     auto messageTime = new QLabel;
     QDateTime dt = QDateTime::fromString(QString::fromStdString(message.getTime()), 
-                                         QString::fromStdString("yyyy-MM-ddThh:mm:ss.zzzZ"));
+                                        Qt::ISODate);
     messageTime->setText(dt.toString(QString::fromStdString("yyyy-MM-dd hh:mm")));
     messageTime->setFont(messageTimeFont);
 
