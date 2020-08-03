@@ -199,11 +199,17 @@ void hub::hubEventsHandler(EventObject *eventObject){
     QString popup;
     auto params = eventObject->getParams();
     if(eventObject->getEvent() == QString::fromStdString("Status_Change")){
-       popup = params[QString::fromStdString("account")] + QString::fromStdString(" is ") + params[QString::fromStdString("new-status")];
-       LXQt::Notification::notify(popup);
-    }else if(eventObject->getEvent() == QString::fromStdString("Service_refresh")){
-        popup = params[QString::fromStdString("account")] + QString::fromStdString(" has 1 new message");
+        popup = params[QString::fromStdString("account")] + QString::fromStdString(" is ") + params[QString::fromStdString("new-status")];
         LXQt::Notification::notify(popup);
+    }else if(eventObject->getEvent() == QString::fromStdString("Service_refresh")){
+        auto newmsg = eventObject->getParam(QString::fromStdString("new_message"));
+        if(!newmsg.isEmpty()){
+            popup = params[QString::fromStdString("account")] + 
+                    QString::fromStdString(" has ") + 
+                    newmsg + 
+                    QString::fromStdString(" new message");
+            LXQt::Notification::notify(popup);
+        }
     }
     refresh();
 }

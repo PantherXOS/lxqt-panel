@@ -58,6 +58,17 @@ public:
         this->params = params;
     }
 
+    QString getParam(const QString &key){
+        QString result = QString::fromStdString("");
+        for (auto p : params) {
+            if(p.first == key){
+                result = p.second;
+                break;
+            }
+        }
+        return result;
+    }
+
     QString toString(){
         QString str = QString::fromStdString("Event: \n\r\ttopic : ")+ topic + QString::fromStdString("\n\r\t") +
                       QString::fromStdString("time  : ") + QString::fromStdString(to_string(time)) + QString::fromStdString("\n\r\t") +
