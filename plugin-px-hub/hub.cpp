@@ -15,8 +15,7 @@ hub::hub(const ILXQtPanelPluginStartupInfo &startupInfo) :
 
 void hub::realign()
 {
-  mButton.setFixedHeight(panel()->iconSize());
-  mButton.setFixedWidth(panel()->iconSize());
+    mButton.setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
 }
 
 void hub::refresh() {

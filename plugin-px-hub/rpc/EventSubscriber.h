@@ -49,6 +49,5 @@ private:
     std::thread statThread;
     size_t sz;
     unsigned char* buff;
-    QToolButton *mButton;
 };
 #endif //PX_HUB_SERVICE_EVENTSUBSCRIBER_H

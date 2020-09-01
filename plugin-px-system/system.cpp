@@ -18,8 +18,7 @@ System::System(const ILXQtPanelPluginStartupInfo &startupInfo) :
 
 void System::realign()
 {
-  mButton.setFixedHeight(panel()->iconSize());
-  mButton.setFixedWidth(panel()->iconSize());
+    mButton.setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
 }
 
 void System::refresh() {
