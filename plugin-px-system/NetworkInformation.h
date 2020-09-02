@@ -5,16 +5,23 @@
 #ifndef LXQT_PANEL_NETWORKINFORMATION_H
 #define LXQT_PANEL_NETWORKINFORMATION_H
 
+#include <QObject>
 #include <string>
 #include <iostream>
+#include <QString>
 using namespace std;
 
-class NetworkInformation {
+class NetworkInformation{
 public:
-    string name;
-    string value;
+    NetworkInformation(){
+        qRegisterMetaType<NetworkInformation>("NetworkInformation");
+        qRegisterMetaType<QVector<NetworkInformation>>("QVector<NetworkInformation>");
+    }
+
+    QString name;
+    QString value;
     bool status = false;
-    string profileName;
+    QString profileName;
     bool wifiStatus = false;
     bool vpnStatus = false;
 };

@@ -6,12 +6,15 @@ set(HEADERS
         system.h
 		Settings.h
 		NetworkInformation.h
+		NetworkInspection.h
 		CheckUpdate.h
 		)
 
 set(SOURCES
 		system.cpp
 		CheckUpdate.cpp
+		NetworkInspection.cpp
+		PxIcon.h
 		)
 
 set(RESOURCES

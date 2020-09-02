@@ -40,7 +40,8 @@
 #include "rapidjson/document.h"
 #include "NetworkInformation.h"
 #include "CheckUpdate.h"
-
+#include "NetworkInspection.h"
+#include "PxIcon.h"
 
 using namespace std;
 using namespace rapidjson;
@@ -62,29 +63,29 @@ public slots:
 
 
 private slots:
-    void refresh();
+    void refresh(QWidget *netInfo=nullptr);
     void updateHandler(QString packages);
+    void netInfoParser(const QVector <NetworkInformation> &netInfos);
 
 private:
+    QLayout *netInfoRecordLayout(QString text, QString icon);
     QLabel *buildIconFromFile(QString file, QSize size);
     QLabel *buildIconFromTheme(QString icon, QSize size);
     QWidgetAction *createTitle(QString title, QString icon);
     QWidgetAction* getUser();
     QWidgetAction* getFirewallStatus();
-    QWidgetAction* getInternet();
-    void getVpnStatus();
-    void getWifiStatus();
+    void setVpnStatus(NetworkInformation vpnStatus);
+    void setWifiStatus(NetworkInformation wifiStatus);
     QWidgetAction* getBTStatus();
     QWidgetAction* getUpdateStat();
     QLayout *internetLayout(QString text, QString icon);
     QWidgetAction* generalItems(QString name,QString information,bool stat,QString icon);
     string exec(const char* cmd);
-    bool networkDataParser(string data);
     QToolButton mButton;
     bool mHidden;
     string vpnName;
-    vector <NetworkInformation> internetInfo;
     QLabel *updateTextLabel;
+    NetworkInspection *networkInspection;
 };
 
 
