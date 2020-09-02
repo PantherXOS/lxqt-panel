@@ -10,6 +10,7 @@ System::System(const ILXQtPanelPluginStartupInfo &startupInfo) :
     realign();
     mButton.setStyleSheet(QString::fromStdString("QToolButton::menu-indicator { image: none; }"));
     mButton.setMenu(mainMenu);
+    mButton.setAutoRaise(true);
     mButton.setPopupMode(QToolButton::DelayedPopup);
     mButton.setIcon(QIcon::fromTheme(QString::fromStdString("px-user")));
     connect(&mButton, SIGNAL(pressed()),this,SLOT(refresh()));
@@ -86,6 +87,7 @@ void System::netInfoParser(const QVector <NetworkInformation> &internetInfo){
 }
 
 void System::refresh(QWidget *netInfo) {
+    mainMenu->hide();
     mainMenu->clear();
     mainMenu->setFixedWidth(MAIN_MENU_SIZE_W);
     mainMenu->addAction(getUser());
@@ -114,6 +116,7 @@ void System::refresh(QWidget *netInfo) {
     mainMenu->addSeparator();
     mainMenu->addAction(getUpdateStat());
     mButton.showMenu();
+    realign();
 }
 
 QLabel *System::buildIconFromTheme(QString icon, QSize size){
