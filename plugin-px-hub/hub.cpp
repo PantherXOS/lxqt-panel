@@ -19,6 +19,8 @@ void hub::realign()
 }
 
 void hub::refresh() {
+    bool menuIsVisible = mainMenu->isVisible();
+    mainMenu->hide();
     mainMenu->clear();
     //sleep(1);
     // get accounts
@@ -70,6 +72,8 @@ void hub::refresh() {
     mButton.setPopupMode(QToolButton::InstantPopup);
     mButton.setAutoRaise(true);
     mButton.setIcon(QIcon::fromTheme(QString::fromStdString("panther")));
+    if(menuIsVisible) 
+        mButton.showMenu();
 }
 
 QLabel *hub::buildIconFromTheme(QString icon, QSize size){
