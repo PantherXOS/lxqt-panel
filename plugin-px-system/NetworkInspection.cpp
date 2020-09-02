@@ -7,16 +7,10 @@
 NetworkInspection::NetworkInspection(QObject *parent) : QWidgetAction(parent){
     auto updateTextLabel = new QLabel;
     updateTextLabel->setText(QString::fromStdString("Updating . . ."));
-    updateTextLabel->setMargin(0);
-    updateTextLabel->setFont(QFont(QString::fromStdString("Helvetica"), 8));
-    updateTextLabel->setContentsMargins(8, 0, 0, 0);
 
     auto llayout = new QHBoxLayout;
     llayout->addWidget(updateTextLabel);
     llayout->setAlignment(Qt::AlignLeft);
-    llayout->setMargin(0);
-    llayout->setSpacing(0);
-    llayout->setContentsMargins(0,0,0,0);
 
     QWidget *widgetAction = new QWidget;
     widgetAction->setObjectName(QString::fromStdString("PxSystemItem"));
