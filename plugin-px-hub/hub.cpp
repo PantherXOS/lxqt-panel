@@ -7,7 +7,13 @@ hub::hub(const ILXQtPanelPluginStartupInfo &startupInfo) :
     mHidden(false)
 {
     realign();
-    refresh();
+    
+    mButton.setStyleSheet(QString::fromStdString(("QToolButton::menu-indicator { image: none; }")));
+    mButton.setMenu(mainMenu);
+    mButton.setPopupMode(QToolButton::InstantPopup);
+    mButton.setAutoRaise(true);
+    mButton.setIcon(QIcon::fromTheme(QString::fromStdString("panther")));
+
     EventSubscriber * eventSubscriber = new EventSubscriber("hub");
     connect(eventSubscriber,SIGNAL(hubEvents(EventObject *)),this,SLOT(hubEventsHandler(EventObject *)));
     eventSubscriber->run();
@@ -50,7 +56,6 @@ void hub::refresh() {
 
     mainMenu->addAction(createTitle(tr("PANTHER HUB"), QStringLiteral("px-updates")));
     // get messages
-
     vector<MessageObject> messageList = rpcHubClient.getMessageList(6);
 #if 0 //Test
     vector<MessageObject> messageList;
@@ -67,11 +72,6 @@ void hub::refresh() {
         mainMenu->addSeparator();
     }
     mainMenu->addSeparator();
-    mButton.setStyleSheet(QString::fromStdString(("QToolButton::menu-indicator { image: none; }")));
-    mButton.setMenu(mainMenu);
-    mButton.setPopupMode(QToolButton::InstantPopup);
-    mButton.setAutoRaise(true);
-    mButton.setIcon(QIcon::fromTheme(QString::fromStdString("panther")));
     if(menuIsVisible) 
         mButton.showMenu();
 }
