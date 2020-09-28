@@ -606,7 +606,7 @@ bool LXQtMainMenu::eventFilter(QObject *obj, QEvent *event)
                 QAction* action = menu->activeAction();
                 if(action !=0) {
                     QList<QAction*> actions = menu->actions();
-                    QList<QAction*>::iterator it = qFind(actions.begin(), actions.end(), action);
+                    QList<QAction*>::iterator it = std::find(actions.begin(), actions.end(), action);
                     it = std::find_if(it + 1, actions.end(), MatchAction(key));
                     if(it == actions.end())
                         it = std::find_if(actions.begin(), it, MatchAction(key));
@@ -696,31 +696,54 @@ void LXQtMainMenu::buildPxMenu() {
     mMenu->insertAction(mMenu->actions()[0],home);
 }
 
-
+vector<string> removeDupWord(string str) 
+{ 
+    vector<string> words;
+    string word = ""; 
+    for (auto x : str) 
+    { 
+        if (x == ' ') 
+        { 
+            words.push_back(word);
+            word = ""; 
+        } 
+        else
+        { 
+            word = word + x; 
+        } 
+    }  
+    words.push_back(word);
+    return words;
+} 
 
 void LXQtMainMenu::buildPxSearch(string searchResult) {
+    QString resultQStr = QString::fromStdString(searchResult);
+    QString Line;
+    QTextStream stream(&resultQStr);
     int i =0;
-    std::string to;
-    std::stringstream ss(searchResult);
-    while(std::getline(ss,to,'\n')) {
-        if (i > 1 && i < 7) {
-            istringstream iss(to);
-            vector<string> tokens{istream_iterator<string>{iss},
-                                  istream_iterator<string>{}};
-            tokens.at(2) = tokens.at(2).substr(1, tokens.at(2).size() - 2);
-            tokens.at(1) = tokens.at(1).substr(1, tokens.at(1).size() - 2);
-            auto resultItem = new ResultItem(QString::fromStdString(tokens.at(2)), QString::fromStdString(tokens.at(0)),
-                                             QString::fromStdString(tokens.at(1)), mMenu->font(), nullptr);
-            if (tokens.at(0).find("directory") != string::npos) {
+
+    while (stream.readLineInto(&Line)) {
+        if (i > 1) {
+            QStringList list = Line.split(QRegExp(QString::fromStdString("\\t")), QString::SkipEmptyParts);
+            auto resultItem = new ResultItem(list[2].right(list[2].size()-1).left(list[2].size()-2), 
+                                             list[0], 
+                                             list[1].right(list[1].size()-1).left(list[1].size()-2), 
+                                             mMenu->font(), 
+                                             nullptr);
+            qDebug() << list[2] <<  list[0] << list[1];
+            if (list[0].toStdString().find("directory") != string::npos) {
                 folders.push_back(resultItem);
-            } else if (tokens.at(0).find("audio") != string::npos) {
+            } else if (list[0].toStdString().find("audio") != string::npos) {
                 musics.push_back(resultItem);
             } else {
                 files.push_back(resultItem);
             }
-        }
+        } 
+        if(i>6) break;
         i++;
     }
+    //Set the device to pos 0
+    stream.seek(0);
 }
 
 void  LXQtMainMenu::pressEnterSearch(string command){

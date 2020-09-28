@@ -74,7 +74,6 @@ private:
     QString type;
     QWidget*  resultWidget;
 
-
 };
 
 
