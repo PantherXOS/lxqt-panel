@@ -17,7 +17,7 @@
 class MenuTitle : public QWidgetAction{
 Q_OBJECT
 public:
-    MenuTitle(QString title, bool setcolor=false, QObject *parent = nullptr)
+    MenuTitle(const QString &title, bool setcolor=false, QObject *parent = nullptr)
             : QWidgetAction(parent) {
         auto qlayout = new QHBoxLayout;
         auto titleLabel = new QLabel;

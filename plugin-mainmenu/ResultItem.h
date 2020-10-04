@@ -19,7 +19,7 @@
 class ResultItem : public QWidgetAction{
 Q_OBJECT
 public:
-    ResultItem(QString name, QString type, QString address, QFont mfont, QObject *parent = nullptr)
+    ResultItem(const QString &name, const QString & type, const QString & address, const QFont &mfont, QObject *parent = nullptr)
             : QWidgetAction(parent) {
         std::string _type = type.toStdString();
         auto title = new QLabel;
@@ -46,11 +46,12 @@ public:
         setText(name);
         setToolTip(address);
     }
+
     void open(){
         QDesktopServices::openUrl(QUrl(this->address));
     }
 
-    QLabel * buildIconFromTheme(QString icon, QSize size){
+    QLabel * buildIconFromTheme(const QString &icon, const QSize &size){
         QIcon qicon = QIcon::fromTheme(icon);
         if(qicon.name().isEmpty())
             qicon = QIcon::fromTheme(QString::fromStdString("unknown"));
@@ -63,7 +64,7 @@ public:
     }
 
     QString toString(){
-        return  QString::fromStdString("Name   : ") + name + QString::fromStdString(" ,")+
+        return  QString::fromStdString("Name    : ") + name + QString::fromStdString(" ,")+
                 QString::fromStdString("Type    : ") + type + QString::fromStdString(" ,")+
                 QString::fromStdString("Address : ") + address;
     }

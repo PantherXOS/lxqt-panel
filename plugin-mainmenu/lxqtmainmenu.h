@@ -114,9 +114,9 @@ private:
     QWidgetAction * mSearchViewAction;
     ActionView * mSearchView;
     QAction * mMakeDirtyAction;
-    void addItem(QString text, bool setColor, QAction *before);
+    void addItem(const QString &text, bool setColor, QAction *before);
     void buildPxMenu();
-    void buildPxSearch(string searchResult);
+    void buildPxSearch(const string &searchResult);
     void pressEnterSearch(string command);
     string exec(const char* cmd);
     bool mFilterMenu; //!< searching should perform hiding nonmatching items in menu

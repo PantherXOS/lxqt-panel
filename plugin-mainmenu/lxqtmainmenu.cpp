@@ -58,6 +58,9 @@
 
 #define DEFAULT_SHORTCUT "Alt+F1"
 
+#define MAX_SEARCH_RESULT       6
+#define MAX_SEARCH_RESULT_STR   "6"
+
 LXQtMainMenu::LXQtMainMenu(const ILXQtPanelPluginStartupInfo &startupInfo):
     QObject(),
     ILXQtPanelPlugin(startupInfo),
@@ -371,8 +374,7 @@ void LXQtMainMenu::searchMenu()
             addItem(QString::fromStdString("SEARCH"), false, mMenu->actions()[0]);
             if (mSearchView->getCount() != 0)
                 addItem(QString::fromStdString("APPLICATIONS"), true, mMenu->actions()[1]);
-
-            string command = "recollq -S type " + text.toStdString();
+            string command = "recollq -S type -n " MAX_SEARCH_RESULT_STR ":1 " + text.toStdString();
             this->searchText = text.toStdString();
             string res = exec(command.c_str());
             if (res.c_str() != NULL)
@@ -650,7 +652,7 @@ bool LXQtMainMenu::eventFilter(QObject *obj, QEvent *event)
 }
 
 
-void LXQtMainMenu::addItem(QString text, bool setColor, QAction *before) {
+void LXQtMainMenu::addItem(const QString &text, bool setColor, QAction *before) {
     auto qWidgetAction = new MenuTitle(text,setColor,this);
     mMenu->insertAction(before,qWidgetAction);
 }
@@ -716,7 +718,7 @@ vector<string> removeDupWord(string str)
     return words;
 } 
 
-void LXQtMainMenu::buildPxSearch(string searchResult) {
+void LXQtMainMenu::buildPxSearch(const string &searchResult) {
     QString resultQStr = QString::fromStdString(searchResult);
     QString Line;
     QTextStream stream(&resultQStr);
@@ -730,7 +732,7 @@ void LXQtMainMenu::buildPxSearch(string searchResult) {
                                              list[1].right(list[1].size()-1).left(list[1].size()-2), 
                                              mMenu->font(), 
                                              nullptr);
-            qDebug() << list[2] <<  list[0] << list[1];
+            // qDebug() << list[2] <<  list[0] << list[1];
             if (list[0].toStdString().find("directory") != string::npos) {
                 folders.push_back(resultItem);
             } else if (list[0].toStdString().find("audio") != string::npos) {
@@ -739,7 +741,7 @@ void LXQtMainMenu::buildPxSearch(string searchResult) {
                 files.push_back(resultItem);
             }
         } 
-        if(i>6) break;
+        if(i>MAX_SEARCH_RESULT) break;
         i++;
     }
     //Set the device to pos 0
@@ -752,8 +754,7 @@ void  LXQtMainMenu::pressEnterSearch(string command){
     QObject context;
     context.moveToThread(&thread);
     QObject::connect(&thread, &QThread::started, &context, [&]() {
-    //string command = "recoll -q " + this->searchText;
-    string res = exec(command.c_str());
+        string res = exec(command.c_str());
     });
     thread.start();
     loop.exec();
