@@ -374,7 +374,7 @@ void LXQtMainMenu::searchMenu()
             addItem(QString::fromStdString("SEARCH"), false, mMenu->actions()[0]);
             if (mSearchView->getCount() != 0)
                 addItem(QString::fromStdString("APPLICATIONS"), true, mMenu->actions()[1]);
-            string command = "recollq -S type -n " MAX_SEARCH_RESULT_STR ":1 " + text.toStdString();
+            string command = "recollq -S type -n " MAX_SEARCH_RESULT_STR ":1 -F 'mtype url filename' " + text.toStdString();
             this->searchText = text.toStdString();
             string res = exec(command.c_str());
             if (res.c_str() != NULL)
@@ -719,33 +719,32 @@ vector<string> removeDupWord(string str)
 } 
 
 void LXQtMainMenu::buildPxSearch(const string &searchResult) {
-    QString resultQStr = QString::fromStdString(searchResult);
-    QString Line;
-    QTextStream stream(&resultQStr);
     int i =0;
-
-    while (stream.readLineInto(&Line)) {
+    std::string to;
+    std::stringstream ss(searchResult);
+    while(std::getline(ss,to,'\n')) {
         if (i > 1) {
-            QStringList list = Line.split(QRegExp(QString::fromStdString("\\t")), QString::SkipEmptyParts);
-            auto resultItem = new ResultItem(list[2].right(list[2].size()-1).left(list[2].size()-2), 
-                                             list[0], 
-                                             list[1].right(list[1].size()-1).left(list[1].size()-2), 
-                                             mMenu->font(), 
-                                             nullptr);
-            // qDebug() << list[2] <<  list[0] << list[1];
-            if (list[0].toStdString().find("directory") != string::npos) {
-                folders.push_back(resultItem);
-            } else if (list[0].toStdString().find("audio") != string::npos) {
-                musics.push_back(resultItem);
-            } else {
-                files.push_back(resultItem);
+            istringstream iss(to);
+            vector<string> tokens{istream_iterator<string>{iss},
+                                  istream_iterator<string>{}};
+            if(tokens.size()==3){
+                QString filename = QString::fromStdString(QByteArray::fromBase64(QString::fromStdString(tokens.at(2)).toUtf8()).toStdString());
+                QString mimetype = QString::fromStdString(QByteArray::fromBase64(QString::fromStdString(tokens.at(0)).toUtf8()).toStdString());
+                QString url      = QString::fromStdString(QByteArray::fromBase64(QString::fromStdString(tokens.at(1)).toUtf8()).toStdString()); 
+                qDebug() << filename << mimetype << url;
+                auto resultItem = new ResultItem(filename, mimetype, url, mMenu->font(), nullptr);
+                if (tokens.at(0).find("directory") != string::npos) {
+                    folders.push_back(resultItem);
+                } else if (tokens.at(0).find("audio") != string::npos) {
+                    musics.push_back(resultItem);
+                } else {
+                    files.push_back(resultItem);
+                }
             }
-        } 
+        }
         if(i>MAX_SEARCH_RESULT) break;
         i++;
     }
-    //Set the device to pos 0
-    stream.seek(0);
 }
 
 void  LXQtMainMenu::pressEnterSearch(string command){
