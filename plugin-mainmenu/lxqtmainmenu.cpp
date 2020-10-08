@@ -46,6 +46,7 @@
 #include <string>
 #include <fstream>
 #include <iostream>
+#include "pxsettings.h"
 
 #include <XdgMenuWidget>
 
@@ -57,9 +58,6 @@
 #include <QtWidgets/QHBoxLayout>
 
 #define DEFAULT_SHORTCUT "Alt+F1"
-
-#define MAX_SEARCH_RESULT       6
-#define MAX_SEARCH_RESULT_STR   "6"
 
 LXQtMainMenu::LXQtMainMenu(const ILXQtPanelPluginStartupInfo &startupInfo):
     QObject(),
@@ -697,26 +695,6 @@ void LXQtMainMenu::buildPxMenu() {
     home = new ResultItem(QString::fromStdString("Home"), QString::fromStdString("folder-blue"), QString::fromStdString(path), mMenu->font(), nullptr);
     mMenu->insertAction(mMenu->actions()[0],home);
 }
-
-vector<string> removeDupWord(string str) 
-{ 
-    vector<string> words;
-    string word = ""; 
-    for (auto x : str) 
-    { 
-        if (x == ' ') 
-        { 
-            words.push_back(word);
-            word = ""; 
-        } 
-        else
-        { 
-            word = word + x; 
-        } 
-    }  
-    words.push_back(word);
-    return words;
-} 
 
 void LXQtMainMenu::buildPxSearch(const string &searchResult) {
     int i =0;

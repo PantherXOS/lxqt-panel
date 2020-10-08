@@ -13,6 +13,7 @@
 #include <QFont>
 #include <QtGui/QDesktopServices>
 #include <QUrl>
+#include "pxsettings.h"
 
 class MenuTitle : public QWidgetAction{
 Q_OBJECT
@@ -24,14 +25,16 @@ public:
         titleLabel->setText(title);
         auto _font = titleLabel->font();
         QFont  font = _font;
-        font.setBold(true);
+        font.setPointSize(MENU_TITLE_FONT_SIZE);
+
         titleLabel->setFont(font);
         titleLabel->setObjectName(QStringLiteral("PxMenuLabel"));
         qlayout->addWidget(titleLabel);
+        qlayout->setSpacing(0);
+        qlayout->setContentsMargins(0,1,5,1);
         auto  widget = new QWidget;
         widget->setLayout(qlayout);
         if(setcolor) {
-//            widget->setStyleSheet("QWidget {background-color: #211F1F; color: white;}"); //211F1F
             widget->setObjectName(QStringLiteral("PxMenuTitle"));
         }
         setDefaultWidget(widget);

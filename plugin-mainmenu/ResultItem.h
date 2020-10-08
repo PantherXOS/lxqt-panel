@@ -30,13 +30,15 @@ public:
         this->name = name;
         this->type = QString::fromStdString(_type);
         this->address = address;
-        const int icon_size = QFontMetrics(mfont).height()*0.8;
+        const int icon_size = QFontMetrics(mfont).height();
         auto itemIcon = buildIconFromTheme(QString::fromStdString(_type),QSize(icon_size,icon_size));
         auto Tlayout = new QHBoxLayout;
         Tlayout->addWidget(itemIcon);
         Tlayout->addWidget(title);
         Tlayout->setAlignment(Qt::AlignLeft);
-
+        Tlayout->setSpacing(3);
+        Tlayout->setContentsMargins(0,5,0,5);
+    
         resultWidget = new QWidget;
         resultWidget->setMouseTracking(true);
         resultWidget->setLayout(Tlayout);

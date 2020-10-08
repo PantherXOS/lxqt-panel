@@ -7,6 +7,7 @@ set(HEADERS
     lxqtmainmenuconfiguration.h
     ResultItem.h
     MenuTitle.h
+    pxsettings.h
 )
 
 set(SOURCES
