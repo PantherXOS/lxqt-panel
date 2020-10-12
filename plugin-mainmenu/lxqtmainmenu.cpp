@@ -686,13 +686,13 @@ void LXQtMainMenu::actionTrigered(QAction *action) {
 
 void LXQtMainMenu::buildPxMenu() {
     string path = string(getpwuid(getuid())->pw_dir);
-    music = new ResultItem(QString::fromStdString("Music"), QString::fromStdString("folder-blue"), QString::fromStdString((path + "/Music/")), mMenu->font(), nullptr);
+    music = new ResultItem(QString::fromStdString("Music"), QString::fromStdString("folder-blue"), QString::fromStdString((path + "/Music/")),  nullptr);
     mMenu->insertAction(mMenu->actions()[0],music);
-    documents = new ResultItem(QString::fromStdString("Documents"), QString::fromStdString("folder-blue"), QString::fromStdString((path + "/Documents/")), mMenu->font(),nullptr);
+    documents = new ResultItem(QString::fromStdString("Documents"), QString::fromStdString("folder-blue"), QString::fromStdString((path + "/Documents/")), nullptr);
     mMenu->insertAction(mMenu->actions()[0],documents);
-    desktop = new ResultItem(QString::fromStdString("Desktop"), QString::fromStdString("folder-blue"), QString::fromStdString((path + "/Desktop/")), mMenu->font(), nullptr);
+    desktop = new ResultItem(QString::fromStdString("Desktop"), QString::fromStdString("folder-blue"), QString::fromStdString((path + "/Desktop/")), nullptr);
     mMenu->insertAction(mMenu->actions()[0],desktop);
-    home = new ResultItem(QString::fromStdString("Home"), QString::fromStdString("folder-blue"), QString::fromStdString(path), mMenu->font(), nullptr);
+    home = new ResultItem(QString::fromStdString("Home"), QString::fromStdString("folder-blue"), QString::fromStdString(path), nullptr);
     mMenu->insertAction(mMenu->actions()[0],home);
 }
 
@@ -710,7 +710,7 @@ void LXQtMainMenu::buildPxSearch(const string &searchResult) {
                 QString mimetype = QString::fromStdString(QByteArray::fromBase64(QString::fromStdString(tokens.at(0)).toUtf8()).toStdString());
                 QString url      = QString::fromStdString(QByteArray::fromBase64(QString::fromStdString(tokens.at(1)).toUtf8()).toStdString()); 
                 qDebug() << filename << mimetype << url;
-                auto resultItem = new ResultItem(filename, mimetype, url, mMenu->font(), nullptr);
+                auto resultItem = new ResultItem(filename, mimetype, url, nullptr);
                 if (tokens.at(0).find("directory") != string::npos) {
                     folders.push_back(resultItem);
                 } else if (tokens.at(0).find("audio") != string::npos) {
