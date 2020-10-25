@@ -20,6 +20,8 @@ set(HEADERS
 		rpc/Utils.h
 		EventObject.h
 		LineSeperator.h
+		HubItem.h
+		AccountItem.h
 		)
 
 set(SOURCES
