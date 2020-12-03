@@ -4,14 +4,46 @@
 <context>
     <name>LXQtMainMenu</name>
     <message>
-        <location filename="../lxqtmainmenu.cpp" line="102"/>
+        <location filename="../lxqtmainmenu.cpp" line="106"/>
         <source>Search...</source>
         <translation>搜索...</translation>
     </message>
     <message>
-        <location filename="../lxqtmainmenu.cpp" line="110"/>
+        <location filename="../lxqtmainmenu.cpp" line="114"/>
         <source>Show/hide main menu</source>
         <translation>显示/隐藏主菜单</translation>
+    </message>
+    <message>
+        <location filename="../lxqtmainmenu.cpp" line="496"/>
+        <source>Add to desktop</source>
+        <translation>添加到桌面</translation>
+    </message>
+    <message>
+        <location filename="../lxqtmainmenu.cpp" line="504"/>
+        <source>Question</source>
+        <translation>问题</translation>
+    </message>
+    <message>
+        <location filename="../lxqtmainmenu.cpp" line="505"/>
+        <source>A file with the same name already exists.
+Do you want to overwrite it?</source>
+        <translation>已存在一个同名文件。
+您想要覆盖它吗？</translation>
+    </message>
+    <message>
+        <location filename="../lxqtmainmenu.cpp" line="511"/>
+        <source>Warning</source>
+        <translation>警告</translation>
+    </message>
+    <message>
+        <location filename="../lxqtmainmenu.cpp" line="512"/>
+        <source>The file cannot be overwritten.</source>
+        <translation>该文件无法被覆盖。</translation>
+    </message>
+    <message>
+        <location filename="../lxqtmainmenu.cpp" line="518"/>
+        <source>Copy</source>
+        <translation>复制</translation>
     </message>
 </context>
 <context>

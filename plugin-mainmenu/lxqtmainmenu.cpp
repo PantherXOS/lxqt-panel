@@ -42,28 +42,26 @@
 #include <algorithm> // for find_if()
 #include <KWindowSystem/KWindowSystem>
 #include <QApplication>
-#include <sstream>
-#include <string>
-#include <fstream>
-#include <iostream>
-#include "pxsettings.h"
 
 #include <XdgMenuWidget>
+#include <XdgIcon>
 
 #ifdef HAVE_MENU_CACHE
     #include "xdgcachedmenu.h"
 #else
+    #include <QStandardPaths>
+    #include <QClipboard>
+    #include <QMimeData>
     #include <XdgAction>
 #endif
-#include <QtWidgets/QHBoxLayout>
 
 #define DEFAULT_SHORTCUT "Alt+F1"
 
 LXQtMainMenu::LXQtMainMenu(const ILXQtPanelPluginStartupInfo &startupInfo):
     QObject(),
     ILXQtPanelPlugin(startupInfo),
-    mMenu(0),
-    mShortcut(0),
+    mMenu(nullptr),
+    mShortcut(nullptr),
     mSearchEditAction{new QWidgetAction{this}},
     mSearchViewAction{new QWidgetAction{this}},
     mMakeDirtyAction{new QAction{this}},
@@ -109,15 +107,13 @@ LXQtMainMenu::LXQtMainMenu(const ILXQtPanelPluginStartupInfo &startupInfo):
     connect(mSearchEdit, &QLineEdit::textChanged, [this] (QString const &) {
         mSearchTimer.start();
     });
-
     connect(mSearchEdit, &QLineEdit::returnPressed, [this] () {
         mMenu->hide();
-        string command = "recoll -q " + this->searchText;
+        std::string command = "recoll -q " + this->searchText;
         this->searchText = "";
         pressEnterSearch(command);
     });
-
-//    connect(mSearchEdit, &QLineEdit::returnPressed, mSearchView, &ActionView::activateCurrent);
+    // connect(mSearchEdit, &QLineEdit::returnPressed, mSearchView, &ActionView::activateCurrent);
     mSearchEditAction->setDefaultWidget(mSearchEdit);
     QTimer::singleShot(0, [this] { settingsChanged(); });
 
@@ -126,7 +122,7 @@ LXQtMainMenu::LXQtMainMenu(const ILXQtPanelPluginStartupInfo &startupInfo):
     {
         connect(mShortcut, &GlobalKeyShortcut::Action::registrationFinished, [this] {
             if (mShortcut->shortcut().isEmpty())
-                mShortcut->changeShortcut(QString::fromStdString(DEFAULT_SHORTCUT));
+                mShortcut->changeShortcut(QStringLiteral(DEFAULT_SHORTCUT));
         });
         connect(mShortcut, &GlobalKeyShortcut::Action::activated, [this] {
             if (!mHideTimer.isActive())
@@ -209,9 +205,9 @@ void LXQtMainMenu::menuCacheReloadNotify(MenuCache* cache, gpointer user_data)
 void LXQtMainMenu::settingsChanged()
 {
     setButtonIcon();
-    if (settings()->value(QString::fromStdString("showText"), false).toBool())
+    if (settings()->value(QStringLiteral("showText"), false).toBool())
     {
-        mButton.setText(settings()->value(QString::fromStdString("text"), QString::fromStdString("Start")).toString());
+        mButton.setText(settings()->value(QStringLiteral("text"), QStringLiteral("Start")).toString());
         mButton.setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
     }
     else
@@ -220,9 +216,9 @@ void LXQtMainMenu::settingsChanged()
         mButton.setToolButtonStyle(Qt::ToolButtonIconOnly);
     }
 
-    mLogDir = settings()->value(QString::fromStdString("log_dir"), QString()).toString();
+    mLogDir = settings()->value(QStringLiteral("log_dir"), QString()).toString();
 
-    QString menu_file = settings()->value(QString::fromStdString("menu_file"), QString()).toString();
+    QString menu_file = settings()->value(QStringLiteral("menu_file"), QString()).toString();
     if (menu_file.isEmpty())
         menu_file = XdgMenu::getMenuFileName();
 
@@ -244,7 +240,7 @@ void LXQtMainMenu::settingsChanged()
         }
         mMenuCacheNotify = menu_cache_add_reload_notify(mMenuCache, (MenuCacheReloadNotify)menuCacheReloadNotify, this);
 #else
-        mXdgMenu.setEnvironments(QStringList() << QString::fromStdString("X-LXQT") << QString::fromStdString("LXQt"));
+        mXdgMenu.setEnvironments(QStringList() << QStringLiteral("X-LXQT") << QStringLiteral("LXQt"));
         mXdgMenu.setLogDir(mLogDir);
 
         bool res = mXdgMenu.read(mMenuFile);
@@ -255,7 +251,7 @@ void LXQtMainMenu::settingsChanged()
         }
         else
         {
-            QMessageBox::warning(0, QString::fromStdString("Parse error"), mXdgMenu.errorString());
+            QMessageBox::warning(nullptr, QStringLiteral("Parse error"), mXdgMenu.errorString());
             return;
         }
 #endif
@@ -265,10 +261,10 @@ void LXQtMainMenu::settingsChanged()
 
     //clear the search to not leaving the menu in wrong state
     mSearchEdit->setText(QString{});
-    mFilterMenu = settings()->value(QString::fromStdString("filterMenu"), true).toBool();
-    mFilterShow = settings()->value(QString::fromStdString("filterShow"), true).toBool();
-    mFilterClear = settings()->value(QString::fromStdString("filterClear"), false).toBool();
-    mFilterShowHideMenu = settings()->value(QString::fromStdString("filterShowHideMenu"), true).toBool();
+    mFilterMenu = settings()->value(QStringLiteral("filterMenu"), true).toBool();
+    mFilterShow = settings()->value(QStringLiteral("filterShow"), true).toBool();
+    mFilterClear = settings()->value(QStringLiteral("filterClear"), false).toBool();
+    mFilterShowHideMenu = settings()->value(QStringLiteral("filterShowHideMenu"), true).toBool();
     if (mMenu)
     {
         mSearchEdit->setVisible(mFilterMenu || mFilterShow);
@@ -276,8 +272,8 @@ void LXQtMainMenu::settingsChanged()
         if (mFilterClear && !mMenu->isVisible())
             mSearchEdit->clear();
     }
-    mSearchView->setMaxItemsToShow(settings()->value(QString::fromStdString("filterShowMaxItems"), 4).toInt());
-    mSearchView->setMaxItemWidth(settings()->value(QString::fromStdString("filterShowMaxWidth"), 300).toInt());
+    mSearchView->setMaxItemsToShow(settings()->value(QStringLiteral("filterShowMaxItems"), 4).toInt());
+    mSearchView->setMaxItemWidth(settings()->value(QStringLiteral("filterShowMaxWidth"), 300).toInt());
 
     realign();
 }
@@ -372,9 +368,9 @@ void LXQtMainMenu::searchMenu()
             addItem(QString::fromStdString("SEARCH"), false, mMenu->actions()[0]);
             if (mSearchView->getCount() != 0)
                 addItem(QString::fromStdString("APPLICATIONS"), true, mMenu->actions()[1]);
-            string command = "recollq -S type -n " MAX_SEARCH_RESULT_STR ":1 -F 'mtype url filename' " + text.toStdString();
+            std::string command = "recollq -S type -n " MAX_SEARCH_RESULT_STR ":1 -F 'mtype url filename' " + text.toStdString();
             this->searchText = text.toStdString();
-            string res = exec(command.c_str());
+            std::string res = exec(command.c_str());
             if (res.c_str() != NULL)
                 buildPxSearch(res);
         } else {
@@ -455,8 +451,9 @@ void LXQtMainMenu::buildMenu()
     mMenu = new XdgCachedMenu(mMenuCache, &mButton);
 #else
     mMenu = new XdgMenuWidget(mXdgMenu, QLatin1String(""), &mButton);
+    addContextMenu(mMenu);
 #endif
-    mMenu->setObjectName(QString::fromStdString("TopLevelMainMenu"));
+    mMenu->setObjectName(QStringLiteral("TopLevelMainMenu"));
     setTranslucentMenus(mMenu);
     // Note: the QWidget::ensurePolished() workarounds problem with transparent
     // QLineEdit (mSearchEditAction) in menu with Breeze style
@@ -473,14 +470,9 @@ void LXQtMainMenu::buildMenu()
     mMenu->addSeparator();
     mMenu->addAction(mSearchViewAction);
     mMenu->addAction(mSearchEditAction);
-
-//    backupMenu = new QMenu;
-//    backupMenu->addActions(mMenu->actions());
     connect(mMenu, &QMenu::triggered, this, &LXQtMainMenu::actionTrigered);
-//    auto act = new QAction(QString::fromStdString("***********"));
-//    mMenu->addAction(act);
-    buildPxMenu();
     connect(mMenu, &QMenu::hovered, this, &LXQtMainMenu::setSearchFocus);
+    buildPxMenu();
     //Note: setting readOnly to true to avoid wake-ups upon the Qt's internal "blink" cursor timer
     //(if the readOnly is not set, the "blink" timer is active also in case the menu is not shown ->
     //QWidgetLineControl::updateNeeded is performed w/o any need)
@@ -501,18 +493,105 @@ void LXQtMainMenu::buildMenu()
 /************************************************
 
  ************************************************/
+void LXQtMainMenu::addContextMenu(QMenu *menu)
+{
+    const auto actions = menu->actions();
+    for (auto const & action : actions)
+    {
+        if (action->menu())
+        {
+            action->menu()->setContextMenuPolicy(Qt::CustomContextMenu);
+            connect(action->menu(), &QWidget::customContextMenuRequested,
+                    this, &LXQtMainMenu::onRequestingCustomMenu);
+            addContextMenu(action->menu());
+        }
+    }
+}
+
+void LXQtMainMenu::onRequestingCustomMenu(const QPoint& p)
+{
+#ifdef HAVE_MENU_CACHE
+    Q_UNUSED(p)
+    return;
+#else
+    QMenu *parentMenu = static_cast<QMenu*>(QObject::sender());
+    if (parentMenu == nullptr)
+        return;
+    QAction *action = parentMenu->actionAt(p);
+    if (action == nullptr || action->menu() != nullptr || action->isSeparator())
+        return;
+    XdgAction *xdgAction = qobject_cast<XdgAction *>(action);
+    if (xdgAction == nullptr)
+        return;
+    const XdgDesktopFile& df = xdgAction->desktopFile();
+    QString file = df.fileName();
+
+    QMenu menu;
+    QAction *a;
+
+    if (df.actions().count() > 0 && df.type() == XdgDesktopFile::Type::ApplicationType)
+    {
+        for (int i = 0; i < df.actions().count(); ++i)
+        {
+            QString action(df.actions().at(i));
+            a = menu.addAction(df.actionIcon(action), df.actionName(action));
+            connect(a, &QAction::triggered, [this, df, action] {
+                df.actionActivate(action, QStringList());
+                mMenu->hide();
+            });
+        }
+        menu.addSeparator();
+    }
+
+    a = menu.addAction(XdgIcon::fromTheme(QLatin1String("desktop")), tr("Add to desktop"));
+    connect(a, &QAction::triggered, [file] {
+        QString desktop = QStandardPaths::writableLocation(QStandardPaths::DesktopLocation);
+        QString desktopFile = desktop + QStringLiteral("/") + file.section(QStringLiteral("/"), -1);
+        if (QFile::exists(desktopFile))
+        {
+            QMessageBox::StandardButton btn =
+            QMessageBox::question(nullptr,
+                                  tr("Question"),
+                                  tr("A file with the same name already exists.\nDo you want to overwrite it?"));
+            if (btn == QMessageBox::No)
+                return;
+            if (!QFile::remove(desktopFile))
+            {
+                QMessageBox::warning(nullptr,
+                                     tr("Warning"),
+                                     tr("The file cannot be overwritten."));
+                return;
+            }
+        }
+        QFile::copy(file, desktopFile);
+    });
+    a = menu.addAction(XdgIcon::fromTheme(QLatin1String("edit-copy")), tr("Copy"));
+    connect(a, &QAction::triggered, [file] {
+        QClipboard* clipboard = QApplication::clipboard();
+        QMimeData* data = new QMimeData();
+        data->setData(QStringLiteral("text/uri-list"), QUrl::fromLocalFile(file).toEncoded()
+                                                       + QByteArray("\r\n"));
+        clipboard->setMimeData(data);
+    });
+    menu.exec(parentMenu->mapToGlobal(p));
+#endif
+}
+
+/************************************************
+
+ ************************************************/
 void LXQtMainMenu::setMenuFontSize()
 {
     if (!mMenu)
         return;
 
     QFont menuFont = mButton.font();
-    bool customFont = settings()->value(QString::fromStdString("customFont"), false).toBool();
+    bool customFont = settings()->value(QStringLiteral("customFont"), false).toBool();
 
     if(customFont)
     {
         menuFont = mMenu->font();
-        menuFont.setPointSize(settings()->value(QString::fromStdString("customFontSize")).toInt());
+        menuFont.setPointSize(settings()->value(QStringLiteral("customFontSize")).toInt());
     }
 
     if (mMenu->font() != menuFont)
@@ -545,9 +624,9 @@ void LXQtMainMenu::setMenuFontSize()
  ************************************************/
 void LXQtMainMenu::setButtonIcon()
 {
-    if (settings()->value(QString::fromStdString("ownIcon"), false).toBool())
+    if (settings()->value(QStringLiteral("ownIcon"), false).toBool())
     {
-        mButton.setStyleSheet(QString::fromStdString("#MainMenu { qproperty-icon: url(%1); }")
+        mButton.setStyleSheet(QStringLiteral("#MainMenu { qproperty-icon: url(%1); }")
                 .arg(settings()->value(QLatin1String("icon"), QLatin1String(LXQT_GRAPHICS_DIR"/helix.svg")).toString()));
     } else
     {
@@ -604,7 +683,7 @@ bool LXQtMainMenu::eventFilter(QObject *obj, QEvent *event)
                 if(key.isEmpty())
                     return false;
                 QAction* action = menu->activeAction();
-                if(action !=0) {
+                if(action !=nullptr) {
                     QList<QAction*> actions = menu->actions();
                     QList<QAction*>::iterator it = std::find(actions.begin(), actions.end(), action);
                     it = std::find_if(it + 1, actions.end(), MatchAction(key));
@@ -649,13 +728,12 @@ bool LXQtMainMenu::eventFilter(QObject *obj, QEvent *event)
     return false;
 }
 
-
 void LXQtMainMenu::addItem(const QString &text, bool setColor, QAction *before) {
     auto qWidgetAction = new MenuTitle(text,setColor,this);
     mMenu->insertAction(before,qWidgetAction);
 }
 
-string LXQtMainMenu::exec(const char* cmd) {
+std::string LXQtMainMenu::exec(const char* cmd) {
     std::array<char, 128> buffer;
     std::string result;
     std::unique_ptr<FILE, decltype(&pclose)> pipe(popen(cmd, "r"), pclose);
@@ -676,16 +754,15 @@ void LXQtMainMenu::actionTrigered(QAction *action) {
         resultItem->open();
     } else if (menuTitle){
        if(menuTitle->text() == QString::fromStdString("FOLDERS")){
-           string command = "recoll -q " + this->searchText+" mime:inode/directory";
+           std::string command = "recoll -q " + this->searchText+" mime:inode/directory";
            this->searchText = "";
            pressEnterSearch(command);
        }
     }
 }
 
-
 void LXQtMainMenu::buildPxMenu() {
-    string path = string(getpwuid(getuid())->pw_dir);
+    std::string path = std::string(getpwuid(getuid())->pw_dir);
     music = new ResultItem(QString::fromStdString("Music"), QString::fromStdString("folder-blue"), QString::fromStdString((path + "/Music/")),  nullptr);
     mMenu->insertAction(mMenu->actions()[0],music);
     documents = new ResultItem(QString::fromStdString("Documents"), QString::fromStdString("folder-blue"), QString::fromStdString((path + "/Documents/")), nullptr);
@@ -696,24 +773,24 @@ void LXQtMainMenu::buildPxMenu() {
     mMenu->insertAction(mMenu->actions()[0],home);
 }
 
-void LXQtMainMenu::buildPxSearch(const string &searchResult) {
+void LXQtMainMenu::buildPxSearch(const std::string &searchResult) {
     int i =0;
     std::string to;
     std::stringstream ss(searchResult);
     while(std::getline(ss,to,'\n')) {
         if (i > 1) {
-            istringstream iss(to);
-            vector<string> tokens{istream_iterator<string>{iss},
-                                  istream_iterator<string>{}};
+            std::istringstream iss(to);
+            std::vector<std::string> tokens{std::istream_iterator<std::string>{iss},
+                                            std::istream_iterator<std::string>{}};
             if(tokens.size()==3){
                 QString filename = QString::fromStdString(QByteArray::fromBase64(QString::fromStdString(tokens.at(2)).toUtf8()).toStdString());
                 QString mimetype = QString::fromStdString(QByteArray::fromBase64(QString::fromStdString(tokens.at(0)).toUtf8()).toStdString());
                 QString url      = QString::fromStdString(QByteArray::fromBase64(QString::fromStdString(tokens.at(1)).toUtf8()).toStdString()); 
                 qDebug() << filename << mimetype << url;
                 auto resultItem = new ResultItem(filename, mimetype, url, nullptr);
-                if (tokens.at(0).find("directory") != string::npos) {
+                if (tokens.at(0).find("directory") != std::string::npos) {
                     folders.push_back(resultItem);
-                } else if (tokens.at(0).find("audio") != string::npos) {
+                } else if (tokens.at(0).find("audio") != std::string::npos) {
                     musics.push_back(resultItem);
                 } else {
                     files.push_back(resultItem);
@@ -725,17 +802,18 @@ void LXQtMainMenu::buildPxSearch(const string &searchResult) {
     }
 }
 
-void  LXQtMainMenu::pressEnterSearch(string command){
+void  LXQtMainMenu::pressEnterSearch(std::string command){
     QThread thread;
     QEventLoop loop;
     QObject context;
     context.moveToThread(&thread);
     QObject::connect(&thread, &QThread::started, &context, [&]() {
-        string res = exec(command.c_str());
+        std::string res = exec(command.c_str());
     });
     thread.start();
     loop.exec();
     thread.quit();
 }
+
 
 #undef DEFAULT_SHORTCUT

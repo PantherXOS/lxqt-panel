@@ -39,7 +39,6 @@
 #include <QScrollBar>
 #include <QProxyStyle>
 #include <QStyledItemDelegate>
-#include <QDebug>
 //==============================
 #ifdef HAVE_MENU_CACHE
 #include <QSortFilterProxyModel>
@@ -80,7 +79,7 @@ namespace
     {
     public:
         using QProxyStyle::QProxyStyle;
-        virtual int styleHint(StyleHint hint, const QStyleOption * option = 0, const QWidget * widget = 0, QStyleHintReturn * returnData = 0) const override
+        virtual int styleHint(StyleHint hint, const QStyleOption * option = nullptr, const QWidget * widget = nullptr, QStyleHintReturn * returnData = nullptr) const override
         {
             if(hint == QStyle::SH_ItemView_ActivateItemOnSingleClick)
                 return 1;
@@ -94,7 +93,6 @@ namespace
     public:
         DelayedIconDelegate(QObject * parent = nullptr)
             : QStyledItemDelegate(parent)
-            , mMaxItemWidth(300)
         {
         }
 
@@ -131,7 +129,7 @@ namespace
             return s;
         }
     private:
-        int mMaxItemWidth;
+        int mMaxItemWidth{300};
     };
 
 }
@@ -190,7 +188,7 @@ void ActionView::addAction(QAction * action)
     item->setText(action->text());
     item->setToolTip(action->toolTip());
     QString all = action->text();
-    all += QString::fromStdString("\n");
+    all += QLatin1Char('\n');
     all += action->toolTip();
     item->setData(all, FilterRole);
 
@@ -229,16 +227,16 @@ void ActionView::setFilter(QString const & filter)
 #else
     mProxy->setfilerString(filter);
 #endif
-   const int count = mProxy->rowCount();
+    const int count = mProxy->rowCount();
     if (0 < count)
     {
         if (count > mMaxItemsToShow)
         {
-           // setCurrentIndex(mProxy->index(mMaxItemsToShow - 1, 0));
+            // setCurrentIndex(mProxy->index(mMaxItemsToShow - 1, 0));
             verticalScrollBar()->triggerAction(QScrollBar::SliderToMinimum);
         } else
         {
-           // setCurrentIndex(mProxy->index(count - 1, 0));
+            // setCurrentIndex(mProxy->index(count - 1, 0));
         }
     }
     filterActioncount= count;
@@ -322,4 +320,3 @@ void ActionView::fillActionsRecursive(QMenu * menu)
 int ActionView::getCount() {
     return filterActioncount;
 }
-

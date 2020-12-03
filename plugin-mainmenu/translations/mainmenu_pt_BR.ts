@@ -4,14 +4,46 @@
 <context>
     <name>LXQtMainMenu</name>
     <message>
-        <location filename="../lxqtmainmenu.cpp" line="102"/>
+        <location filename="../lxqtmainmenu.cpp" line="106"/>
         <source>Search...</source>
         <translation>Pesquisar...</translation>
     </message>
     <message>
-        <location filename="../lxqtmainmenu.cpp" line="110"/>
+        <location filename="../lxqtmainmenu.cpp" line="114"/>
         <source>Show/hide main menu</source>
         <translation>Exibir/ocultar o menu principal</translation>
+    </message>
+    <message>
+        <location filename="../lxqtmainmenu.cpp" line="496"/>
+        <source>Add to desktop</source>
+        <translation>Adicionar à área de trabalho</translation>
+    </message>
+    <message>
+        <location filename="../lxqtmainmenu.cpp" line="504"/>
+        <source>Question</source>
+        <translation>Questão</translation>
+    </message>
+    <message>
+        <location filename="../lxqtmainmenu.cpp" line="505"/>
+        <source>A file with the same name already exists.
+Do you want to overwrite it?</source>
+        <translation>Já existe um arquivo com o mesmo nome.
+Você deseja sobrescrevê-lo?</translation>
+    </message>
+    <message>
+        <location filename="../lxqtmainmenu.cpp" line="511"/>
+        <source>Warning</source>
+        <translation>Atenção</translation>
+    </message>
+    <message>
+        <location filename="../lxqtmainmenu.cpp" line="512"/>
+        <source>The file cannot be overwritten.</source>
+        <translation>O arquivo não pode ser sobrescrito.</translation>
+    </message>
+    <message>
+        <location filename="../lxqtmainmenu.cpp" line="518"/>
+        <source>Copy</source>
+        <translation>Copiar</translation>
     </message>
 </context>
 <context>

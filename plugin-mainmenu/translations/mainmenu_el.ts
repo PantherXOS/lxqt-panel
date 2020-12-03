@@ -4,14 +4,47 @@
 <context>
     <name>LXQtMainMenu</name>
     <message>
-        <location filename="../lxqtmainmenu.cpp" line="102"/>
+        <location filename="../lxqtmainmenu.cpp" line="106"/>
         <source>Search...</source>
         <translation>Αναζήτηση...</translation>
     </message>
     <message>
-        <location filename="../lxqtmainmenu.cpp" line="110"/>
+        <location filename="../lxqtmainmenu.cpp" line="114"/>
         <source>Show/hide main menu</source>
         <translation>Εμφάνιση/απόκρυψη του κύριου μενού</translation>
+    </message>
+    <message>
+        <location filename="../lxqtmainmenu.cpp" line="496"/>
+        <source>Add to desktop</source>
+        <translation>Προσθήκη στην επιφάνεια εργασίας</translation>
+    </message>
+    <message>
+        <location filename="../lxqtmainmenu.cpp" line="504"/>
+        <source>Question</source>
+        <translation>Ερώτηση</translation>
+    </message>
+    <message>
+        <location filename="../lxqtmainmenu.cpp" line="505"/>
+        <source>A file with the same name already exists.
+Do you want to overwrite it?</source>
+        <translation>Ένα αρχείο με το ίδιο όνομα υπάρχει ήδη.
+Επιθυμείτε να το αντικαταστήσετε;
+</translation>
+    </message>
+    <message>
+        <location filename="../lxqtmainmenu.cpp" line="511"/>
+        <source>Warning</source>
+        <translation>Προειδοποίηση</translation>
+    </message>
+    <message>
+        <location filename="../lxqtmainmenu.cpp" line="512"/>
+        <source>The file cannot be overwritten.</source>
+        <translation>Το αρχείο δεν μπορεί να αντικατασταθεί.</translation>
+    </message>
+    <message>
+        <location filename="../lxqtmainmenu.cpp" line="518"/>
+        <source>Copy</source>
+        <translation>Αντιγραφή</translation>
     </message>
 </context>
 <context>

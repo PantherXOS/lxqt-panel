@@ -93,7 +93,6 @@ public:
     /*! \brief Set the maximum width of item to show
      */
     void setMaxItemWidth(int max);
-
     int getCount();
 
 public slots:
@@ -111,7 +110,6 @@ private slots:
 
 private:
     void fillActionsRecursive(QMenu * menu);
-    int filterActioncount = 0 ;
 
 private:
     QStandardItemModel * mModel;
@@ -121,6 +119,8 @@ private:
     FilterProxyModel * mProxy;
 #endif
     int mMaxItemsToShow;
+    int filterActioncount = 0 ;
+
 };
 
 #endif //ACTION_VIEW_H

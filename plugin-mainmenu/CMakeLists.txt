@@ -43,6 +43,7 @@ if(MENUCACHE_FOUND)
 
 endif()
 
+
 set(QT_USE_QTXML 1)
 set(QT_USE_QTDBUS 1)
 
