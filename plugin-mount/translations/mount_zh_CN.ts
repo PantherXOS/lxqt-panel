@@ -22,24 +22,40 @@
         <translation>行为</translation>
     </message>
     <message>
-        <location filename="../configuration.ui" line="26"/>
+        <location filename="../configuration.ui" line="32"/>
         <source>When a device is connected:</source>
         <translation>连接设备时：</translation>
     </message>
     <message>
-        <location filename="../configuration.cpp" line="40"/>
+        <location filename="../configuration.ui" line="42"/>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Trigger the following action eject shortcut is pressed (&lt;span style=&quot; font-weight:600;&quot;&gt;XF86Eject&lt;/span&gt; by default)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;按下弹出快捷键 (默认为 &lt;span style=&quot; font-weight:600;&quot;&gt;XF86Eject&lt;/span&gt;) 触发以下操作&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
+        <location filename="../configuration.ui" line="45"/>
+        <source>When eject button is pressed:</source>
+        <translation>当弹出按钮被按下时：</translation>
+    </message>
+    <message>
+        <location filename="../configuration.cpp" line="43"/>
         <source>Popup menu</source>
         <translation>弹出菜单</translation>
     </message>
     <message>
-        <location filename="../configuration.cpp" line="41"/>
+        <location filename="../configuration.cpp" line="44"/>
         <source>Show info</source>
         <translation>显示信息</translation>
     </message>
     <message>
-        <location filename="../configuration.cpp" line="42"/>
+        <location filename="../configuration.cpp" line="45"/>
+        <location filename="../configuration.cpp" line="50"/>
         <source>Do nothing</source>
         <translation>什么都不做</translation>
+    </message>
+    <message>
+        <location filename="../configuration.cpp" line="51"/>
+        <source>Eject All Optical Drives</source>
+        <translation>弹出所有光盘驱动器</translation>
     </message>
 </context>
 <context>
@@ -58,6 +74,32 @@
         <location filename="../actions/deviceaction_info.cpp" line="50"/>
         <source>Removable media/devices manager</source>
         <translation>可移动媒体管理器</translation>
+    </message>
+</context>
+<context>
+    <name>EjectActionOptical</name>
+    <message>
+        <location filename="../actions/ejectaction_optical.cpp" line="59"/>
+        <source>Removable media/devices manager</source>
+        <translation>可移动媒体/设备管理器</translation>
+    </message>
+    <message>
+        <location filename="../actions/ejectaction_optical.cpp" line="59"/>
+        <source>Ejected all optical drives</source>
+        <translation>被弹出的所有光盘驱动器</translation>
+    </message>
+</context>
+<context>
+    <name>LXQtMountPlugin</name>
+    <message>
+        <location filename="../lxqtmountplugin.cpp" line="79"/>
+        <source>Removable media/devices manager: Global shortcut &apos;%1&apos; cannot be registered</source>
+        <translation>可移动媒体/设备管理器：全局快捷键 &apos;%1&apos; 无法被注册</translation>
+    </message>
+    <message>
+        <location filename="../lxqtmountplugin.cpp" line="116"/>
+        <source>Eject removable media</source>
+        <translation>弹出可移动媒体</translation>
     </message>
 </context>
 <context>

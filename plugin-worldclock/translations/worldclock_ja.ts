@@ -128,12 +128,12 @@
     <message>
         <location filename="../lxqtworldclockconfiguration.ui" line="535"/>
         <source>Show &amp;week numbers in popup calendar</source>
-        <translation type="unfinished"></translation>
+        <translation>ポップアップするカレンダーに週番号を表示する(&amp;W)</translation>
     </message>
     <message>
         <location filename="../lxqtworldclockconfiguration.ui" line="545"/>
         <source>S&amp;how tooltip</source>
-        <translation type="unfinished"></translation>
+        <translation>ツールチップを表示する(&amp;H)</translation>
     </message>
     <message>
         <location filename="../lxqtworldclockconfiguration.ui" line="201"/>
@@ -281,8 +281,6 @@
 &lt;tr&gt;&lt;td&gt;mm&lt;/td&gt;&lt;td&gt;the minute with a leading zero (00 to 59)&lt;/td&gt;&lt;/tr&gt;
 &lt;tr&gt;&lt;td&gt;s&lt;/td&gt;&lt;td&gt;the second without a leading zero (0 to 59)&lt;/td&gt;&lt;/tr&gt;
 &lt;tr&gt;&lt;td&gt;ss&lt;/td&gt;&lt;td&gt;the second with a leading zero (00 to 59)&lt;/td&gt;&lt;/tr&gt;
-&lt;tr&gt;&lt;td&gt;z&lt;/td&gt;&lt;td&gt;the milliseconds without leading zeroes (0 to 999)&lt;/td&gt;&lt;/tr&gt;
-&lt;tr&gt;&lt;td&gt;zzz&lt;/td&gt;&lt;td&gt;the milliseconds with leading zeroes (000 to 999)&lt;/td&gt;&lt;/tr&gt;
 &lt;tr&gt;&lt;td&gt;AP &lt;i&gt;or&lt;/i&gt; A&lt;/td&gt;&lt;td&gt;use AM/PM display. &lt;b&gt;A/AP&lt;/b&gt; will be replaced by either &quot;AM&quot; or &quot;PM&quot;.&lt;/td&gt;&lt;/tr&gt;
 &lt;tr&gt;&lt;td&gt;ap &lt;i&gt;or&lt;/i&gt; a&lt;/td&gt;&lt;td&gt;use am/pm display. &lt;b&gt;a/ap&lt;/b&gt; will be replaced by either &quot;am&quot; or &quot;pm&quot;.&lt;/td&gt;&lt;/tr&gt;
 &lt;tr&gt;&lt;td&gt;t&lt;/td&gt;&lt;td&gt;the timezone (e.g. &quot;CEST&quot;)&lt;/td&gt;&lt;/tr&gt;
@@ -328,8 +326,6 @@
 &lt;tr&gt;&lt;td&gt; mm&lt;/td&gt; &lt;td&gt;分（00から59）先頭に0がつく&lt;/td&gt; &lt;/tr&gt;
 &lt;tr&gt;&lt;td&gt; s&lt;/td&gt; &lt;td&gt;秒（0〜59）先頭に0なし&lt;/td&gt; &lt;/tr&gt;
 &lt;tr&gt;&lt;td&gt;ss&lt;/td&gt; &lt;td&gt;秒（00〜59）先頭に0がつく&lt;/td&gt; &lt;/tr&gt;
-&lt;tr&gt;&lt;td&gt;z&lt;/td&gt; &lt;td&gt;ミリ秒（0〜999）先頭に0なし&lt;/td&gt; &lt;/tr&gt;
-&lt;tr&gt;&lt;td&gt;zzz&lt;/td&gt; &lt;td&gt;ミリ秒（000〜999）先頭に0がつく&lt;/td&gt; &lt;/tr&gt;
 &lt;tr&gt; &lt;td&gt; AP &lt;i&gt;または&lt;/i&gt; A &lt;/td&gt; &lt;td&gt;午前/午後の表示に使用します。 &lt;b&gt; A/AP &lt;/b&gt;は &quot;AM&quot; または &quot;PM&quot; に置き換えられます。&lt;/td&gt; &lt;/tr&gt;
 &lt;tr&gt; &lt;td&gt; ap &lt;i&gt;または&lt;/i&gt; a &lt;/td&gt; &lt;td&gt;午前/午後の表示に使用します。 &lt;b&gt; a/ap &lt;/b&gt;は &quot;am&quot; または &quot;pm&quot; に置き換えられます。（訳注: 日本語では AP と ap はどちらも&quot;午前&quot;または&quot;午後&quot;に置き換えられるようです）&lt;/td&gt; &lt;/tr&gt;
 &lt;tr&gt;&lt;td&gt;t&lt;/td&gt; &lt;td&gt;タイムゾーン（例: &quot;JST&quot;）&lt;/td&gt; &lt;/tr&gt;

@@ -230,12 +230,12 @@
     <message>
         <location filename="../lxqtworldclockconfiguration.ui" line="535"/>
         <source>Show &amp;week numbers in popup calendar</source>
-        <translation type="unfinished"></translation>
+        <translation>Εμφάνιση των αριθμών &amp;εβδομάδων στο αναδυόμενο ημερολόγιο</translation>
     </message>
     <message>
         <location filename="../lxqtworldclockconfiguration.ui" line="545"/>
         <source>S&amp;how tooltip</source>
-        <translation type="unfinished"></translation>
+        <translation>Εμ&amp;φάνιση υπόδειξης</translation>
     </message>
     <message>
         <location filename="../lxqtworldclockconfiguration.cpp" line="107"/>
@@ -281,8 +281,6 @@
 &lt;tr&gt;&lt;td&gt;mm&lt;/td&gt;&lt;td&gt;the minute with a leading zero (00 to 59)&lt;/td&gt;&lt;/tr&gt;
 &lt;tr&gt;&lt;td&gt;s&lt;/td&gt;&lt;td&gt;the second without a leading zero (0 to 59)&lt;/td&gt;&lt;/tr&gt;
 &lt;tr&gt;&lt;td&gt;ss&lt;/td&gt;&lt;td&gt;the second with a leading zero (00 to 59)&lt;/td&gt;&lt;/tr&gt;
-&lt;tr&gt;&lt;td&gt;z&lt;/td&gt;&lt;td&gt;the milliseconds without leading zeroes (0 to 999)&lt;/td&gt;&lt;/tr&gt;
-&lt;tr&gt;&lt;td&gt;zzz&lt;/td&gt;&lt;td&gt;the milliseconds with leading zeroes (000 to 999)&lt;/td&gt;&lt;/tr&gt;
 &lt;tr&gt;&lt;td&gt;AP &lt;i&gt;or&lt;/i&gt; A&lt;/td&gt;&lt;td&gt;use AM/PM display. &lt;b&gt;A/AP&lt;/b&gt; will be replaced by either &quot;AM&quot; or &quot;PM&quot;.&lt;/td&gt;&lt;/tr&gt;
 &lt;tr&gt;&lt;td&gt;ap &lt;i&gt;or&lt;/i&gt; a&lt;/td&gt;&lt;td&gt;use am/pm display. &lt;b&gt;a/ap&lt;/b&gt; will be replaced by either &quot;am&quot; or &quot;pm&quot;.&lt;/td&gt;&lt;/tr&gt;
 &lt;tr&gt;&lt;td&gt;t&lt;/td&gt;&lt;td&gt;the timezone (e.g. &quot;CEST&quot;)&lt;/td&gt;&lt;/tr&gt;
@@ -314,12 +312,10 @@
 &lt;tr&gt;&lt;td&gt;hh&lt;/td&gt;&lt;td&gt;η ώρα με το αρχικό μηδενικό (00 ως 23 ή 01 ως 12 αν απεικονίζεται ως ΠΜ/ΜΜ)&lt;/td&gt;&lt;/tr&gt;
 &lt;tr&gt;&lt;td&gt;H&lt;/td&gt;&lt;td&gt;η ώρα με το αρχικό μηδενικό (0 ως 23, ακόμα και με απεικόνιση ως ΠΜ/ΜΜ)&lt;/td&gt;&lt;/tr&gt;
 &lt;tr&gt;&lt;td&gt;HH&lt;/td&gt;&lt;td&gt;η ώρα με το αρχικό μηδενικό (00 ως 23, ακόμα και με απεικόνιση ως ΠΜ/ΜΜ)&lt;/td&gt;&lt;/tr&gt;
-&lt;tr&gt;&lt;td&gt;m&lt;/td&gt;&lt;td&gt;τα λεπτά δίχως το αρχικό μηδενικό (0 ως 59)&lt;/td&gt;&lt;/tr&gt;
-&lt;tr&gt;&lt;td&gt;mm&lt;/td&gt;&lt;td&gt;τα λεπτά με το αρχικό μηδενικό (00 ως 59)&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;m&lt;/td&gt;&lt;td&gt;τα λεπτά δίχως το αρχικό μηδενικό (0 ως )&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;mm&lt;/td&gt;&lt;td&gt;τα λεπτά με το αρχικό μηδενικό (0 ως 59)&lt;/td&gt;&lt;/tr&gt;
 &lt;tr&gt;&lt;td&gt;s&lt;/td&gt;&lt;td&gt;τα δευτερόλεπτα δίχως το αρχικό μηδενικό (0 ως 59)&lt;/td&gt;&lt;/tr&gt;
 &lt;tr&gt;&lt;td&gt;ss&lt;/td&gt;&lt;td&gt;τα δευτερόλεπτα με το αρχικό μηδενικό (00 ως 59)&lt;/td&gt;&lt;/tr&gt;
-&lt;tr&gt;&lt;td&gt;z&lt;/td&gt;&lt;td&gt;τα χιλιοστά δευτερολέπτου δίχως τα αρχικά μηδενικά (0 ως 999)&lt;/td&gt;&lt;/tr&gt;
-&lt;tr&gt;&lt;td&gt;zzz&lt;/td&gt;&lt;td&gt;τα χιλιοστά δευτερολέπτου με τα αρχικά μηδενικά (000 ως 999)&lt;/td&gt;&lt;/tr&gt;
 &lt;tr&gt;&lt;td&gt;AP &lt;i&gt;or&lt;/i&gt; A&lt;/td&gt;&lt;td&gt;χρήση της απεικόνισης ως ΠΜ/ΜΜ. Τα &lt;b&gt;A/AP&lt;/b&gt; θα αντικατασταθούν από &quot;ΠΠ&quot; ή &quot;ΜΜ&quot;.&lt;/td&gt;&lt;/tr&gt;
 &lt;tr&gt;&lt;td&gt;ap &lt;i&gt;or&lt;/i&gt; a&lt;/td&gt;&lt;td&gt;χρήση της απεικόνισης πμ/μμ. Τα &lt;b&gt;a/ap&lt;/b&gt; θα αντικατασταθούν από τα &quot;πμ&quot; ή &quot;μμ&quot;.&lt;/td&gt;&lt;/tr&gt;
 &lt;tr&gt;&lt;td&gt;t&lt;/td&gt;&lt;td&gt;η ζώνη ώρας (π.χ. &quot;CEST&quot;)&lt;/td&gt;&lt;/tr&gt;

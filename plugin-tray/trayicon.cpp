@@ -88,12 +88,8 @@ TrayIcon::TrayIcon(Window iconId, QSize const & iconSize, QWidget* parent):
 
     setObjectName(QStringLiteral("TrayIcon"));
     setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
-    // NOTE:
-    // see https://github.com/lxqt/lxqt/issues/945
-    // workaround: delayed init because of weird behaviour of some icons/windows (claws-mail)
-    // (upon starting the app the window for receiving clicks wasn't correctly sized
-    //  no matter what we've done)
-    QTimer::singleShot(200, [this] { init(); update(); });
+    init();
+    update();
 }
 
 
@@ -155,7 +151,7 @@ void TrayIcon::init()
         Atom acttype;
         int actfmt;
         unsigned long nbitem, bytes;
-        unsigned char *data = 0;
+        unsigned char *data = nullptr;
         int ret;
 
         ret = XGetWindowProperty(dsp, mIconId, xfitMan().atom("_XEMBED_INFO"),

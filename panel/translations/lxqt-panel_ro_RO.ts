@@ -195,7 +195,7 @@
     <message>
         <location filename="../config/configpanelwidget.ui" line="488"/>
         <source>&lt;small&gt;Compositing is required for panel transparency.&lt;/small&gt;</source>
-        <translation>&lt;small&gt; Este necesar un compozitor  pentru transparența tabloului de bord.&lt;/ small&gt;</translation>
+        <translation>&lt;small&gt;Este necesar un compozitor pentru transparența tabloului de bord.&lt;/ small&gt;</translation>
     </message>
     <message>
         <location filename="../config/configpanelwidget.ui" line="516"/>
@@ -399,17 +399,17 @@ Doriți sa înlăturați acest panou?</translation>
 <context>
     <name>Plugin</name>
     <message>
-        <location filename="../plugin.cpp" line="432"/>
+        <location filename="../plugin.cpp" line="436"/>
         <source>Configure &quot;%1&quot;</source>
         <translation type="unfinished">Configurează &quot;%1&quot;</translation>
     </message>
     <message>
-        <location filename="../plugin.cpp" line="437"/>
+        <location filename="../plugin.cpp" line="441"/>
         <source>Move &quot;%1&quot;</source>
         <translation>Mută &quot;%1&quot;</translation>
     </message>
     <message>
-        <location filename="../plugin.cpp" line="445"/>
+        <location filename="../plugin.cpp" line="449"/>
         <source>Remove &quot;%1&quot;</source>
         <translation type="unfinished">Îndepărtează &quot;%1&quot;</translation>
     </message>

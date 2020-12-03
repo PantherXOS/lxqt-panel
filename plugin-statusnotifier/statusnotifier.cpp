@@ -35,6 +35,13 @@ StatusNotifier::StatusNotifier(const ILXQtPanelPluginStartupInfo &startupInfo) :
     m_widget = new StatusNotifierWidget(this);
 }
 
+QDialog *StatusNotifier::configureDialog()
+{
+    auto dialog = new StatusNotifierConfiguration(settings());
+    dialog->addItems(m_widget->itemTitles());
+    return dialog;
+}
+
 void StatusNotifier::realign()
 {
     m_widget->realign();

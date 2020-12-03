@@ -89,7 +89,7 @@
     <message>
         <location filename="../lxqtvolumeconfiguration.ui" line="91"/>
         <source>Notify about volume changes with keyboard</source>
-        <translation type="unfinished"></translation>
+        <translation>使用鍵盤改變音量時顯示通知</translation>
     </message>
     <message>
         <location filename="../lxqtvolumeconfiguration.ui" line="106"/>
@@ -105,12 +105,12 @@
 <context>
     <name>VolumePopup</name>
     <message>
-        <location filename="../volumepopup.cpp" line="54"/>
+        <location filename="../volumepopup.cpp" line="55"/>
         <source>Launch mixer</source>
         <translation>執行混音器</translation>
     </message>
     <message>
-        <location filename="../volumepopup.cpp" line="55"/>
+        <location filename="../volumepopup.cpp" line="56"/>
         <source>Mi&amp;xer</source>
         <translation>混音器 (&amp;x)</translation>
     </message>
