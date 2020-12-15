@@ -72,13 +72,12 @@ LXQtTaskGroup::LXQtTaskGroup(const QString &groupName, WId window, LXQtTaskBar *
 void LXQtTaskGroup::contextMenuEvent(QContextMenuEvent *event)
 {
     setPopupVisible(false, true);
-    mPreventPopup = true;
     if (mSingleButton)
     {
         LXQtTaskButton::contextMenuEvent(event);
         return;
     }
-
+    mPreventPopup = true;
     QMenu * menu = new QMenu(tr("Group"));
     menu->setAttribute(Qt::WA_DeleteOnClose);
     QAction *a = menu->addAction(XdgIcon::fromTheme(QStringLiteral("process-stop")), tr("Close group"));
@@ -490,10 +489,10 @@ int LXQtTaskGroup::recalculateFrameHeight() const
 int LXQtTaskGroup::recalculateFrameWidth() const
 {
     const QFontMetrics fm = fontMetrics();
-    int max = 100 * fm.width (QLatin1Char(' ')); // elide after the max width
+    int max = 100 * fm.horizontalAdvance(QLatin1Char(' ')); // elide after the max width
     int txtWidth = 0;
     for (LXQtTaskButton *btn : qAsConst(mButtonHash))
-        txtWidth = qMax(fm.width(btn->text()), txtWidth);
+        txtWidth = qMax(fm.horizontalAdvance(btn->text()), txtWidth);
     return iconSize().width() + qMin(txtWidth, max) + 30/* give enough room to margins and borders*/;
 }
 
@@ -629,7 +628,7 @@ bool LXQtTaskGroup::onWindowChanged(WId window, NET::Properties prop, NET::Prope
         // if class is changed the window won't belong to our group any more
         if (parentTaskBar()->isGroupingEnabled() && prop2.testFlag(NET::WM2WindowClass))
         {
-            KWindowInfo info(window, 0, NET::WM2WindowClass);
+            KWindowInfo info(window, NET::Properties(), NET::WM2WindowClass);
             if (QString::fromUtf8(info.windowClassClass()) != mGroupName)
             {
                 onWindowRemoved(window);

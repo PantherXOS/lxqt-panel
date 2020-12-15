@@ -1,14 +1,20 @@
-lxqt-panel-0.15.1.13 / 2020-10-18
+lxqt-panel-0.16.1 / 2020-11-04
 ==============================
-  * Update hub plugin gui: Update and improvements of PantherX HUB menu items.
+  * Fixed compilation with Qt 5.12 and Qt 5.13.
 
-lxqt-panel-0.15.1.12 / 2020-10-18
+lxqt-panel-0.16.0 / 2020-11-01
 ==============================
-  * Update mainmenu gui: Update and improvements of PantherX menu items.
-
-lxqt-panel-0.15.1.11 / 2020-10-08
-==============================
-  * Update mainmenu gui: Matching the top px menu with mainmenu items.
+  * Use a stylesheet for progress-bars of Sensors plugin.
+  * Implemented auto-hiding for Status Notifier.
+  * Added option to task button for moving the window to next monitor.
+  * Added option to place task buttons of new windows next to the existing ones of same class when task buttons are ungrouped.
+  * Removed incorrect and redundant explanation of milliseconds from World Clock.
+  * Don't call non-const member functions on temporaries.
+  * Prevent possible C++11 range loop container detachment.
+  * Fixed the sizes and alignments of some plugins at startup.
+  * Added right-click menu to main menu items.
+  * Address deprecation warnings/errors.
+  * Added XF86Eject button action.
 
 lxqt-panel-0.15.1 / 2020-05-20
 ==============================

@@ -41,12 +41,13 @@
 #include "audioengine.h"
 #include <QDebug>
 #include <QWheelEvent>
+#include <QScreen>
 
 VolumePopup::VolumePopup(QWidget* parent):
     QDialog(parent, Qt::Dialog | Qt::WindowStaysOnTopHint | Qt::CustomizeWindowHint | Qt::Popup | Qt::X11BypassWindowManagerHint),
     m_pos(0,0),
     m_anchor(Qt::TopLeftCorner),
-    m_device(0)
+    m_device(nullptr)
 {
     m_mixerButton = new QPushButton(this);
     m_mixerButton->setObjectName(QStringLiteral("MixerLink"));
@@ -248,13 +249,16 @@ void VolumePopup::realign()
 
     }
 
-    QRect screen = QApplication::desktop()->availableGeometry(m_pos);
+		if (QScreen const * const screen = QGuiApplication::screenAt(m_pos))
+		{
+			auto const & geometry = screen->availableGeometry();
 
-    if (rect.right() > screen.right())
-        rect.moveRight(screen.right());
+			if (rect.right() > geometry.right())
+				rect.moveRight(geometry.right());
 
-    if (rect.bottom() > screen.bottom())
-        rect.moveBottom(screen.bottom());
+			if (rect.bottom() > geometry.bottom())
+				rect.moveBottom(geometry.bottom());
+		}
 
     move(rect.topLeft());
 }

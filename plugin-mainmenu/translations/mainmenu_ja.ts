@@ -4,14 +4,45 @@
 <context>
     <name>LXQtMainMenu</name>
     <message>
-        <location filename="../lxqtmainmenu.cpp" line="102"/>
+        <location filename="../lxqtmainmenu.cpp" line="106"/>
         <source>Search...</source>
         <translation>検索...</translation>
     </message>
     <message>
-        <location filename="../lxqtmainmenu.cpp" line="110"/>
+        <location filename="../lxqtmainmenu.cpp" line="114"/>
         <source>Show/hide main menu</source>
         <translation>アプリケーションメニューの表示/非表示</translation>
+    </message>
+    <message>
+        <location filename="../lxqtmainmenu.cpp" line="496"/>
+        <source>Add to desktop</source>
+        <translation>デスクトップに追加する</translation>
+    </message>
+    <message>
+        <location filename="../lxqtmainmenu.cpp" line="504"/>
+        <source>Question</source>
+        <translation>質問</translation>
+    </message>
+    <message>
+        <location filename="../lxqtmainmenu.cpp" line="505"/>
+        <source>A file with the same name already exists.
+Do you want to overwrite it?</source>
+        <translation>同じ名前のファイルが既に存在します。上書きしますか？</translation>
+    </message>
+    <message>
+        <location filename="../lxqtmainmenu.cpp" line="511"/>
+        <source>Warning</source>
+        <translation>警告</translation>
+    </message>
+    <message>
+        <location filename="../lxqtmainmenu.cpp" line="512"/>
+        <source>The file cannot be overwritten.</source>
+        <translation>ファイルを上書き出来ません。</translation>
+    </message>
+    <message>
+        <location filename="../lxqtmainmenu.cpp" line="518"/>
+        <source>Copy</source>
+        <translation>コピー</translation>
     </message>
 </context>
 <context>

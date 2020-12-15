@@ -41,11 +41,12 @@
 #include <QDomElement>
 #include <QAction>
 #include <QTimer>
-#include <QDebug>
 #include <QKeySequence>
+#include <QDebug>
 #include <string>
 #include <iostream>
 #include <QThread>
+#include <sstream>
 
 #include "menustyle.h"
 #include <memory>
@@ -55,8 +56,6 @@
 #include <sys/stat.h>
 #include <zconf.h>
 #include <QDir>
-
-using namespace std;
 
 
 class QMenu;
@@ -96,17 +95,17 @@ protected:
 private:
     void setMenuFontSize();
     void setButtonIcon();
+    void addContextMenu(QMenu *menu);
+    void addItem(const QString &text, bool setColor, QAction *before);
+    void buildPxMenu();
+    void buildPxSearch(const std::string &searchResult);
+    void pressEnterSearch(std::string command);
+    std::string exec(const char* cmd);
 
 private:
     QToolButton mButton;
     QString mLogDir;
     QMenu* mMenu;
-    string searchText;
-    QList <ResultItem *> folders;
-    QList <ResultItem *> files;
-    QList <ResultItem *> musics;
-//    QMenu* backupMenu;
-
     GlobalKeyShortcut::Action *mShortcut;
     MenuStyle mTopMenuStyle;
     QWidgetAction * mSearchEditAction;
@@ -114,16 +113,15 @@ private:
     QWidgetAction * mSearchViewAction;
     ActionView * mSearchView;
     QAction * mMakeDirtyAction;
-    void addItem(const QString &text, bool setColor, QAction *before);
-    void buildPxMenu();
-    void buildPxSearch(const string &searchResult);
-    void pressEnterSearch(string command);
-    string exec(const char* cmd);
     bool mFilterMenu; //!< searching should perform hiding nonmatching items in menu
     bool mFilterShow; //!< searching should list matching items in top menu
     bool mFilterClear; //!< search field should be cleared upon showing the menu
     bool mFilterShowHideMenu; //!< while searching all (original) menu entries should be hidden
     bool mHeavyMenuChanges; //!< flag for filtering some mMenu events while heavy changes are performed
+    std::string searchText;
+    QList <ResultItem *> folders;
+    QList <ResultItem *> files;
+    QList <ResultItem *> musics;
     ResultItem* music = nullptr;
     ResultItem* documents;
     ResultItem* home;
@@ -143,6 +141,7 @@ private:
     QString mMenuFile;
 
 protected slots:
+
     virtual void settingsChanged();
     void buildMenu();
 
@@ -151,6 +150,7 @@ private slots:
     void showHideMenu();
     void searchMenu();
     void setSearchFocus(QAction *action);
+    void onRequestingCustomMenu(const QPoint& p);
     void actionTrigered(QAction *action);
 };
 

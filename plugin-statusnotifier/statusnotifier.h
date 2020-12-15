@@ -31,6 +31,7 @@
 
 #include "../panel/ilxqtpanelplugin.h"
 #include "statusnotifierwidget.h"
+#include "statusnotifierconfiguration.h"
 
 class StatusNotifier : public QObject, public ILXQtPanelPlugin
 {
@@ -38,11 +39,15 @@ class StatusNotifier : public QObject, public ILXQtPanelPlugin
 public:
     StatusNotifier(const ILXQtPanelPluginStartupInfo &startupInfo);
 
-    bool isSeparate() const { return true; }
-    void realign();
-    QString themeId() const { return QStringLiteral("StatusNotifier"); }
-    virtual Flags flags() const { return SingleInstance | NeedsHandle; }
-    QWidget *widget() { return m_widget; }
+    bool isSeparate() const override { return true; }
+    void realign() override;
+    QString themeId() const override { return QStringLiteral("StatusNotifier"); }
+    Flags flags() const override { return SingleInstance | HaveConfigDialog | NeedsHandle; }
+    QWidget *widget() override { return m_widget; }
+
+    QDialog *configureDialog() override;
+
+    void settingsChanged() override { m_widget->settingsChanged(); }
 
 private:
     StatusNotifierWidget *m_widget;

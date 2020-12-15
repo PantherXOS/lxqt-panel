@@ -30,10 +30,12 @@
 
 #include "../panel/lxqtpanelpluginconfigdialog.h"
 
-#define CFG_KEY_ACTION  "newDeviceAction"
-#define ACT_SHOW_MENU   "showMenu"
-#define ACT_SHOW_INFO   "showInfo"
-#define ACT_NOTHING     "nothing"
+#define CFG_KEY_ACTION    "newDeviceAction"
+#define CFG_EJECT_ACTION  "ejectAction"
+#define ACT_SHOW_MENU     "showMenu"
+#define ACT_SHOW_INFO     "showInfo"
+#define ACT_NOTHING       "nothing"
+#define ACT_EJECT_OPTICAL "ejectOpticalDrives"
 
 namespace Ui {
     class Configuration;
@@ -50,6 +52,7 @@ public:
 protected slots:
     virtual void loadSettings();
     void devAddedChanged(int index);
+    void ejectPressedChanged(int index);
 
 private:
     Ui::Configuration *ui;

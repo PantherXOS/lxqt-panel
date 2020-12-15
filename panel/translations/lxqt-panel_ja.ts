@@ -217,7 +217,7 @@ Colorize icons based on widget style (palette)</source>
 
 次の設定を無効にすることもできます。
 
-LXQt 設定&#x3000;外観 →
+LXQt 設定 - 外観 →
 アイコンテーマ →
 ウィジェットのスタイル（パレット）に基づいてアイコンを色付けする</translation>
     </message>
@@ -406,17 +406,17 @@ Do you want to remove this panel?</source>
 <context>
     <name>Plugin</name>
     <message>
-        <location filename="../plugin.cpp" line="432"/>
+        <location filename="../plugin.cpp" line="436"/>
         <source>Configure &quot;%1&quot;</source>
         <translation>【%1】の設定</translation>
     </message>
     <message>
-        <location filename="../plugin.cpp" line="437"/>
+        <location filename="../plugin.cpp" line="441"/>
         <source>Move &quot;%1&quot;</source>
         <translation>【%1】の移動</translation>
     </message>
     <message>
-        <location filename="../plugin.cpp" line="445"/>
+        <location filename="../plugin.cpp" line="449"/>
         <source>Remove &quot;%1&quot;</source>
         <translation>【%1】の削除</translation>
     </message>

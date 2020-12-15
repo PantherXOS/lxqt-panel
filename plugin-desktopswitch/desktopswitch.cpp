@@ -162,7 +162,7 @@ void DesktopSwitch::refresh()
     //delete unneeded buttons (if neccessary)
     for ( ; i < current_cnt; ++i)
     {
-        b = m_buttons->buttons().last();
+        b = m_buttons->buttons().constLast();
         m_buttons->removeButton(b);
         mWidget.layout()->removeWidget(b);
         delete b;
@@ -227,7 +227,8 @@ void DesktopSwitch::onCurrentDesktopChanged(int current)
     if (mShowOnlyActive)
     {
         int i = 1;
-        for (auto button : m_buttons->buttons())
+        const auto buttons = m_buttons->buttons();
+        for (const auto button : buttons)
         {
             if (current == i)
             {

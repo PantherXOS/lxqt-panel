@@ -29,10 +29,10 @@ set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTOUIC ON)
 set(CMAKE_AUTORCC ON)
 
-set(REQUIRED_QT_VERSION "5.10")
+set(REQUIRED_QT_VERSION "5.12")
 set(KF5_MINIMUM_VERSION "5.36.0")
-set(LXQT_GLOBALKEYS_MINIMUM_VERSION "0.15.0")
-set(LXQT_MINIMUM_VERSION "0.15.0")
+set(LXQT_GLOBALKEYS_MINIMUM_VERSION "0.16.0")
+set(LXQT_MINIMUM_VERSION "0.16.0")
 
 find_package(Qt5DBus ${REQUIRED_QT_VERSION} REQUIRED)
 find_package(Qt5LinguistTools ${REQUIRED_QT_VERSION} REQUIRED)
@@ -261,7 +261,6 @@ if(BACKLIGHT_PLUGIN)
     add_subdirectory(plugin-backlight)
 endif()
 
-
 setByDefault(HUB_PLUGIN Yes)
 if(HUB_PLUGIN)
     list(APPEND ENABLED_PLUGINS "Hub")
@@ -273,7 +272,6 @@ if(SYSTEM_PLUGIN)
     list(APPEND ENABLED_PLUGINS "SYSTEM")
     add_subdirectory(plugin-px-system)
 endif()
-
 
 #########################################################################
 
