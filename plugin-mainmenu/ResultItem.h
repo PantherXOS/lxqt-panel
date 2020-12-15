@@ -15,6 +15,7 @@
 #include <QUrl>
 #include <QMouseEvent>
 
+#include "pxsettings.h"
 
 class ResultItem : public QAction{
 Q_OBJECT
@@ -22,7 +23,10 @@ public:
     ResultItem(const QString &name, const QString & type, const QString & address, QObject *parent = nullptr)
             : QAction(parent) {
         std::string _type = type.toStdString();
-        setText(name);
+        if(name.size()>MAX_SEARCH_RESULT_FILE_NAME)
+            setText(name.left(MAX_SEARCH_RESULT_FILE_NAME-4) + QString::fromStdString("..."));
+        else 
+            setText(name);
         std::replace( _type.begin(), _type.end(), '/', '-');
         this->name = name;
         this->type = QString::fromStdString(_type);

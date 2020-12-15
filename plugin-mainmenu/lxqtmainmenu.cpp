@@ -357,8 +357,8 @@ void LXQtMainMenu::searchMenu()
     if (mFilterShow)
     {
         for(auto a: mMenu->actions()) {
-           if (qobject_cast<ResultItem *>(a) || qobject_cast<MenuTitle *>(a))
-               mMenu->removeAction(a);
+            if (qobject_cast<ResultItem *>(a) || qobject_cast<MenuTitle *>(a))
+                mMenu->removeAction(a);
         }
         files.clear();
         folders.clear();
@@ -370,19 +370,19 @@ void LXQtMainMenu::searchMenu()
             mSearchView->setFilter(text);
         if(!text.isEmpty()) {
             addItem(QString::fromStdString("SEARCH"), false, mMenu->actions()[0]);
-            if (mSearchView->getCount() != 0)
+            if (mSearchView->getCount())
                 addItem(QString::fromStdString("APPLICATIONS"), true, mMenu->actions()[1]);
-            string command = "recollq -S type -n " MAX_SEARCH_RESULT_STR ":1 -F 'mtype url filename' " + text.toStdString();
+            string command = "recollq -S type -n " + to_string(MAX_SEARCH_RESULT) + ":1 -F 'mtype url filename' " + text.toStdString();
             this->searchText = text.toStdString();
             string res = exec(command.c_str());
             if (res.c_str() != NULL)
                 buildPxSearch(res);
         } else {
             addItem(QString::fromStdString("YOUR APPLICATIONS"), false, mMenu->actions()[0]);
+            mMenu->insertAction(mMenu->actions()[1], mMenu->addSeparator());
             buildPxMenu();
             addItem(QString::fromStdString("YOUR FILES"), false, mMenu->actions()[0]);
             mMenu->insertAction(mMenu->actions()[1], mMenu->addSeparator());
-            mMenu->insertAction(mMenu->actions()[7], mMenu->addSeparator());
         }
         if(folders.size()) {
             for (auto res : folders)
@@ -404,7 +404,10 @@ void LXQtMainMenu::searchMenu()
         mMenu->insertSeparator(mMenu->actions()[1]);
         mHeavyMenuChanges = true;
 
-        mSearchView->setVisible(shown);
+        if(mSearchView->getCount())
+            mSearchView->setVisible(shown);
+        else 
+            mSearchView->setVisible(false);
         mSearchViewAction->setVisible(shown);
         //TODO: how to force the menu to recalculate it's size in a more elegant way?
         mMenu->addAction(mMakeDirtyAction);
@@ -474,12 +477,9 @@ void LXQtMainMenu::buildMenu()
     mMenu->addAction(mSearchViewAction);
     mMenu->addAction(mSearchEditAction);
 
-//    backupMenu = new QMenu;
-//    backupMenu->addActions(mMenu->actions());
     connect(mMenu, &QMenu::triggered, this, &LXQtMainMenu::actionTrigered);
-//    auto act = new QAction(QString::fromStdString("***********"));
-//    mMenu->addAction(act);
-    buildPxMenu();
+
+    // buildPxMenu();
     connect(mMenu, &QMenu::hovered, this, &LXQtMainMenu::setSearchFocus);
     //Note: setting readOnly to true to avoid wake-ups upon the Qt's internal "blink" cursor timer
     //(if the readOnly is not set, the "blink" timer is active also in case the menu is not shown ->
@@ -700,7 +700,7 @@ void LXQtMainMenu::buildPxSearch(const string &searchResult) {
     int i =0;
     std::string to;
     std::stringstream ss(searchResult);
-    while(std::getline(ss,to,'\n')) {
+    while(std::getline(ss,to,'\n') && i<=MAX_SEARCH_RESULT ) {
         if (i > 1) {
             istringstream iss(to);
             vector<string> tokens{istream_iterator<string>{iss},
@@ -709,18 +709,16 @@ void LXQtMainMenu::buildPxSearch(const string &searchResult) {
                 QString filename = QString::fromStdString(QByteArray::fromBase64(QString::fromStdString(tokens.at(2)).toUtf8()).toStdString());
                 QString mimetype = QString::fromStdString(QByteArray::fromBase64(QString::fromStdString(tokens.at(0)).toUtf8()).toStdString());
                 QString url      = QString::fromStdString(QByteArray::fromBase64(QString::fromStdString(tokens.at(1)).toUtf8()).toStdString()); 
-                qDebug() << filename << mimetype << url;
                 auto resultItem = new ResultItem(filename, mimetype, url, nullptr);
-                if (tokens.at(0).find("directory") != string::npos) {
+                if (mimetype.contains(QString::fromStdString("directory"), Qt::CaseInsensitive)) {
                     folders.push_back(resultItem);
-                } else if (tokens.at(0).find("audio") != string::npos) {
+                } else if (mimetype.contains(QString::fromStdString("audio"), Qt::CaseInsensitive)) {
                     musics.push_back(resultItem);
                 } else {
                     files.push_back(resultItem);
                 }
             }
         }
-        if(i>MAX_SEARCH_RESULT) break;
         i++;
     }
 }
