@@ -368,11 +368,7 @@ void LXQtMainMenu::searchMenu()
             addItem(QString::fromStdString("SEARCH"), false, mMenu->actions()[0]);
             if (mSearchView->getCount())
                 addItem(QString::fromStdString("APPLICATIONS"), true, mMenu->actions()[1]);
-<<<<<<< HEAD
-            string command = "recollq -S type -n " + to_string(MAX_SEARCH_RESULT) + ":1 -F 'mtype url filename' " + text.toStdString();
-=======
-            std::string command = "recollq -S type -n " MAX_SEARCH_RESULT_STR ":1 -F 'mtype url filename' " + text.toStdString();
->>>>>>> merge-with-upstream-0.16
+            std::string command = "recollq -S type -n " + std::to_string(MAX_SEARCH_RESULT) + ":1 -F 'mtype url filename' " + text.toStdString();
             this->searchText = text.toStdString();
             std::string res = exec(command.c_str());
             if (res.c_str() != NULL)
@@ -477,16 +473,10 @@ void LXQtMainMenu::buildMenu()
     mMenu->addSeparator();
     mMenu->addAction(mSearchViewAction);
     mMenu->addAction(mSearchEditAction);
-<<<<<<< HEAD
 
     connect(mMenu, &QMenu::triggered, this, &LXQtMainMenu::actionTrigered);
-
     // buildPxMenu();
-=======
-    connect(mMenu, &QMenu::triggered, this, &LXQtMainMenu::actionTrigered);
->>>>>>> merge-with-upstream-0.16
     connect(mMenu, &QMenu::hovered, this, &LXQtMainMenu::setSearchFocus);
-    buildPxMenu();
     //Note: setting readOnly to true to avoid wake-ups upon the Qt's internal "blink" cursor timer
     //(if the readOnly is not set, the "blink" timer is active also in case the menu is not shown ->
     //QWidgetLineControl::updateNeeded is performed w/o any need)
