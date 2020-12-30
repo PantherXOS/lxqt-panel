@@ -1,15 +1,20 @@
-@0xc893ae030f1e9308;
+@0x90f740e38f16890d;
 
-struct AccountStatus{
-	    time	@0 : Text;
-        type    @1 : Text;
-        icon    @2 : Text;
-        link    @3 : Text;
-        altLink @4 : Text;
-        title   @5 : Text;
-        unread  @6 : UInt16;
-        status  @7 : Status;
-        subType @8 : Text;
+struct HUBAccountInfo {
+        id      @0 : Text;
+        title   @1 : Text;
+}
+
+struct HUBAccountStatus{
+	    time	    @0 : Text;
+        type        @1 : Text;
+        icon        @2 : Text;
+        link        @3 : Text;
+        altLink     @4 : Text;
+        accountInfo @5 : HUBAccountInfo;
+        unread      @6 : UInt16;
+        status      @7 : Status;
+        subType     @8 : Text;
 
 	enum Status {
 		none 	@0;
@@ -19,10 +24,10 @@ struct AccountStatus{
 		}
 }
 
-struct Message{
+struct HUBMessage{
 	    time	    @0 : Text;
 	    msgId	    @1 : Text;
-	    account     @2 : Text;
+        accountInfo @2 : HUBAccountInfo;
         source      @3 : Text;
         type        @4 : Text;
         icon        @5 : Text;
@@ -37,10 +42,10 @@ struct Message{
 }
 
 interface HubReader{
-        getLastMessages     @0 (count: Int8 )   -> (messages:List(Message));
-        getLastMessage      @1 (account: Text ) -> (message: Message);
-        getAccountStatus    @2 (account: Text)  -> (accountStatus: AccountStatus);
-        getAccountsStatus   @3 ()               -> (accountsStatus:List(AccountStatus));
+        getLastMessages @0 (count: Int8 ) -> (messages:List(HUBMessage));
+        getLastMessage @1 (accountID: Text ) -> (message: HUBMessage);
+        getAccountStatus @2 (accountID: Text) -> (accountStatus: HUBAccountStatus);
+        getAccountsStatus @3 () -> (accountsStatus:List(HUBAccountStatus));
 }
 
 struct HubEvent {

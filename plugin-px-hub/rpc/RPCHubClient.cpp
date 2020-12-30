@@ -18,16 +18,16 @@ vector<AccountObject> RPCHubClient::getAccountList() {
         for(auto act : actRes.getAccountsStatus()) {
             AccountObject account;
             switch (act.getStatus()){
-                case AccountStatus::Status::NONE:
+                case HUBAccountStatus::Status::NONE:
                     account.setStatus(Status::none);
                     break;
-                case AccountStatus::Status::ERROR:
+                case HUBAccountStatus::Status::ERROR:
                     account.setStatus(Status::error);
                     break;
-                case AccountStatus::Status::ONLINE:
+                case HUBAccountStatus::Status::ONLINE:
                     account.setStatus(Status::online);
                     break;
-                case AccountStatus::Status::OFFLINE:
+                case HUBAccountStatus::Status::OFFLINE:
                     account.setStatus(Status::offline);
                     break;
             }
@@ -37,7 +37,7 @@ vector<AccountObject> RPCHubClient::getAccountList() {
             account.setIcon(act.getIcon().cStr());
             account.setLink(act.getLink().cStr());
             account.setAltLink(act.getAltLink().cStr());
-            account.setTitle(act.getTitle().cStr());
+            account.setTitle(act.getAccountInfo().getTitle().cStr());
             rsult.push_back(account);
         }
     } catch (kj::Exception e){
