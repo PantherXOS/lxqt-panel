@@ -121,13 +121,13 @@ void hub::updateButtonHandler() {
 void hub::hubEventsHandler(EventObject *eventObject){
     QString popup;
     auto params = eventObject->getParams();
-    if(eventObject->getEvent() == QString::fromStdString("Status_Change")){
-        popup = params[QString::fromStdString("account")] + QString::fromStdString(" is ") + params[QString::fromStdString("new-status")];
+    if(eventObject->getEvent() == QString::fromStdString("status_change")){
+        popup = params[QString::fromStdString("account_title")] + QString::fromStdString(" is ") + params[QString::fromStdString("new-status")];
         LXQt::Notification::notify(popup);
-    }else if(eventObject->getEvent() == QString::fromStdString("Service_refresh")){
+    }else if(eventObject->getEvent() == QString::fromStdString("service_refresh")){
         auto newmsg = eventObject->getParam(QString::fromStdString("new_message"));
         if(!newmsg.isEmpty()){
-            popup = params[QString::fromStdString("account")] + 
+            popup = params[QString::fromStdString("account_title")] + 
                     QString::fromStdString(" has ") + 
                     newmsg + 
                     QString::fromStdString(" new message");
