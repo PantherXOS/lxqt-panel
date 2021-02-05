@@ -131,9 +131,19 @@ Q_OBJECT
 public:
     HubItem(MessageObject &message, QObject *parent = nullptr)
             : QWidgetAction(parent) {
+        _url = QString::fromStdString(message.getLink());
         auto widget = new HubItemWidget(message);
         setDefaultWidget(widget);
+        connect(this, SIGNAL(triggered()), this, SLOT(triggered()));
     }
+
+private slots:
+    void triggered(){
+        QDesktopServices::openUrl(QUrl(_url));
+    }
+
+private:
+    QString _url;
 };
 
 
