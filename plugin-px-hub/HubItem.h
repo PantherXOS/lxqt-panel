@@ -74,12 +74,12 @@ public:
 
 
         QFontMetrics fm(messagePreviewFont);
-        int textWidth =fm.width(QString::fromStdString(message.getMessage()));
+        int textWidth =fm.horizontalAdvance(QString::fromStdString(message.getMessage()));
         auto _msg = message.getMessage();
         while(textWidth > MAX_MESSAGE_SIZE_WIDTH){
             _msg = _msg.substr(0, _msg.size() - 6);
             _msg += "...";
-            textWidth =fm.width(QString::fromStdString(_msg));
+            textWidth =fm.horizontalAdvance(QString::fromStdString(_msg));
         }
         
         auto messagePreview = new QLabel;
