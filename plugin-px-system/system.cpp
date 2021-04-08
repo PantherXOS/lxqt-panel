@@ -99,10 +99,13 @@ void System::refresh(QWidget *netInfo) {
         qWidgetAction->setDefaultWidget(netInfo);
         mainMenu->addAction(qWidgetAction);
         mainMenu->addSeparator();
-        if(networkInspection){
-            setVpnStatus(networkInspection->getVpnStatus());
-            setWifiStatus(networkInspection->getWifiStatus());    
-        }
+        listVpnStatus.clear();
+        listWifiStatus.clear();
+        listLanStatus.clear();
+        getConnectionState();
+        setVpnStatus(listVpnStatus);
+        setWifiStatus(listWifiStatus);   
+        setLanStatus(listLanStatus);  
     } else {
         networkInspection = new NetworkInspection(this);
         connect(networkInspection,SIGNAL(networkInfoIsReady(const QVector <NetworkInformation> &)),this,SLOT(netInfoParser(const QVector <NetworkInformation> &)));
@@ -207,23 +210,41 @@ QWidgetAction *System::getFirewallStatus() {
 }
 
 
-void System::setVpnStatus(NetworkInformation info) {
-    if (info.vpnStatus){
-        mainMenu->addAction(generalItems(QString::fromStdString("VPN"),info.profileName,info.status,QString::fromStdString("px-vpn")));
-        mainMenu->addSeparator();
+void System::setVpnStatus(QVector<NetworkInformation> listInfo) {
+    for(auto inf: listInfo){
+        if (inf.vpnStatus){              
+            mainMenu->addAction(generalItems(QString::fromStdString("VPN"),inf.profileName,inf.status,QString::fromStdString("px-vpn")));
+            
+        }
     }
+    mainMenu->addSeparator();
 }
 
-void System::setWifiStatus(NetworkInformation info) {
-    if (info.wifiStatus){
-        mainMenu->addAction(generalItems(QString::fromStdString("WIFI"),info.profileName,info.status,QString::fromStdString("px-wifi")));
-        mainMenu->addSeparator();
-    }
+void System::setWifiStatus(QVector<NetworkInformation> listInfo) {
+    for(auto inf: listInfo){
+        if (inf.wifiStatus){
+        mainMenu->addAction(generalItems(QString::fromStdString("WIFI"),inf.profileName,inf.status,QString::fromStdString("px-wifi")));
+       
+         }
+    }  
+     mainMenu->addSeparator();  
+}
+
+void System::setLanStatus(QVector<NetworkInformation> listInfo) {
+    for(auto inf: listInfo){
+        if (inf.lanStatus){
+        mainMenu->addAction(generalItems(QString::fromStdString("LAN"),inf.profileName,inf.status,QString::fromStdString("px-lan")));
+       
+        }
+    } 
+     mainMenu->addSeparator();   
 }
 
 QWidgetAction *System::getBTStatus() {
     return generalItems(QString::fromStdString("BT"),QString::fromStdString("Logitech z533"),true,QString::fromStdString("px-bluetooth"));
 }
+
+
 
 QWidgetAction* System::generalItems(QString name,QString information,bool stat,QString icon){
     QString statusIconFile;
@@ -352,6 +373,65 @@ void System::updateHandler(QString packages) {
         updateTextLabel->setText(QString::fromStdString(message));
     }else{
         updateTextLabel->setText(QString::fromStdString("Your panther is secure and up to date."));
-    }
+    }   
 
 }
+
+
+vector<string> split(string str, char delimiter) {
+  vector<string> internal;
+  stringstream ss(str); // Turn the string into a stream.
+  string tok;
+
+  while(getline(ss, tok, delimiter)) {
+    internal.push_back(tok);
+  }
+  return internal;
+}
+
+void System::getConnectionState(){
+        string result = exec("nmcli -m tabular --terse connection show --active");   
+        std::stringstream ss(result.c_str());
+        std::string line;
+        std::string delimiter = ":";
+        std::vector<string> internal;
+
+         if (!result.empty() )
+        {
+            while(std::getline(ss,line,'\n')){    
+                 vector<string> sep = split(line, ':');
+                 string connectionType;
+                 if(sep.at(2).find('-') != std::string::npos){
+                 vector<string> type = split(sep.at(2), '-');
+                 connectionType = type.at(2);
+                 }else{
+                    connectionType = sep.at(2);
+                 }
+                if(sep.at(0).size()>MAX_TYPE_NAME_SIZE)
+                    sep.at(0) = sep.at(0).substr(0,MAX_TYPE_NAME_SIZE)+"...";
+                 if(connectionType == "wireless"){
+                     NetworkInformation wifi;
+                     wifi.profileName = QString::fromStdString(sep.at(0));
+                     wifi.wifiStatus = true;
+                     wifi.status = true;
+                     listWifiStatus.push_back(wifi);
+                 }
+                 if(connectionType == "ethernet"){
+                     NetworkInformation lan;
+                     lan.profileName = QString::fromStdString(sep.at(0));
+                     lan.lanStatus = true;
+                     lan.status = true;
+                     listLanStatus.push_back(lan);
+                 }
+                 if(connectionType == "vpn"){
+                     NetworkInformation vpn;
+                     vpn.profileName = QString::fromStdString(sep.at(0));
+                     vpn.vpnStatus = true;
+                     vpn.status = true;
+                     listVpnStatus.push_back(vpn);
+                 }
+            }
+        }   
+}
+
+

@@ -24,6 +24,7 @@ public:
     QString profileName;
     bool wifiStatus = false;
     bool vpnStatus = false;
+    bool lanStatus = false;
 };
 
 

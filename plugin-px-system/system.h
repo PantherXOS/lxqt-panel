@@ -74,8 +74,10 @@ private:
     QWidgetAction *createTitle(QString title, QString icon);
     QWidgetAction* getUser();
     QWidgetAction* getFirewallStatus();
-    void setVpnStatus(NetworkInformation vpnStatus);
-    void setWifiStatus(NetworkInformation wifiStatus);
+    void setVpnStatus(QVector<NetworkInformation> vpnStatus);
+    void setWifiStatus(QVector<NetworkInformation> wifiStatus);
+    void setLanStatus(QVector<NetworkInformation> lanStatus);
+    void getConnectionState();
     QWidgetAction* getBTStatus();
     QWidgetAction* getUpdateStat();
     QLayout *internetLayout(QString text, QString icon);
@@ -86,6 +88,9 @@ private:
     string vpnName;
     QLabel *updateTextLabel;
     NetworkInspection *networkInspection;
+    QVector<NetworkInformation> listLanStatus;
+    QVector<NetworkInformation> listWifiStatus;
+    QVector<NetworkInformation> listVpnStatus;
 };
 
 
