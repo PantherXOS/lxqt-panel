@@ -115,12 +115,19 @@ void System::refresh(QWidget *netInfo) {
     }
     mainMenu->addSeparator();
     mainMenu->addSeparator();
-    mainMenu->addAction(getBTStatus());
-    mainMenu->addSeparator();
-    mainMenu->addAction(getUpdateStat());
+    // mainMenu->addAction(getBTStatus());
+    // mainMenu->addSeparator();
+    //mainMenu->addAction(getUpdateStat());
+     auto statWidget = getUpdateStat();
+    connect(statWidget, SIGNAL(triggered()), this, SLOT(updateTriggered()));
+    mainMenu->addAction(statWidget);
     mButton.showMenu();
     realign();
 }
+void System::updateTriggered(){
+        exec("px-software");
+    }
+
 
 QLabel *System::buildIconFromTheme(QString icon, QSize size){
     QIcon qicon = QIcon::fromTheme(icon);
@@ -430,6 +437,14 @@ void System::getConnectionState(){
                      vpn.status = true;
                      listVpnStatus.push_back(vpn);
                  }
+                 if(connectionType == "wireguard"){
+                     NetworkInformation vpn;
+                     vpn.profileName = QString::fromStdString(sep.at(0));
+                     vpn.vpnStatus = true;
+                     vpn.status = true;
+                     listVpnStatus.push_back(vpn);
+                 }
+
             }
         }   
 }

@@ -66,6 +66,7 @@ private slots:
     void refresh(QWidget *netInfo=nullptr);
     void updateHandler(QString packages);
     void netInfoParser(const QVector <NetworkInformation> &netInfos);
+    void updateTriggered();
 
 private:
     QLayout *netInfoRecordLayout(QString text, QString icon);
