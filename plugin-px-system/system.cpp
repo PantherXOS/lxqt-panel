@@ -188,7 +188,13 @@ QWidgetAction *System::getUser() {
     auto accountIcon = buildIconFromTheme(QString::fromStdString("px-user"),QSize(ACCOUNT_ICON_SIZE,ACCOUNT_ICON_SIZE));
     accountIcon->setContentsMargins(0,0,0,0);
     auto accountTitle = new QLabel;
-    string acc = exec("whoami").c_str();
+    QStringList homePath = QStandardPaths::standardLocations(QStandardPaths::HomeLocation);
+    string acc = homePath.first().split(QDir::separator()).last().toStdString();
+    string displayCmd = "lslogins -o GECOS "+acc+" -u | cut -f2 -d\":\"";
+    QString displayName =QString::fromStdString(exec(displayCmd.c_str()).c_str());
+    if(!displayName.trimmed().isEmpty()){
+        acc = displayName.trimmed().toStdString();
+    }
     acc = acc.substr(0, acc.find("\n", 0));
     if(acc.size()>MAX_ACCOUNT_SIZE)
         acc = acc.substr(0,MAX_ACCOUNT_SIZE)+"...";

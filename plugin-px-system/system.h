@@ -16,6 +16,7 @@
 #include <QAction>
 #include <QMenu>
 #include <QDebug>
+#include <QString>
 #include <QtGui/QPainter>
 #include <QtWidgets/QScrollArea>
 #include <XdgIcon>
