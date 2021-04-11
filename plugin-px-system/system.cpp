@@ -125,8 +125,8 @@ void System::refresh(QWidget *netInfo) {
     realign();
 }
 void System::updateTriggered(){
-        exec("px-software");
-    }
+    QDesktopServices::openUrl(QUrl(QString::fromStdString("px-software:list=user_updates")));
+}
 
 
 QLabel *System::buildIconFromTheme(QString icon, QSize size){
