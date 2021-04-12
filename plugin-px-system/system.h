@@ -19,6 +19,7 @@
 #include <QString>
 #include <QtGui/QPainter>
 #include <QtWidgets/QScrollArea>
+#include <QDesktopServices>
 #include <XdgIcon>
 #include <string>
 #include <QtWidgets/QWidgetAction>
@@ -28,6 +29,8 @@
 #include <QIcon>
 #include <QToolButton>
 #include <QtWidgets/QPushButton>
+#include <QFile>
+#include <QTextStream>
 #include "../panel/ilxqtpanelplugin.h"
 #include <string>
 #include <stdio.h>
@@ -68,6 +71,7 @@ private slots:
     void updateHandler(QString packages);
     void netInfoParser(const QVector <NetworkInformation> &netInfos);
     void updateTriggered();
+    void fireWallTriggered();
 
 private:
     QLayout *netInfoRecordLayout(QString text, QString icon);

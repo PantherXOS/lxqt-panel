@@ -92,7 +92,10 @@ void System::refresh(QWidget *netInfo) {
     mainMenu->setFixedWidth(MAIN_MENU_SIZE_W);
     mainMenu->addAction(getUser());
     mainMenu->addSeparator();
-    mainMenu->addAction(getFirewallStatus());
+    ///mainMenu->addAction(getFirewallStatus());
+    auto fireWallWidget = getFirewallStatus();
+    connect(fireWallWidget, SIGNAL(triggered()), this, SLOT(fireWallTriggered()));
+    mainMenu->addAction(fireWallWidget);
     mainMenu->addSeparator();
     if(netInfo!=nullptr){
         auto qWidgetAction = new QWidgetAction(this);
@@ -118,7 +121,7 @@ void System::refresh(QWidget *netInfo) {
     // mainMenu->addAction(getBTStatus());
     // mainMenu->addSeparator();
     //mainMenu->addAction(getUpdateStat());
-     auto statWidget = getUpdateStat();
+    auto statWidget = getUpdateStat();
     connect(statWidget, SIGNAL(triggered()), this, SLOT(updateTriggered()));
     mainMenu->addAction(statWidget);
     mButton.showMenu();
@@ -126,6 +129,23 @@ void System::refresh(QWidget *netInfo) {
 }
 void System::updateTriggered(){
     QDesktopServices::openUrl(QUrl(QString::fromStdString("px-software:list=user_updates")));
+}
+
+void System::fireWallTriggered(){
+    QString filDir = QDir::homePath()+QString::fromStdString("/.local/share/lxqt-panel/systemPlugin/");
+    QString filename = filDir + QString::fromStdString("firewall.sh");
+    if(!QDir(filDir).exists())
+        QDir().mkpath(filDir);
+    QFile file(filename);
+    if(!file.exists()){
+        if (file.open(QIODevice::ReadWrite)) {
+            QTextStream stream(&file);
+            stream << "#!/run/current-system/profile/bin/bash \nsudo nft list ruleset \n/run/current-system/profile/bin/bash" << Qt::endl;
+            exec(("chmod +x "+filename.toStdString()).c_str());
+        }
+    }
+    string cmd = "qterminal -e " + filename.toStdString()+ " &";
+    exec(cmd.c_str());
 }
 
 
@@ -236,9 +256,9 @@ void System::setVpnStatus(QVector<NetworkInformation> listInfo) {
 void System::setWifiStatus(QVector<NetworkInformation> listInfo) {
     for(auto inf: listInfo){
         if (inf.wifiStatus){
-        mainMenu->addAction(generalItems(QString::fromStdString("WIFI"),inf.profileName,inf.status,QString::fromStdString("px-wifi")));
+            mainMenu->addAction(generalItems(QString::fromStdString("WIFI"),inf.profileName,inf.status,QString::fromStdString("px-wifi")));
        
-         }
+        }
     }  
      mainMenu->addSeparator();  
 }
