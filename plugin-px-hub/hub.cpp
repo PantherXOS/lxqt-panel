@@ -12,7 +12,7 @@ hub::hub(const ILXQtPanelPluginStartupInfo &startupInfo) :
     mButton.setMenu(mainMenu);
     mButton.setPopupMode(QToolButton::InstantPopup);
     mButton.setAutoRaise(true);
-    mButton.setIcon(QIcon::fromTheme(QString::fromStdString("panther")));
+    mButton.setIcon(QIcon::fromTheme(QString::fromStdString("px-hub")));
 
     EventSubscriber * eventSubscriber = new EventSubscriber("hub");
     connect(eventSubscriber,SIGNAL(hubEvents(EventObject *)),this,SLOT(hubEventsHandler(EventObject *)));
