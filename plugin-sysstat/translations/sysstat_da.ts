@@ -146,7 +146,7 @@
     <message>
         <location filename="../lxqtsysstatconfiguration.ui" line="80"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Minimal width if the panel is horizontal.&lt;/p&gt;&lt;p&gt;Minimal height if the panel is vertical.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Mindste bredde hvis panelet er vandret.&lt;/p&gt;&lt;p&gt;Mindste højde hvis panelet er lodret.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../lxqtsysstatconfiguration.ui" line="83"/>
@@ -372,31 +372,31 @@
 <context>
     <name>LXQtSysStatContent</name>
     <message>
-        <location filename="../lxqtsysstat.cpp" line="397"/>
+        <location filename="../lxqtsysstat.cpp" line="392"/>
         <source>system: %1%&lt;br&gt;user: %2%&lt;br&gt;nice: %3%&lt;br&gt;other: %4%&lt;br&gt;freq: %5%</source>
         <comment>CPU tooltip information</comment>
         <translation>system: %1%&lt;br&gt;bruger: %2%&lt;br&gt;fint: %3%&lt;br&gt;andet: %4%&lt;br&gt;frek.: %5%</translation>
     </message>
     <message>
-        <location filename="../lxqtsysstat.cpp" line="446"/>
+        <location filename="../lxqtsysstat.cpp" line="441"/>
         <source>system: %1%&lt;br&gt;user: %2%&lt;br&gt;nice: %3%&lt;br&gt;other: %4%&lt;br&gt;freq: n/a</source>
         <comment>CPU tooltip information</comment>
         <translation>system: %1%&lt;br&gt;bruger: %2%&lt;br&gt;fint: %3%&lt;br&gt;andet: %4%&lt;br&gt;frek.: utilgængelig</translation>
     </message>
     <message>
-        <location filename="../lxqtsysstat.cpp" line="488"/>
+        <location filename="../lxqtsysstat.cpp" line="483"/>
         <source>apps: %1%&lt;br&gt;buffers: %2%&lt;br&gt;cached: %3%</source>
         <comment>Memory tooltip information</comment>
         <translation>programmer: %1%&lt;br&gt;buffere: %2%&lt;br&gt;mellemlagret: %3%</translation>
     </message>
     <message>
-        <location filename="../lxqtsysstat.cpp" line="522"/>
+        <location filename="../lxqtsysstat.cpp" line="517"/>
         <source>used: %1%</source>
         <comment>Swap tooltip information</comment>
         <translation>brugt: %1%</translation>
     </message>
     <message>
-        <location filename="../lxqtsysstat.cpp" line="552"/>
+        <location filename="../lxqtsysstat.cpp" line="547"/>
         <source>min: %1%&lt;br&gt;max: %2%</source>
         <comment>Network tooltip information</comment>
         <translation>min.: %1%&lt;br&gt;maks.: %2%</translation>

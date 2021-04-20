@@ -4,21 +4,21 @@
 <context>
     <name>LXQtQuickLaunch</name>
     <message>
-        <location filename="../lxqtquicklaunch.cpp" line="226"/>
+        <location filename="../lxqtquicklaunch.cpp" line="229"/>
         <source>Drop Error</source>
-        <translation>Збій при розміщенні</translation>
+        <translation>Помилка розміщення</translation>
     </message>
     <message>
-        <location filename="../lxqtquicklaunch.cpp" line="227"/>
+        <location filename="../lxqtquicklaunch.cpp" line="230"/>
         <source>File/URL &apos;%1&apos; cannot be embedded into QuickLaunch for now</source>
         <translation>Файл/URL &apos;%1&apos; зараз не вдається додати до швидкого запуску</translation>
     </message>
     <message>
-        <location filename="../lxqtquicklaunch.cpp" line="333"/>
+        <location filename="../lxqtquicklaunch.cpp" line="336"/>
         <source>Drop application
 icons here</source>
-        <translation>Тут значок програми
-розміщення</translation>
+        <translation>Перетягніть піктограми
+програм сюди</translation>
     </message>
 </context>
 <context>
@@ -26,7 +26,7 @@ icons here</source>
     <message>
         <location filename="../quicklaunchbutton.cpp" line="55"/>
         <source>(Ctrl + DND)</source>
-        <translation type="unfinished"></translation>
+        <translation>(Ctrl + перетягнути)</translation>
     </message>
     <message>
         <location filename="../quicklaunchbutton.cpp" line="57"/>
