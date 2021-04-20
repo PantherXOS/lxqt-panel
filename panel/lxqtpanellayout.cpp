@@ -59,7 +59,7 @@ public:
         setDuration(ANIMATION_DURATION);
     }
 
-    void updateCurrentValue(const QVariant &current)
+    void updateCurrentValue(const QVariant &current) override
     {
         mItem->setGeometry(current.toRect());
     }
@@ -1020,7 +1020,7 @@ void LXQtPanelLayout::startMovePlugin()
         // The processor will be automatically deleted when stopped.
         PluginMoveProcessor *moveProcessor = new PluginMoveProcessor(this, plugin);
         moveProcessor->start();
-        connect(moveProcessor, SIGNAL(finished()), this, SLOT(finishMovePlugin()));
+        connect(moveProcessor, &PluginMoveProcessor::finished, this, &LXQtPanelLayout::finishMovePlugin);
     }
 }
 

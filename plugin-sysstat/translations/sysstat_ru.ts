@@ -146,7 +146,7 @@
     <message>
         <location filename="../lxqtsysstatconfiguration.ui" line="80"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Minimal width if the panel is horizontal.&lt;/p&gt;&lt;p&gt;Minimal height if the panel is vertical.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Минимальная ширина панели, если она горизинтальная.&lt;/p&gt;&lt;p&gt;Минимальная высота — если вертикальная.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../lxqtsysstatconfiguration.ui" line="83"/>
@@ -372,31 +372,31 @@
 <context>
     <name>LXQtSysStatContent</name>
     <message>
-        <location filename="../lxqtsysstat.cpp" line="397"/>
+        <location filename="../lxqtsysstat.cpp" line="392"/>
         <source>system: %1%&lt;br&gt;user: %2%&lt;br&gt;nice: %3%&lt;br&gt;other: %4%&lt;br&gt;freq: %5%</source>
         <comment>CPU tooltip information</comment>
         <translation>система: %1%&lt;br&gt;пользователь: %2%&lt;br&gt;nice: %3%&lt;br&gt;прочее: %4%&lt;br&gt;частота: %5%</translation>
     </message>
     <message>
-        <location filename="../lxqtsysstat.cpp" line="446"/>
+        <location filename="../lxqtsysstat.cpp" line="441"/>
         <source>system: %1%&lt;br&gt;user: %2%&lt;br&gt;nice: %3%&lt;br&gt;other: %4%&lt;br&gt;freq: n/a</source>
         <comment>CPU tooltip information</comment>
         <translation>система: %1%&lt;br&gt;пользователь: %2%&lt;br&gt;nice: %3%&lt;br&gt;прочее: %4%&lt;br&gt;частота: n/a</translation>
     </message>
     <message>
-        <location filename="../lxqtsysstat.cpp" line="488"/>
+        <location filename="../lxqtsysstat.cpp" line="483"/>
         <source>apps: %1%&lt;br&gt;buffers: %2%&lt;br&gt;cached: %3%</source>
         <comment>Memory tooltip information</comment>
         <translation>приложения: %1%&lt;br&gt;буферы: %2%&lt;br&gt;кэшировано: %3%</translation>
     </message>
     <message>
-        <location filename="../lxqtsysstat.cpp" line="522"/>
+        <location filename="../lxqtsysstat.cpp" line="517"/>
         <source>used: %1%</source>
         <comment>Swap tooltip information</comment>
         <translation>использовано: %1%</translation>
     </message>
     <message>
-        <location filename="../lxqtsysstat.cpp" line="552"/>
+        <location filename="../lxqtsysstat.cpp" line="547"/>
         <source>min: %1%&lt;br&gt;max: %2%</source>
         <comment>Network tooltip information</comment>
         <translation>мин.: %1%&lt;br&gt;макс.: %2%</translation>

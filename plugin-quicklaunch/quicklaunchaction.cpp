@@ -84,7 +84,7 @@ QuickLaunchAction::QuickLaunchAction(const XdgDesktopFile * xdg,
     {
         QAction * act = new QAction{xdg->actionIcon(action), xdg->actionName(action), this};
         act->setData(action);
-        connect(act, &QAction::triggered, [this, act] { execAction(act->data().toString()); });
+        connect(act, &QAction::triggered, this, [this, act] { execAction(act->data().toString()); });
         m_addtitionalActions.push_back(act);
     }
 }
@@ -122,8 +122,15 @@ void QuickLaunchAction::execAction(QString additionalAction)
     switch (m_type)
     {
         case ActionLegacy:
+        {
+#if (QT_VERSION >= QT_VERSION_CHECK(5,15,0))
+            QStringList args = QProcess::splitCommand(exec);
+            QProcess::startDetached(args.takeFirst(), args);
+#else
             QProcess::startDetached(exec);
+#endif
             break;
+        }
         case ActionXdg:
         {
             XdgDesktopFile xdg;

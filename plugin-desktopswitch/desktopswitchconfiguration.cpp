@@ -37,13 +37,15 @@ DesktopSwitchConfiguration::DesktopSwitchConfiguration(PluginSettings *settings,
     setObjectName(QStringLiteral("DesktopSwitchConfigurationWindow"));
     ui->setupUi(this);
 
-    connect(ui->buttons, SIGNAL(clicked(QAbstractButton*)), this, SLOT(dialogButtonsAction(QAbstractButton*)));
+    connect(ui->buttons, &QDialogButtonBox::clicked, this, &DesktopSwitchConfiguration::dialogButtonsAction);
 
     loadSettings();
 
-    connect(ui->rowsSB, SIGNAL(valueChanged(int)), this, SLOT(rowsChanged(int)));
-    connect(ui->labelTypeCB, SIGNAL(currentIndexChanged(int)), this, SLOT(labelTypeChanged(int)));
-    connect(ui->showOnlyActiveCB, &QAbstractButton::toggled, [this] (bool checked) { this->settings().setValue(QStringLiteral("showOnlyActive"), checked); });
+    connect(ui->rowsSB,           QOverload<int>::of(&QSpinBox::valueChanged),         this, &DesktopSwitchConfiguration::rowsChanged);
+    connect(ui->labelTypeCB,      QOverload<int>::of(&QComboBox::currentIndexChanged), this, &DesktopSwitchConfiguration::labelTypeChanged);
+    connect(ui->showOnlyActiveCB, &QAbstractButton::toggled,                           this, [this] (bool checked) {
+        this->settings().setValue(QStringLiteral("showOnlyActive"), checked);
+    });
 
     loadDesktopsNames();
 }
@@ -66,14 +68,14 @@ void DesktopSwitchConfiguration::loadDesktopsNames()
     for (int i = 1; i <= n; i++)
     {
         QLineEdit *edit = new QLineEdit(KWindowSystem::desktopName(i), this);
-        ((QFormLayout *) ui->namesGroupBox->layout())->addRow(QStringLiteral("Desktop %1:").arg(i), edit);
+        ((QFormLayout *) ui->namesGroupBox->layout())->addRow(tr("Desktop %1:").arg(i), edit);
 
         // C++11 rocks!
         QTimer *timer = new QTimer(this);
         timer->setInterval(400);
         timer->setSingleShot(true);
-        connect(timer, &QTimer::timeout, [=] { KWindowSystem::setDesktopName(i, edit->text()); });
-        connect(edit, &QLineEdit::textEdited, [=] { timer->start(); });
+        connect(timer, &QTimer::timeout,       this, [=] { KWindowSystem::setDesktopName(i, edit->text()); });
+        connect(edit,  &QLineEdit::textEdited, this, [=] { timer->start(); });
     }
 }
 

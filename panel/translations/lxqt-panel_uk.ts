@@ -24,9 +24,9 @@
         <translation>Закрити</translation>
     </message>
     <message>
-        <location filename="../config/addplugindialog.cpp" line="115"/>
+        <location filename="../config/addplugindialog.cpp" line="119"/>
         <source>(only one instance can run at a time)</source>
-        <translation>(тільки один екземпляр може бути запущений за раз)</translation>
+        <translation>(лише один екземпляр може бути запущений за раз)</translation>
     </message>
 </context>
 <context>
@@ -68,12 +68,12 @@
         <location filename="../config/configpanelwidget.ui" line="109"/>
         <location filename="../config/configpanelwidget.ui" line="153"/>
         <source> px</source>
-        <translation> пт</translation>
+        <translation> пікселів</translation>
     </message>
     <message>
         <location filename="../config/configpanelwidget.ui" line="166"/>
         <source>Icon size:</source>
-        <translation>Розмір значків:</translation>
+        <translation>Розмір піктограм:</translation>
     </message>
     <message>
         <location filename="../config/configpanelwidget.ui" line="88"/>
@@ -83,7 +83,7 @@
     <message>
         <location filename="../config/configpanelwidget.ui" line="68"/>
         <source>&lt;p&gt;Negative pixel value sets the panel length to that many pixels less than available screen space.&lt;/p&gt;&lt;p/&gt;&lt;p&gt;&lt;i&gt;E.g. &quot;Length&quot; set to -100px, screen size is 1000px, then real panel length will be 900 px.&lt;/i&gt;&lt;/p&gt;</source>
-        <translation>&lt;p&gt;Негативне значення пунктів встановить розмір панелі менший за доступний розмір екрану.&lt;/p&gt;&lt;p/&gt;&lt;p&gt;&lt;i&gt;Наприклад &quot;Довжина&quot; встановлена на -100пікселів, розмір екрану є 1000пікселів, тоді дійсний розмір панелі буде 900 пікселів.&lt;/i&gt;&lt;/p</translation>
+        <translation>&lt;p&gt;Від&apos;ємне значення встановить довжину панелі зменшену на вказану кількість пікселів від доступної довжини екрана.&lt;/p&gt;&lt;p/&gt;&lt;p&gt;&lt;i&gt;Наприклад &quot;Довжиною&quot; встановлено 100 пікселів, розмір екрана — 1000 пікселів, тоді дійсний розмір панелі буде 900 пікселів.&lt;/i&gt;&lt;/p</translation>
     </message>
     <message>
         <location filename="../config/configpanelwidget.ui" line="96"/>
@@ -93,7 +93,7 @@
     <message>
         <location filename="../config/configpanelwidget.ui" line="101"/>
         <source>px</source>
-        <translation>пт</translation>
+        <translation>пікселів</translation>
     </message>
     <message>
         <location filename="../config/configpanelwidget.ui" line="202"/>
@@ -124,20 +124,20 @@
     </message>
     <message>
         <location filename="../config/configpanelwidget.ui" line="219"/>
-        <location filename="../config/configpanelwidget.cpp" line="211"/>
+        <location filename="../config/configpanelwidget.cpp" line="216"/>
         <source>Left</source>
         <translation>Зліва</translation>
     </message>
     <message>
         <location filename="../config/configpanelwidget.ui" line="224"/>
-        <location filename="../config/configpanelwidget.cpp" line="212"/>
-        <location filename="../config/configpanelwidget.cpp" line="218"/>
+        <location filename="../config/configpanelwidget.cpp" line="217"/>
+        <location filename="../config/configpanelwidget.cpp" line="223"/>
         <source>Center</source>
         <translation>Посередині</translation>
     </message>
     <message>
         <location filename="../config/configpanelwidget.ui" line="229"/>
-        <location filename="../config/configpanelwidget.cpp" line="213"/>
+        <location filename="../config/configpanelwidget.cpp" line="218"/>
         <source>Right</source>
         <translation>Справа</translation>
     </message>
@@ -150,7 +150,7 @@
         <location filename="../config/configpanelwidget.ui" line="301"/>
         <location filename="../config/configpanelwidget.ui" line="311"/>
         <source>Zero means no delay</source>
-        <translation>При вказанні нуля затримки не буде</translation>
+        <translation>Якщо вказати нуль, затримки не буде</translation>
     </message>
     <message>
         <location filename="../config/configpanelwidget.ui" line="304"/>
@@ -163,47 +163,52 @@
         <translation>Лишати тонкий край прихованої панелі видимим</translation>
     </message>
     <message>
-        <location filename="../config/configpanelwidget.ui" line="337"/>
+        <location filename="../config/configpanelwidget.ui" line="334"/>
+        <source>Hide only on overlapping a window</source>
+        <translation>Ховати лише коли перекривається вікном</translation>
+    </message>
+    <message>
+        <location filename="../config/configpanelwidget.ui" line="344"/>
         <source>Don&apos;t allow maximized windows go under the panel window</source>
         <translation>Не дозволяти максимізованим вікнам розташовуватися під панеллю</translation>
     </message>
     <message>
-        <location filename="../config/configpanelwidget.ui" line="340"/>
+        <location filename="../config/configpanelwidget.ui" line="347"/>
         <source>Reserve space on display</source>
         <translation>Резервувати простір на екрані</translation>
     </message>
     <message>
-        <location filename="../config/configpanelwidget.ui" line="356"/>
+        <location filename="../config/configpanelwidget.ui" line="363"/>
         <source>Custom styling</source>
         <translation>Власний стиль</translation>
     </message>
     <message>
-        <location filename="../config/configpanelwidget.ui" line="377"/>
+        <location filename="../config/configpanelwidget.ui" line="384"/>
         <source>Font color:</source>
         <translation>Колір шрифта:</translation>
     </message>
     <message>
-        <location filename="../config/configpanelwidget.ui" line="417"/>
+        <location filename="../config/configpanelwidget.ui" line="424"/>
         <source>Background color:</source>
         <translation>Коілр тла:</translation>
     </message>
     <message>
-        <location filename="../config/configpanelwidget.ui" line="456"/>
+        <location filename="../config/configpanelwidget.ui" line="463"/>
         <source>Background opacity:</source>
         <translation>Прозорість тла:</translation>
     </message>
     <message>
-        <location filename="../config/configpanelwidget.ui" line="488"/>
+        <location filename="../config/configpanelwidget.ui" line="495"/>
         <source>&lt;small&gt;Compositing is required for panel transparency.&lt;/small&gt;</source>
         <translation>&lt;small&gt;Композит вимагається для прозорості панелі.&lt;/small&gt;</translation>
     </message>
     <message>
-        <location filename="../config/configpanelwidget.ui" line="516"/>
+        <location filename="../config/configpanelwidget.ui" line="523"/>
         <source>Background image:</source>
-        <translation>Малюнок тла:</translation>
+        <translation>Зображення тла:</translation>
     </message>
     <message>
-        <location filename="../config/configpanelwidget.ui" line="568"/>
+        <location filename="../config/configpanelwidget.ui" line="575"/>
         <source>A partial workaround for widget styles that
 cannot give a separate theme to the panel.
 
@@ -212,15 +217,22 @@ You might also want to disable:
 LXQt Appearance Configuration →
 Icons Theme →
 Colorize icons based on widget style (palette)</source>
-        <translation type="unfinished"></translation>
+        <translation>Часткове рішення для стилів віджетів, які
+не надають окрему тему панелі.
+
+Ви також можете вимкнути:
+
+Налаштування вигляду LXQt →
+Тема піктограм →
+Забарвлювати піктограми на основі стилю віджета (палітра)</translation>
     </message>
     <message>
-        <location filename="../config/configpanelwidget.ui" line="578"/>
+        <location filename="../config/configpanelwidget.ui" line="585"/>
         <source>Override icon &amp;theme</source>
         <translation>Замінити тему піктограм</translation>
     </message>
     <message>
-        <location filename="../config/configpanelwidget.ui" line="593"/>
+        <location filename="../config/configpanelwidget.ui" line="600"/>
         <source>Icon theme for panels:</source>
         <translation>Тема піктограм для панелей:</translation>
     </message>
@@ -235,68 +247,68 @@ Colorize icons based on widget style (palette)</source>
         <translation>Позиція:</translation>
     </message>
     <message>
-        <location filename="../config/configpanelwidget.cpp" line="177"/>
+        <location filename="../config/configpanelwidget.cpp" line="182"/>
         <source>Top of desktop</source>
         <translation>Згори стільниці</translation>
     </message>
     <message>
-        <location filename="../config/configpanelwidget.cpp" line="178"/>
+        <location filename="../config/configpanelwidget.cpp" line="183"/>
         <source>Left of desktop</source>
         <translation>З лівого боку стільниці</translation>
     </message>
     <message>
-        <location filename="../config/configpanelwidget.cpp" line="179"/>
+        <location filename="../config/configpanelwidget.cpp" line="184"/>
         <source>Right of desktop</source>
         <translation>З правого боку стільниці</translation>
     </message>
     <message>
-        <location filename="../config/configpanelwidget.cpp" line="180"/>
+        <location filename="../config/configpanelwidget.cpp" line="185"/>
         <source>Bottom of desktop</source>
         <translation>Знизу стільниці</translation>
     </message>
     <message>
-        <location filename="../config/configpanelwidget.cpp" line="189"/>
+        <location filename="../config/configpanelwidget.cpp" line="194"/>
         <source>Top of desktop %1</source>
         <translation>Згори стільниці %1</translation>
     </message>
     <message>
-        <location filename="../config/configpanelwidget.cpp" line="190"/>
+        <location filename="../config/configpanelwidget.cpp" line="195"/>
         <source>Left of desktop %1</source>
         <translation>З лівого боку стільниці %1</translation>
     </message>
     <message>
-        <location filename="../config/configpanelwidget.cpp" line="191"/>
+        <location filename="../config/configpanelwidget.cpp" line="196"/>
         <source>Right of desktop %1</source>
         <translation>З правого боку стільниці %1</translation>
     </message>
     <message>
-        <location filename="../config/configpanelwidget.cpp" line="192"/>
+        <location filename="../config/configpanelwidget.cpp" line="197"/>
         <source>Bottom of desktop %1</source>
-        <translation>Знизу стільниці %1</translation>
+        <translation>Внизу стільниці %1</translation>
     </message>
     <message>
-        <location filename="../config/configpanelwidget.cpp" line="217"/>
+        <location filename="../config/configpanelwidget.cpp" line="222"/>
         <source>Top</source>
-        <translation>Зверху</translation>
+        <translation>Вгорі</translation>
     </message>
     <message>
-        <location filename="../config/configpanelwidget.cpp" line="219"/>
+        <location filename="../config/configpanelwidget.cpp" line="224"/>
         <source>Bottom</source>
-        <translation>Знизу</translation>
+        <translation>Внизу</translation>
     </message>
     <message>
-        <location filename="../config/configpanelwidget.cpp" line="439"/>
-        <location filename="../config/configpanelwidget.cpp" line="455"/>
+        <location filename="../config/configpanelwidget.cpp" line="445"/>
+        <location filename="../config/configpanelwidget.cpp" line="461"/>
         <source>Pick color</source>
         <translation>Взяти колір</translation>
     </message>
     <message>
-        <location filename="../config/configpanelwidget.cpp" line="473"/>
+        <location filename="../config/configpanelwidget.cpp" line="479"/>
         <source>Images (*.png *.gif *.jpg)</source>
-        <translation>Малюнки (*.png *.gif *.jpg</translation>
+        <translation>Зображення (*.png *.gif *.jpg)</translation>
     </message>
     <message>
-        <location filename="../config/configpanelwidget.cpp" line="473"/>
+        <location filename="../config/configpanelwidget.cpp" line="479"/>
         <source>Pick image</source>
         <translation>Взяти малюнок</translation>
     </message>
@@ -351,45 +363,45 @@ Colorize icons based on widget style (palette)</source>
 <context>
     <name>LXQtPanel</name>
     <message>
-        <location filename="../lxqtpanel.cpp" line="1130"/>
-        <location filename="../lxqtpanel.cpp" line="1156"/>
+        <location filename="../lxqtpanel.cpp" line="1178"/>
+        <location filename="../lxqtpanel.cpp" line="1204"/>
         <source>Panel</source>
         <translation>Панель</translation>
     </message>
     <message>
-        <location filename="../lxqtpanel.cpp" line="1159"/>
+        <location filename="../lxqtpanel.cpp" line="1207"/>
         <source>Configure Panel</source>
         <translation>Налаштувати панель</translation>
     </message>
     <message>
-        <location filename="../lxqtpanel.cpp" line="1164"/>
+        <location filename="../lxqtpanel.cpp" line="1212"/>
         <source>Manage Widgets</source>
         <translation>Керувати віджетами</translation>
     </message>
     <message>
-        <location filename="../lxqtpanel.cpp" line="1170"/>
+        <location filename="../lxqtpanel.cpp" line="1218"/>
         <source>Add New Panel</source>
         <translation>Додати нову панель</translation>
     </message>
     <message>
-        <location filename="../lxqtpanel.cpp" line="1177"/>
+        <location filename="../lxqtpanel.cpp" line="1225"/>
         <source>Remove Panel</source>
         <comment>Menu Item</comment>
-        <translation type="unfinished">Вилучити панель</translation>
+        <translation>Вилучити панель</translation>
     </message>
     <message>
-        <location filename="../lxqtpanel.cpp" line="1182"/>
+        <location filename="../lxqtpanel.cpp" line="1230"/>
         <source>Lock This Panel</source>
-        <translation>Замкнути цю панель</translation>
+        <translation>Закріпити цю панель</translation>
     </message>
     <message>
-        <location filename="../lxqtpanel.cpp" line="1338"/>
+        <location filename="../lxqtpanel.cpp" line="1386"/>
         <source>Remove Panel</source>
         <comment>Dialog Title</comment>
-        <translation type="unfinished">Вилучити панель</translation>
+        <translation>Вилучити панель</translation>
     </message>
     <message>
-        <location filename="../lxqtpanel.cpp" line="1339"/>
+        <location filename="../lxqtpanel.cpp" line="1387"/>
         <source>Removing a panel can not be undone.
 Do you want to remove this panel?</source>
         <translation>Вилучення панелі невідворотне.
@@ -401,17 +413,17 @@ Do you want to remove this panel?</source>
     <message>
         <location filename="../plugin.cpp" line="436"/>
         <source>Configure &quot;%1&quot;</source>
-        <translation>Налаштування &quot;%1&quot; </translation>
+        <translation>Налаштування &quot;%1&quot;</translation>
     </message>
     <message>
         <location filename="../plugin.cpp" line="441"/>
         <source>Move &quot;%1&quot;</source>
-        <translation>Перемістити &quot;%1&quot; </translation>
+        <translation>Перемістити &quot;%1&quot;</translation>
     </message>
     <message>
         <location filename="../plugin.cpp" line="449"/>
         <source>Remove &quot;%1&quot;</source>
-        <translation>Вилучити &quot;%1&quot; </translation>
+        <translation>Вилучити &quot;%1&quot;</translation>
     </message>
 </context>
 <context>

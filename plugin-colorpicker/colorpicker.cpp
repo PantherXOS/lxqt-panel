@@ -39,9 +39,7 @@ ColorPicker::ColorPicker(const ILXQtPanelPluginStartupInfo &startupInfo) :
 }
 
 
-ColorPicker::~ColorPicker()
-{
-}
+ColorPicker::~ColorPicker() = default;
 
 
 void ColorPicker::realign()
@@ -70,14 +68,11 @@ ColorPickerWidget::ColorPickerWidget(QWidget *parent):
     mButton.setIcon(XdgIcon::fromTheme(QStringLiteral("color-picker"), QStringLiteral("kcolorchooser")));
 
     mCapturing = false;
-    connect(&mButton, SIGNAL(clicked()), this, SLOT(captureMouse()));
-
+    connect(&mButton, &QToolButton::clicked, this, &ColorPickerWidget::captureMouse);
 }
 
 
-ColorPickerWidget::~ColorPickerWidget()
-{
-}
+ColorPickerWidget::~ColorPickerWidget() = default;
 
 
 void ColorPickerWidget::mouseReleaseEvent(QMouseEvent *event)

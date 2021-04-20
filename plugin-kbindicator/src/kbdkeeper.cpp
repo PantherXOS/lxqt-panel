@@ -39,15 +39,13 @@ KbdKeeper::KbdKeeper(const KbdLayout & layout, KeeperType type):
     m_layout.readKbdInfo(m_info);
 }
 
-KbdKeeper::~KbdKeeper()
-{}
+KbdKeeper::~KbdKeeper() = default;
 
 bool KbdKeeper::setup()
 {
-    connect(&m_layout, SIGNAL(keyboardChanged()), SLOT(keyboardChanged()));
-    connect(&m_layout, SIGNAL(layoutChanged(uint)), SLOT(layoutChanged(uint)));
-    connect(&m_layout, SIGNAL(checkState()), SLOT(checkState()));
-
+    connect(&m_layout, &KbdLayout::keyboardChanged, this, &KbdKeeper::keyboardChanged);
+    connect(&m_layout, &KbdLayout::layoutChanged,   this, &KbdKeeper::layoutChanged);
+    connect(&m_layout, &KbdLayout::checkState,      this, &KbdKeeper::checkState);
     return true;
 }
 
@@ -89,8 +87,7 @@ WinKbdKeeper::WinKbdKeeper(const KbdLayout & layout):
     KbdKeeper(layout, KeeperType::Window)
 {}
 
-WinKbdKeeper::~WinKbdKeeper()
-{}
+WinKbdKeeper::~WinKbdKeeper() = default;
 
 void WinKbdKeeper::layoutChanged(uint group)
 {
@@ -137,8 +134,7 @@ AppKbdKeeper::AppKbdKeeper(const KbdLayout & layout):
     KbdKeeper(layout, KeeperType::Window)
 {}
 
-AppKbdKeeper::~AppKbdKeeper()
-{}
+AppKbdKeeper::~AppKbdKeeper() = default;
 
 void AppKbdKeeper::layoutChanged(uint group)
 {

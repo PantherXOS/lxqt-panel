@@ -75,6 +75,7 @@
 #define CFG_KEY_PLUGINS            "plugins"
 #define CFG_KEY_HIDABLE            "hidable"
 #define CFG_KEY_VISIBLE_MARGIN     "visible-margin"
+#define CFG_KEY_HIDE_ON_OVERLAP    "hide-on-overlap"
 #define CFG_KEY_ANIMATION          "animation-duration"
 #define CFG_KEY_SHOW_DELAY         "show-delay"
 #define CFG_KEY_LOCKPANEL          "lockPanel"
@@ -134,6 +135,7 @@ LXQtPanel::LXQtPanel(const QString &configGroup, LXQt::Settings *settings, QWidg
     mActualScreenNum(0),
     mHidable(false),
     mVisibleMargin(true),
+    mHideOnOverlap(false),
     mHidden(false),
     mAnimationTime(0),
     mReserveSpace(true),
@@ -188,15 +190,15 @@ LXQtPanel::LXQtPanel(const QString &configGroup, LXQt::Settings *settings, QWidg
 
     mDelaySave.setSingleShot(true);
     mDelaySave.setInterval(SETTINGS_SAVE_DELAY);
-    connect(&mDelaySave, SIGNAL(timeout()), this, SLOT(saveSettings()));
+    connect(&mDelaySave, &QTimer::timeout, this, [this] { saveSettings(); } );
 
     mHideTimer.setSingleShot(true);
     mHideTimer.setInterval(PANEL_HIDE_DELAY);
-    connect(&mHideTimer, SIGNAL(timeout()), this, SLOT(hidePanelWork()));
+    connect(&mHideTimer, &QTimer::timeout, this, &LXQtPanel::hidePanelWork);
 
     mShowDelayTimer.setSingleShot(true);
     mShowDelayTimer.setInterval(PANEL_SHOW_DELAY);
-    connect(&mShowDelayTimer, &QTimer::timeout, [this] { showPanel(mAnimationTime > 0); });
+    connect(&mShowDelayTimer, &QTimer::timeout, this, [this] { showPanel(mAnimationTime > 0); });
 
     // screen updates
     connect(qApp, &QApplication::screenAdded, this, [this] (QScreen* newScreen) {
@@ -217,10 +219,10 @@ LXQtPanel::LXQtPanel(const QString &configGroup, LXQt::Settings *settings, QWidg
         connect(screen, &QScreen::geometryChanged, this, &LXQtPanel::ensureVisible);
     }
 
-    connect(LXQt::Settings::globalSettings(), SIGNAL(settingsChanged()), this, SLOT(update()));
-    connect(lxqtApp, SIGNAL(themeChanged()), this, SLOT(realign()));
+    connect(LXQt::Settings::globalSettings(), &LXQt::GlobalSettings::settingsChanged, this, [this] { update(); } );
+    connect(lxqtApp,                          &LXQt::Application::themeChanged,       this, &LXQtPanel::realign);
 
-    connect(mStandaloneWindows.data(), &WindowNotifier::firstShown, [this] { showPanel(true); });
+    connect(mStandaloneWindows.data(), &WindowNotifier::firstShown, this, [this] { showPanel(true); });
     connect(mStandaloneWindows.data(), &WindowNotifier::lastHidden, this, &LXQtPanel::hidePanel);
 
     readSettings();
@@ -240,6 +242,46 @@ LXQtPanel::LXQtPanel(const QString &configGroup, LXQt::Settings *settings, QWidg
         showPanel(false);
         QTimer::singleShot(PANEL_HIDE_FIRST_TIME, this, SLOT(hidePanel()));
     }
+
+    connect(KWindowSystem::self(), &KWindowSystem::windowAdded, this, [this] {
+        if (mHidable && mHideOnOverlap && !mHidden)
+        {
+            mShowDelayTimer.stop();
+            hidePanel();
+        }
+    });
+    connect(KWindowSystem::self(), &KWindowSystem::windowRemoved, this, [this] {
+        if (mHidable && mHideOnOverlap && mHidden && !isPanelOverlapped())
+            mShowDelayTimer.start();
+    });
+    connect(KWindowSystem::self(), &KWindowSystem::currentDesktopChanged, this, [this] {
+       if (mHidable && mHideOnOverlap)
+       {
+            if (!mHidden)
+            {
+                mShowDelayTimer.stop();
+                hidePanel();
+            }
+            else if (!isPanelOverlapped())
+                mShowDelayTimer.start();
+       }
+    });
+    connect(KWindowSystem::self(),
+            static_cast<void (KWindowSystem::*)(WId, NET::Properties, NET::Properties2)>(&KWindowSystem::windowChanged),
+            this, [this] (WId /* id */, NET::Properties prop, NET::Properties2) {
+        if (mHidable && mHideOnOverlap
+            // when a window is moved, resized, shaded, or minimized
+            && (prop.testFlag(NET::WMGeometry) || prop.testFlag(NET::WMState)))
+        {
+            if (!mHidden)
+            {
+                mShowDelayTimer.stop();
+                hidePanel();
+            }
+            else if (!isPanelOverlapped())
+                mShowDelayTimer.start();
+        }
+    });
 }
 
 /************************************************
@@ -256,6 +298,8 @@ void LXQtPanel::readSettings()
     mHidden = mHidable;
 
     mVisibleMargin = mSettings->value(QStringLiteral(CFG_KEY_VISIBLE_MARGIN), mVisibleMargin).toBool();
+
+    mHideOnOverlap = mSettings->value(QStringLiteral(CFG_KEY_HIDE_ON_OVERLAP), mHideOnOverlap).toBool();
 
     mAnimationTime = mSettings->value(QStringLiteral(CFG_KEY_ANIMATION), mAnimationTime).toInt();
     mShowDelayTimer.setInterval(mSettings->value(QStringLiteral(CFG_KEY_SHOW_DELAY), mShowDelayTimer.interval()).toInt());
@@ -333,6 +377,7 @@ void LXQtPanel::saveSettings(bool later)
 
     mSettings->setValue(QStringLiteral(CFG_KEY_HIDABLE), mHidable);
     mSettings->setValue(QStringLiteral(CFG_KEY_VISIBLE_MARGIN), mVisibleMargin);
+    mSettings->setValue(QStringLiteral(CFG_KEY_HIDE_ON_OVERLAP), mHideOnOverlap);
     mSettings->setValue(QStringLiteral(CFG_KEY_ANIMATION), mAnimationTime);
     mSettings->setValue(QStringLiteral(CFG_KEY_SHOW_DELAY), mShowDelayTimer.interval());
 
@@ -385,7 +430,11 @@ void LXQtPanel::show()
 QStringList pluginDesktopDirs()
 {
     QStringList dirs;
+#if (QT_VERSION >= QT_VERSION_CHECK(5,15,0))
+    dirs << QString::fromLocal8Bit(qgetenv("LXQT_PANEL_PLUGINS_DIR")).split(QLatin1Char(':'), Qt::SkipEmptyParts);
+#else
     dirs << QString::fromLocal8Bit(qgetenv("LXQT_PANEL_PLUGINS_DIR")).split(QLatin1Char(':'), QString::SkipEmptyParts);
+#endif
     dirs << QStringLiteral("%1/%2").arg(XdgDirs::dataHome(), QStringLiteral("/lxqt/lxqt-panel"));
     dirs << QStringLiteral(PLUGIN_DESKTOPS_DIR);
     return dirs;
@@ -412,7 +461,10 @@ void LXQtPanel::loadPlugins()
     for (auto const & plugin : plugins)
     {
         mLayout->addPlugin(plugin);
-        connect(plugin, &Plugin::dragLeft, [this] { mShowDelayTimer.stop(); hidePanel(); });
+        connect(plugin, &Plugin::dragLeft, this, [this] {
+            mShowDelayTimer.stop();
+            hidePanel();
+        });
     }
 }
 
@@ -529,6 +581,7 @@ void LXQtPanel::setPanelGeometry(bool animate)
                 rect.moveRight(currentScreen.right());
         }
     }
+    if (!mHidden || !mGeometry.isValid()) mGeometry = rect;
     if (rect != geometry())
     {
         setFixedSize(rect.size());
@@ -539,7 +592,7 @@ void LXQtPanel::setPanelGeometry(bool animate)
                 mAnimation = new QPropertyAnimation(this, "geometry");
                 mAnimation->setEasingCurve(QEasingCurve::Linear);
                 //Note: for hiding, the margins are set after animation is finished
-                connect(mAnimation, &QAbstractAnimation::finished, [this] { if (mHidden) setMargins(); });
+                connect(mAnimation, &QAbstractAnimation::finished, this, [this] { if (mHidden) setMargins(); });
             }
             mAnimation->setDuration(mAnimationTime);
             mAnimation->setStartValue(geometry());
@@ -820,8 +873,6 @@ void LXQtPanel::updateStyleSheet()
     if (mFontColor.isValid())
         sheet << QString(QStringLiteral("Plugin * { color: ") + mFontColor.name() + QStringLiteral("; }"));
 
-    QString object = LXQtPanelWidget->objectName();
-
     if (mBackgroundColor.isValid())
     {
         QString color = QStringLiteral("%1, %2, %3, %4")
@@ -1076,7 +1127,11 @@ bool LXQtPanel::event(QEvent *event)
         // Sometimes Qt needs to re-create the underlying window of the widget and
         // the winId() may be changed at runtime. So we need to reset all X11 properties
         // when this happens.
-        qDebug() << "WinIdChange" << hex << effectiveWinId() << "handle" << windowHandle() << windowHandle()->screen();
+        #if (QT_VERSION >= QT_VERSION_CHECK(5,14,0))
+            qDebug() << "WinIdChange" << Qt::hex << effectiveWinId() << "handle" << windowHandle() << windowHandle()->screen();
+        #else
+            qDebug() << "WinIdChange" << hex << effectiveWinId() << "handle" << windowHandle() << windowHandle()->screen();
+        #endif
 
         // Qt::WA_X11NetWmWindowTypeDock becomes ineffective in Qt 5
         // See QTBUG-39887: https://bugreports.qt-project.org/browse/QTBUG-39887
@@ -1157,36 +1212,36 @@ void LXQtPanel::showPopupMenu(Plugin *plugin)
 
     menu->addAction(XdgIcon::fromTheme(QLatin1String("configure")),
                    tr("Configure Panel"),
-                   this, SLOT(showConfigDialog())
+                   this, &LXQtPanel::showConfigDialog
                   )->setDisabled(mLockPanel);
 
     menu->addAction(XdgIcon::fromTheme(QStringLiteral("preferences-plugin")),
                    tr("Manage Widgets"),
-                   this, SLOT(showAddPluginDialog())
+                   this, &LXQtPanel::showAddPluginDialog
                   )->setDisabled(mLockPanel);
 
     LXQtPanelApplication *a = reinterpret_cast<LXQtPanelApplication*>(qApp);
     menu->addAction(XdgIcon::fromTheme(QLatin1String("list-add")),
                    tr("Add New Panel"),
-                   a, SLOT(addNewPanel())
+                   a, &LXQtPanelApplication::addNewPanel
                   );
 
     if (a->count() > 1)
     {
         menu->addAction(XdgIcon::fromTheme(QLatin1String("list-remove")),
                        tr("Remove Panel", "Menu Item"),
-                       this, SLOT(userRequestForDeletion())
+                       this, &LXQtPanel::userRequestForDeletion
                       )->setDisabled(mLockPanel);
     }
 
     QAction * act_lock = menu->addAction(tr("Lock This Panel"));
     act_lock->setCheckable(true);
     act_lock->setChecked(mLockPanel);
-    connect(act_lock, &QAction::triggered, [this] { mLockPanel = !mLockPanel; saveSettings(false); });
+    connect(act_lock, &QAction::triggered, this, [this] { mLockPanel = !mLockPanel; saveSettings(false); });
 
 #ifdef DEBUG
     menu->addSeparator();
-    menu->addAction("Exit (debug only)", qApp, SLOT(quit()));
+    menu->addAction("Exit (debug only)", qApp, &QApplication::quit);
 #endif
 
     /* Note: in multihead & multipanel setup the QMenu::popup/exec places the window
@@ -1217,19 +1272,19 @@ QRect LXQtPanel::calculatePopupWindowPos(QPoint const & absolutePos, QSize const
     switch (position())
     {
     case ILXQtPanel::PositionTop:
-        y = globalGeometry().bottom();
+        y = mGeometry.bottom();
         break;
 
     case ILXQtPanel::PositionBottom:
-        y = globalGeometry().top() - windowSize.height();
+        y = mGeometry.top() - windowSize.height();
         break;
 
     case ILXQtPanel::PositionLeft:
-        x = globalGeometry().right();
+        x = mGeometry.right();
         break;
 
     case ILXQtPanel::PositionRight:
-        x = globalGeometry().left() - windowSize.width();
+        x = mGeometry.left() - windowSize.width();
         break;
     }
 
@@ -1275,7 +1330,7 @@ QRect LXQtPanel::calculatePopupWindowPos(const ILXQtPanelPlugin *plugin, const Q
     }
 
     // Note: assuming there are not contentMargins around the "BackgroundWidget" (LXQtPanelWidget)
-    return calculatePopupWindowPos(globalGeometry().topLeft() + panel_plugin->geometry().topLeft(), windowSize);
+    return calculatePopupWindowPos(mGeometry.topLeft() + panel_plugin->geometry().topLeft(), windowSize);
 }
 
 
@@ -1356,6 +1411,37 @@ void LXQtPanel::userRequestForDeletion()
     emit deletedByUser(this);
 }
 
+bool LXQtPanel::isPanelOverlapped() const
+{
+    QFlags<NET::WindowTypeMask> ignoreList;
+    ignoreList |= NET::DesktopMask;
+    ignoreList |= NET::DockMask;
+    ignoreList |= NET::SplashMask;
+    ignoreList |= NET::MenuMask;
+    ignoreList |= NET::PopupMenuMask;
+    ignoreList |= NET::DropdownMenuMask;
+    ignoreList |= NET::TopMenuMask;
+    ignoreList |= NET::NotificationMask;
+
+    const auto wIds = KWindowSystem::stackingOrder();
+    for (auto const wId : wIds)
+    {
+        KWindowInfo info(wId, NET::WMWindowType | NET::WMState | NET::WMFrameExtents | NET::WMDesktop);
+        if (info.valid()
+            // skip windows that are on other desktops
+            && info.isOnCurrentDesktop()
+            // skip shaded, minimized or hidden windows
+            && !(info.state() & (NET::Shaded | NET::Hidden))
+            // check against the list of ignored types
+            && !NET::typeMatchesMask(info.windowType(NET::AllTypesMask), ignoreList))
+        {
+            if (info.frameGeometry().intersects(mGeometry))
+                return true;
+        }
+    }
+    return false;
+}
+
 void LXQtPanel::showPanel(bool animate)
 {
     if (mHidable)
@@ -1372,9 +1458,10 @@ void LXQtPanel::showPanel(bool animate)
 void LXQtPanel::hidePanel()
 {
     if (mHidable && !mHidden
-            && !mStandaloneWindows->isAnyWindowShown()
-       )
+        && !mStandaloneWindows->isAnyWindowShown())
+    {
         mHideTimer.start();
+    }
 }
 
 void LXQtPanel::hidePanelWork()
@@ -1383,9 +1470,13 @@ void LXQtPanel::hidePanelWork()
     {
         if (!mStandaloneWindows->isAnyWindowShown())
         {
-            mHidden = true;
-            setPanelGeometry(mAnimationTime > 0);
-        } else
+            if (!mHideOnOverlap || isPanelOverlapped())
+            {
+                mHidden = true;
+                setPanelGeometry(mAnimationTime > 0);
+            }
+        }
+        else
         {
             mHideTimer.start();
         }
@@ -1411,6 +1502,19 @@ void LXQtPanel::setVisibleMargin(bool visibleMargin, bool save)
         return;
 
     mVisibleMargin = visibleMargin;
+
+    if (save)
+        saveSettings(true);
+
+    realign();
+}
+
+void LXQtPanel::setHideOnOverlap(bool hideOnOverlap, bool save)
+{
+    if (mHideOnOverlap == hideOnOverlap)
+        return;
+
+    mHideOnOverlap = hideOnOverlap;
 
     if (save)
         saveSettings(true);

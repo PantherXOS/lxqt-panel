@@ -46,7 +46,7 @@ namespace
         using DBusMenuImporter::DBusMenuImporter;
 
     protected:
-        virtual QIcon iconForName(const QString & name) override
+        QIcon iconForName(const QString & name) override
         {
             return XdgIcon::fromTheme(name);
         }
@@ -312,7 +312,11 @@ void StatusNotifierButton::mouseReleaseEvent(QMouseEvent *event)
 
 void StatusNotifierButton::wheelEvent(QWheelEvent *event)
 {
-    interface->Scroll(event->delta(), QStringLiteral("vertical"));
+    QPoint angleDelta = event->angleDelta();
+    Qt::Orientation orient = (qAbs(angleDelta.x()) > qAbs(angleDelta.y()) ? Qt::Horizontal : Qt::Vertical);
+    int delta = (orient == Qt::Horizontal ? angleDelta.x() : angleDelta.y());
+
+    interface->Scroll(delta, QStringLiteral("vertical"));
 }
 
 void StatusNotifierButton::resetIcon()

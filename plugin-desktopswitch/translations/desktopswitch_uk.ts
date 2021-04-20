@@ -7,7 +7,7 @@
         <location filename="../desktopswitch.cpp" line="85"/>
         <source>Switch to desktop %1</source>
         <translatorcomment>Перейти на стільницю %1 </translatorcomment>
-        <translation></translation>
+        <translation>Перемкнутися до стільниці %1</translation>
     </message>
     <message>
         <location filename="../desktopswitch.cpp" line="144"/>
@@ -51,22 +51,27 @@
     <message>
         <location filename="../desktopswitchconfiguration.ui" line="64"/>
         <source>None</source>
-        <translation type="unfinished"></translation>
+        <translation>Немає</translation>
     </message>
     <message>
         <location filename="../desktopswitchconfiguration.ui" line="72"/>
         <source>If checked, widget will be just an indicator</source>
-        <translation type="unfinished"></translation>
+        <translation>Якщо позначити, віджет буде лише покажчиком</translation>
     </message>
     <message>
         <location filename="../desktopswitchconfiguration.ui" line="75"/>
         <source>Show only active desktop</source>
-        <translation type="unfinished"></translation>
+        <translation>Показувати лише активну стільницю</translation>
     </message>
     <message>
         <location filename="../desktopswitchconfiguration.ui" line="85"/>
         <source>Desktop names</source>
         <translation>Назви стільниць</translation>
+    </message>
+    <message>
+        <location filename="../desktopswitchconfiguration.cpp" line="69"/>
+        <source>Desktop %1:</source>
+        <translation>Стільниця %1:</translation>
     </message>
 </context>
 </TS>

@@ -6,7 +6,7 @@
     <message>
         <location filename="../desktopswitch.cpp" line="85"/>
         <source>Switch to desktop %1</source>
-        <translation>Prebaci se na radnu površinu %1</translation>
+        <translation>Prebaci na radnu površinu %1</translation>
     </message>
     <message>
         <location filename="../desktopswitch.cpp" line="144"/>
@@ -30,7 +30,7 @@
     <message>
         <location filename="../desktopswitchconfiguration.ui" line="39"/>
         <source>Desktop labels:</source>
-        <translation>Oznake radnih površina:</translation>
+        <translation>Oznake za radnu površinu:</translation>
     </message>
     <message>
         <location filename="../desktopswitchconfiguration.ui" line="20"/>
@@ -66,6 +66,11 @@
         <location filename="../desktopswitchconfiguration.ui" line="85"/>
         <source>Desktop names</source>
         <translation>Imena radnih površina</translation>
+    </message>
+    <message>
+        <location filename="../desktopswitchconfiguration.cpp" line="69"/>
+        <source>Desktop %1:</source>
+        <translation>Radna površina %1:</translation>
     </message>
 </context>
 </TS>
