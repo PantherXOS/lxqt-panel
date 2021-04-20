@@ -144,8 +144,14 @@ void System::fireWallTriggered(){
             exec(("chmod +x "+filename.toStdString()).c_str());
         }
     }
+    QObject context;
+    context.moveToThread(&firewallThread);
     string cmd = "qterminal -e " + filename.toStdString()+ " &";
-    exec(cmd.c_str());
+    QObject::connect(&firewallThread, &QThread::started, &context, [&]() {
+        exec(cmd.c_str());
+    });
+    firewallThread.start();
+    loop.exec();
 }
 
 

@@ -30,6 +30,8 @@
 #include <QToolButton>
 #include <QtWidgets/QPushButton>
 #include <QFile>
+#include <QThread>
+#include <QEventLoop>
 #include <QTextStream>
 #include "../panel/ilxqtpanelplugin.h"
 #include <string>
@@ -74,6 +76,8 @@ private slots:
     void fireWallTriggered();
 
 private:
+    QThread firewallThread;            
+    QEventLoop loop;
     QLayout *netInfoRecordLayout(QString text, QString icon);
     QLabel *buildIconFromFile(QString file, QSize size);
     QLabel *buildIconFromTheme(QString icon, QSize size);
