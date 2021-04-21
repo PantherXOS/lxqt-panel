@@ -28,9 +28,11 @@ public:
         if(account.getStatus() == Status::online)
             statusIconFile=QString::fromStdString(":resources/icon/status_0_green_o");
         else if(account.getStatus() == Status::offline)
-            statusIconFile=QString::fromStdString(":resources/icon/status_0_red");
+            statusIconFile=QString::fromStdString(":resources/icon/status_0_grey");
         else if(account.getStatus() == Status::none)
             statusIconFile=QString::fromStdString(":resources/icon/status_0_grey");
+        else if(account.getStatus() == Status::error)
+            statusIconFile=QString::fromStdString(":resources/icon/status_0_red");
         auto statusLabel = buildIconFromFile(statusIconFile,QSize(ACCOUNT_STATUS_ICON_SIZE,ACCOUNT_STATUS_ICON_SIZE));
         auto accountIcon = buildIconFromTheme(QString::fromStdString(account.getIcon()),QSize(ACCOUNT_ICON_SIZE,ACCOUNT_ICON_SIZE));
         accountIcon->setContentsMargins(3,0,0,0);
