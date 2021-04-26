@@ -18,12 +18,14 @@
 #include <QFrame>
 #include <QFont>
 #include <QIcon>
+#include <QListWidget>
 #include "MessageObject.h"
 #include "Settings.h"
 
 class HubItemWidget : public QWidget {
 public:
-    HubItemWidget(MessageObject &message, QWidget *parent = nullptr) : QWidget(parent) {
+    HubItemWidget(MessageObject &message, int width, QWidget *parent = nullptr) : QWidget(parent) {
+        messageLink = QString::fromStdString(message.getLink());
         auto messageSender = new QLabel;
         QFont messageSenderFont = messageSender->font();
         messageSenderFont.setPointSize(MSG_SENDER_FONT_SIZE);
@@ -76,7 +78,7 @@ public:
         QFontMetrics fm(messagePreviewFont);
         int textWidth =fm.horizontalAdvance(QString::fromStdString(message.getMessage()));
         auto _msg = message.getMessage();
-        while(textWidth > MAX_MESSAGE_SIZE_WIDTH){
+        while(textWidth > width){
             _msg = _msg.substr(0, _msg.size() - 6);
             _msg += "...";
             textWidth =fm.horizontalAdvance(QString::fromStdString(_msg));
@@ -101,6 +103,11 @@ public:
         ilayout->setSpacing(0);
         ilayout->setContentsMargins(3,0,0,0);
 
+        QFrame * frame = new QFrame();
+        frame->setFrameShape(QFrame::HLine);
+        frame->setStyleSheet(QString::fromStdString("QFrame{background-color: gray}"));
+        Tlayout->addWidget(frame);
+
         auto glayout = new QHBoxLayout;
         glayout->addLayout(ilayout);
         glayout->addLayout(Tlayout);
@@ -124,26 +131,54 @@ public:
         iconLabel->setFixedSize(size);
         return iconLabel;
     }
+
+    QString getMessageLink(){
+        return messageLink;
+    }
+
+private:
+    QString messageLink;
 };
 
 class HubItem : public QWidgetAction{
 Q_OBJECT
 public:
-    HubItem(MessageObject &message, QObject *parent = nullptr)
+    HubItem(vector<MessageObject> &messageList, QObject *parent = nullptr)
             : QWidgetAction(parent) {
-        _url = QString::fromStdString(message.getLink());
-        auto widget = new HubItemWidget(message);
-        setDefaultWidget(widget);
-        connect(this, SIGNAL(triggered()), this, SLOT(triggered()));
+        //_url = QString::fromStdString(message.getLink());
+       // auto widget = new HubItemWidget(message);
+        listWidget = new QListWidget();
+        listWidget->setStyleSheet(QString::fromStdString("QListWidget {background-color:transparent;}"));
+        for(auto &m : messageList){
+            auto widgwtItem = new QListWidgetItem();
+            listWidget->addItem(widgwtItem);
+            auto messageItem = new HubItemWidget(m,(MAIN_MENU_SIZE_W - listWidget->horizontalScrollBar()->size().height()-50)); 
+            
+            messageHeightSize = messageItem->sizeHint().height();
+            listWidget->setItemWidget(widgwtItem,messageItem);
+            widgwtItem->setSizeHint(messageItem->size()); 
+        }
+        int listSize;
+        if(messageList.size()<6)
+            listSize = messageHeightSize*messageList.size();
+        else
+            listSize = messageHeightSize*6;
+        listWidget->setFixedHeight(listSize);
+        
+        setDefaultWidget(listWidget);
+        connect(listWidget, SIGNAL(itemClicked(QListWidgetItem*)), this, SLOT(triggered(QListWidgetItem*)));
     }
 
 private slots:
-    void triggered(){
-        QDesktopServices::openUrl(QUrl(_url));
+    void triggered(QListWidgetItem* item){
+        QDesktopServices::openUrl(QUrl(((HubItemWidget*)(listWidget->itemWidget(item)))->getMessageLink()));
     }
 
 private:
-    QString _url;
+    // QString _url;
+    int messageHeightSize;
+    int frameWidth;
+    QListWidget* listWidget;
 };
 
 

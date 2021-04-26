@@ -26,14 +26,14 @@
 #include <QFont>
 #include <QIcon>
 #include <QDateTime>
+#include <rpc/EventSubscriber.h>
+#include <lxqt/LXQt/Notification>
+#include <QListWidget>
 #include "../panel/ilxqtpanelplugin.h"
-
 #include "rpc/RPCHubClient.h"
 #include "AccountObject.h"
 #include "Settings.h"
 #include "MessageObject.h"
-#include <rpc/EventSubscriber.h>
-#include <lxqt/LXQt/Notification>
 #include "LineSeperator.h"
 #include "HubItem.h"
 #include "AccountItem.h"

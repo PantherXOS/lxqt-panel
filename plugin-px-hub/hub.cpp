@@ -23,7 +23,7 @@ void hub::realign()
 {
     mButton.setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
 }
-
+#include <QLabel>
 void hub::refresh() {
     bool menuIsVisible = mainMenu->isVisible();
     mainMenu->hide();
@@ -47,12 +47,10 @@ void hub::refresh() {
 
     mainMenu->addAction(createTitle(tr("PANTHER HUB"), QStringLiteral("px-updates")));
     // get messages
-    vector<MessageObject> messageList = rpcHubClient.getMessageList(6);
-    for(auto &m : messageList){
-        auto messageItem = new HubItem(m);
-        mainMenu->addAction(messageItem);
-        mainMenu->addSeparator();
-    }
+    vector<MessageObject> messageList = rpcHubClient.getMessageList(50);
+    auto hubIemList = new HubItem(messageList);
+    mainMenu->addAction(hubIemList);
+
     mainMenu->addSeparator();
     if(menuIsVisible) 
         mButton.showMenu();
