@@ -19,5 +19,7 @@
 #define MSG_PREVIEW_FONT_SIZE               9
 #define MSG_UNREAD_PREVIEW_FONT_SIZE        10
 #define HUB_TITLE_FONT_SIZE                 11
+#define MAX_MESSAGE_COUNT                   50
+#define MESSAGE_VIEW_COUNT                  6
 
 #endif //LXQT_PANEL_SETTINGS_H

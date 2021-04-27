@@ -45,11 +45,11 @@ void hub::refresh() {
     sWidgetAction->setDefaultWidget(seperator1);
     mainMenu->addAction(sWidgetAction);
 
-    mainMenu->addAction(createTitle(tr("PANTHER HUB"), QStringLiteral("px-updates")));
+    mainMenu->addAction(createTitle(tr("PANTHERX HUB"), QStringLiteral("px-updates")));
     // get messages
-    vector<MessageObject> messageList = rpcHubClient.getMessageList(50);
-    auto hubIemList = new HubItem(messageList);
-    mainMenu->addAction(hubIemList);
+    vector<MessageObject> messageList = rpcHubClient.getMessageList(MAX_MESSAGE_COUNT);
+    auto hubItemList = new HubItem(messageList);
+    mainMenu->addAction(hubItemList);
 
     mainMenu->addSeparator();
     if(menuIsVisible) 

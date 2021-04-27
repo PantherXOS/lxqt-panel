@@ -103,20 +103,35 @@ public:
         ilayout->setSpacing(0);
         ilayout->setContentsMargins(3,0,0,0);
 
+        
         QFrame * frame = new QFrame();
         frame->setFrameShape(QFrame::HLine);
-        frame->setStyleSheet(QString::fromStdString("QFrame{background-color: gray}"));
-        Tlayout->addWidget(frame);
+        frame->setFrameShadow(QFrame::Plain);
+        frame->setLineWidth(0);
+        frame->setMidLineWidth(0);
+        auto sepraterlayout = new QVBoxLayout;
+        //sepraterlayout->addLayout(qlayout);
+        sepraterlayout->addWidget(frame);
+        sepraterlayout->setAlignment(Qt::AlignBottom);
 
         auto glayout = new QHBoxLayout;
         glayout->addLayout(ilayout);
         glayout->addLayout(Tlayout);
-    //    glayout->setMargin(0);
-        glayout->setSpacing(0);
-    //    glayout->setContentsMargins(0,0,0,0);
+        glayout->setMargin(5);
+        // glayout->setSpacing(0);
+        // glayout->setContentsMargins(0,0,0,0);
+
+        auto flayout = new QVBoxLayout;
+        flayout->addLayout(glayout);
+        flayout->addLayout(sepraterlayout);
+        flayout->setMargin(0);
+        flayout->setSpacing(0);
+        flayout->setContentsMargins(0,0,0,0);
+
+
 
         setObjectName(QString::fromStdString("PxHubItem"));
-        setLayout(glayout);
+        setLayout(flayout);
         setSizePolicy(QSizePolicy::MinimumExpanding,QSizePolicy::Preferred);
         setAttribute(Qt::WA_Hover);
         setMouseTracking(true);
@@ -159,10 +174,10 @@ public:
             widgwtItem->setSizeHint(messageItem->size()); 
         }
         int listSize;
-        if(messageList.size()<6)
+        if(messageList.size()< MESSAGE_VIEW_COUNT)
             listSize = messageHeightSize*messageList.size();
         else
-            listSize = messageHeightSize*6;
+            listSize = messageHeightSize*MESSAGE_VIEW_COUNT;
         listWidget->setFixedHeight(listSize);
         
         setDefaultWidget(listWidget);
