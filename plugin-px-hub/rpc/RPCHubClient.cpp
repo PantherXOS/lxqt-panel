@@ -4,11 +4,11 @@
 
 #include "RPCHubClient.h"
 
-#define HUB_SERVER_ADDRESS string(getpwuid(getuid())->pw_dir) + "/.userdata/rpc/hub"
+#define HUB_SERVER_ADDRESS string("unix:") + "/tmp/" + string(getenv("USER")) + "/rpc/hub"
 
 vector<AccountObject> RPCHubClient::getAccountList() {
     vector<AccountObject> rsult;
-    string addr = string("unix:") + HUB_SERVER_ADDRESS;
+    string addr = HUB_SERVER_ADDRESS;
     capnp::EzRpcClient rpcClient(addr);
     auto &waitScope = rpcClient.getWaitScope();
     HubReader::Client client = rpcClient.getMain<HubReader>();
@@ -48,7 +48,7 @@ vector<AccountObject> RPCHubClient::getAccountList() {
 
 vector<MessageObject> RPCHubClient::getMessageList(int n) {
     vector<MessageObject> messageList;
-    string addr = string("unix:") + HUB_SERVER_ADDRESS;
+    string addr = HUB_SERVER_ADDRESS;
     capnp::EzRpcClient rpcClient(addr);
     auto &waitScope = rpcClient.getWaitScope();
     HubReader::Client client = rpcClient.getMain<HubReader>();
