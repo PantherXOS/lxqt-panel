@@ -23,7 +23,7 @@ void EventSubscriber::run() {
             int res=-1;
             while(res != 0){
                 subSock = { 0x00 };
-                string ipcSock = "ipc://"+string(getpwuid(getuid())->pw_dir) + UTILS::FILE::fullpath(CHANNEL_BASE) + service;
+                string ipcSock = "ipc:///tmp/" + string(getenv("USER")) + "/rpc/event-channels/" + service;
                 nng_sub0_open(&subSock);
                 nng_setopt(subSock, NNG_OPT_SUB_SUBSCRIBE, "", 0);
                 res = nng_dial(subSock, ipcSock.c_str(), nullptr, 0);
