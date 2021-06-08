@@ -36,10 +36,10 @@ public:
         QFont messagePreviewFont = messageSender->font();
         messagePreviewFont.setPointSize(MSG_PREVIEW_FONT_SIZE);
         if(message.isUnread()){
-            messageSenderFont.setItalic(true);
-            messageTimeFont.setItalic(true);
+            messageSenderFont.setItalic(false);
+            messageTimeFont.setItalic(false);
             messagePreviewFont.setPointSize(MSG_UNREAD_PREVIEW_FONT_SIZE);
-            messagePreviewFont.setItalic(true);
+            messagePreviewFont.setItalic(false);
         }
         string acc = message.getSender();
         if(acc.size()>MAX_ACCOUNT_SIZE)
@@ -55,9 +55,8 @@ public:
         llayout->setContentsMargins(0,0,0,0);
 
         auto messageTime = new QLabel;
-        QDateTime dt = QDateTime::fromString(QString::fromStdString(message.getTime()), 
-                                            Qt::ISODate).toLocalTime();
-        messageTime->setText(dt.toString(QString::fromStdString("yyyy-MM-dd hh:mm")));
+        getVisibleTime(QString::fromStdString(message.getTime()));
+        messageTime->setText(getVisibleTime(QString::fromStdString(message.getTime())));
         messageTime->setFont(messageTimeFont);
 
         auto rlayout = new QHBoxLayout;
@@ -78,6 +77,8 @@ public:
         QFontMetrics fm(messagePreviewFont);
         int textWidth =fm.horizontalAdvance(QString::fromStdString(message.getMessage()));
         auto _msg = message.getMessage();
+        _msg.erase(std::remove(_msg.begin(), _msg.end(), '\n'),
+            _msg.end());
         while(textWidth > width){
             _msg = _msg.substr(0, _msg.size() - 6);
             _msg += "...";
@@ -87,7 +88,7 @@ public:
         auto messagePreview = new QLabel;
         messagePreview->setText(QString::fromStdString(_msg));
         messagePreview->setFont(messagePreviewFont);
-        messagePreview->setContentsMargins(0,2,0,0);
+        messagePreview->setContentsMargins(0,0,0,0);
 
         auto Tlayout = new QVBoxLayout;
         Tlayout->addLayout(qlayout);
@@ -153,6 +154,24 @@ public:
 
 private:
     QString messageLink;
+    QString getVisibleTime(QString messageTime){
+        QDateTime dt = QDateTime::fromString(messageTime, 
+                                            Qt::ISODate).toLocalTime();
+        qint64 difference = dt.daysTo(QDateTime::currentDateTime());
+        if(difference>=1){
+            return dt.toString(QString::fromStdString("ddd  dd.MM  h:mm a"));
+        }else{
+            QString result;
+            qint64 secDifference = dt.secsTo(QDateTime::currentDateTime());
+            if((secDifference/60)>90){
+               result= QString::number(secDifference/3600)+QString::fromStdString("h ago"); 
+            }else{
+                 result= QString::number(secDifference/60)+QString::fromStdString("m ago");
+            }
+            return result;
+        }
+
+    }
 };
 
 class HubItem : public QWidgetAction{

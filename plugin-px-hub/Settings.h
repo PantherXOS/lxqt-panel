@@ -6,7 +6,7 @@
 #define LXQT_PANEL_SETTINGS_H
 
 #define ACCOUNT_STATUS_ICON_SIZE            20
-#define MAIN_MENU_SIZE_W                    300
+#define MAIN_MENU_SIZE_W                    360
 #define ACCOUNT_ICON_SIZE                   15
 #define MESSAGE_ICON_SIZE                   15
 #define UPDATE_ICON_SIZE                    15
