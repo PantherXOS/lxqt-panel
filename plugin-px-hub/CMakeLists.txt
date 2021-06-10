@@ -22,6 +22,9 @@ set(HEADERS
 		LineSeperator.h
 		HubItem.h
 		AccountItem.h
+		TimeBoxObject.h
+		CalendarItemWidget.h
+		CalendarBox.h
 		)
 
 set(SOURCES

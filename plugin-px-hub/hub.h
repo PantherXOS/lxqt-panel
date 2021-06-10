@@ -37,6 +37,9 @@
 #include "LineSeperator.h"
 #include "HubItem.h"
 #include "AccountItem.h"
+#include "CalendarBox.h"
+#include "CalendarItemWidget.h"
+#include "TimeBoxObject.h"
 
 using namespace std;
 
@@ -61,6 +64,7 @@ private slots:
 private:
     QWidgetAction *createTitle(QString title, QString icon);
     void refresh();
+    QVector<TimeBoxObject> getCalendar();
 
     QToolButton mButton;
     bool mHidden;

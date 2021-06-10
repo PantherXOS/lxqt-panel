@@ -44,7 +44,11 @@ void hub::refresh() {
     auto sWidgetAction = new QWidgetAction(this);
     sWidgetAction->setDefaultWidget(seperator1);
     mainMenu->addAction(sWidgetAction);
-
+    auto calendarList = getCalendar();   
+   
+    auto calcWidget = new CalendarBoxWidgetAction(calendarList);
+    mainMenu->addAction(calcWidget);
+    mainMenu->addSeparator();
     mainMenu->addAction(createTitle(tr("PANTHERX HUB"), QStringLiteral("px-updates")));
     // get messages
     vector<MessageObject> messageList = rpcHubClient.getMessageList(MAX_MESSAGE_COUNT);
@@ -113,5 +117,13 @@ void hub::hubEventsHandler(EventObject *eventObject){
         }
     }
     refresh();
+}
+
+QVector<TimeBoxObject> hub::getCalendar(){
+
+    QVector<TimeBoxObject> timeBoxObjectList;
+    //TODO FILL vector
+
+    return timeBoxObjectList;
 }
 
