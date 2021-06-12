@@ -157,19 +157,20 @@ private:
     QString getVisibleTime(QString messageTime){
         QDateTime dt = QDateTime::fromString(messageTime, 
                                             Qt::ISODate).toLocalTime();
-        qint64 difference = dt.daysTo(QDateTime::currentDateTime());
-        if(difference>=1){
-            return dt.toString(QString::fromStdString("ddd  dd.MM  h:mm a"));
-        }else{
             QString result;
             qint64 secDifference = dt.secsTo(QDateTime::currentDateTime());
             if((secDifference/60)>90){
-               result= QString::number(secDifference/3600)+QString::fromStdString("h ago"); 
+                
+                int hour = secDifference/3600;
+                if(hour<24)
+                    result= QString::number(secDifference/3600)+QString::fromStdString("h ago");
+                else
+                     result= dt.toString(QString::fromStdString("ddd  dd.MM  h:mm a"));
             }else{
                  result= QString::number(secDifference/60)+QString::fromStdString("m ago");
             }
             return result;
-        }
+       // }
 
     }
 };

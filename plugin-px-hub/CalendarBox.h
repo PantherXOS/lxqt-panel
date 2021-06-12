@@ -27,6 +27,10 @@
 #include "TimeBoxObject.h"
 #include "CalendarItemWidget.h"
 
+#define GREEN_COLOR "rgb(45,133,55)"
+#define YELLOW_COLOR "rgb(248,166,30)"
+#define FONT_GRAY  "rgb(124,127,132)"
+
 
 
 class CalendarBox : public QWidget{
@@ -40,11 +44,15 @@ public:
         // }
         QColor green(Qt::green);
         QColor yellow(Qt::yellow);       
-        auto test = new CalendarItemWidget(QString::fromStdString("12:30"),QString::fromStdString(" "),QString::fromStdString(" "),green,130);
-        auto mmidletest = new CalendarItemWidget(QString::fromStdString(" "),QString::fromStdString("2h"),QString::fromStdString(" "),yellow,60);
-        auto endtest = new CalendarItemWidget(QString::fromStdString(" "),QString::fromStdString(" "),QString::fromStdString("17:30"),green,130);
+        auto test = new CalendarItemWidget(QString::fromStdString("13:32"),QString::fromStdString(" "),QString::fromStdString(" "),GREEN_COLOR,60);
+        auto mmidletest1 = new CalendarItemWidget(QString::fromStdString(" "),QString::fromStdString("+1h"),QString::fromStdString(" "),YELLOW_COLOR,70);
+        auto mmidletest2 = new CalendarItemWidget(QString::fromStdString(" "),QString::fromStdString("+2h"),QString::fromStdString(" "),GREEN_COLOR,80);
+        auto mmidletest3 = new CalendarItemWidget(QString::fromStdString(" "),QString::fromStdString("+3h"),QString::fromStdString(" "),YELLOW_COLOR,33);
+        auto endtest = new CalendarItemWidget(QString::fromStdString(" "),QString::fromStdString(" "),QString::fromStdString("18:00"),GREEN_COLOR,75);
         mainLayout->addWidget(test);
-        mainLayout->addWidget(mmidletest);
+        mainLayout->addWidget(mmidletest1);
+        mainLayout->addWidget(mmidletest2);
+        mainLayout->addWidget(mmidletest3);
         mainLayout->addWidget(endtest);
         mainLayout->setMargin(0);
         mainLayout->setSpacing(0);

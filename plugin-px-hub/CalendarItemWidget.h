@@ -30,35 +30,39 @@
 class CalendarItemWidget : public QWidget {
 Q_OBJECT
 public:
-    CalendarItemWidget(const QString &startTime, const QString &middleTime, const QString &endTime, const QColor &color,int width, QWidget *parent = nullptr) : QWidget(parent) {
+    CalendarItemWidget(const QString &startTime, const QString &middleTime, const QString &endTime, const string &color,int width, QWidget *parent = nullptr) : QWidget(parent) {
         auto coloredPart = new QLabel;
-        QPalette _palette;
+        // QPalette _palette;
         auto messageSender = new QLabel;
         QFont calendarFont = messageSender->font();
         calendarFont.setPointSize(MSG_PREVIEW_FONT_SIZE);
         
-        _palette.setColor(QPalette::Window, color);        
+        //_palette.setColor(QPalette::Window, color);        
         coloredPart->setAutoFillBackground(true);  
-        coloredPart->setPalette(_palette);  
+        //coloredPart->setPalette(_palette);  
         coloredPart->setFixedWidth(width);
         coloredPart->setFixedHeight(10);
-        coloredPart->setStyleSheet(QString::fromStdString("QLable{border: 0px ;}"));
+        coloredPart->setStyleSheet(QString::fromStdString("QLabel{border: 0px ; background-color:"+color+"}"));
         
 
         auto start = new QLabel;
         start->setText(startTime);
         start->setFont(calendarFont);
+        start->setStyleSheet(QString::fromStdString("QLabel{color:rgb(124,127,132)}"));
         start->setAlignment(Qt::AlignLeft);
 
         auto middle = new QLabel;
         middle->setText(middleTime);
         middle->setFont(calendarFont);
         middle->setAlignment(Qt::AlignCenter);
+        middle->setStyleSheet(QString::fromStdString("QLabel{color:rgb(124,127,132)}"));
 
         auto end = new QLabel;
         end->setText(endTime);
         end->setFont(calendarFont);
+        //end->set
         end->setAlignment(Qt::AlignRight);
+        end->setStyleSheet(QString::fromStdString("QLabel{color:rgb(124,127,132)}"));
 
         auto timelayout = new QHBoxLayout;
         timelayout->addWidget(start);
