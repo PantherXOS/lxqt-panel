@@ -56,7 +56,7 @@ public:
         mainLayout->addWidget(endtest);
         mainLayout->setMargin(0);
         mainLayout->setSpacing(0);
-        mainLayout->setContentsMargins(6,4,0,2);
+        mainLayout->setContentsMargins(6,6,0,2);
 
         auto calendarIcon = buildIconFromTheme(QString::fromStdString("px-categories"), QSize(MESSAGE_ICON_SIZE,MESSAGE_ICON_SIZE));
         //calendarIcon->setContentsMargins(3,0,0,0);

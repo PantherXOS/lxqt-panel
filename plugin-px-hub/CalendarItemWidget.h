@@ -33,8 +33,8 @@ public:
     CalendarItemWidget(const QString &startTime, const QString &middleTime, const QString &endTime, const string &color,int width, QWidget *parent = nullptr) : QWidget(parent) {
         auto coloredPart = new QLabel;
         // QPalette _palette;
-        auto messageSender = new QLabel;
-        QFont calendarFont = messageSender->font();
+        auto message = new QLabel;
+        QFont calendarFont = message->font();
         calendarFont.setPointSize(MSG_PREVIEW_FONT_SIZE);
         
         //_palette.setColor(QPalette::Window, color);        
