@@ -164,7 +164,7 @@
 		<Name>DesktopSettings</Name>
 		<Directory>lxde-settings.directory</Directory>
 		<Menu>
-			<Name>LXQtSettings</Name>
+			<Name>AdvancedSettings</Name>
 			<Directory>lxqt-settings.directory</Directory>
 			<Include>
 				<And>
