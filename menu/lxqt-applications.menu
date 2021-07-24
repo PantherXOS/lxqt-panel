@@ -99,14 +99,6 @@
 		</Include>
 	</Menu>	 <!-- End Internet -->
 
-	<!-- LXQt-About -->
-	<Menu>
-		<Name>LXQt-About</Name>
-		<Include>
-		<Filename>lxqt-about.desktop</Filename>
-		</Include>
-	</Menu> <!-- End LXQt-About -->
-
 	<!-- Multimedia -->
 	<Menu>
 		<Name>Multimedia</Name>
@@ -215,6 +207,18 @@
 		</Include>
 	</Menu>	 <!-- End Leave -->
 
+	<!-- About -->
+	<Menu>
+		<Name>About</Name>
+		<Directory>px-about.directory</Directory>
+		<Include>
+		<Filename>lxqt-about.desktop</Filename>
+			<Or>
+				<Category>PX-About</Category>
+			</Or>
+		</Include>
+	</Menu>	 <!-- End Leave -->
+
 	<!-- Screensaver -->
 	<Menu>
 		<Name>Screensaver</Name>
@@ -228,7 +232,7 @@
 		<Merge type="menus"/>
 		<Separator/>
 		<Menuname>DesktopSettings</Menuname>
-		<Menuname show_empty="false" inline="true">LXQt-About</Menuname>
+		<Menuname show_empty="false">About</Menuname>
 		<Separator/>
 		<Menuname show_empty="false">X-Leave</Menuname>
 		<Menuname show_empty="false" inline="true">Screensaver</Menuname>
