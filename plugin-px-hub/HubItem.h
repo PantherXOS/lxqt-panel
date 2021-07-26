@@ -159,8 +159,7 @@ private:
                                             Qt::ISODate).toLocalTime();
             QString result;
             qint64 secDifference = dt.secsTo(QDateTime::currentDateTime());
-            if((secDifference/60)>60){
-                
+            if((secDifference/60)>60){                
                 int hour = secDifference/3600;
                 if(hour<24)
                     result= QString::number(secDifference/3600)+QString::fromStdString("h ago");

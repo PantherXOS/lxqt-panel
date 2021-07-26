@@ -207,6 +207,14 @@
 		</Include>
 	</Menu>	 <!-- End Leave -->
 
+	<!-- Wiki/Help -->
+	<Menu>
+		<Name>Wiki-Help</Name>
+		<Include>
+		<Filename>px-desktop-wiki.desktop</Filename>
+		</Include>
+	</Menu> <!-- End Wiki/Help -->
+
 	<!-- About -->
 	<Menu>
 		<Name>About</Name>
@@ -233,6 +241,7 @@
 		<Separator/>
 		<Menuname>DesktopSettings</Menuname>
 		<Menuname show_empty="false">About</Menuname>
+		<Menuname show_empty="false" inline="true">Wiki-Help</Menuname>
 		<Separator/>
 		<Menuname show_empty="false">X-Leave</Menuname>
 		<Menuname show_empty="false" inline="true">Screensaver</Menuname>
