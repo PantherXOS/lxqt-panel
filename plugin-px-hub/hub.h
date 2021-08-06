@@ -61,6 +61,7 @@ public slots:
 private slots:
     void hubEventsHandler(EventObject *eventObject);
     void updateButtonHandler();
+    void pantherButtonHandler();
 private:
     QWidgetAction *createTitle(QString title, QString icon);
     void refresh();

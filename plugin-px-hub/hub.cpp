@@ -61,12 +61,14 @@ void hub::refresh() {
 }
 
 QWidgetAction *hub::createTitle(QString title, QString icon) {
-    auto subject = new QLabel;
+    auto subject = new QPushButton();;
     auto titleFont = subject->font();
     titleFont.setPointSize(HUB_TITLE_FONT_SIZE);
 
     subject->setText(title);
     subject->setFont(titleFont);
+    subject->setStyleSheet(QString::fromStdString("QPushButton {background-color: transparent; border:0px;}"));
+    connect(subject,SIGNAL(released()),this,SLOT(pantherButtonHandler()));
 
     auto slayout = new QHBoxLayout;
     slayout->setAlignment(Qt::AlignLeft);
@@ -98,6 +100,10 @@ QWidgetAction *hub::createTitle(QString title, QString icon) {
 
 void hub::updateButtonHandler() {
     refresh();
+}
+
+void hub::pantherButtonHandler() {
+    QDesktopServices::openUrl(QUrl(QString::fromStdString("px-hub-gui")));
 }
 
 void hub::hubEventsHandler(EventObject *eventObject){
