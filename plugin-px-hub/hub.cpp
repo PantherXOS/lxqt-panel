@@ -103,7 +103,7 @@ void hub::updateButtonHandler() {
 }
 
 void hub::pantherButtonHandler() {
-    QDesktopServices::openUrl(QUrl(QString::fromStdString("px-hub-gui")));
+    QDesktopServices::openUrl(QUrl(QString::fromStdString("px-hub-gui:")));
 }
 
 void hub::hubEventsHandler(EventObject *eventObject){
