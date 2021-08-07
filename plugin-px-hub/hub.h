@@ -62,8 +62,10 @@ private slots:
     void hubEventsHandler(EventObject *eventObject);
     void updateButtonHandler();
     void pantherButtonHandler();
+    void accountButtonHandler();
 private:
     QWidgetAction *createTitle(QString title, QString icon);
+    QWidgetAction  *createAccountButton();
     void refresh();
     QVector<TimeBoxObject> getCalendar();
 

@@ -35,11 +35,17 @@ void hub::refresh() {
 
     mainMenu->setFixedWidth(MAIN_MENU_SIZE_W);
     mainMenu->addAction(createTitle(tr("YOUR ACCOUNTS"), QString::fromStdString("")));
-    for(auto &s : accounts){
+    if(accounts.size() != 0){
+        for(auto &s : accounts){
         auto accountItem = new AccountItem(s);
         mainMenu->addAction(accountItem);
         mainMenu->addSeparator();
+        }
+    }else{
+        mainMenu->addAction(createAccountButton());
     }
+    
+    
     auto seperator1 = new LineSeperator();
     auto sWidgetAction = new QWidgetAction(this);
     sWidgetAction->setDefaultWidget(seperator1);
@@ -105,6 +111,36 @@ void hub::updateButtonHandler() {
 void hub::pantherButtonHandler() {
     QDesktopServices::openUrl(QUrl(QString::fromStdString("px-hub-gui:")));
 }
+
+void hub::accountButtonHandler(){
+   QDesktopServices::openUrl(QUrl(QString::fromStdString("px-settings-online-accounts:")));
+   
+}
+
+QWidgetAction *hub::createAccountButton(){
+    auto accountTitle = new QPushButton();
+    auto accountTitleFont = accountTitle->font();
+    accountTitleFont.setPointSize(ACCOUNT_TITLE_BUTTON_FONT);
+
+    accountTitle->setText(QString::fromStdString("You have not added any supported online accounts yet.\n Add an account now"));
+    accountTitle->setFont(accountTitleFont);
+    accountTitle->setStyleSheet(QString::fromStdString("QPushButton {background-color: transparent; border:0px;}"));
+    connect(accountTitle,SIGNAL(released()),this,SLOT(accountButtonHandler()));
+
+    auto slayout = new QHBoxLayout;
+    slayout->setAlignment(Qt::AlignLeft);
+    slayout->addWidget(accountTitle);
+
+    auto sWidget = new QWidget;
+    sWidget->setObjectName(QString::fromStdString("accountButtonTitle"));
+    sWidget->setLayout(slayout);
+    sWidget->setContentsMargins(0,0,0,5);
+    auto sWidgetAction = new QWidgetAction(this);
+    sWidgetAction->setDefaultWidget(sWidget);
+
+    return sWidgetAction;
+}
+
 
 void hub::hubEventsHandler(EventObject *eventObject){
     QString popup;
