@@ -151,50 +151,13 @@
 		</Include>
 		</Menu> <!-- End Other -->
 
-	<!-- Settings -->
+	<!-- PantherXSettings -->
 	<Menu>
-		<Name>DesktopSettings</Name>
-		<Directory>lxde-settings.directory</Directory>
-		<Menu>
-			<Name>Advanced Settings</Name>
-			<Directory>lxqt-settings.directory</Directory>
-			<Include>
-				<And>
-					<Category>LXQt</Category>
-					<Or>
-						<Category>Settings</Category>
-						<Category>PackageManager</Category>
-					</Or>
-				</And>
-				<!-- Include some optional components here -->
-				<Filename>obconf-qt.desktop</Filename>
-				<Filename>compton-conf.desktop</Filename>
-				<Filename>pcmanfm-qt-desktop-pref.desktop</Filename>
-			</Include>
-			<Layout>
-				<Filename>lxqt-config.desktop</Filename>
-				<Separator/>
-				<Merge type="menus"/>
-				<Merge type="files"/>
-			</Layout>
-		</Menu>
-		<OnlyUnallocated/>
+		<Name>PantherXSettings</Name>
 		<Include>
-			<Or>
-				<Category>Settings</Category>
-				<Category>PackageManager</Category>
-			</Or>
+		<Filename>px-settings-center.desktop</Filename>
 		</Include>
-		<Exclude>
-			<Or>
-				<Filename>lxqt-config.desktop</Filename>
-			</Or>
-		</Exclude>
-		<Layout>
-			<Merge type="menus"/>
-			<Merge type="files"/>
-		</Layout>
-	</Menu> <!-- End Settings -->
+	</Menu> <!-- End PantherXSettings -->
 
 	<!-- Leave -->
 	<Menu>
@@ -239,7 +202,7 @@
 		<Merge type="files"/>
 		<Merge type="menus"/>
 		<Separator/>
-		<Menuname>DesktopSettings</Menuname>
+		<Menuname show_empty="false" inline="true">PantherXSettings</Menuname>
 		<Menuname show_empty="false">About</Menuname>
 		<Menuname show_empty="false" inline="true">Wiki-Help</Menuname>
 		<Separator/>
