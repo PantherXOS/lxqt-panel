@@ -110,10 +110,18 @@ class AccountItem : public QWidgetAction{
 Q_OBJECT
 public:
     AccountItem(AccountObject &account, QObject *parent = nullptr)
-            : QWidgetAction(parent) {
+            : QWidgetAction(parent), _account(account) {
         auto widget = new AccountItemWidget(account);
-        setDefaultWidget(widget);
+        setDefaultWidget(widget);        
     }
+
+    AccountObject getAccount(){
+        return _account;
+    }
+
+private:
+    AccountObject _account;
+
 };
 
 

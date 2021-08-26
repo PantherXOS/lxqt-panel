@@ -17,6 +17,17 @@ hub::hub(const ILXQtPanelPluginStartupInfo &startupInfo) :
     EventSubscriber * eventSubscriber = new EventSubscriber("hub");
     connect(eventSubscriber,SIGNAL(hubEvents(EventObject *)),this,SLOT(hubEventsHandler(EventObject *)));
     eventSubscriber->run();
+    connect(mainMenu,SIGNAL(triggered(QAction*)),this,SLOT(mainMenuTriggeredHandler(QAction*)));
+}
+
+void hub::mainMenuTriggeredHandler(QAction* action){
+   //auto accountAction = (AccountItem*)action;
+    auto accountAction = qobject_cast<AccountItem *>(action);
+    if(accountAction != NULL){
+        std::string command = "px-hub-gui:account="+accountAction->getAccount().getTitle();
+        QDesktopServices::openUrl(QUrl(QString::fromStdString(command)));
+    }
+    
 }
 
 void hub::realign()
@@ -113,8 +124,7 @@ void hub::pantherButtonHandler() {
 }
 
 void hub::accountButtonHandler(){
-   QDesktopServices::openUrl(QUrl(QString::fromStdString("px-settings-online-accounts:")));
-   
+   QDesktopServices::openUrl(QUrl(QString::fromStdString("px-settings-online-accounts:")));   
 }
 
 QWidgetAction *hub::createAccountButton(){

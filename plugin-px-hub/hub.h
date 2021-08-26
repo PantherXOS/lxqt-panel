@@ -63,6 +63,7 @@ private slots:
     void updateButtonHandler();
     void pantherButtonHandler();
     void accountButtonHandler();
+    void mainMenuTriggeredHandler(QAction*);
 private:
     QWidgetAction *createTitle(QString title, QString icon);
     QWidgetAction  *createAccountButton();
