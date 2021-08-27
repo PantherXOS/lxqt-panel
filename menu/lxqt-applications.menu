@@ -151,6 +151,14 @@
 		</Include>
 		</Menu> <!-- End Other -->
 
+	<!-- AdvancedSearch -->
+	<Menu>
+		<Name>AdvancedSearch</Name>
+		<Include>
+		<Filename>recoll-searchgui.desktop</Filename>
+		</Include>
+	</Menu> <!-- End AdvancedSearch -->
+
 	<!-- PantherXSettings -->
 	<Menu>
 		<Name>PantherXSettings</Name>
@@ -203,6 +211,7 @@
 		<Merge type="menus"/>
 		<Separator/>
 		<Menuname show_empty="false" inline="true">PantherXSettings</Menuname>
+		<Menuname show_empty="false" inline="true">AdvancedSearch</Menuname>
 		<Menuname show_empty="false">About</Menuname>
 		<Menuname show_empty="false" inline="true">Wiki-Help</Menuname>
 		<Separator/>
