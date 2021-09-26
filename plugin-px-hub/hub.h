@@ -26,6 +26,7 @@
 #include <QFont>
 #include <QIcon>
 #include <QDateTime>
+#include <QPushButton>
 #include <rpc/EventSubscriber.h>
 #include <lxqt/LXQt/Notification>
 #include <QListWidget>
@@ -69,7 +70,7 @@ private:
     QWidgetAction  *createAccountButton();
     void refresh();
     QVector<TimeBoxObject> getCalendar();
-
+    QPushButton* qPushButton;
     QToolButton mButton;
     bool mHidden;
     bool isRun= false;

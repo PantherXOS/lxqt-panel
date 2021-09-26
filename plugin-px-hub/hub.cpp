@@ -36,40 +36,40 @@ void hub::realign()
 }
 #include <QLabel>
 void hub::refresh() {
-    bool menuIsVisible = mainMenu->isVisible();
-    mainMenu->hide();
-    mainMenu->clear();
+    bool menuIsVisible = mainMenu->isVisible();    
     //sleep(1);
     // get accounts
     RPCHubClient rpcHubClient;
     vector<AccountObject> accounts= rpcHubClient.getAccountList();
-
+    // get messages
+    vector<MessageObject> messageList = rpcHubClient.getMessageList(MAX_MESSAGE_COUNT);
+    auto hubItemList = new HubItem(messageList);
+    //get calendar detail
+    auto calendarList = getCalendar();      
+    auto calcWidget = new CalendarBoxWidgetAction(calendarList);
+    //mainMenu->hide();
+    mainMenu->clear();
     mainMenu->setFixedWidth(MAIN_MENU_SIZE_W);
     mainMenu->addAction(createTitle(tr("YOUR ACCOUNTS"), QString::fromStdString("")));
     if(accounts.size() != 0){
         for(auto &s : accounts){
-        auto accountItem = new AccountItem(s);
-        mainMenu->addAction(accountItem);
-        mainMenu->addSeparator();
+            auto accountItem = new AccountItem(s);
+            mainMenu->addAction(accountItem);
+            mainMenu->addSeparator();
         }
     }else{
         mainMenu->addAction(createAccountButton());
-    }
-    
+    }    
     
     auto seperator1 = new LineSeperator();
     auto sWidgetAction = new QWidgetAction(this);
     sWidgetAction->setDefaultWidget(seperator1);
     mainMenu->addAction(sWidgetAction);
-    auto calendarList = getCalendar();   
-   
-    auto calcWidget = new CalendarBoxWidgetAction(calendarList);
+    
     mainMenu->addAction(calcWidget);
     mainMenu->addSeparator();
     mainMenu->addAction(createTitle(tr("PANTHERX HUB"), QStringLiteral("px-updates")));
-    // get messages
-    vector<MessageObject> messageList = rpcHubClient.getMessageList(MAX_MESSAGE_COUNT);
-    auto hubItemList = new HubItem(messageList);
+    
     mainMenu->addAction(hubItemList);
 
     mainMenu->addSeparator();
@@ -84,31 +84,37 @@ QWidgetAction *hub::createTitle(QString title, QString icon) {
 
     subject->setText(title);
     subject->setFont(titleFont);
-    subject->setStyleSheet(QString::fromStdString("QPushButton {background-color: transparent; border:0px;}"));
+    subject->setStyleSheet(QString::fromStdString("QPushButton { border:0px;Text-align:left;}"));
+    subject->setObjectName(QString::fromStdString("PxHubItem"));
+    subject->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Expanding);    
     connect(subject,SIGNAL(released()),this,SLOT(pantherButtonHandler()));
 
     auto slayout = new QHBoxLayout;
     slayout->setAlignment(Qt::AlignLeft);
     slayout->addWidget(subject);
+    slayout->setObjectName(QString::fromStdString("PxHubItem"));
     auto rlayout = new QHBoxLayout;
 
     if(!icon.isEmpty()){
-        auto qPushButton = new QPushButton();
+        qPushButton = new QPushButton();      
         qPushButton->setIcon(QIcon::fromTheme(icon));
         qPushButton->setIconSize(QSize(UPDATE_ICON_SIZE,UPDATE_ICON_SIZE));
-        qPushButton->setStyleSheet(QString::fromStdString("QPushButton {background-color: transparent; border:0px;}"));
+        qPushButton->setStyleSheet(QString::fromStdString("QPushButton {border:0px;}"));
+        qPushButton->setObjectName(QString::fromStdString("PxHubItem"));
+        qPushButton->setFixedSize(UPDATE_ICON_SIZE+10,UPDATE_ICON_SIZE+10);
         connect(qPushButton,SIGNAL(released()),this,SLOT(updateButtonHandler()));
         rlayout->addWidget(qPushButton);
-        rlayout->setAlignment(Qt::AlignRight);
+        rlayout->setAlignment(Qt::AlignRight); 
     }
     auto mainLayout = new QHBoxLayout;
     mainLayout->addLayout(slayout);
     mainLayout->addLayout(rlayout);
 
     auto sWidget = new QWidget;
-    sWidget->setObjectName(QString::fromStdString("PxHubTitle"));
+    //sWidget->setObjectName(QString::fromStdString("PxHubItem"));
     sWidget->setLayout(mainLayout);
     sWidget->setContentsMargins(0,0,0,5);
+    sWidget->setAttribute(Qt::WA_Hover);
     auto sWidgetAction = new QWidgetAction(this);
     sWidgetAction->setDefaultWidget(sWidget);
 
@@ -116,6 +122,9 @@ QWidgetAction *hub::createTitle(QString title, QString icon) {
 }
 
 void hub::updateButtonHandler() {
+    qPushButton->setIcon(QIcon());
+    qPushButton->setText(QString::fromStdString("..."));
+
     refresh();
 }
 
