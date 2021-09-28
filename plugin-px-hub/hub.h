@@ -30,6 +30,7 @@
 #include <rpc/EventSubscriber.h>
 #include <lxqt/LXQt/Notification>
 #include <QListWidget>
+#include <QTimer>
 #include "../panel/ilxqtpanelplugin.h"
 #include "rpc/RPCHubClient.h"
 #include "AccountObject.h"
@@ -65,16 +66,17 @@ private slots:
     void pantherButtonHandler();
     void accountButtonHandler();
     void mainMenuTriggeredHandler(QAction*);
+    void refresh();
 private:
     QWidgetAction *createTitle(QString title, QString icon);
-    QWidgetAction  *createAccountButton();
-    void refresh();
+    QWidgetAction  *createAccountButton();   
     QVector<TimeBoxObject> getCalendar();
     QPushButton* qPushButton;
     QToolButton mButton;
     bool mHidden;
     bool isRun= false;
     std::thread statThread;
+    QTimer refreshTimer;
 };
 
 

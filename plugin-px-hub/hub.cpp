@@ -18,6 +18,13 @@ hub::hub(const ILXQtPanelPluginStartupInfo &startupInfo) :
     connect(eventSubscriber,SIGNAL(hubEvents(EventObject *)),this,SLOT(hubEventsHandler(EventObject *)));
     eventSubscriber->run();
     connect(mainMenu,SIGNAL(triggered(QAction*)),this,SLOT(mainMenuTriggeredHandler(QAction*)));
+    connect(&refreshTimer,SIGNAL(timeout()),this,SLOT(refresh()));
+    connect(mainMenu,&QMenu::aboutToShow,[&](){
+        refreshTimer.start(60000);
+    });
+    connect(mainMenu,&QMenu::aboutToHide,[&](){
+        refreshTimer.stop();  
+    });
 }
 
 void hub::mainMenuTriggeredHandler(QAction* action){
