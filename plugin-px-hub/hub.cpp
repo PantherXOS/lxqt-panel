@@ -50,11 +50,14 @@ void hub::refresh() {
     vector<AccountObject> accounts= rpcHubClient.getAccountList();
     // get messages
     vector<MessageObject> messageList = rpcHubClient.getMessageList(MAX_MESSAGE_COUNT);
-    auto hubItemList = new HubItem(messageList);
+    auto hubItemList = new HubItem(messageList,this);
     //get calendar detail
     auto calendarList = getCalendar();      
-    auto calcWidget = new CalendarBoxWidgetAction(calendarList);
+    auto calcWidget = new CalendarBoxWidgetAction(calendarList,this);
     //mainMenu->hide();
+    auto acts = mainMenu->actions();
+    for(auto obj: acts)
+        obj->deleteLater();
     mainMenu->clear();
     mainMenu->setFixedWidth(MAIN_MENU_SIZE_W);
     mainMenu->addAction(createTitle(tr("YOUR ACCOUNTS"), QString::fromStdString("")));

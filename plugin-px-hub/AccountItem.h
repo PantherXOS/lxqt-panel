@@ -36,7 +36,7 @@ public:
         auto statusLabel = buildIconFromFile(statusIconFile,QSize(ACCOUNT_STATUS_ICON_SIZE,ACCOUNT_STATUS_ICON_SIZE));
         auto accountIcon = buildIconFromTheme(QString::fromStdString(account.getIcon()),QSize(ACCOUNT_ICON_SIZE,ACCOUNT_ICON_SIZE));
         accountIcon->setContentsMargins(3,0,0,0);
-        auto accountTitle = new QLabel;
+        auto accountTitle = new QLabel(this);
         QFont accountTitleFont = accountTitle->font();
         accountTitleFont.setPointSize(ACCOUNT_TITLE_FONT_SIZE);
         accountTitle->setFont(accountTitleFont);
@@ -48,7 +48,7 @@ public:
         accountTitle->setMargin(0);
         accountTitle->setContentsMargins(5,0,0,0);
 
-        auto unreadCount = new QLabel;
+        auto unreadCount = new QLabel(this);
         unreadCount->setText(QString::fromStdString(to_string(account.getUnread())));
         if(account.getUnread() == 0)
             unreadCount->setVisible(false);
@@ -86,7 +86,7 @@ public:
     QLabel *buildIconFromTheme(QString icon, QSize size){
         QIcon qicon = QIcon::fromTheme(icon);
         QPixmap pixmap = qicon.pixmap(size, QIcon::Normal, QIcon::On);
-        auto iconLabel = new QLabel;
+        auto iconLabel = new QLabel(this);
         iconLabel->setAttribute(Qt::WA_TranslucentBackground);
         iconLabel->setPixmap(pixmap);
         iconLabel->setFixedSize(size);
@@ -98,7 +98,7 @@ public:
         QImage image(file);
         qicon.addPixmap(QPixmap::fromImage(image), QIcon::Normal, QIcon::On);
         QPixmap pixmap = qicon.pixmap(size, QIcon::Normal, QIcon::On);
-        auto iconLabel = new QLabel;
+        auto iconLabel = new QLabel(this);
         iconLabel->setAttribute(Qt::WA_TranslucentBackground);
         iconLabel->setPixmap(pixmap);
         iconLabel->setFixedSize(size);
@@ -109,19 +109,23 @@ public:
 class AccountItem : public QWidgetAction{
 Q_OBJECT
 public:
-    AccountItem(AccountObject &account, QObject *parent = nullptr)
+    AccountItem(AccountObject &account, QWidget *parent = nullptr)
             : QWidgetAction(parent), _account(account) {
-        auto widget = new AccountItemWidget(account);
+        widget = new AccountItemWidget(account);
         setDefaultWidget(widget);        
-    }
+    }    
 
     AccountObject getAccount(){
         return _account;
     }
 
+    ~AccountItem(){
+        widget->deleteLater();
+    }
+
 private:
     AccountObject _account;
-
+    AccountItemWidget *widget;
 };
 
 

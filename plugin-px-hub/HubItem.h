@@ -26,7 +26,7 @@ class HubItemWidget : public QWidget {
 public:
     HubItemWidget(MessageObject &message, int width, QWidget *parent = nullptr) : QWidget(parent) {
         messageLink = QString::fromStdString(message.getLink());
-        auto messageSender = new QLabel;
+        auto messageSender = new QLabel(this);
         QFont messageSenderFont = messageSender->font();
         messageSenderFont.setPointSize(MSG_SENDER_FONT_SIZE);
         
@@ -54,7 +54,7 @@ public:
         llayout->setSpacing(0);
         llayout->setContentsMargins(0,0,0,0);
 
-        auto messageTime = new QLabel;
+        auto messageTime = new QLabel(this);
         getVisibleTime(QString::fromStdString(message.getTime()));
         messageTime->setText(getVisibleTime(QString::fromStdString(message.getTime())));
         messageTime->setFont(messageTimeFont);
@@ -186,7 +186,7 @@ public:
         for(auto &m : messageList){
             auto widgwtItem = new QListWidgetItem();
             listWidget->addItem(widgwtItem);
-            auto messageItem = new HubItemWidget(m,(MAIN_MENU_SIZE_W - listWidget->horizontalScrollBar()->size().height()-50)); 
+            auto messageItem = new HubItemWidget(m,(MAIN_MENU_SIZE_W - listWidget->horizontalScrollBar()->size().height()-50),listWidget); 
             
             messageHeightSize = messageItem->sizeHint().height();
             listWidget->setItemWidget(widgwtItem,messageItem);
@@ -201,6 +201,10 @@ public:
         
         setDefaultWidget(listWidget);
         connect(listWidget, SIGNAL(itemClicked(QListWidgetItem*)), this, SLOT(triggered(QListWidgetItem*)));
+    }
+
+    ~HubItem(){
+        listWidget->deleteLater();
     }
 
 private slots:
