@@ -71,7 +71,7 @@ Chcete ho přepsat?</translation>
     <message>
         <location filename="../lxqtmainmenuconfiguration.ui" line="76"/>
         <source>Custom font size:</source>
-        <translation>Uživatelem stanovená velikost písma:</translation>
+        <translation>Uživatelsky určená velikost písma:</translation>
     </message>
     <message>
         <location filename="../lxqtmainmenuconfiguration.ui" line="86"/>
@@ -141,7 +141,7 @@ Chcete ho přepsat?</translation>
     <message>
         <location filename="../lxqtmainmenuconfiguration.cpp" line="72"/>
         <source>Reset</source>
-        <translation>Vráti na výchozí</translation>
+        <translation>Vrátit na výchozí</translation>
     </message>
     <message>
         <location filename="../lxqtmainmenuconfiguration.cpp" line="166"/>
