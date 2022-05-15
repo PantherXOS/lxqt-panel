@@ -1,10 +1,11 @@
 /* BEGIN_COMMON_COPYRIGHT_HEADER
- * (c)LGPL2+
+ * (c)LGPL2.1+
  *
  * LXQt - a lightweight, Qt based, desktop toolset
  * https://lxqt.org
  *
  * Copyright: 2013 Razor team
+ *            2022 LXQt team
  * Authors:
  *   Alexander Sokoloff <sokoloff.a@gmail.com>
  *
@@ -25,40 +26,21 @@
  *
  * END_COMMON_COPYRIGHT_HEADER */
 
-
 #include "lxqttrayplugin.h"
-#include "lxqttrayconfiguration.h"
-#include "lxqttray.h"
+#include "fdoselectionmanager.h"
 
-LXQtTrayPlugin::LXQtTrayPlugin(const ILXQtPanelPluginStartupInfo &startupInfo) :
-    QObject(),
-    ILXQtPanelPlugin(startupInfo),
-    mWidget(new LXQtTray(this))
+LXQtTrayPlugin::LXQtTrayPlugin(const ILXQtPanelPluginStartupInfo &startupInfo)
+    : QObject()
+    , ILXQtPanelPlugin(startupInfo)
+    , mManager{new FdoSelectionManager}
 {
 }
 
 LXQtTrayPlugin::~LXQtTrayPlugin()
 {
-    delete mWidget;
 }
 
 QWidget *LXQtTrayPlugin::widget()
 {
-    return mWidget;
+    return nullptr;
 }
-
-QDialog *LXQtTrayPlugin::configureDialog()
-{
-    return new LXQtTrayConfiguration(settings());
-}
-
-void LXQtTrayPlugin::realign()
-{
-    mWidget->realign();
-}
-
-void LXQtTrayPlugin::settingsChanged()
-{
-    mWidget->settingsChanged();
-}
-

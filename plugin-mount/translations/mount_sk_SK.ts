@@ -37,23 +37,23 @@
         <translation>Pri stlačení tlačidla na vysunutie:</translation>
     </message>
     <message>
-        <location filename="../configuration.cpp" line="43"/>
+        <location filename="../configuration.cpp" line="44"/>
         <source>Popup menu</source>
         <translation>Zobraziť menu</translation>
     </message>
     <message>
-        <location filename="../configuration.cpp" line="44"/>
+        <location filename="../configuration.cpp" line="45"/>
         <source>Show info</source>
         <translation>Zobraziť informácie</translation>
     </message>
     <message>
-        <location filename="../configuration.cpp" line="45"/>
-        <location filename="../configuration.cpp" line="50"/>
+        <location filename="../configuration.cpp" line="46"/>
+        <location filename="../configuration.cpp" line="51"/>
         <source>Do nothing</source>
         <translation>Nerobiť nič</translation>
     </message>
     <message>
-        <location filename="../configuration.cpp" line="51"/>
+        <location filename="../configuration.cpp" line="52"/>
         <source>Eject All Optical Drives</source>
         <translation>Vysunúť disky všetkých optických jednotiek</translation>
     </message>
@@ -100,24 +100,6 @@
         <location filename="../lxqtmountplugin.cpp" line="116"/>
         <source>Eject removable media</source>
         <translation>Vysunúť prenosné zariadenia</translation>
-    </message>
-    <message>
-        <location filename="../actions/ejectaction_optical.cpp" line="59"/>
-        <source>Ejected all optical drives</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>LXQtMountPlugin</name>
-    <message>
-        <location filename="../lxqtmountplugin.cpp" line="79"/>
-        <source>Removable media/devices manager: Global shortcut &apos;%1&apos; cannot be registered</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../lxqtmountplugin.cpp" line="116"/>
-        <source>Eject removable media</source>
-        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

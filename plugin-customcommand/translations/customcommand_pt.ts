@@ -2,6 +2,14 @@
 <!DOCTYPE TS>
 <TS version="2.1" language="pt">
 <context>
+    <name>LXQtCustomCommand</name>
+    <message>
+        <location filename="../lxqtcustomcommand.cpp" line="176"/>
+        <source>Error</source>
+        <translation>Erro</translation>
+    </message>
+</context>
+<context>
     <name>LXQtCustomCommandConfiguration</name>
     <message>
         <location filename="../lxqtcustomcommandconfiguration.ui" line="14"/>
@@ -120,6 +128,16 @@
         <location filename="../lxqtcustomcommandconfiguration.ui" line="302"/>
         <source>Wheel Down</source>
         <translation>Roda para baixo</translation>
+    </message>
+    <message>
+        <location filename="../lxqtcustomcommandconfiguration.cpp" line="139"/>
+        <source>Select Icon File</source>
+        <translation>Selecionar ficheiro de ícones</translation>
+    </message>
+    <message>
+        <location filename="../lxqtcustomcommandconfiguration.cpp" line="139"/>
+        <source>Images (*.png *.svg *.xpm *.jpg)</source>
+        <translation>Imagens (*.png *.svg *.xpm *.jpg)</translation>
     </message>
 </context>
 </TS>

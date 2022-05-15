@@ -4,21 +4,21 @@
 <context>
     <name>LXQtQuickLaunch</name>
     <message>
-        <location filename="../lxqtquicklaunch.cpp" line="229"/>
+        <location filename="../lxqtquicklaunch.cpp" line="224"/>
         <source>Drop Error</source>
         <translation>Chyba při upuštění sem</translation>
     </message>
     <message>
-        <location filename="../lxqtquicklaunch.cpp" line="230"/>
+        <location filename="../lxqtquicklaunch.cpp" line="225"/>
         <source>File/URL &apos;%1&apos; cannot be embedded into QuickLaunch for now</source>
         <translation>Soubor/URL „%1“ proteď nelze vložit do rychlého spouštění</translation>
     </message>
     <message>
-        <location filename="../lxqtquicklaunch.cpp" line="336"/>
+        <location filename="../lxqtquicklaunch.cpp" line="331"/>
         <source>Drop application
 icons here</source>
         <translation>Sem přetáhněte
-ikonu aplikace</translation>
+ikony aplikací</translation>
     </message>
 </context>
 <context>
@@ -26,7 +26,7 @@ ikonu aplikace</translation>
     <message>
         <location filename="../quicklaunchbutton.cpp" line="55"/>
         <source>(Ctrl + DND)</source>
-        <translation>(Ctrl + DND)</translation>
+        <translation>(Ctrl + táhni a pusť)</translation>
     </message>
     <message>
         <location filename="../quicklaunchbutton.cpp" line="57"/>
@@ -39,7 +39,7 @@ ikonu aplikace</translation>
         <translation>Posunout vpravo</translation>
     </message>
     <message>
-        <location filename="../quicklaunchbutton.cpp" line="64"/>
+        <location filename="../quicklaunchbutton.cpp" line="63"/>
         <source>Remove from quicklaunch</source>
         <translation>Odebrat z rychlého spouštění</translation>
     </message>

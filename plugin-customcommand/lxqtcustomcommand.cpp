@@ -64,6 +64,8 @@ LXQtCustomCommand::LXQtCustomCommand(const ILXQtPanelPluginStartupInfo &startupI
 
 LXQtCustomCommand::~LXQtCustomCommand()
 {
+    // Ensure process is closed before exiting and avoids warning from QProcess.
+    mProcess->close();
     delete mButton;
 }
 
@@ -100,7 +102,7 @@ void LXQtCustomCommand::settingsChanged()
     int oldMaxWidth = mMaxWidth;
 
     mAutoRotate = settings()->value(QStringLiteral("autoRotate"), true).toBool();
-    mFont = settings()->value(QStringLiteral("font"), mButton->font().toString()).toString();
+    mFont = settings()->value(QStringLiteral("font"), QString()).toString(); // the default font should be empty
     mCommand = settings()->value(QStringLiteral("command"), QStringLiteral("echo Configure...")).toString();
     mRunWithBash = settings()->value(QStringLiteral("runWithBash"), true).toBool();
     mRepeat = settings()->value(QStringLiteral("repeat"), true).toBool();
@@ -115,7 +117,8 @@ void LXQtCustomCommand::settingsChanged()
 
     if (oldFont != mFont) {
         QFont newFont;
-        newFont.fromString(mFont);
+        if (!mFont.isEmpty()) // is empty when it's reset to app's font
+            newFont.fromString(mFont);
         if (mFirstRun) {
             QTimer::singleShot(0, mButton, [this, newFont] {
                 mButton->setFont(newFont);

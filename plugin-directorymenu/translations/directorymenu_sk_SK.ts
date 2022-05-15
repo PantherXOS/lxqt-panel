@@ -4,12 +4,12 @@
 <context>
     <name>DirectoryMenu</name>
     <message>
-        <location filename="../directorymenu.cpp" line="125"/>
+        <location filename="../directorymenu.cpp" line="126"/>
         <source>Open</source>
         <translation>Otvoriť</translation>
     </message>
     <message>
-        <location filename="../directorymenu.cpp" line="129"/>
+        <location filename="../directorymenu.cpp" line="130"/>
         <source>Open in terminal</source>
         <translation>Otvoriť v terminále</translation>
     </message>
@@ -43,37 +43,72 @@
     </message>
     <message>
         <location filename="../directorymenuconfiguration.ui" line="66"/>
+        <source>Label</source>
+        <translation>Označenie</translation>
+    </message>
+    <message>
+        <location filename="../directorymenuconfiguration.ui" line="86"/>
+        <source>Button style</source>
+        <translation>Štýl tlačidla</translation>
+    </message>
+    <message>
+        <location filename="../directorymenuconfiguration.ui" line="103"/>
         <source>Terminal</source>
         <translation>Terminál</translation>
     </message>
     <message>
-        <location filename="../directorymenuconfiguration.ui" line="73"/>
-        <location filename="../directorymenuconfiguration.cpp" line="112"/>
+        <location filename="../directorymenuconfiguration.ui" line="96"/>
+        <location filename="../directorymenuconfiguration.cpp" line="131"/>
         <source>Choose Default Terminal</source>
         <translation>Vybrať predvolený terminál</translation>
     </message>
     <message>
-        <location filename="../directorymenuconfiguration.cpp" line="96"/>
+        <location filename="../directorymenuconfiguration.cpp" line="54"/>
+        <source>Only icon</source>
+        <translation>Iba ikona</translation>
+    </message>
+    <message>
+        <location filename="../directorymenuconfiguration.cpp" line="55"/>
+        <source>Only text</source>
+        <translation>Iba text</translation>
+    </message>
+    <message>
+        <location filename="../directorymenuconfiguration.cpp" line="56"/>
+        <source>Icon and text</source>
+        <translation>Ikona a text</translation>
+    </message>
+    <message>
+        <location filename="../directorymenuconfiguration.cpp" line="115"/>
         <source>Choose Base Directory</source>
         <translation>Vybrať základný adresár</translation>
     </message>
     <message>
-        <location filename="../directorymenuconfiguration.cpp" line="126"/>
+        <location filename="../directorymenuconfiguration.cpp" line="164"/>
         <source>Choose Icon</source>
         <translation>Zvoliť ikonu</translation>
     </message>
     <message>
-        <location filename="../directorymenuconfiguration.cpp" line="126"/>
-        <source>Icons (*.png *.xpm *.jpg)</source>
-        <translation>Ikony (*.png *.xpm *.jpg)</translation>
+        <location filename="../directorymenuconfiguration.cpp" line="164"/>
+        <source>Icons (*.png *.xpm *.jpg *.svg)</source>
+        <translation>Ikony (*.png *.xpm *.jpg *.svg)</translation>
     </message>
     <message>
-        <location filename="../directorymenuconfiguration.cpp" line="135"/>
+        <location filename="../directorymenuconfiguration.cpp" line="188"/>
+        <source>Choose Label</source>
+        <translation>Vyberať štítok</translation>
+    </message>
+    <message>
+        <location filename="../directorymenuconfiguration.cpp" line="189"/>
+        <source>Label:</source>
+        <translation>Označenie:</translation>
+    </message>
+    <message>
+        <location filename="../directorymenuconfiguration.cpp" line="173"/>
         <source>Directory Menu</source>
         <translation>Ponuka adresára</translation>
     </message>
     <message>
-        <location filename="../directorymenuconfiguration.cpp" line="135"/>
+        <location filename="../directorymenuconfiguration.cpp" line="173"/>
         <source>An error occurred while loading the icon.</source>
         <translation>Pri načítaní ikony nastala chyba.</translation>
     </message>

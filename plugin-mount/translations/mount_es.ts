@@ -37,23 +37,23 @@
         <translation>Al pulsar el botón de expulsión:</translation>
     </message>
     <message>
-        <location filename="../configuration.cpp" line="43"/>
+        <location filename="../configuration.cpp" line="44"/>
         <source>Popup menu</source>
         <translation>Menú emergente</translation>
     </message>
     <message>
-        <location filename="../configuration.cpp" line="44"/>
+        <location filename="../configuration.cpp" line="45"/>
         <source>Show info</source>
         <translation>Mostrar información</translation>
     </message>
     <message>
-        <location filename="../configuration.cpp" line="45"/>
-        <location filename="../configuration.cpp" line="50"/>
+        <location filename="../configuration.cpp" line="46"/>
+        <location filename="../configuration.cpp" line="51"/>
         <source>Do nothing</source>
         <translation>No hacer nada</translation>
     </message>
     <message>
-        <location filename="../configuration.cpp" line="51"/>
+        <location filename="../configuration.cpp" line="52"/>
         <source>Eject All Optical Drives</source>
         <translation>Expulsar todas las unidades ópticas</translation>
     </message>
@@ -100,32 +100,6 @@
         <location filename="../lxqtmountplugin.cpp" line="116"/>
         <source>Eject removable media</source>
         <translation>Expulsar soporte extraíble</translation>
-    </message>
-</context>
-<context>
-    <name>EjectActionOptical</name>
-    <message>
-        <location filename="../actions/ejectaction_optical.cpp" line="59"/>
-        <source>Removable media/devices manager</source>
-        <translation type="unfinished">Gestor de medios y dispositivos extraíbles</translation>
-    </message>
-    <message>
-        <location filename="../actions/ejectaction_optical.cpp" line="59"/>
-        <source>Ejected all optical drives</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>LXQtMountPlugin</name>
-    <message>
-        <location filename="../lxqtmountplugin.cpp" line="79"/>
-        <source>Removable media/devices manager: Global shortcut &apos;%1&apos; cannot be registered</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../lxqtmountplugin.cpp" line="116"/>
-        <source>Eject removable media</source>
-        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

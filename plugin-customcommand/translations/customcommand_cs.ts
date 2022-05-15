@@ -2,6 +2,14 @@
 <!DOCTYPE TS>
 <TS version="2.1" language="cs">
 <context>
+    <name>LXQtCustomCommand</name>
+    <message>
+        <location filename="../lxqtcustomcommand.cpp" line="176"/>
+        <source>Error</source>
+        <translation>Chyba</translation>
+    </message>
+</context>
+<context>
     <name>LXQtCustomCommandConfiguration</name>
     <message>
         <location filename="../lxqtcustomcommandconfiguration.ui" line="14"/>
@@ -11,7 +19,7 @@
     <message>
         <location filename="../lxqtcustomcommandconfiguration.ui" line="20"/>
         <source>Display</source>
-        <translation>Zobrazit</translation>
+        <translation>Zobrazení</translation>
     </message>
     <message>
         <location filename="../lxqtcustomcommandconfiguration.ui" line="28"/>
@@ -46,7 +54,7 @@
     <message>
         <location filename="../lxqtcustomcommandconfiguration.ui" line="82"/>
         <source> px</source>
-        <translation> px</translation>
+        <translation> obraz. bodů</translation>
     </message>
     <message>
         <location filename="../lxqtcustomcommandconfiguration.ui" line="101"/>
@@ -76,7 +84,7 @@
     <message>
         <location filename="../lxqtcustomcommandconfiguration.ui" line="150"/>
         <source>echo Configure...</source>
-        <translation>nastavit echo…</translation>
+        <translation>echo Nastavte…</translation>
     </message>
     <message>
         <location filename="../lxqtcustomcommandconfiguration.ui" line="153"/>
@@ -104,7 +112,7 @@
     <message>
         <location filename="../lxqtcustomcommandconfiguration.ui" line="255"/>
         <source>Mouse Commands</source>
-        <translation>Příkazy myši</translation>
+        <translation>Příkazy myší</translation>
     </message>
     <message>
         <location filename="../lxqtcustomcommandconfiguration.ui" line="261"/>
@@ -120,6 +128,16 @@
         <location filename="../lxqtcustomcommandconfiguration.ui" line="302"/>
         <source>Wheel Down</source>
         <translation>Pootočení kolečkem dolů</translation>
+    </message>
+    <message>
+        <location filename="../lxqtcustomcommandconfiguration.cpp" line="139"/>
+        <source>Select Icon File</source>
+        <translation>Vyberte soubor obsahující ikonu</translation>
+    </message>
+    <message>
+        <location filename="../lxqtcustomcommandconfiguration.cpp" line="139"/>
+        <source>Images (*.png *.svg *.xpm *.jpg)</source>
+        <translation>Obrázky (*.png *.svg *.xpm *.jpg)</translation>
     </message>
 </context>
 </TS>

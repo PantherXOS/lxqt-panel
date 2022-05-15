@@ -12,107 +12,107 @@
 <context>
     <name>LXQtTaskButton</name>
     <message>
-        <location filename="../lxqttaskbutton.cpp" line="677"/>
+        <location filename="../lxqttaskbutton.cpp" line="673"/>
         <source>Application</source>
         <translation>Aplikace</translation>
     </message>
     <message>
-        <location filename="../lxqttaskbutton.cpp" line="711"/>
+        <location filename="../lxqttaskbutton.cpp" line="707"/>
         <source>To &amp;Desktop</source>
         <translation>Na &amp;plochu</translation>
     </message>
     <message>
-        <location filename="../lxqttaskbutton.cpp" line="713"/>
+        <location filename="../lxqttaskbutton.cpp" line="709"/>
         <source>&amp;All Desktops</source>
         <translation>&amp;Všechny plochy</translation>
     </message>
     <message>
-        <location filename="../lxqttaskbutton.cpp" line="721"/>
+        <location filename="../lxqttaskbutton.cpp" line="719"/>
         <source>Desktop &amp;%1</source>
         <translation>Plocha &amp;%1</translation>
     </message>
     <message>
-        <location filename="../lxqttaskbutton.cpp" line="728"/>
+        <location filename="../lxqttaskbutton.cpp" line="729"/>
         <source>&amp;To Current Desktop</source>
         <translation>Na s&amp;távající plochu</translation>
     </message>
     <message>
-        <location filename="../lxqttaskbutton.cpp" line="737"/>
-        <source>Move To &amp;Next Monitor</source>
-        <translation>Přesunout na &amp;další obrazovku</translation>
+        <location filename="../lxqttaskbutton.cpp" line="738"/>
+        <source>Move To N&amp;ext Monitor</source>
+        <translation>Př&amp;esunout na další z monitorů</translation>
     </message>
     <message>
-        <location filename="../lxqttaskbutton.cpp" line="740"/>
+        <location filename="../lxqttaskbutton.cpp" line="741"/>
         <source>Move To &amp;Previous Monitor</source>
         <translation>Přesunout na &amp;předchozí obrazovku</translation>
     </message>
     <message>
-        <location filename="../lxqttaskbutton.cpp" line="744"/>
+        <location filename="../lxqttaskbutton.cpp" line="745"/>
         <source>&amp;Move</source>
         <translation>&amp;Přesunout</translation>
     </message>
     <message>
-        <location filename="../lxqttaskbutton.cpp" line="747"/>
+        <location filename="../lxqttaskbutton.cpp" line="748"/>
         <source>Resi&amp;ze</source>
         <translation>&amp;Změnit velikost</translation>
     </message>
     <message>
-        <location filename="../lxqttaskbutton.cpp" line="754"/>
+        <location filename="../lxqttaskbutton.cpp" line="755"/>
         <source>Ma&amp;ximize</source>
         <translation>Z&amp;většit</translation>
     </message>
     <message>
-        <location filename="../lxqttaskbutton.cpp" line="761"/>
+        <location filename="../lxqttaskbutton.cpp" line="762"/>
         <source>Maximize vertically</source>
         <translation>Udělat největším ve svislém směru</translation>
     </message>
     <message>
-        <location filename="../lxqttaskbutton.cpp" line="766"/>
+        <location filename="../lxqttaskbutton.cpp" line="767"/>
         <source>Maximize horizontally</source>
         <translation>Udělat největším ve vodorovném směru</translation>
     </message>
     <message>
-        <location filename="../lxqttaskbutton.cpp" line="772"/>
+        <location filename="../lxqttaskbutton.cpp" line="773"/>
         <source>&amp;Restore</source>
         <translation>&amp;Obnovit předchozí velikost</translation>
     </message>
     <message>
-        <location filename="../lxqttaskbutton.cpp" line="776"/>
+        <location filename="../lxqttaskbutton.cpp" line="777"/>
         <source>Mi&amp;nimize</source>
         <translation>&amp;Zmenšit</translation>
     </message>
     <message>
-        <location filename="../lxqttaskbutton.cpp" line="782"/>
+        <location filename="../lxqttaskbutton.cpp" line="783"/>
         <source>Roll down</source>
         <translation>Sbalit</translation>
     </message>
     <message>
-        <location filename="../lxqttaskbutton.cpp" line="788"/>
+        <location filename="../lxqttaskbutton.cpp" line="789"/>
         <source>Roll up</source>
         <translation>Rozbalit</translation>
     </message>
     <message>
-        <location filename="../lxqttaskbutton.cpp" line="796"/>
+        <location filename="../lxqttaskbutton.cpp" line="797"/>
         <source>&amp;Layer</source>
         <translation>&amp;Vrstva</translation>
     </message>
     <message>
-        <location filename="../lxqttaskbutton.cpp" line="798"/>
+        <location filename="../lxqttaskbutton.cpp" line="799"/>
         <source>Always on &amp;top</source>
         <translation>Vždy &amp;navrchu</translation>
     </message>
     <message>
-        <location filename="../lxqttaskbutton.cpp" line="804"/>
+        <location filename="../lxqttaskbutton.cpp" line="805"/>
         <source>&amp;Normal</source>
         <translation>&amp;Normální</translation>
     </message>
     <message>
-        <location filename="../lxqttaskbutton.cpp" line="810"/>
+        <location filename="../lxqttaskbutton.cpp" line="811"/>
         <source>Always on &amp;bottom</source>
         <translation>Vždy &amp;naspodu</translation>
     </message>
     <message>
-        <location filename="../lxqttaskbutton.cpp" line="818"/>
+        <location filename="../lxqttaskbutton.cpp" line="819"/>
         <source>&amp;Close</source>
         <translation>&amp;Zavřít</translation>
     </message>
@@ -175,7 +175,7 @@
     <message>
         <location filename="../lxqttaskbarconfiguration.ui" line="152"/>
         <source>Show popup on mouse hover</source>
-        <translation>Při najetí ukazovátkem myši zobrazit vyskakovací okno</translation>
+        <translation>Při najetí ukazatelem myši zobrazit vyskakovací okno</translation>
     </message>
     <message>
         <location filename="../lxqttaskbarconfiguration.ui" line="169"/>
@@ -232,7 +232,7 @@
     <message>
         <location filename="../lxqttaskbarconfiguration.ui" line="76"/>
         <source>Close on middle-click</source>
-        <translation>Zavírat klepnutím prostředním tlačítkem</translation>
+        <translation>Zavírat kliknutím prostředním tlačítkem</translation>
     </message>
     <message>
         <location filename="../lxqttaskbarconfiguration.cpp" line="44"/>
@@ -267,12 +267,12 @@
     <message>
         <location filename="../lxqttaskbarconfiguration.cpp" line="52"/>
         <source>Scroll up to move to next desktop, down to previous</source>
-        <translation>Posunout nahoru pro přesun na další plochu, dolů pro přesun na předchozí</translation>
+        <translation>Otáčením nahoru pro přesun na další plochu, dolů pro přesun na předchozí</translation>
     </message>
     <message>
         <location filename="../lxqttaskbarconfiguration.cpp" line="53"/>
         <source>Scroll up to move to previous desktop, down to next</source>
-        <translation>Posunout nahoru pro přesun na předchozí plochu, dolů pro přesun na další</translation>
+        <translation>Otáčením nahoru pro přesun na předchozí plochu, dolů pro přesun na další</translation>
     </message>
     <message>
         <location filename="../lxqttaskbarconfiguration.cpp" line="55"/>

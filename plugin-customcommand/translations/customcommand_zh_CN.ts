@@ -2,6 +2,14 @@
 <!DOCTYPE TS>
 <TS version="2.1" language="zh_CN">
 <context>
+    <name>LXQtCustomCommand</name>
+    <message>
+        <location filename="../lxqtcustomcommand.cpp" line="176"/>
+        <source>Error</source>
+        <translation>错误</translation>
+    </message>
+</context>
+<context>
     <name>LXQtCustomCommandConfiguration</name>
     <message>
         <location filename="../lxqtcustomcommandconfiguration.ui" line="14"/>
@@ -120,6 +128,16 @@
         <location filename="../lxqtcustomcommandconfiguration.ui" line="302"/>
         <source>Wheel Down</source>
         <translation>滚轮向下</translation>
+    </message>
+    <message>
+        <location filename="../lxqtcustomcommandconfiguration.cpp" line="139"/>
+        <source>Select Icon File</source>
+        <translation>选择图标文件</translation>
+    </message>
+    <message>
+        <location filename="../lxqtcustomcommandconfiguration.cpp" line="139"/>
+        <source>Images (*.png *.svg *.xpm *.jpg)</source>
+        <translation>图片 (*.png *.svg *.xpm *.jpg)</translation>
     </message>
 </context>
 </TS>

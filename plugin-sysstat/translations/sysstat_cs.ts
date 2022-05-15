@@ -151,7 +151,7 @@
     <message>
         <location filename="../lxqtsysstatconfiguration.ui" line="83"/>
         <source> px</source>
-        <translation> px</translation>
+        <translation> obraz. bodů</translation>
     </message>
     <message>
         <location filename="../lxqtsysstatconfiguration.ui" line="99"/>
@@ -372,31 +372,31 @@
 <context>
     <name>LXQtSysStatContent</name>
     <message>
-        <location filename="../lxqtsysstat.cpp" line="392"/>
+        <location filename="../lxqtsysstat.cpp" line="400"/>
         <source>system: %1%&lt;br&gt;user: %2%&lt;br&gt;nice: %3%&lt;br&gt;other: %4%&lt;br&gt;freq: %5%</source>
         <comment>CPU tooltip information</comment>
         <translation>systém: %1%&lt;br&gt;uživatel: %2%&lt;br&gt;přednost: %3%&lt;br&gt;ostatní: %4%&lt;br&gt;frekvence: %5%</translation>
     </message>
     <message>
-        <location filename="../lxqtsysstat.cpp" line="441"/>
+        <location filename="../lxqtsysstat.cpp" line="449"/>
         <source>system: %1%&lt;br&gt;user: %2%&lt;br&gt;nice: %3%&lt;br&gt;other: %4%&lt;br&gt;freq: n/a</source>
         <comment>CPU tooltip information</comment>
         <translation>systém: %1%&lt;br&gt;uživatel: %2%&lt;br&gt;přednost: %3%&lt;br&gt;ostatní: %4%&lt;br&gt;frekvence: n/a</translation>
     </message>
     <message>
-        <location filename="../lxqtsysstat.cpp" line="483"/>
+        <location filename="../lxqtsysstat.cpp" line="491"/>
         <source>apps: %1%&lt;br&gt;buffers: %2%&lt;br&gt;cached: %3%</source>
         <comment>Memory tooltip information</comment>
         <translation>aplikace: %1%&lt;br&gt;vyrovnávací paměti: %2%&lt;br&gt;uloženo v mezipaměti: %3%</translation>
     </message>
     <message>
-        <location filename="../lxqtsysstat.cpp" line="517"/>
+        <location filename="../lxqtsysstat.cpp" line="525"/>
         <source>used: %1%</source>
         <comment>Swap tooltip information</comment>
         <translation>použito: %1%</translation>
     </message>
     <message>
-        <location filename="../lxqtsysstat.cpp" line="547"/>
+        <location filename="../lxqtsysstat.cpp" line="555"/>
         <source>min: %1%&lt;br&gt;max: %2%</source>
         <comment>Network tooltip information</comment>
         <translation>nejméně: %1%&lt;br&gt;nejvíce: %2%</translation>

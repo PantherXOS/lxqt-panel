@@ -4,12 +4,12 @@
 <context>
     <name>DirectoryMenu</name>
     <message>
-        <location filename="../directorymenu.cpp" line="125"/>
+        <location filename="../directorymenu.cpp" line="126"/>
         <source>Open</source>
         <translation>Отваряне</translation>
     </message>
     <message>
-        <location filename="../directorymenu.cpp" line="129"/>
+        <location filename="../directorymenu.cpp" line="130"/>
         <source>Open in terminal</source>
         <translation>Отваряне в терминал</translation>
     </message>
@@ -43,37 +43,72 @@
     </message>
     <message>
         <location filename="../directorymenuconfiguration.ui" line="66"/>
+        <source>Label</source>
+        <translation>Етикет</translation>
+    </message>
+    <message>
+        <location filename="../directorymenuconfiguration.ui" line="86"/>
+        <source>Button style</source>
+        <translation>Стил на бутоните</translation>
+    </message>
+    <message>
+        <location filename="../directorymenuconfiguration.ui" line="103"/>
         <source>Terminal</source>
         <translation>Терминал</translation>
     </message>
     <message>
-        <location filename="../directorymenuconfiguration.ui" line="73"/>
-        <location filename="../directorymenuconfiguration.cpp" line="112"/>
+        <location filename="../directorymenuconfiguration.ui" line="96"/>
+        <location filename="../directorymenuconfiguration.cpp" line="131"/>
         <source>Choose Default Terminal</source>
         <translation>Избиране на терминал</translation>
     </message>
     <message>
-        <location filename="../directorymenuconfiguration.cpp" line="96"/>
+        <location filename="../directorymenuconfiguration.cpp" line="54"/>
+        <source>Only icon</source>
+        <translation>Само икони</translation>
+    </message>
+    <message>
+        <location filename="../directorymenuconfiguration.cpp" line="55"/>
+        <source>Only text</source>
+        <translation>Само текст</translation>
+    </message>
+    <message>
+        <location filename="../directorymenuconfiguration.cpp" line="56"/>
+        <source>Icon and text</source>
+        <translation>Икони и текст</translation>
+    </message>
+    <message>
+        <location filename="../directorymenuconfiguration.cpp" line="115"/>
         <source>Choose Base Directory</source>
         <translation>Избиране на основна директория</translation>
     </message>
     <message>
-        <location filename="../directorymenuconfiguration.cpp" line="126"/>
+        <location filename="../directorymenuconfiguration.cpp" line="164"/>
         <source>Choose Icon</source>
         <translation>Избиране на икона</translation>
     </message>
     <message>
-        <location filename="../directorymenuconfiguration.cpp" line="126"/>
-        <source>Icons (*.png *.xpm *.jpg)</source>
-        <translation>Икони (*.png *.xpm *.jpg)</translation>
+        <location filename="../directorymenuconfiguration.cpp" line="164"/>
+        <source>Icons (*.png *.xpm *.jpg *.svg)</source>
+        <translation>Икони (*.png *.xpm *.jpg *.svg)</translation>
     </message>
     <message>
-        <location filename="../directorymenuconfiguration.cpp" line="135"/>
+        <location filename="../directorymenuconfiguration.cpp" line="188"/>
+        <source>Choose Label</source>
+        <translation>Избери етикет</translation>
+    </message>
+    <message>
+        <location filename="../directorymenuconfiguration.cpp" line="189"/>
+        <source>Label:</source>
+        <translation>Етикет:</translation>
+    </message>
+    <message>
+        <location filename="../directorymenuconfiguration.cpp" line="173"/>
         <source>Directory Menu</source>
         <translation>Меню на директорията</translation>
     </message>
     <message>
-        <location filename="../directorymenuconfiguration.cpp" line="135"/>
+        <location filename="../directorymenuconfiguration.cpp" line="173"/>
         <source>An error occurred while loading the icon.</source>
         <translation>Грешка при зареждането на иконата.</translation>
     </message>
