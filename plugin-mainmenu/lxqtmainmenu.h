@@ -138,6 +138,7 @@ private:
     QTimer mDelayedPopup;
     QTimer mHideTimer;
     QTimer mSearchTimer;
+    QString mShortcutSeq;
     QString mMenuFile;
 
 protected slots:
