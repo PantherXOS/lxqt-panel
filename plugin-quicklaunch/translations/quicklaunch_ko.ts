@@ -17,8 +17,8 @@
         <location filename="../lxqtquicklaunch.cpp" line="331"/>
         <source>Drop application
 icons here</source>
-        <translation>여기에 응용 프로그램
-아이콘 놓기</translation>
+        <translation>즐겨쓰는 프로그램
+아이콘 넣기</translation>
     </message>
 </context>
 <context>
@@ -42,6 +42,11 @@ icons here</source>
         <location filename="../quicklaunchbutton.cpp" line="63"/>
         <source>Remove from quicklaunch</source>
         <translation>quicklaunch에서 빼기</translation>
+    </message>
+    <message>
+        <location filename="../quicklaunchbutton.cpp" line="72"/>
+        <source>Refresh</source>
+        <translation>새로 고침</translation>
     </message>
 </context>
 </TS>

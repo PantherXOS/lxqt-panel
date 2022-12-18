@@ -43,5 +43,10 @@ rakenduse ikoone</translation>
         <source>Remove from quicklaunch</source>
         <translation>Eemalda kiirkäivitajast</translation>
     </message>
+    <message>
+        <location filename="../quicklaunchbutton.cpp" line="72"/>
+        <source>Refresh</source>
+        <translation>Värskenda</translation>
+    </message>
 </context>
 </TS>

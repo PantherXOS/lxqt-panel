@@ -6,7 +6,7 @@
     <message>
         <location filename="../lxqtquicklaunch.cpp" line="224"/>
         <source>Drop Error</source>
-        <translation>Erro ao soltar</translation>
+        <translation>Erro ao largar</translation>
     </message>
     <message>
         <location filename="../lxqtquicklaunch.cpp" line="225"/>
@@ -42,6 +42,11 @@ icons here</source>
         <location filename="../quicklaunchbutton.cpp" line="63"/>
         <source>Remove from quicklaunch</source>
         <translation>Remover de Início rápido</translation>
+    </message>
+    <message>
+        <location filename="../quicklaunchbutton.cpp" line="72"/>
+        <source>Refresh</source>
+        <translation>Atualizar</translation>
     </message>
 </context>
 </TS>

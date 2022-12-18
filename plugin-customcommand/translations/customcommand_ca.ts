@@ -6,7 +6,7 @@
     <message>
         <location filename="../lxqtcustomcommand.cpp" line="176"/>
         <source>Error</source>
-        <translation type="unfinished"></translation>
+        <translation>Error</translation>
     </message>
 </context>
 <context>
@@ -84,7 +84,7 @@
     <message>
         <location filename="../lxqtcustomcommandconfiguration.ui" line="150"/>
         <source>echo Configure...</source>
-        <translation type="unfinished">Configura eco ...</translation>
+        <translation>Configuració de l&apos;eco...</translation>
     </message>
     <message>
         <location filename="../lxqtcustomcommandconfiguration.ui" line="153"/>
@@ -132,12 +132,12 @@
     <message>
         <location filename="../lxqtcustomcommandconfiguration.cpp" line="139"/>
         <source>Select Icon File</source>
-        <translation type="unfinished"></translation>
+        <translation>Trieu un fitxer d&apos;icona</translation>
     </message>
     <message>
         <location filename="../lxqtcustomcommandconfiguration.cpp" line="139"/>
         <source>Images (*.png *.svg *.xpm *.jpg)</source>
-        <translation type="unfinished"></translation>
+        <translation>Imatges (*.png *.svg *.xpm *.jpg)</translation>
     </message>
 </context>
 </TS>
