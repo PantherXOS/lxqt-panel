@@ -6,7 +6,7 @@
     <message>
         <location filename="../config/addplugindialog.ui" line="14"/>
         <source>Add Plugins</source>
-        <translation>新增插件</translation>
+        <translation>新增外掛</translation>
     </message>
     <message>
         <location filename="../config/addplugindialog.ui" line="22"/>
@@ -39,12 +39,12 @@
     <message>
         <location filename="../config/configpaneldialog.cpp" line="39"/>
         <source>Placement</source>
-        <translation type="unfinished"></translation>
+        <translation>布局</translation>
     </message>
     <message>
         <location filename="../config/configpaneldialog.cpp" line="43"/>
         <source>Styling</source>
-        <translation type="unfinished"></translation>
+        <translation>樣式</translation>
     </message>
     <message>
         <location filename="../config/configpaneldialog.cpp" line="47"/>
@@ -57,7 +57,7 @@
     <message>
         <location filename="../config/configplacement.ui" line="20"/>
         <source>Configure placement</source>
-        <translation type="unfinished"></translation>
+        <translation>配置布局</translation>
     </message>
     <message>
         <location filename="../config/configplacement.ui" line="44"/>
@@ -248,7 +248,7 @@
     <message>
         <location filename="../config/configpluginswidget.ui" line="14"/>
         <source>Configure Plugins</source>
-        <translation>配置插件</translation>
+        <translation>配置外掛</translation>
     </message>
     <message>
         <location filename="../config/configpluginswidget.ui" line="84"/>
@@ -295,7 +295,7 @@
     <message>
         <location filename="../config/configstyling.ui" line="20"/>
         <source>Configure Styling</source>
-        <translation type="unfinished"></translation>
+        <translation>配置樣式</translation>
     </message>
     <message>
         <location filename="../config/configstyling.ui" line="44"/>
